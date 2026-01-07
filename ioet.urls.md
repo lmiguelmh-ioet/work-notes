@@ -1,0 +1,18 @@
+- directory/contacts:
+	- https://www.notion.so/ioet/Company-Directory-21553fa4fef4803eb6cff97e6918b716
+- notion
+	- https://www.notion.so/ioet
+- slack
+	- https://ioetec.slack.com/
+	- https://app.slack.com/client/T03VCBF1Z
+- karma
+	- created with slack account
+	- https://app.karmabot.chat/rewards#/
+- secure store: to share secrets like keys, creds
+	- https://www.securestore.ioet.com/dashboard
+- desk: to book a workspace
+	- https://reservations.ioet.com/en
+- snipe-it: inventory management of equipment
+	- https://ioet.snipe-it.io/
+- houses
+	- https://www.notion.so/ioet/Houses-21053fa4fef4804a93ead5f23bac9d53
