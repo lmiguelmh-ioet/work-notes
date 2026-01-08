@@ -1,3 +1,8 @@
+- JIRA boards
+	- https://warbyparker.atlassian.net/jira/software/c/projects/OTCM/boards/771
+	- Errors tickets:
+		- https://warbyparker.atlassian.net/jira/software/c/projects/OEH/boards/725
+
 - warby parker
 	- https://warbyparker.okta.com/
 - warby parker github

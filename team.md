@@ -1,11 +1,5 @@
 ### Your Manager
 
-Thanks for all
-You kind of feel the enery of the team, happ yenergy
-I am located on Lima
-I have experience working AWS + Python + Java and even with computer vision and 
-
-
 Astrid: 3 projects
 Gabriel: tech lead
 Ariel: 3 years
