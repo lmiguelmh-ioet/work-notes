@@ -1,3 +1,8 @@
+- warby parker
+	- https://warbyparker.okta.com/
+- warby parker github
+	- https://github.com/WarbyParker/monocle_integrations
+	- 
 - directory/contacts:
 	- https://www.notion.so/ioet/Company-Directory-21553fa4fef4803eb6cff97e6918b716
 - notion

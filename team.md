@@ -1,0 +1,129 @@
+### Your Manager
+
+Thanks for all
+You kind of feel the enery of the team, happ yenergy
+I am located on Lima
+I have experience working AWS + Python + Java and even with computer vision and 
+
+
+Astrid: 3 projects
+Gabriel: tech lead
+Ariel: 3 years
+Jerson: developer 
+Johnny: developer 3 months
+Marcos: 
+Michael: 4 years
+Miguel: 2 years
+Josué: Yos Yoshua 4 years
+Fabiola: QA -
+Kaio: QA Brazil 3 years
+Rocio: Arg
+Justo: 2 weeks
+
+
+![Photo of manager](https://images7.bamboohr.com/23336/photos/40683-0-4.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9pbWFnZXM3LmJhbWJvb2hyLmNvbS8yMzMzNi8qIiwiQ29uZGl0aW9uIjp7IkRhdGVHcmVhdGVyVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzY3Nzk5NzE3fSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3NzAzOTE3Mjd9fX1dfQ__&Signature=AeziZv1IO6JSL2LwsHFzFxEGopUNB9~eGjFLjpCcQh8QwzsNmgt2lSvjQAGBoUU8oUHgaWyQL5q7vy~aYrnrlVOdreSgJ80bShfTK8P0jHGh-ThLk2VzSTdTirdtqPPSbQCoPHAf8WtXSclrkr14GrSj4gk9ZcSRapzsk5jtkkmyXa1KLWBlHq1dxYu1kSVox13KNFPM2bxg9P0JAtFWQH6Zgsz6QA0QFlRlgjwKoEkx3T9zv6uKC~oojp2GHUE7eR-cMMNVJdFW4N2d6b1IV-OVfmJs7klG~kgVlailu4olb5713iV4wYXX3a4CKBNEx58WtXAmF50k2lK3PkekYA__&Key-Pair-Id=APKAIZ7QQNDH4DJY7K4Q)
+
+Emilio López
+
+- Senior PM/BA
+- [emilio.lopez@ioet.com](mailto:emilio.lopez@ioet.com)
+- [](mailto:emilio.lopez@ioet.com)[](https://ioet.bamboohr.com/self_onboarding/packet/www.linkedin.com/in/emilio-l%C3%B3pez-48a769129)
+
+### Your Team
+
+![Team member photo](https://images7.bamboohr.com/23336/photos/40805-3-4.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9pbWFnZXM3LmJhbWJvb2hyLmNvbS8yMzMzNi8qIiwiQ29uZGl0aW9uIjp7IkRhdGVHcmVhdGVyVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzY3Nzk5NzE3fSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3NzAzOTE3Mjd9fX1dfQ__&Signature=AeziZv1IO6JSL2LwsHFzFxEGopUNB9~eGjFLjpCcQh8QwzsNmgt2lSvjQAGBoUU8oUHgaWyQL5q7vy~aYrnrlVOdreSgJ80bShfTK8P0jHGh-ThLk2VzSTdTirdtqPPSbQCoPHAf8WtXSclrkr14GrSj4gk9ZcSRapzsk5jtkkmyXa1KLWBlHq1dxYu1kSVox13KNFPM2bxg9P0JAtFWQH6Zgsz6QA0QFlRlgjwKoEkx3T9zv6uKC~oojp2GHUE7eR-cMMNVJdFW4N2d6b1IV-OVfmJs7klG~kgVlailu4olb5713iV4wYXX3a4CKBNEx58WtXAmF50k2lK3PkekYA__&Key-Pair-Id=APKAIZ7QQNDH4DJY7K4Q)
+
+Kaio Amaral
+
+- QA Engineer
+- [kaio.amaral@ioet.com](mailto:kaio.amaral@ioet.com)
+- [](mailto:kaio.amaral@ioet.com)
+
+![Team member photo](https://images7.bamboohr.com/23336/photos/40671-0-4.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9pbWFnZXM3LmJhbWJvb2hyLmNvbS8yMzMzNi8qIiwiQ29uZGl0aW9uIjp7IkRhdGVHcmVhdGVyVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzY3Nzk5NzE3fSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3NzAzOTE3Mjd9fX1dfQ__&Signature=AeziZv1IO6JSL2LwsHFzFxEGopUNB9~eGjFLjpCcQh8QwzsNmgt2lSvjQAGBoUU8oUHgaWyQL5q7vy~aYrnrlVOdreSgJ80bShfTK8P0jHGh-ThLk2VzSTdTirdtqPPSbQCoPHAf8WtXSclrkr14GrSj4gk9ZcSRapzsk5jtkkmyXa1KLWBlHq1dxYu1kSVox13KNFPM2bxg9P0JAtFWQH6Zgsz6QA0QFlRlgjwKoEkx3T9zv6uKC~oojp2GHUE7eR-cMMNVJdFW4N2d6b1IV-OVfmJs7klG~kgVlailu4olb5713iV4wYXX3a4CKBNEx58WtXAmF50k2lK3PkekYA__&Key-Pair-Id=APKAIZ7QQNDH4DJY7K4Q)
+
+Fabiola Briones
+
+- Senior QA Engineer
+- [fabiola.briones@ioet.com](mailto:fabiola.briones@ioet.com)
+- [](mailto:fabiola.briones@ioet.com)
+
+![Team member photo](https://images7.bamboohr.com/23336/photos/40681-0-4.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9pbWFnZXM3LmJhbWJvb2hyLmNvbS8yMzMzNi8qIiwiQ29uZGl0aW9uIjp7IkRhdGVHcmVhdGVyVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzY3Nzk5NzE3fSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3NzAzOTE3Mjd9fX1dfQ__&Signature=AeziZv1IO6JSL2LwsHFzFxEGopUNB9~eGjFLjpCcQh8QwzsNmgt2lSvjQAGBoUU8oUHgaWyQL5q7vy~aYrnrlVOdreSgJ80bShfTK8P0jHGh-ThLk2VzSTdTirdtqPPSbQCoPHAf8WtXSclrkr14GrSj4gk9ZcSRapzsk5jtkkmyXa1KLWBlHq1dxYu1kSVox13KNFPM2bxg9P0JAtFWQH6Zgsz6QA0QFlRlgjwKoEkx3T9zv6uKC~oojp2GHUE7eR-cMMNVJdFW4N2d6b1IV-OVfmJs7klG~kgVlailu4olb5713iV4wYXX3a4CKBNEx58WtXAmF50k2lK3PkekYA__&Key-Pair-Id=APKAIZ7QQNDH4DJY7K4Q)
+
+Josué Cando
+
+- Senior Software Engineer
+- [josue.cando@ioet.com](mailto:josue.cando@ioet.com)
+- [](mailto:josue.cando@ioet.com)[](https://linkedin.com/in/josueob)
+
+![Team member photo](https://images7.bamboohr.com/23336/photos/40909-0-4.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9pbWFnZXM3LmJhbWJvb2hyLmNvbS8yMzMzNi8qIiwiQ29uZGl0aW9uIjp7IkRhdGVHcmVhdGVyVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzY3Nzk5NzE3fSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3NzAzOTE3Mjd9fX1dfQ__&Signature=AeziZv1IO6JSL2LwsHFzFxEGopUNB9~eGjFLjpCcQh8QwzsNmgt2lSvjQAGBoUU8oUHgaWyQL5q7vy~aYrnrlVOdreSgJ80bShfTK8P0jHGh-ThLk2VzSTdTirdtqPPSbQCoPHAf8WtXSclrkr14GrSj4gk9ZcSRapzsk5jtkkmyXa1KLWBlHq1dxYu1kSVox13KNFPM2bxg9P0JAtFWQH6Zgsz6QA0QFlRlgjwKoEkx3T9zv6uKC~oojp2GHUE7eR-cMMNVJdFW4N2d6b1IV-OVfmJs7klG~kgVlailu4olb5713iV4wYXX3a4CKBNEx58WtXAmF50k2lK3PkekYA__&Key-Pair-Id=APKAIZ7QQNDH4DJY7K4Q)
+
+Johnny Coral
+
+- Junior Software Engineer
+- [johnny.coral@ioet.com](mailto:johnny.coral@ioet.com)
+- [](mailto:johnny.coral@ioet.com)[](https://www.linkedin.com/in/johnny-coral/)
+
+![Team member photo](https://images7.bamboohr.com/23336/photos/40894-0-4.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9pbWFnZXM3LmJhbWJvb2hyLmNvbS8yMzMzNi8qIiwiQ29uZGl0aW9uIjp7IkRhdGVHcmVhdGVyVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzY3Nzk5NzE3fSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3NzAzOTE3Mjd9fX1dfQ__&Signature=AeziZv1IO6JSL2LwsHFzFxEGopUNB9~eGjFLjpCcQh8QwzsNmgt2lSvjQAGBoUU8oUHgaWyQL5q7vy~aYrnrlVOdreSgJ80bShfTK8P0jHGh-ThLk2VzSTdTirdtqPPSbQCoPHAf8WtXSclrkr14GrSj4gk9ZcSRapzsk5jtkkmyXa1KLWBlHq1dxYu1kSVox13KNFPM2bxg9P0JAtFWQH6Zgsz6QA0QFlRlgjwKoEkx3T9zv6uKC~oojp2GHUE7eR-cMMNVJdFW4N2d6b1IV-OVfmJs7klG~kgVlailu4olb5713iV4wYXX3a4CKBNEx58WtXAmF50k2lK3PkekYA__&Key-Pair-Id=APKAIZ7QQNDH4DJY7K4Q)
+
+Rocio Fabrykant
+
+- Oracle Specialist
+- [rocio.fabrykant@ioet.com](mailto:rocio.fabrykant@ioet.com)
+- [](mailto:rocio.fabrykant@ioet.com)
+
+![Team member photo](https://images7.bamboohr.com/23336/photos/40709-0-4.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9pbWFnZXM3LmJhbWJvb2hyLmNvbS8yMzMzNi8qIiwiQ29uZGl0aW9uIjp7IkRhdGVHcmVhdGVyVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzY3Nzk5NzE3fSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3NzAzOTE3Mjd9fX1dfQ__&Signature=AeziZv1IO6JSL2LwsHFzFxEGopUNB9~eGjFLjpCcQh8QwzsNmgt2lSvjQAGBoUU8oUHgaWyQL5q7vy~aYrnrlVOdreSgJ80bShfTK8P0jHGh-ThLk2VzSTdTirdtqPPSbQCoPHAf8WtXSclrkr14GrSj4gk9ZcSRapzsk5jtkkmyXa1KLWBlHq1dxYu1kSVox13KNFPM2bxg9P0JAtFWQH6Zgsz6QA0QFlRlgjwKoEkx3T9zv6uKC~oojp2GHUE7eR-cMMNVJdFW4N2d6b1IV-OVfmJs7klG~kgVlailu4olb5713iV4wYXX3a4CKBNEx58WtXAmF50k2lK3PkekYA__&Key-Pair-Id=APKAIZ7QQNDH4DJY7K4Q)
+
+Michael Guanoluisa
+
+- Software Engineer
+- [michael.guanoluisa@ioet.com](mailto:michael.guanoluisa@ioet.com)
+- [](mailto:michael.guanoluisa@ioet.com)[](https://www.linkedin.com/in/michael-guanoluisa-96a723204/)[](https://www.facebook.com/michael.guanoluisaquiroz)
+
+![Team member photo](https://images7.bamboohr.com/23336/photos/40859-0-4.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9pbWFnZXM3LmJhbWJvb2hyLmNvbS8yMzMzNi8qIiwiQ29uZGl0aW9uIjp7IkRhdGVHcmVhdGVyVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzY3Nzk5NzE3fSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3NzAzOTE3Mjd9fX1dfQ__&Signature=AeziZv1IO6JSL2LwsHFzFxEGopUNB9~eGjFLjpCcQh8QwzsNmgt2lSvjQAGBoUU8oUHgaWyQL5q7vy~aYrnrlVOdreSgJ80bShfTK8P0jHGh-ThLk2VzSTdTirdtqPPSbQCoPHAf8WtXSclrkr14GrSj4gk9ZcSRapzsk5jtkkmyXa1KLWBlHq1dxYu1kSVox13KNFPM2bxg9P0JAtFWQH6Zgsz6QA0QFlRlgjwKoEkx3T9zv6uKC~oojp2GHUE7eR-cMMNVJdFW4N2d6b1IV-OVfmJs7klG~kgVlailu4olb5713iV4wYXX3a4CKBNEx58WtXAmF50k2lK3PkekYA__&Key-Pair-Id=APKAIZ7QQNDH4DJY7K4Q)
+
+Marcos Hernández
+
+- Software Engineer
+- [marcos.hernandez@ioet.com](mailto:marcos.hernandez@ioet.com)
+- [](mailto:marcos.hernandez@ioet.com)[](https://www.linkedin.com/in/marcos-hernandez-896b11185/)
+
+![Team member photo](https://images7.bamboohr.com/23336/photos/40653-0-4.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9pbWFnZXM3LmJhbWJvb2hyLmNvbS8yMzMzNi8qIiwiQ29uZGl0aW9uIjp7IkRhdGVHcmVhdGVyVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzY3Nzk5NzE3fSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3NzAzOTE3Mjd9fX1dfQ__&Signature=AeziZv1IO6JSL2LwsHFzFxEGopUNB9~eGjFLjpCcQh8QwzsNmgt2lSvjQAGBoUU8oUHgaWyQL5q7vy~aYrnrlVOdreSgJ80bShfTK8P0jHGh-ThLk2VzSTdTirdtqPPSbQCoPHAf8WtXSclrkr14GrSj4gk9ZcSRapzsk5jtkkmyXa1KLWBlHq1dxYu1kSVox13KNFPM2bxg9P0JAtFWQH6Zgsz6QA0QFlRlgjwKoEkx3T9zv6uKC~oojp2GHUE7eR-cMMNVJdFW4N2d6b1IV-OVfmJs7klG~kgVlailu4olb5713iV4wYXX3a4CKBNEx58WtXAmF50k2lK3PkekYA__&Key-Pair-Id=APKAIZ7QQNDH4DJY7K4Q)
+
+Jerson Morocho
+
+- Senior Software Engineer
+- [jerson.morocho@ioet.com](mailto:jerson.morocho@ioet.com)
+- [](mailto:jerson.morocho@ioet.com)[](https://www.linkedin.com/in/thegreatyamori/)[](http://twitter.com/https://twitter.com/thegreatyamori)
+
+![Team member photo](https://images7.bamboohr.com/23336/photos/40824-0-4.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9pbWFnZXM3LmJhbWJvb2hyLmNvbS8yMzMzNi8qIiwiQ29uZGl0aW9uIjp7IkRhdGVHcmVhdGVyVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzY3Nzk5NzE3fSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3NzAzOTE3Mjd9fX1dfQ__&Signature=AeziZv1IO6JSL2LwsHFzFxEGopUNB9~eGjFLjpCcQh8QwzsNmgt2lSvjQAGBoUU8oUHgaWyQL5q7vy~aYrnrlVOdreSgJ80bShfTK8P0jHGh-ThLk2VzSTdTirdtqPPSbQCoPHAf8WtXSclrkr14GrSj4gk9ZcSRapzsk5jtkkmyXa1KLWBlHq1dxYu1kSVox13KNFPM2bxg9P0JAtFWQH6Zgsz6QA0QFlRlgjwKoEkx3T9zv6uKC~oojp2GHUE7eR-cMMNVJdFW4N2d6b1IV-OVfmJs7klG~kgVlailu4olb5713iV4wYXX3a4CKBNEx58WtXAmF50k2lK3PkekYA__&Key-Pair-Id=APKAIZ7QQNDH4DJY7K4Q)
+
+Miguel Muñoz
+
+- Software Engineer
+- [miguel.munoz@ioet.com](mailto:miguel.munoz@ioet.com)
+- [](mailto:miguel.munoz@ioet.com)[](https://www.linkedin.com/in/jos%C3%A9-mu%C3%B1oz-49b295a3/)
+
+![Team member photo](https://images7.bamboohr.com/23336/photos/40928-0-4.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9pbWFnZXM3LmJhbWJvb2hyLmNvbS8yMzMzNi8qIiwiQ29uZGl0aW9uIjp7IkRhdGVHcmVhdGVyVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzY3Nzk5NzE3fSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3NzAzOTE3Mjd9fX1dfQ__&Signature=AeziZv1IO6JSL2LwsHFzFxEGopUNB9~eGjFLjpCcQh8QwzsNmgt2lSvjQAGBoUU8oUHgaWyQL5q7vy~aYrnrlVOdreSgJ80bShfTK8P0jHGh-ThLk2VzSTdTirdtqPPSbQCoPHAf8WtXSclrkr14GrSj4gk9ZcSRapzsk5jtkkmyXa1KLWBlHq1dxYu1kSVox13KNFPM2bxg9P0JAtFWQH6Zgsz6QA0QFlRlgjwKoEkx3T9zv6uKC~oojp2GHUE7eR-cMMNVJdFW4N2d6b1IV-OVfmJs7klG~kgVlailu4olb5713iV4wYXX3a4CKBNEx58WtXAmF50k2lK3PkekYA__&Key-Pair-Id=APKAIZ7QQNDH4DJY7K4Q)
+
+Justo Rivera
+
+- Senior Software Engineer
+- [justo.rivera@ioet.com](mailto:justo.rivera@ioet.com)
+- [](mailto:justo.rivera@ioet.com)
+
+![Team member photo](https://images7.bamboohr.com/23336/photos/40809-1-4.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9pbWFnZXM3LmJhbWJvb2hyLmNvbS8yMzMzNi8qIiwiQ29uZGl0aW9uIjp7IkRhdGVHcmVhdGVyVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzY3Nzk5NzE3fSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3NzAzOTE3Mjd9fX1dfQ__&Signature=AeziZv1IO6JSL2LwsHFzFxEGopUNB9~eGjFLjpCcQh8QwzsNmgt2lSvjQAGBoUU8oUHgaWyQL5q7vy~aYrnrlVOdreSgJ80bShfTK8P0jHGh-ThLk2VzSTdTirdtqPPSbQCoPHAf8WtXSclrkr14GrSj4gk9ZcSRapzsk5jtkkmyXa1KLWBlHq1dxYu1kSVox13KNFPM2bxg9P0JAtFWQH6Zgsz6QA0QFlRlgjwKoEkx3T9zv6uKC~oojp2GHUE7eR-cMMNVJdFW4N2d6b1IV-OVfmJs7klG~kgVlailu4olb5713iV4wYXX3a4CKBNEx58WtXAmF50k2lK3PkekYA__&Key-Pair-Id=APKAIZ7QQNDH4DJY7K4Q)
+
+Ariel Sperduti
+
+- Senior Software Engineer
+- [ariel.sperduti@ioet.com](mailto:ariel.sperduti@ioet.com)
+- [](mailto:ariel.sperduti@ioet.com)[](https://www.linkedin.com/in/arielsperduti/)
+
+![Team member photo](https://images7.bamboohr.com/23336/photos/40697-0-4.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9pbWFnZXM3LmJhbWJvb2hyLmNvbS8yMzMzNi8qIiwiQ29uZGl0aW9uIjp7IkRhdGVHcmVhdGVyVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzY3Nzk5NzE3fSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3NzAzOTE3Mjd9fX1dfQ__&Signature=AeziZv1IO6JSL2LwsHFzFxEGopUNB9~eGjFLjpCcQh8QwzsNmgt2lSvjQAGBoUU8oUHgaWyQL5q7vy~aYrnrlVOdreSgJ80bShfTK8P0jHGh-ThLk2VzSTdTirdtqPPSbQCoPHAf8WtXSclrkr14GrSj4gk9ZcSRapzsk5jtkkmyXa1KLWBlHq1dxYu1kSVox13KNFPM2bxg9P0JAtFWQH6Zgsz6QA0QFlRlgjwKoEkx3T9zv6uKC~oojp2GHUE7eR-cMMNVJdFW4N2d6b1IV-OVfmJs7klG~kgVlailu4olb5713iV4wYXX3a4CKBNEx58WtXAmF50k2lK3PkekYA__&Key-Pair-Id=APKAIZ7QQNDH4DJY7K4Q)
+
+Gabriel Viera
+
+- Senior Software Engineer
+- [gabriel.viera@ioet.com](mailto:gabriel.viera@ioet.com)
+- [](mailto:gabriel.viera@ioet.com)[](https://www.linkedin.com/in/gabriel-viera/)[](http://twitter.com/https://twitter.com/Gabriel62363152)
+![[Pasted image 20260107104332.png]]
