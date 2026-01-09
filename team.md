@@ -1,6 +1,6 @@
-### Your Manager
 
 Astrid: 3 projects
+Emilio: PM
 Gabriel: tech lead
 Ariel: 3 years
 Jerson: developer 
@@ -14,6 +14,12 @@ Kaio: QA Brazil 3 years
 Rocio: Arg
 Justo: 2 weeks
 
+- top-performer
+	- 1 Ariel - bueno técnicamente
+		- gano quien saca la mayor cantidad de ticket que parece un bot
+	- Josue - responsable + metódico
+	- Miguel - bueno entender contexto de negocio - comunicación - proactivo
+	- Gabriel - lead + capex (threshold de story points)
 
 ![Photo of manager](https://images7.bamboohr.com/23336/photos/40683-0-4.jpg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9pbWFnZXM3LmJhbWJvb2hyLmNvbS8yMzMzNi8qIiwiQ29uZGl0aW9uIjp7IkRhdGVHcmVhdGVyVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzY3Nzk5NzE3fSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3NzAzOTE3Mjd9fX1dfQ__&Signature=AeziZv1IO6JSL2LwsHFzFxEGopUNB9~eGjFLjpCcQh8QwzsNmgt2lSvjQAGBoUU8oUHgaWyQL5q7vy~aYrnrlVOdreSgJ80bShfTK8P0jHGh-ThLk2VzSTdTirdtqPPSbQCoPHAf8WtXSclrkr14GrSj4gk9ZcSRapzsk5jtkkmyXa1KLWBlHq1dxYu1kSVox13KNFPM2bxg9P0JAtFWQH6Zgsz6QA0QFlRlgjwKoEkx3T9zv6uKC~oojp2GHUE7eR-cMMNVJdFW4N2d6b1IV-OVfmJs7klG~kgVlailu4olb5713iV4wYXX3a4CKBNEx58WtXAmF50k2lK3PkekYA__&Key-Pair-Id=APKAIZ7QQNDH4DJY7K4Q)
 
