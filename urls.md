@@ -2,6 +2,7 @@
 	- https://docs.oracle.com/en/cloud/saas/supply-chain-and-manufacturing/25d/fasrp/op-materialtransactions-post.html
 
 - OIC platform
+	- ??? works: https://design.integration.us-phoenix-1.ocp.oraclecloud.com/?integrationInstance=oictest2-axhxufzsltne-px
 	- Dev  
 		- OIC: [https://oic-test-inst-axhxufzsltne-px.integration.ocp.oraclecloud.com/](https://oic-test-inst-axhxufzsltne-px.integration.ocp.oraclecloud.com/)  
 		- Oracle ERP: [https://fa-evdi-dev1-saasfaprod1.fa.ocs.oraclecloud.com/fscmUI/faces/FuseWelcome?_adf.ctrl-state=165[…]M=0&_afrMFR=192&_afrMFG=0&_afrMFS=0&_afrMFO=0](https://fa-evdi-dev1-saasfaprod1.fa.ocs.oraclecloud.com/fscmUI/faces/FuseWelcome?_adf.ctrl-state=165x65j434_1&_adf.no-new-window-redirect=true&_afrLoop=72736312678623741&_afrWindowMode=2&_afrWindowId=null&_afrFS=16&_afrMT=screen&_afrMFW=1641&_afrMFH=943&_afrMFDW=1643&_afrMFDH=947&_afrMFC=10&_afrMFCI=0&_afrMFM=0&_afrMFR=192&_afrMFG=0&_afrMFS=0&_afrMFO=0)
