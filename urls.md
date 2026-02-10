@@ -1,6 +1,9 @@
 - books from oreilly:
 	- https://www.oreilly.com/ 
 
+- Github stage:
+	- https://github.com/WarbyParker/monocle_integrations/pull/1592
+
 - "por cada cosa que puedas separar es bueno tener un PR, mientras mas puedas atomizar se hace mas facil, el review, el trabajar en paralelo, el estar continuamente enviando cambios"
 
 - Project whole documentation, including other FSD, user stories, testing scenarios:

@@ -94,14 +94,39 @@ https://github.com/WarbyParker/monocle_integrations/pull/1592
 git tag --sort=-taggerdate -n
 
 # show tag
-git show vstage22 --quiet
+git show vstage28 --quiet
 
 # create annotated tag with empty description
-git tag -a vstage26 -m ""
-git push origin vstage26
+git tag -a vstage31 -m ""
+git push origin vstage31
 
 # remove tag
 git tag -d vstage26
+```
+
+
+## Poetry
+
+- do NOT edit `pyproject.toml`
+	- Automatic dependency resolution - Poetry finds compatible versions
+	- Updates `poetry.lock` automatically
+	- Validates your changes won't break dependencies
+	- Handles version constraints correctly
+```
+# ✅ CORRECT: Use poetry add
+poetry add amazon-sns-extended-client@^1.0.1
+poetry add requests@^2.28  # Exact constraint
+poetry add fastapi         # Latest compatible version
+poetry add pytest --group dev
+poetry add "django>=4.0,<5.0"  # Version range
+
+# ✅ Editing is only for metadata (name, description)
+# Edit these directly in pyproject.toml:
+[tool.poetry]
+name = "my-project"
+version = "0.1.0"
+description = "My description"  # ✅ OK to edit directly
+
 ```
 
 ## CloudWatch
