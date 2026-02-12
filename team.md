@@ -1,109 +1,16 @@
-## Dev Lead talks
+
+## Dev Lead talks / Team 
 - Do not write a lot of comments
 	- when code reviewing people read comments, and that can be missleading
 - SOLID
 	- single responsability
+- MARCOS: 2 PRs reviewed
 
 ## Note system: why
-- Help you actually execute (personal productivity)
-- Feed alignment artifacts into async channels (Jira/Slack/email/standup)
-- Accumulate evidence for leveling (staff/lead skills)
-- Senior = output    
-- Staff = output + decisions + shaping + de-risking
-- From `Done → Standup`
-- From `Done → Jira comment`
-- From `Decisions → Jira ticket(s)` if architectural/product
-- From `Risks → Jira issues` if externalized
-```
-# {{date:YYYY-MM-DD}}
-## Plan
-- _top 1-2 priorities (sync with JIRA)_
-- _add dependencies and risks to watch_
-
-## Done (append during day)
-- _should feed JIRA and stand-up updates_
-
-## Decisions / Notes / Context
-- _design choices, trade-offs, coordination needed, questions asked/answered_
-
-## Meetings / Async Threads
-### Stand Up
-- _Who + Topic_
-- _Summary (1–3 bullets)_
-- _Decision/**Outcome**_
-- _Next steps/Owners_
-
-## Tasks (carry forward)
-- _map to JIRA issue keys if possible_
-
-## Insights/Ideas
-- _for weekly review and future proposals_
-
-
----
-# Weekly Review: Week {{date:YYYY-MM}}
-## Outcomes (Impact)
-- _Jira refs if helpful (for traceability)_
-
-## Decisions & Tradeoffs
-- _architectural, product, prioritization, tech debt vs velocity calls_
-
-## Risks & Gaps (leadership signal)
-- _blocks, unowned surfaces, future drag, missing context_
-
-## Next Week Focus
-- _priorities, dependencies, alignment topics_
-
-## Insights/Ideas Summary
-- _summary of insights_
-```
+[team.note-system](team.note-system.md)
 
 ## Github
-- before PR:
-```
-make up
-make test-unit
-make check-coverage
-make check-format
-make format
-
-branch: OEH-50831-modify-po-inspection-report-dm
-commit: [OEH-50831] Modify PO Inspection Report DM
-- Adds optional parameter to filter by PO line status (other than OPEN).
-- Adds optional parameter to filter by change notice.
-- Filter early by moving where conditions to the JOIN level.
-- Filter accessories and suppliers as requested.
-  
-description:
-This PR modifies the PO Inspection Report data model:
-
-
-Hey Team, could you help me reviewing this PR:
-<URL>
-
-I promise next time I will try to split it in smaller pieces.
-```
-- stage
-```
-1. Merge a main:
-2. Después vas a ese pr y le das en update branch with rebase
-https://github.com/WarbyParker/monocle_integrations/pull/1592
-3. Y después creas el tag en stage
-   
-# list existing tags
-git tag --sort=-taggerdate -n
-
-# show tag
-git show vstage28 --quiet
-
-# create annotated tag with empty description
-git tag -a vstage31 -m ""
-git push origin vstage31
-
-# remove tag
-git tag -d vstage26
-```
-
+[team.github](team.github.md)
 
 ## Poetry
 
@@ -128,6 +35,8 @@ version = "0.1.0"
 description = "My description"  # ✅ OK to edit directly
 
 ```
+
+
 
 ## CloudWatch
 - https://us-east-1.console.aws.amazon.com/lambda/home?region=us-east-1#/functions/oic-monocle-integrations-lambda-stage-us-east-1?tab=monitoring
@@ -335,3 +244,425 @@ Gabriel Viera
 
 
 ![[Pasted image 20260107104332.png]]
+
+## Annual review questions
+
+### Engineer
+```
+Your Role in Relation to the Reviewee
+*
+Select the option that best describes your working relationship
+Direct Team Member (same team, similar level)
+Tech Lead / Senior Engineer
+Project Manager / Business Analyst
+Team Lead / Engineering Manager
+Cross-functional Collaborator (Designer, QA, DevOps)
+Client / Stakeholder
+Other
+How long have you worked with this person?
+*
+Less than 3 months
+3-6 months
+6-12 months
+1-2 years
+More than 2 years
+
+This person follows coding standards and best practices
+1 - Rarely follows standards
+2 - Sometimes follows standards
+3 - Usually follows standards
+4 - Always follows standards and suggests improvements
+5 - Sets the standard for the team
+
+This person helps improve our codebase and technical processes
+1 - Rarely contributes improvements
+2 - Occasionally suggests improvements
+3 - Regularly contributes improvements
+4 - Actively drives improvements
+5 - Leads major improvements that benefit the whole team
+
+This person creates maintainable and scalable solutions
+1 - Rarely creates maintainable solutions
+2 - Sometimes creates maintainable solutions
+3 - Usually creates maintainable solutions
+4 - Always creates well-structured solutions
+5 - Creates exemplary solutions that others learn from
+
+This person manages their work to meet deadlines
+*
+1 - Often misses deadlines
+2 - Sometimes struggles with deadlines
+3 - Usually meets deadlines
+4 - Always meets deadlines and stays organized
+5 - Always delivers on time and helps the team stay on track
+This person speaks up when deadlines are unrealistic
+*
+1 - Rarely raises timeline concerns
+2 - Sometimes questions unrealistic deadlines
+3 - Usually negotiates when needed
+4 - Proactively manages expectations
+5 - Helps the team plan realistic timelines
+This person balances speed and quality in their work
+*
+1 - Often sacrifices quality for speed
+2 - Sometimes struggles to balance both
+3 - Usually finds the right balance
+4 - Consistently delivers quality work on time
+5 - Sets the example for balancing speed and quality
+
+This person helps with tasks beyond their main responsibilities
+*
+1 - Rarely helps beyond assigned tasks
+2 - Sometimes helps when asked
+3 - Regularly helps with additional tasks
+4 - Actively looks for ways to contribute
+5 - Goes above and beyond to support team success
+This person works with managers and leads to improve processes
+*
+1 - Rarely engages in process discussions
+2 - Sometimes shares process feedback
+3 - Regularly contributes to process improvements
+4 - Actively suggests and implements improvements
+5 - Drives significant process improvements
+This person identifies opportunities for innovation and improvement
+*
+1 - Rarely notices improvement opportunities
+2 - Sometimes spots areas for improvement
+3 - Regularly identifies improvement opportunities
+4 - Actively pursues innovative solutions
+5 - Consistently drives innovation and positive change
+
+This person completes tasks without needing supervision
+*
+1 - Usually needs guidance and follow-up
+2 - Sometimes needs reminders
+3 - Usually works independently
+4 - Always works independently and reliably
+5 - Takes full ownership and helps others stay accountable
+This person takes initiative to solve problems and remove blockers
+*
+1 - Rarely takes initiative
+2 - Sometimes takes initiative when prompted
+3 - Usually takes initiative
+4 - Always proactive in solving problems
+5 - Drives problem-solving for the entire team
+This person handles large, complex projects effectively
+*
+1 - Struggles with complex projects
+2 - Sometimes manages complex work
+3 - Usually handles complex projects well
+4 - Excels at managing complex projects
+5 - Masters complex projects and guides others
+
+This person considers different solutions before deciding
+*
+1 - Usually goes with the first solution
+2 - Sometimes considers alternatives
+3 - Regularly evaluates multiple options
+4 - Thoroughly analyzes options and explains choices
+5 - Finds creative solutions others haven't considered
+This person proposes innovative solutions to complex problems
+*
+1 - Rarely suggests new approaches
+2 - Sometimes proposes creative solutions
+3 - Regularly offers innovative ideas
+4 - Consistently brings fresh perspectives
+5 - Leads breakthrough thinking and innovation
+This person contributes effectively to brainstorming and design discussions
+*
+1 - Rarely participates in design discussions
+2 - Sometimes contributes to discussions
+3 - Regularly adds value to discussions
+4 - Often leads productive discussions
+5 - Facilitates breakthrough discussions and decisions
+
+This person actively participates in discussions and offers helpful insights
+*
+1 - Rarely speaks up in discussions
+2 - Sometimes participates when prompted
+3 - Regularly contributes to discussions
+4 - Always adds valuable insights
+5 - Drives discussions and helps the team reach decisions
+This person helps resolve blockers for teammates
+*
+1 - Rarely helps with blockers
+2 - Sometimes helps when asked
+3 - Regularly helps resolve blockers
+4 - Proactively identifies and solves blockers
+5 - Prevents blockers and improves team workflows
+This person helps team members stay aligned and work together
+*
+1 - Rarely helps with team alignment
+2 - Sometimes facilitates team discussions
+3 - Regularly promotes team alignment
+4 - Actively builds team collaboration
+5 - Ensures team unity and shared understanding
+
+This person helps and supports teammates
+*
+1 - Rarely helps others
+2 - Helps when directly asked
+3 - Regularly supports teammates
+4 - Actively mentors and guides others
+5 - Goes above and beyond to develop team members
+This person contributes to team growth and learning
+*
+1 - Rarely contributes to team development
+2 - Sometimes shares knowledge
+3 - Regularly helps the team grow
+4 - Actively drives team learning initiatives
+5 - Creates a culture of continuous learning
+This person creates a positive, collaborative team environment
+*
+1 - Sometimes creates friction or tension
+2 - Generally maintains neutral interactions
+3 - Usually promotes positive collaboration
+4 - Actively builds team morale and unity
+5 - Creates an exceptionally positive team culture
+
+This person understands what clients need
+*
+1 - Rarely considers client perspective
+2 - Sometimes thinks about client needs
+3 - Usually understands client requirements
+4 - Anticipates client needs proactively
+5 - Deeply understands clients and exceeds expectations
+This person delivers work that meets or exceeds client expectations
+*
+1 - Sometimes falls short of client expectations
+2 - Usually meets basic client expectations
+3 - Regularly meets client expectations
+4 - Often exceeds client expectations
+5 - Consistently delivers exceptional results
+This person focuses on providing high-quality service
+*
+1 - Service quality is inconsistent
+2 - Usually provides acceptable service
+3 - Regularly provides good service
+4 - Always provides excellent service
+5 - Sets the standard for exceptional service
+
+This person communicates clearly and respectfully, and contributes to a positive, collaborative team culture.
+*
+1 - Often unclear or creates tension in interactions
+2 - Occasionally struggles with clarity or teamwork
+3 - Generally professional and collaborative
+4 - Consistently clear, respectful, and a positive team influence
+5 - Sets a high standard for communication and inspires collaboration
+This person is open to feedback, gives it constructively, and takes accountability for their actions and work.
+*
+1 - Avoids feedback and deflects responsibility
+2 - Accepts feedback but struggles to apply it; sometimes avoids accountability
+3 - Applies feedback when needed and takes responsibility for tasks
+4 - Seeks/gives feedback thoughtfully and owns mistakes
+5 - Builds a feedback-driven culture and promotes integrity
+This person remains flexible and productive during shifting priorities or team changes.
+*
+1 - Struggles with change and uncertainty
+2 - Occasionally adaptable with support
+3 - Adjusts to change with minimal disruption
+4 - Adapts quickly and helps others adjust
+5 - Leads through change and keeps the team aligned
+This person fosters a positive, collaborative work environment.
+*
+1 - Frequently creates tension or disengagement
+2 - Sometimes struggles to work with others
+3 - Generally collaborative and respectful
+4 - Actively contributes to a healthy team culture
+5 - Inspires collaboration and team spirit
+This person handles stressful or challenging situations with professionalism and supports others.
+*
+1 - Often reactive or overwhelmed under stress
+2 - Sometimes loses focus in high-pressure situations
+3 - Stays calm in most stressful scenarios
+4 - Maintains composure and reassures others
+5 - A stabilizing force for the team in difficult situations
+
+Key Strengths
+*
+What are this engineer's top 3 strengths? Please provide specific examples of when you've observed these strengths in action.
+Development Opportunities
+*
+What 1-2 areas would you recommend for this engineer's professional development? Please be constructive and specific.
+Have there been any highlights or feedback from the client about this person?
+*
+```
+
+
+### QA
+```
+This person follows and promotes QA/testing best practices
+*
+1 - Rarely follows standards
+2 - Sometimes follows standards
+3 - Usually follows standards
+4 - Always follows standards and suggests improvements
+5 - Sets the standard for the team
+This person improves test coverage and quality processes
+*
+1 - Rarely contributes improvements
+2 - Occasionally suggests improvements
+3 - Regularly contributes improvements
+4 - Actively drives improvements
+5 - Leads major improvements that benefit the whole team
+This person builds maintainable and scalable test frameworks
+*
+1 - Rarely creates maintainable solutions
+2 - Sometimes creates maintainable solutions
+3 - Usually creates maintainable solutions
+4 - Always creates well-structured solutions
+5 - Creates exemplary solutions that others learn from
+
+This person delivers test plans, cases, and reports on time
+*
+1 - Often misses deadlines
+2 - Sometimes struggles with timelines
+3 - Usually meets QA timelines
+4 - Always delivers QA assets on time
+5 - Keeps the QA process ahead of schedule
+This person speaks up when deadlines or QA expectations are unrealistic
+*
+1 - Rarely raises concerns
+2 - Sometimes flags timing risks
+3 - Usually manages expectations
+4 - Proactively negotiates timing constraints
+5 - Helps teams plan realistic timelines
+This person balances quality, speed, and testing scope effectively
+*
+1 - Often sacrifices depth or coverage
+2 - Sometimes misjudges scope vs time
+3 - Usually finds a good balance
+4 - Consistently meets quality and time goals
+5 - Sets the benchmark for QA delivery
+
+This person takes full ownership of testing responsibilities without supervision
+*
+1 - Often needs reminders
+2 - Occasionally needs follow-up
+3 - Generally reliable on their own
+4 - Always reliable and autonomous
+5 - Owns tasks and helps others stay on track
+This person proactively resolves test environment or blocker issues
+*
+1 - Avoids or ignores blockers
+2 - Sometimes escalates issues
+3 - Often resolves problems with help
+4 - Proactively removes blockers
+5 - Leads QA issue resolution for the team
+This person handles complex testing efforts effectively (e.g. regression, automation)
+*
+1 - Struggles with complex QA work
+2 - Sometimes needs support
+3 - Handles advanced QA tasks well
+4 - Excels in complex QA assignments
+5 - Leads end-to-end QA for large projects
+
+This person proposes thoughtful test strategies or root cause analysis
+*
+1 - Rarely offers insight into issues
+2 - Sometimes suggests improvements
+3 - Regularly offers QA solutions
+4 - Consistently proposes valuable strategies
+5 - Guides others in strategic QA decisions
+This person finds innovative ways to improve testing or coverage
+*
+1 - Rarely innovates in QA
+2 - Sometimes adapts new ideas
+3 - Regularly contributes innovative approaches
+4 - Consistently improves QA efficiency
+5 - Leads innovation in QA practices
+This person contributes effectively to QA planning and retrospectives
+*
+1 - Rarely joins or contributes
+2 - Sometimes provides input
+3 - Regularly contributes usefully
+4 - Actively drives QA process discussions
+5 - Leads structured QA improvements
+
+This person actively participates in QA discussions and team syncs
+*
+1 - Rarely joins or contributes
+2 - Sometimes involved
+3 - Regular contributor
+4 - Drives QA conversations
+5 - Fosters cross-team collaboration
+This person helps resolve blockers for other team members
+*
+1 - Rarely supports teammates
+2 - Supports when asked
+3 - Often unblocks peers
+4 - Proactively assists teammates
+5 - Consistently improves team flow
+This person promotes shared understanding of quality goals
+*
+1 - Often works in isolation
+2 - Sometimes syncs with others
+3 - Keeps team aligned on QA
+4 - Builds bridges across roles
+5 - Aligns all stakeholders on quality
+
+This person understands and anticipates user-impacting issues
+*
+1 - Rarely considers user impact
+2 - Occasionally flags risks
+3 - Frequently raises UX/quality issues
+4 - Proactively tests with users in mind
+5 - Champions user-focused quality
+This person ensures the product meets or exceeds quality expectations
+*
+1 - Often misses quality issues
+2 - Meets basic QA expectations
+3 - Delivers expected results
+4 - Exceeds QA expectations
+5 - Ensures exceptional quality
+This person maintains consistency and excellence in testing and reporting
+*
+1 - Results vary in depth or accuracy
+2 - Usually good reports
+3 - Consistent and clear QA work
+4 - Delivers QA excellence regularly
+5 - Sets the standard in QA reporting
+
+This person communicates professionally, clearly, and respectfully in all work situations.
+*
+1 - Often unprofessional or unclear in communication
+2 - Occasionally struggles with tone or clarity
+3 - Communicates clearly in most situations
+4 - Consistently communicates with clarity and respect
+5 - Sets a high standard for professional communication
+This person is open to receiving and giving constructive feedback.
+*
+1 - Avoids or resists feedback
+2 - Accepts feedback but struggles to apply it
+3 - Open to feedback and applies it when needed
+4 - Seeks feedback and gives it thoughtfully
+5 - Builds a feedback-driven team culture
+This person takes accountability for their actions and work.
+*
+1 - Often deflects responsibility
+2 - Sometimes avoids accountability
+3 - Takes responsibility for their own tasks
+4 - Owns mistakes and learns from them
+5 - Promotes a culture of ownership and integrity
+This person shows flexibility and stays productive during changing priorities or team shifts.
+*
+1 - Struggles with change and uncertainty
+2 - Occasionally adaptable with support
+3 - Adjusts to change with minimal impact
+4 - Adapts quickly and helps others adjust
+5 - Leads through change and keeps the team aligned
+This person fosters a positive, collaborative work environment.
+*
+1 - Frequently creates tension or disengagement
+2 - Sometimes struggles to work with others
+3 - Generally collaborative and respectful
+4 - Actively contributes to a healthy team culture
+5 - Inspires collaboration and team spirit
+This person handles stressful or challenging situations with professionalism and composure.
+*
+1 - Often reactive or overwhelmed
+2 - Sometimes loses focus under stress
+3 - Stays calm in most situations
+4 - Maintains composure and supports others
+5 - A stabilizing force for the team in high-pressure situations
+```

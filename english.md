@@ -73,7 +73,7 @@ HE is so eccentric, in one occasion he came to the university dressing with a ca
 ![](assets/Pasted%20image%2020260121140903.png)
 - 6: to accept the changes from getting olders, to allow those changes to happen, and accept them. (dignity)
 
-## Debate
+## Discussion: Importance of physical appearance
 ![](assets/Pasted%20image%2020260121141108.png)
 ![](assets/Pasted%20image%2020260121141112.png)
 - agree team:
@@ -194,3 +194,62 @@ HE is so eccentric, in one occasion he came to the university dressing with a ca
 		- gardening club
 		- drank coffee
 
+
+# Class 5: Financial goals
+
+## Discussion: Importance of physical appearance
+
+![](assets/Pasted%20image%2020260211132440.png)
+- Argumentos:
+- physical appearance is very important for success in life
+	- first impression
+		- everything enters through the eyes
+	- psichological bias
+		- halo effect
+	- visual era - social networks
+		- follower/influencer
+	- Self-Fulfilling Prophecy
+		- you look good, you are more confident, you perform better
+	- dressing, posture
+	- it depends on the profession:
+		- actors/actresses/singers
+		- dermatologist/hairdresser
+		- lawyers, 
+	- even presidents 
+		- one US president who lost the election because he didn't allow to be touched by maquillators¡?
+		- well they said that
+
+```
+Idea:  
+People judge others very quickly based on appearance.  
+Physical appearance plays a crucial role in first impressions. Studies show that people form opinions within seconds. These first impressions can influence hiring decisions, promotions, and even social relationships.  
+Example:  
+In job interviews, well-groomed and attractive candidates are often perceived as more competent and confident, even before they speak.  
+
+Ideas:  
+The halo effect is a psychological bias where attractive people are assumed to have other positive qualities.  
+There is a psychological phenomenon called the “halo effect,” where people assume that attractive individuals are more intelligent, capable, and trustworthy. This bias gives good-looking people an unfair advantage in many areas of life.  
+
+Idea:  
+We live in a visual era.  
+In today’s society, especially with social media, physical appearance has become even more important. Influencers, public figures, and even professionals gain visibility and opportunities partly because of how they look.  
+Examples:  
+Platforms like Instagram and TikTok reward visual appeal, which can directly translate into financial success.
+
+Appearance influences attitude and confidence  
+Physical appearance does not only affect how others see us, but also how we see ourselves. When we look good, we tend to feel more confident and motivated. This confidence directly influences our attitude, performance, and behavior.
+
+results of interviews -> is how the interviewer perceives you
+
+is is not determinant, but they already have an advantage
+the classic point is the interview, this is basically how the other people see you
+
+there are laws even that help with that.
+```
+
+## Money and financial goals
+
+![](assets/Pasted%20image%2020260211140717.png)
+- my first bicycle 
+- ride
+- department

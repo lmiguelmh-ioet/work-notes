@@ -8,6 +8,7 @@
 
 - Project whole documentation, including other FSD, user stories, testing scenarios:
 	- https://drive.google.com/drive/folders/1XOXP7l5cug2MGherdoMZ33RjTmAB98Pr
+
 - Lean Specs for development
 	- https://drive.google.com/drive/folders/1Pf3JoT1biPQzUnHoPIJ74yE2DaUyJovc
 
@@ -43,11 +44,13 @@
 		- Oracle ERP: [https://fa-evdi-test-saasfaprod1.fa.ocs.oraclecloud.com/fscmUI/faces/FuseWelcome?_adf.ctrl-state=1cs[…]lse%3B256%3B%3B%3B&_afrLoop=25347663087866644](https://fa-evdi-test-saasfaprod1.fa.ocs.oraclecloud.com/fscmUI/faces/FuseWelcome?_adf.ctrl-state=1csrv169a9_5&fnd=%3B%3B%3B%3Bfalse%3B256%3B%3B%3B&_afrLoop=25347663087866644)
 	- Prod changes
 		- [https://docs.google.com/spreadsheets/d/1C4WTH_EPQ6BKwL22b8qnJT8NillpYmhv0gRhnX7c9ec/edit?usp=sharing](https://docs.google.com/spreadsheets/d/1C4WTH_EPQ6BKwL22b8qnJT8NillpYmhv0gRhnX7c9ec/edit?usp=sharing)
+
 	- Prod 
 		- OIC: [http://oic-prod-axhxufzsltne-ia.integration.ocp.oraclecloud.com:443/](http://oic-prod-axhxufzsltne-ia.integration.ocp.oraclecloud.com:443/)  
 		- Oracle ERP: [https://fa-evdi-saasfaprod1.fa.ocs.oraclecloud.com/](https://fa-evdi-saasfaprod1.fa.ocs.oraclecloud.com/)
+			- Reports: Hamburger > Tools > Report and analytics
 
-	- Creds OIC (same for all environments) 
+	- OIC Credentials (same for all environments) 
 		- [https://us-east-1.console.aws.amazon.com/secretsmanager/secret?name=prod%2FOracle%2Fwp.integration_user&region=us-east-1#](https://us-east-1.console.aws.amazon.com/secretsmanager/secret?name=prod%2FOracle%2Fwp.integration_user&region=us-east-1#)
 
 - JIRA boards
