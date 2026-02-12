@@ -4,8 +4,6 @@
 - Github stage:
 	- https://github.com/WarbyParker/monocle_integrations/pull/1592
 
-- "por cada cosa que puedas separar es bueno tener un PR, mientras mas puedas atomizar se hace mas facil, el review, el trabajar en paralelo, el estar continuamente enviando cambios"
-
 - Project whole documentation, including other FSD, user stories, testing scenarios:
 	- https://drive.google.com/drive/folders/1XOXP7l5cug2MGherdoMZ33RjTmAB98Pr
 
@@ -33,6 +31,9 @@
 	- https://fa-evdi-test-saasfaprod1.fa.ocs.oraclecloud.com/fscmUI/faces/AtkHomePageWelcome?_adf.ctrl-state=1a1g9ckgym_1&_adf.no-new-window-redirect=true&_afrLoop=18960188241766294&_afrWindowMode=2&_afrWindowId=null&_afrFS=16&_afrMT=screen&_afrMFW=1365&_afrMFH=968&_afrMFDW=1920&_afrMFDH=1080&_afrMFC=8&_afrMFCI=0&_afrMFM=0&_afrMFR=96&_afrMFG=0&_afrMFS=0&_afrMFO=0
 	- 
 
+- OIC Prod changes
+	- [https://docs.google.com/spreadsheets/d/1C4WTH_EPQ6BKwL22b8qnJT8NillpYmhv0gRhnX7c9ec/edit?usp=sharing](https://docs.google.com/spreadsheets/d/1C4WTH_EPQ6BKwL22b8qnJT8NillpYmhv0gRhnX7c9ec/edit?usp=sharing)
+
 - OIC platform
 	- ??? works: https://design.integration.us-phoenix-1.ocp.oraclecloud.com/?integrationInstance=oictest2-axhxufzsltne-px
 	- prod changes: https://docs.google.com/spreadsheets/d/1C4WTH_EPQ6BKwL22b8qnJT8NillpYmhv0gRhnX7c9ec/edit?usp=sharing&pli=1&authuser=0
@@ -41,10 +42,7 @@
 		- Oracle ERP: [https://fa-evdi-dev1-saasfaprod1.fa.ocs.oraclecloud.com/fscmUI/faces/FuseWelcome?_adf.ctrl-state=165[…]M=0&_afrMFR=192&_afrMFG=0&_afrMFS=0&_afrMFO=0](https://fa-evdi-dev1-saasfaprod1.fa.ocs.oraclecloud.com/fscmUI/faces/FuseWelcome?_adf.ctrl-state=165x65j434_1&_adf.no-new-window-redirect=true&_afrLoop=72736312678623741&_afrWindowMode=2&_afrWindowId=null&_afrFS=16&_afrMT=screen&_afrMFW=1641&_afrMFH=943&_afrMFDW=1643&_afrMFDH=947&_afrMFC=10&_afrMFCI=0&_afrMFM=0&_afrMFR=192&_afrMFG=0&_afrMFS=0&_afrMFO=0)
 	- Stage  
 		- OIC: [https://oictest2-axhxufzsltne-px.integration.ocp.oraclecloud.com/](https://oictest2-axhxufzsltne-px.integration.ocp.oraclecloud.com/)  
-		- Oracle ERP: [https://fa-evdi-test-saasfaprod1.fa.ocs.oraclecloud.com/fscmUI/faces/FuseWelcome?_adf.ctrl-state=1cs[…]lse%3B256%3B%3B%3B&_afrLoop=25347663087866644](https://fa-evdi-test-saasfaprod1.fa.ocs.oraclecloud.com/fscmUI/faces/FuseWelcome?_adf.ctrl-state=1csrv169a9_5&fnd=%3B%3B%3B%3Bfalse%3B256%3B%3B%3B&_afrLoop=25347663087866644)
-	- Prod changes
-		- [https://docs.google.com/spreadsheets/d/1C4WTH_EPQ6BKwL22b8qnJT8NillpYmhv0gRhnX7c9ec/edit?usp=sharing](https://docs.google.com/spreadsheets/d/1C4WTH_EPQ6BKwL22b8qnJT8NillpYmhv0gRhnX7c9ec/edit?usp=sharing)
-
+		- Oracle ERP: [https://fa-evdi-test-saasfaprod1.fa.ocs.oraclecloud.com/](https://fa-evdi-test-saasfaprod1.fa.ocs.oraclecloud.com/)
 	- Prod 
 		- OIC: [http://oic-prod-axhxufzsltne-ia.integration.ocp.oraclecloud.com:443/](http://oic-prod-axhxufzsltne-ia.integration.ocp.oraclecloud.com:443/)  
 		- Oracle ERP: [https://fa-evdi-saasfaprod1.fa.ocs.oraclecloud.com/](https://fa-evdi-saasfaprod1.fa.ocs.oraclecloud.com/)
@@ -72,7 +70,7 @@
 - directory/contacts:
 	- https://www.notion.so/ioet/Company-Directory-21553fa4fef4803eb6cff97e6918b716
 - notion
-	- https://www.notion.so/ioet
+	- https://www.notion.so/ioet/Internal-ioet-Home-Page-20253fa4fef480c89b7dd5f6ea748a96
 - slack
 	- https://warbyparker.enterprise.slack.com/
 	- https://ioetec.slack.com/

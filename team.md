@@ -4,7 +4,18 @@
 	- when code reviewing people read comments, and that can be missleading
 - SOLID
 	- single responsability
-- MARCOS: 2 PRs reviewed
+- "por cada cosa que puedas separar es bueno tener un PR, mientras mas puedas atomizar se hace mas facil, el review, el trabajar en paralelo, el estar continuamente enviando cambios"
+
+
+### PRs reviewed by me (-1) others reviewing mine (+1)
+- MARCOS: 
+	- 2026/02/11: +2 PRs
+	- 2026/02/12: -1 PR
+	- 2026/02/12: +1 PR
+- MIGUEL:
+	- 2026/02/11: -1 PR
+	- 2026/02/12: -1 PR
+- 
 
 ## Note system: why
 [team.note-system](team.note-system.md)
