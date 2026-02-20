@@ -253,3 +253,25 @@ there are laws even that help with that.
 - my first bicycle 
 - ride
 - department
+
+# Clase 6
+- ![](assets/Pasted%20image%2020260218131652.png)
+- ![](assets/Pasted%20image%2020260218132118.png)
+- ![](assets/Pasted%20image%2020260218132220.png)
+- ![](assets/Pasted%20image%2020260218132607.png)
+- ![](assets/Pasted%20image%2020260218133219.png)
+- ![](assets/Pasted%20image%2020260218133233.png)
+- "to live with what one have, to not spend more than you earn"
+- ![](assets/Pasted%20image%2020260218135132.png)
+- ![](assets/Pasted%20image%2020260218141409.png)
+- ![](assets/Pasted%20image%2020260218141611.png)
+- ![](assets/Pasted%20image%2020260218141620.png)
+- ![](assets/Pasted%20image%2020260218141721.png)
+	- plan to complete
+	- hopes to find
+	- intends to pay / expects to pay
+	- expect to get / hopes to get
+- I expect to save money by cutting costs, for example, I won't pay for diapers for my child when she gets older and learn to use the bathroom.
+- I hope to save enough money to buy a new car by the end of the year.
+
+

@@ -1,6 +1,9 @@
 - books from oreilly:
 	- https://www.oreilly.com/ 
 
+- Support
+	- https://support.warbyparker.com/support/login
+
 - Github stage:
 	- https://github.com/WarbyParker/monocle_integrations/pull/1592
 
@@ -26,7 +29,9 @@
 
 - OIC docs
 	- https://docs.oracle.com/en/cloud/saas/supply-chain-and-manufacturing/25d/fasrp/op-materialtransactions-post.html
+
 - Oracle ERP docs tables description
+	- https://docs.oracle.com/en/cloud/saas/financials/25d/books.html
 	- https://docs.oracle.com/en/cloud/saas/supply-chain-and-manufacturing/25d/oedsc/egoitemeffb-23612.html#Details
 
 - Oracle ERP (reports and "queries")
