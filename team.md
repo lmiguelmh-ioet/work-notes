@@ -64,6 +64,16 @@ fields @timestamp, @message, @logStream, @log
 ## JIRA
 - https://warbyparker.atlassian.net/issues/?jql=textfields%20~%20%22MFG-I-3021%22
 	- ![](assets/Pasted%20image%2020260120145024.png)
+
+## OIC
+- enable debug logs to see payload
+	- ![](assets/Pasted%20image%2020260223144551.png)
+	- ![](assets/Pasted%20image%2020260223144606.png)
+	- ![](assets/Pasted%20image%2020260223144618.png)
+
+- check executions
+	- ![](assets/Pasted%20image%2020260223144356.png)
+
 ## Scrum meet
 - scrum moderator is announced on Monday:
 	- ![](assets/Pasted%20image%2020260120110646.png)
