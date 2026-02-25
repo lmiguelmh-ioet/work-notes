@@ -1,4 +1,12 @@
-## MFG-3021
+## CM-I-3004
+
+- additional info about cash reconciliation report from Providers (Stripe, Paypal, Affirm)
+	- [projects.cash-reconciliation](projects.cash-reconciliation.md)
+
+
+---
+
+## MFG-I-3021
 - 4 days for main integration
 	- [20260120: QA testing](day/day-20260120.md)
 	- [20260119: PR API test](day/day-20260119.md)
@@ -7,6 +15,11 @@
 - 4 days for OIC and skeleton
 	- [20260114: PRs: OIC integration + Basic API skeleton](day/day-20260114.md)
 	- [20260109: start ticket OIC integration](day/day-20260109.md)
+- payloads: https://us-east-1.console.aws.amazon.com/s3/buckets/transfer-stage-data?region=us-east-1&pref[…]ors/Manhattan/MFG-I-3021/Archive/&showversions=false
+	- en Backup se guarda una copia del payload "original", haya finalizado o no con errores
+	- en Archive se guarda el resultado del API si es exitoso
+	- en Error se guarda el resultado del API si es fallido
+- tickets: https://warbyparker.atlassian.net/issues/?jql=textfields%20~%20%22MFG-I-3021%22
 
 
 ## S3-driven flows

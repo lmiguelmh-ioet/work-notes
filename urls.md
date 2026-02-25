@@ -22,6 +22,7 @@
 
 - S3 bucket:
 	- stage: https://us-east-1.console.aws.amazon.com/s3/buckets/transfer-stage-data?region=us-east-1&prefix=vendors/advanced_photochromics/In/compensated_rx/&showversions=false
+	- stage: https://us-east-1.console.aws.amazon.com/s3/buckets/transfer-stage-data?prefix=vendors%2FManhattan%2FMFG-I-3021%2F&region=us-east-1&tab=objects
 
 - monocles lambda ??
 	- prod: https://us-east-1.console.aws.amazon.com/lambda/home?region=us-east-1#/functions/oic-monocle-integrations-events_handler_lambda-prod-us-east-1?tab=code
