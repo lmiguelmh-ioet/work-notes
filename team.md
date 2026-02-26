@@ -114,6 +114,10 @@ fields @timestamp, @message, @logStream, @log
 
 ## Team
 
+- proyecto
+	- Dan Morel
+	- Gabriel Viera
+
 Astrid: 3 projects
 Emilio: PM
 Gabriel: tech lead

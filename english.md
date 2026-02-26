@@ -195,7 +195,7 @@ HE is so eccentric, in one occasion he came to the university dressing with a ca
 		- drank coffee
 
 
-# Class 5: Financial goals
+# Class 5
 
 ## Discussion: Importance of physical appearance
 
@@ -254,7 +254,7 @@ there are laws even that help with that.
 - ride
 - department
 
-# Clase 6
+# Class 6: Financial goals (Future plans)
 - ![](assets/Pasted%20image%2020260218131652.png)
 - ![](assets/Pasted%20image%2020260218132118.png)
 - ![](assets/Pasted%20image%2020260218132220.png)
@@ -274,4 +274,59 @@ there are laws even that help with that.
 - I expect to save money by cutting costs, for example, I won't pay for diapers for my child when she gets older and learn to use the bathroom.
 - I hope to save enough money to buy a new car by the end of the year.
 
+
+# Class 7: Financial goals and Buyer remorse
+![](assets/Pasted%20image%2020260225131316.png)
+- Sentences:
+	- I expect to get certified by the end of year.
+	- I plan to have at least my AWS certification renewed.
+
+![](assets/Pasted%20image%2020260225131634.png)
+- I intend to get certified in AWS services.
+- I will get certified by the end of year.
+
+![](assets/Pasted%20image%2020260225133013.png)
+![](assets/Pasted%20image%2020260225133026.png)
+
+By the end of this month, he planned to have created a realistic budget. 
+- Use the perfect form when using a timeframe: By the end of this month 
+	- A time on the future will or might take place before a specified time in the future
+	- MAYBE
+- vs: He plan to create a realistic budget. 
+	- Completely understandable, it doesn't have a timeframe
+- vs: He will have created a realistic budget.
+	- FUTURE AND WILL BE COMPLETED
+
+He expects to have paid off one of his last credit cards by October.
+He hopes to have begun putting some money away in savings.
+He plans to have paid back most of his debt within the year.
+
+By the end of this month, I will have put 10% percent of my paycheck in the bank.
+By the summer, I will have saved enough to go to Italy.
+Will you have paid off your credit card balance by December?
+When will they have paid the bill in full?
+
+![](assets/Pasted%20image%2020260225134729.png)
+
+- By the end of next month, I will have my daughter go to a new school. (BAD?)
+- Once, she's started going to her school, I'll buy her pencils, and notebooks.
+- We hope for her to adapt well to this new life style.
+
+By the end of this week, I will have registered my daughter to a new school.
+Once, she's started going to her school, I'll buy her pencils and notebooks.
+We hope to adapt well to this new life style.
+
+- Profesor, as native this is understandable:
+	- "We hope she adjust well"
+	- "We hope she adapts to new lifestyle"
+
+
+![](assets/Pasted%20image%2020260225141138.png)
+![](assets/Pasted%20image%2020260225141805.png)
+![](assets/Pasted%20image%2020260225141950.png)
+1. b - juicer (on sale, good price, hardly used)
+2. a - camera (pain on the neck, too many features)
+3. b - exercise machine (don't use it enough, coach potato) -> "ocioso"
+4. b - sound system (complicated instructions)
+5. a - car (cost and arm and a leg) -> "cuesta un ojo de la cara"
 
