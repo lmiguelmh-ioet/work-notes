@@ -74,6 +74,16 @@ fields @timestamp, @message, @logStream, @log
 - check executions
 	- ![](assets/Pasted%20image%2020260223144356.png)
 
+- OIC move to dev1 or stage
+	- it took me a while, but the whole picture is this:  
+		- OIC integrations point to our lambda that is in `stage`  
+		- but the lambda can point to Oracle `dev1` or `stage`
+			- `monocle_integrations/_config/stage.yml:3`
+	- see branch: `[OTCM-104451] Point to dev1`
+	- ![](assets/Pasted%20image%2020260227090031.png)
+	- ![](assets/Pasted%20image%2020260227090258.png)
+	- 
+
 ## Scrum meet
 - scrum moderator is announced on Monday:
 	- ![](assets/Pasted%20image%2020260120110646.png)
@@ -98,6 +108,10 @@ fields @timestamp, @message, @logStream, @log
 		- "Does anyone have any topic?"
 	- Ok, I think that's it for today?
 ## Oracle ERP
+- See the transaction_date for Completed transactions (3021 perform material issue)
+	- https://fa-evdi-dev1-saasfaprod1.fa.ocs.oraclecloud.com/fscmUI/faces/deeplink?objType=INV_COMPL_TXN&action=NONE
+	- ![](assets/Pasted%20image%2020260227124618.png)
+
 - See item all attributes (e.g. by item number -> UPC)
 	- Product Information Management 
 	- Tasks button
@@ -115,7 +129,7 @@ fields @timestamp, @message, @logStream, @log
 ## Team
 
 - proyecto
-	- Dan Morel
+	- Dan Morel (WP - principal engineer)
 	- Gabriel Viera
 
 Astrid: 3 projects
