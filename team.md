@@ -8,6 +8,29 @@
 
 
 ### TESTs
+- prefer `mocker.patch.object` over `patch.object`
+```
+from pytest_mocker import MockerFixture (DO NOT USE MockFIxture deprecated name)
+    @pytest.mark.asyncio
+    async def test__delegates_to_processor__when_import_succeeds(
+        self,
+        mocker: MockerFixture,
+    ) -> None:
+        document_name = "statement_20260211.zip"
+        mock_get_document_name = mocker.patch.object(
+            WpBankStatementImportCallback,
+            "_get_document_name",
+            return_value=document_name,
+        )
+```
+
+- you should use the dependencies_factory to inject the mock dependencies in the instance to test
+```
+NO!
+processor = BankStatementImportCallbackProcessor(file_move_strategy=file_move_strategy)
+YES: use dependencies
+```
+
 - unit tests
 	- ?
 - Event tests (oma file dispatcher)
