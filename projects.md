@@ -1,12 +1,32 @@
-## CM-I-3004
+## CM-I-3004 - payout bank statement import
 
 - additional info about cash reconciliation report from Providers (Stripe, Paypal, Affirm)
 	- [projects.cash-reconciliation](projects.cash-reconciliation.md)
+- OIC: WP Bank Statements Callback Integration
+```
+'BANK-STATEMENTS-CALLBACK'
+lookupValue('WP_CMN_INT_UTIL_LKP', 'IntegrationRICEId', VAR_RICE_ID, 'RESTApiURI', '')
+curl --verbose -X POST https://sjlqdgbb5mesmduz4pw5oj6fsa0ykkxk.lambda-url.us-east-1.on.aws/{import-verification-uri} \ -H "Authorization: [authorization-value]" \ -H "Content-Type: application/json" \ -d '{ "import_event_response" : { "status" : "SUCCEEDED", "jobs" : [ { "id" : "12345", "name" : "Load Interface File for Imports", "status" : "SUCCEEDED", "document_name" : "EDI835-2025-12-16-CECEOB_Warby Parker_12162025_f50-Reimbursement.zip" }, { "id" : "98765", "name" : "Import Bank Statements from a Spreadsheet", "status" : "SUCCEEDED", "document_name" : null } ] }, "total" : 10 }'
+```
+
+---
+
+## IN-I-2060 - OMA file dispatcher
+- ?
+- PRs:
+	- Integration test: https://github.com/WarbyParker/monocle_integrations/pull/1641
 
 
 ---
 
-## MFG-I-3021
+## SNS Adapter
+- 
+
+
+
+---
+## MFG-I-3021 - material issue
+
 - 4 days for main integration
 	- [20260120: QA testing](day/day-20260120.md)
 	- [20260119: PR API test](day/day-20260119.md)
@@ -19,7 +39,11 @@
 	- en Backup se guarda una copia del payload "original", haya finalizado o no con errores
 	- en Archive se guarda el resultado del API si es exitoso
 	- en Error se guarda el resultado del API si es fallido
-- tickets: https://warbyparker.atlassian.net/issues/?jql=textfields%20~%20%22MFG-I-3021%22
+- tickets: 
+	- https://warbyparker.atlassian.net/issues/?jql=textfields%20~%20%22MFG-I-3021%22
+- original tickets: 
+	- https://warbyparker.atlassian.net/issues?jql=textfields%20~%20%22MFG-I-3021%22%20AND%20reporter%20!%3D%20633e0a9afedc6169aed9dc30
+	- https://github.com/WarbyParker/monocle_integrations/pull/1600
 
 
 ## S3-driven flows

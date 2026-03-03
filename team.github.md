@@ -1,3 +1,7 @@
+- my PRs
+	- https://github.com/WarbyParker/monocle_integrations/pulls/@me
+	- filter: is:open is:pr author:@me 
+
 - before PR:
 ```
 make up

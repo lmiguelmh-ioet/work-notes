@@ -7,6 +7,17 @@
 - "por cada cosa que puedas separar es bueno tener un PR, mientras mas puedas atomizar se hace mas facil, el review, el trabajar en paralelo, el estar continuamente enviando cambios"
 
 
+### TESTs
+- unit tests
+	- ?
+- Event tests (oma file dispatcher)
+	- https://github.com/WarbyParker/monocle_integrations/pull/1641/changes
+- API tests (material transactions)
+	- https://github.com/WarbyParker/monocle_integrations/pull/1600/changes
+- Integration tests (sns)
+	- https://github.com/WarbyParker/monocle_integrations/pull/1670/changes
+- E2E test (material transactions)
+	- https://github.com/WarbyParker/monocle_integrations/pull/1600/changes
 ### PRs reviewed by me (-1) others reviewing mine (+1)
 - MARCOS: 
 	- 2026/02/11: +2 PRs
@@ -65,6 +76,8 @@ fields @timestamp, @message, @logStream, @log
 - https://warbyparker.atlassian.net/issues/?jql=textfields%20~%20%22MFG-I-3021%22
 	- ![](assets/Pasted%20image%2020260120145024.png)
 
+- Astrid open tickets:
+	- https://warbyparker.atlassian.net/issues?jql=project%20%3D%20%22Monocle%20%28Oracle%29%20Production%20Issues%22%20and%20created%20%3E%3D%20%222026-02-01%22%20and%20created%20%3C%3D%20%222026-03-01%22%20and%20type%20%3D%20Bug%20and%20summary%20~%20%22Error%7CPROD%7CNon-Payables%22%20AND%20status%20NOT%20IN%20%28Rejected%2C%20Resolved%29%20ORDER%20BY%20created%20DESC%2C%20status%20DESC
 ## OIC
 - enable debug logs to see payload
 	- ![](assets/Pasted%20image%2020260223144551.png)
@@ -97,6 +110,7 @@ fields @timestamp, @message, @logStream, @log
 		- (4) Astrid and (5) Emilio
 		- "Hello, ??? do you have any updates regarding your ticket?"
 		- "Hello, ??? do you have any updates?"
+		- "Hello, ??? any updates you want to share?"
 		- "That's everyone."
 	- Announcement section
 		- "Let's move to the announcements sections?"
