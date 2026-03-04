@@ -330,3 +330,66 @@ We hope to adapt well to this new life style.
 4. b - sound system (complicated instructions)
 5. a - car (cost and arm and a leg) -> "cuesta un ojo de la cara"
 
+# Class 8
+
+What is the funniest word you know in English?
+- solo
+- "ahora"
+- "ah"
+
+- Third conditional: past unreal conditionals:
+- ![](assets/Pasted%20image%2020260304132246.png)
+	- ![](assets/Pasted%20image%2020260304133416.png)
+		- Had she asked they would have lent her the money.
+	- ![](assets/Pasted%20image%2020260304133458.png)
+		- Had I been debt free I would have considered buying that house?
+	- 
+		- Had the Carsons not been able to support their son, he would have had to find a part-time job.
+	- ![](assets/Pasted%20image%2020260304133755.png)
+		- Could you had gotten the car had they not raised the price?
+- ![](assets/Pasted%20image%2020260304133919.png)
+- ![](assets/Pasted%20image%2020260304134011.png)
+- Buyers remorse:
+- 1 
+- 2 Had we known it would take up so much room, we would never have bought such a large sofa
+- 3 Had I known it would be so hard to put together, I could have gotten an entertainment center with fewer pieces.
+- 4 Had we known it would cost so much to maintain, we probably would have bought a more economical car.
+- 5 Had I known it's so hard to operate, I would have gotten a DVD player with simpler directions.
+
+- USE THE PAST PARTICIPLE (went -> gone)
+- Had I gone to physically see and test this headset, I would never have bought it.
+- Had I gone to physically see and test this headset, I could have gotten a better one.
+
+- "Had this happened, what would you have done."
+- "Had this <>, would Jipson would be in debt."
+
+- First situation: Jipson bought a car.
+	- travel more to another cities.
+		- Had this happened, Jipson would have traveled more to other cities.
+	- take a loan.
+		- Had this happened, Jipson might have went to the bank to take a loan.
+	- researching different types of cars.
+		- Had this happened, Jipson 
+	- Had this happened, Jipson might have walked less.
+	- Had this happened, I would have bought an electronic one.
+- Second situation: Viral influencer (tiktok)
+	- thousands of likes
+	- lot of money
+	- borrow money
+- Third situation: 
+	- Had this happened, I would have moved to Ecuador.
+	- Had this happened, I would have been really busy.
+	- Had this happened, Leonardo would have asked to  increase its salary.
+	- Had this happened, IOET would have opened a lot of offices in Peru.
+	- Had this happened, Luis would have to review all of the performance
+- Fourth situation:
+	- Had this happened, Laura would have used her car more often.
+	- Had this happened, Laura would have practiced less Spanish 
+	- Had this happened, Laura would have walked less.
+	- Had this happened, Laura would eaten food is not as healthy.
+	- Had this happened, Laura would have paid expensive rent (food).
+- Fifth situation: children meets
+	- Had this happened, Luis would have traveled to Ecuador for a vacation.
+	- Had this happened, Luis would have visit Leonardo.
+	- Had this happened, Luis would have known Leonardo's family.
+

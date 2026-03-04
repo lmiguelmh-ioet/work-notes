@@ -13,6 +13,9 @@
 - Lean Specs for development
 	- https://drive.google.com/drive/folders/1Pf3JoT1biPQzUnHoPIJ74yE2DaUyJovc
 
+- Process flows diagrams (entire flow)
+	- https://drive.google.com/drive/folders/13erUp3Q-iicFzzpXfMKWe4b9fmgj3PO4
+
 - monocles lambda - API
 	- prod: https://us-east-1.console.aws.amazon.com/lambda/home?region=us-east-1#/functions/oic-monocle-integrations-lambda-stage-us-east-1?subtab=url&tab=monitoring
 	- stage: https://us-east-1.console.aws.amazon.com/lambda/home?region=us-east-1#/functions/oic-monocle-integrations-lambda-stage-us-east-1?subtab=url&tab=monitoring
@@ -36,6 +39,8 @@
 	- https://docs.oracle.com/en/cloud/saas/supply-chain-and-manufacturing/25d/oedsc/egoitemeffb-23612.html#Details
 
 - Oracle ERP (reports and "queries")
+	- dev1: https://fa-evdi-dev1-saasfaprod1.fa.ocs.oraclecloud.com/fscmUI/faces/AtkHomePageWelcome
+	- evdi-test: https://fa-evdi-test-saasfaprod1.fa.ocs.oraclecloud.com/fscmUI/faces/AtkHomePageWelcome
 	- https://fa-evdi-test-saasfaprod1.fa.ocs.oraclecloud.com/fscmUI/faces/AtkHomePageWelcome?_adf.ctrl-state=1a1g9ckgym_1&_adf.no-new-window-redirect=true&_afrLoop=18960188241766294&_afrWindowMode=2&_afrWindowId=null&_afrFS=16&_afrMT=screen&_afrMFW=1365&_afrMFH=968&_afrMFDW=1920&_afrMFDH=1080&_afrMFC=8&_afrMFCI=0&_afrMFM=0&_afrMFR=96&_afrMFG=0&_afrMFS=0&_afrMFO=0
 
 - OIC Prod changes
@@ -45,11 +50,11 @@
 	- ??? works: https://design.integration.us-phoenix-1.ocp.oraclecloud.com/?integrationInstance=oictest2-axhxufzsltne-px
 	- prod changes: https://docs.google.com/spreadsheets/d/1C4WTH_EPQ6BKwL22b8qnJT8NillpYmhv0gRhnX7c9ec/edit?usp=sharing&pli=1&authuser=0
 	- Dev  
-		- OIC: [https://oic-test-inst-axhxufzsltne-px.integration.ocp.oraclecloud.com/](https://oic-test-inst-axhxufzsltne-px.integration.ocp.oraclecloud.com/)  
+		- OIC: https://oic-test-inst-axhxufzsltne-px.integration.ocp.oraclecloud.com/ 
 		- Oracle ERP: [https://fa-evdi-dev1-saasfaprod1.fa.ocs.oraclecloud.com/fscmUI/faces/FuseWelcome?_adf.ctrl-state=165[…]M=0&_afrMFR=192&_afrMFG=0&_afrMFS=0&_afrMFO=0](https://fa-evdi-dev1-saasfaprod1.fa.ocs.oraclecloud.com/fscmUI/faces/FuseWelcome?_adf.ctrl-state=165x65j434_1&_adf.no-new-window-redirect=true&_afrLoop=72736312678623741&_afrWindowMode=2&_afrWindowId=null&_afrFS=16&_afrMT=screen&_afrMFW=1641&_afrMFH=943&_afrMFDW=1643&_afrMFDH=947&_afrMFC=10&_afrMFCI=0&_afrMFM=0&_afrMFR=192&_afrMFG=0&_afrMFS=0&_afrMFO=0)
 	- Stage  
 		- OIC: [https://oictest2-axhxufzsltne-px.integration.ocp.oraclecloud.com/](https://oictest2-axhxufzsltne-px.integration.ocp.oraclecloud.com/)  
-		- Oracle ERP: [https://fa-evdi-test-saasfaprod1.fa.ocs.oraclecloud.com/](https://fa-evdi-test-saasfaprod1.fa.ocs.oraclecloud.com/)
+		- Oracle ERP: https://fa-evdi-test-saasfaprod1.fa.ocs.oraclecloud.com/
 	- Prod 
 		- OIC: [http://oic-prod-axhxufzsltne-ia.integration.ocp.oraclecloud.com:443/](http://oic-prod-axhxufzsltne-ia.integration.ocp.oraclecloud.com:443/)  
 		- Oracle ERP: [https://fa-evdi-saasfaprod1.fa.ocs.oraclecloud.com/](https://fa-evdi-saasfaprod1.fa.ocs.oraclecloud.com/)

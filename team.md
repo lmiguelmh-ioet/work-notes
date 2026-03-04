@@ -120,6 +120,12 @@ fields @timestamp, @message, @logStream, @log
 	- ![](assets/Pasted%20image%2020260227090258.png)
 	- 
 
+## TIckets for oncall
+- From Monday to Sunday
+	- ALL should be closed
+- Next monday close the ones from weekend
+- You might need more time, so ask Emilio
+
 ## Scrum meet
 - scrum moderator is announced on Monday:
 	- ![](assets/Pasted%20image%2020260120110646.png)
