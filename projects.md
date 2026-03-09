@@ -1,3 +1,10 @@
+## IN-I-2054 - update PO ASNs outbound
+- https://warbyparker.atlassian.net/browse/OTCM-105519
+- filter by datetime / shipment numbers
+- [day-20260305](day/day-20260305.md)
+
+
+---
 ## CM-I-3004 - payout bank statement import
 
 - additional info about cash reconciliation report from Providers (Stripe, Paypal, Affirm)
@@ -20,7 +27,7 @@ curl --verbose -X POST https://sjlqdgbb5mesmduz4pw5oj6fsa0ykkxk.lambda-url.us-ea
 ---
 
 ## SNS Adapter
-- 
+- done
 
 
 
