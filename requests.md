@@ -31,11 +31,62 @@ curl --verbose --location 'https://fa-evdi-dev1-saasfaprod1.fa.ocs.oraclecloud.c
     "ReturnStatus" : "S"
   }
 }
+
+# send OK ShipmentLine x10
+curl --verbose --location 'https://fa-evdi-dev1-saasfaprod1.fa.ocs.oraclecloud.com:443/fscmRestApi/resources/11.13.18.05/shipmentLineChangeRequests/action/pickRelease' --header 'Content-Type: application/vnd.oracle.adf.action+json' --header "Authorization: Basic $ERP_BASIC_AUTH" --data '{"details": [{"EntityType": "Line", "ShipmentLine" : 3826160}, {"EntityType": "Line", "ShipmentLine" : 3826160}, {"EntityType": "Line", "ShipmentLine" : 3826160}, {"EntityType": "Line", "ShipmentLine" : 3826160}, {"EntityType": "Line", "ShipmentLine" : 3826160}, {"EntityType": "Line", "ShipmentLine" : 3826160}, {"EntityType": "Line", "ShipmentLine" : 3826160}, {"EntityType": "Line", "ShipmentLine" : 3826160}, {"EntityType": "Line", "ShipmentLine" : 3826160}, {"EntityType": "Line", "ShipmentLine" : 3826160}]}'
+
+< HTTP/2 200 
+# NOTE: only 1 response
+{
+  "result" : {
+    "Message" : "Concurrent requests submitted: 1. Concurrent requests failed: 0. Pick release request ID 105162523 was created for the selected lines.",
+    "ReturnStatus" : "S"
+  }
+* Connection #0 to host fa-evdi-dev1-saasfaprod1.fa.ocs.oraclecloud.com:443 left intact
+}
+
+
+# send ok ShipmentLine and err ShipmentLine
+curl --verbose --location 'https://fa-evdi-dev1-saasfaprod1.fa.ocs.oraclecloud.com:443/fscmRestApi/resources/11.13.18.05/shipmentLineChangeRequests/action/pickRelease' --header 'Content-Type: application/vnd.oracle.adf.action+json' --header "Authorization: Basic $ERP_BASIC_AUTH" --data '{"details": [{"EntityType": "Line", "ShipmentLine" : 3826160}, {"EntityType": "Line", "ShipmentLine" : 3826161}]}'
+
+< HTTP/2 200 
+# NOTE: "S" response even if one failed
+{
+  "result" : {
+    "Message" : "Concurrent requests submitted: 1. Concurrent requests failed: 0. Pick release request ID 105162527 was created for the selected lines. You cannot perform the action PICK-RELEASE on shipment line 3826160 with item 1124322. Shipment 1371003 is not eligible for the action code PICK-RELEASE.",
+    "ReturnStatus" : "S"
+  }
+* Connection #0 to host fa-evdi-dev1-saasfaprod1.fa.ocs.oraclecloud.com:443 left intact
+}
+
+
+# send 2 err ShipmentLine
+curl --verbose --location 'https://fa-evdi-dev1-saasfaprod1.fa.ocs.oraclecloud.com:443/fscmRestApi/resources/11.13.18.05/shipmentLineChangeRequests/action/pickRelease' --header 'Content-Type: application/vnd.oracle.adf.action+json' --header "Authorization: Basic $ERP_BASIC_AUTH" --data '{"details": [{"EntityType": "Line", "ShipmentLine" : 3824163}, {"EntityType": "Line", "ShipmentLine" : 3824162}, {"EntityType": "Line", "ShipmentLine" : 3824163}, {"EntityType": "Line", "ShipmentLine" : 3824162}, {"EntityType": "Line", "ShipmentLine" : 3824163}, {"EntityType": "Line", "ShipmentLine" : 3824162}, {"EntityType": "Line", "ShipmentLine" : 3824163}, {"EntityType": "Line", "ShipmentLine" : 3824162}, {"EntityType": "Line", "ShipmentLine" : 3824163}, {"EntityType": "Line", "ShipmentLine" : 3824162}, {"EntityType": "Line", "ShipmentLine" : 3822161}]}'
+
+< HTTP/2 200 
+# NOTE: only 5 responses! (send 10 requests (duplicated))
+{
+  "result" : {
+    "Message" : "You cannot perform this action on all selected records. You cannot perform the action PICK-RELEASE on shipment line 3822161 with item 19000091. Shipment 1368003 is not eligible for the action code PICK-RELEASE. You cannot perform the action PICK-RELEASE on shipment line 3824162 with item 19000094. Shipment 1369003 is not eligible for the action code PICK-RELEASE. You cannot perform the action PICK-RELEASE on shipment line 3824163 with item 19000099. Shipment 1370003 is not eligible for the action code PICK-RELEASE. You cannot perform the action PICK-RELEASE on shipment line 3824162 with item 19000094. Shipment 1369003 is not eligible for the action code PICK-RELEASE. You cannot perform the action PICK-RELEASE on shipment line 3824163 with item 19000099.",
+    "ReturnStatus" : "E"
+  }
+}
+
+# send 2 ok ShipmentLine
+curl --verbose --location 'https://fa-evdi-dev1-saasfaprod1.fa.ocs.oraclecloud.com:443/fscmRestApi/resources/11.13.18.05/shipmentLineChangeRequests/action/pickRelease' --header 'Content-Type: application/vnd.oracle.adf.action+json' --header "Authorization: Basic $ERP_BASIC_AUTH" --data '{"details": [{"EntityType": "Line", "ShipmentLine" : 3826162}, {"EntityType": "Line", "ShipmentLine" : 3826163}]}'
+
+{
+  "result" : {
+    "Message" : "Concurrent requests submitted: 1. Concurrent requests failed: 0. Pick release request ID 105162539 was created for the selected lines.",
+    "ReturnStatus" : "S"
+  }
+}
+
 ```
 
 - get ShipmentLine from TransferOrder
 ```
-curl --header "Authorization: Basic $ERP_BASIC_AUTH" --location 'https://fa-evdi-dev1-saasfaprod1.fa.ocs.oraclecloud.com/fscmRestApi/resources/11.13.18.05/shipmentLines?q=OrderTypeCode=TRANSFER_ORDER;Order=1050844' --header 'Content-Type: application/json' --compressed | jq -r '.items[] | [.ShipmentLine, .OrderTypeCode, .Order] | @csv'
+curl --header "Authorization: Basic $ERP_BASIC_AUTH" --location 'https://fa-evdi-dev1-saasfaprod1.fa.ocs.oraclecloud.com/fscmRestApi/resources/11.13.18.05/shipmentLines?q=OrderTypeCode=TRANSFER_ORDER;Order=1052842' --header 'Content-Type: application/json' --compressed | jq -r '.items[] | [.ShipmentLine, .OrderTypeCode, .Order] | @csv'
 
 curl --header "Authorization: Basic $ERP_BASIC_AUTH" --location 'https://fa-evdi-dev1-saasfaprod1.fa.ocs.oraclecloud.com/fscmRestApi/resources/11.13.18.05/shipmentLines?q=OrderTypeCode=TRANSFER_ORDER;Order=1050844&onlyData=true&limit=500&totalResults=true' --header 'Content-Type: application/json' --compressed
 
