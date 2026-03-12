@@ -116,6 +116,8 @@ fields @timestamp, @message, @logStream, @log
 		- but the lambda can point to Oracle `dev1` or `stage`
 			- `monocle_integrations/_config/stage.yml:3`
 	- see branch: `[OTCM-104451] Point to dev1`
+- You can also configure the connection
+	- ![](assets/Pasted%20image%2020260312131707.png)
 	- ![](assets/Pasted%20image%2020260227090031.png)
 	- ![](assets/Pasted%20image%2020260227090258.png)
 	- 
