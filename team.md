@@ -43,13 +43,13 @@ YES: use dependencies
 	- https://github.com/WarbyParker/monocle_integrations/pull/1600/changes
 ### PRs reviewed by me (-1) others reviewing mine (+1)
 - MARCOS: 
-	- 2026/02/11: +2 PRs
-	- 2026/02/12: -1 PR
+	- 2026/03/11: +1 PR
 	- 2026/02/12: +1 PR
-- MIGUEL:
-	- 2026/02/11: -1 PR
-	- 2026/02/12: -1 PR
-- 
+	- 2026/02/11: +2 PRs
+- ARIEL:
+	- 2026/02/?: +2 PRs
+- GABRIEL:
+	- 2026/02/?: +2 PRs
 
 ## Note system: why
 [team.note-system](team.note-system.md)

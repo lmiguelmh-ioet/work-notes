@@ -1,12 +1,28 @@
-## IN-I-2054 - update PO ASNs outbound
-- https://warbyparker.atlassian.net/browse/OTCM-105519
-- filter by datetime / shipment numbers
-- [day-20260305](day/day-20260305.md)
+## WMS-I-1005 - pick release line shipment
+- tickets:
+	- pickrelease adapter: https://warbyparker.atlassian.net/browse/OTCM-105690
+	- update integration logic: https://warbyparker.atlassian.net/browse/OTCM-105694
+- docs:
+	- FSD: https://drive.google.com/file/d/1mbxE4J-vFY6PqVlBJw8J0eqashthZ4FH/
+	- API: https://docs.oracle.com/en/cloud/saas/supply-chain-and-manufacturing/25d/fasrp/api-inventory-management-shipment-line-change-requests.html
 
+
+---
+## IN-I-2054 - update PO ASNs outbound
+- tickets:
+	- report+integration: https://warbyparker.atlassian.net/browse/OTCM-105519
+- days:
+	- [day-20260305](day/day-20260305.md)
 
 ---
 ## CM-I-3004 - payout bank statement import
 
+- tickets:
+	- S3 event listener: https://warbyparker.atlassian.net/browse/OTCM-104196
+	- integration (upload zip): https://warbyparker.atlassian.net/browse/OTCM-104332
+	- bank statement callback: https://warbyparker.atlassian.net/browse/OTCM-105215
+- docs:
+	- FSD: https://docs.google.com/document/d/1RWzYl3VdoZdHLroiwXv3aiXXo4kWqZ9l
 - additional info about cash reconciliation report from Providers (Stripe, Paypal, Affirm)
 	- [projects.cash-reconciliation](projects.cash-reconciliation.md)
 - OIC: WP Bank Statements Callback Integration
@@ -19,16 +35,21 @@ curl --verbose -X POST https://sjlqdgbb5mesmduz4pw5oj6fsa0ykkxk.lambda-url.us-ea
 ---
 
 ## IN-I-2060 - OMA file dispatcher
-- ?
+- ticket:
+	- s3 event listener: https://warbyparker.atlassian.net/browse/OTCM-100904
+	- integration (transmit .oma to LMS ftp/queue): https://warbyparker.atlassian.net/browse/OTCM-100905
+- docs:
+	- FSD: 
 - PRs:
 	- Integration test: https://github.com/WarbyParker/monocle_integrations/pull/1641
-
 
 ---
 
 ## SNS Adapter
-- done
-
+- ticket:
+	- https://warbyparker.atlassian.net/browse/OTCM-102781
+- docs:
+	- architecture: https://warbyparker.atlassian.net/wiki/spaces/Argon/pages/9663217730/Tech+Plan+OMG+-+Order+Fulfillment#Proposed-Architecture
 
 
 ---

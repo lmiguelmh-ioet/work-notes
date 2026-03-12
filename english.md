@@ -393,3 +393,52 @@ What is the funniest word you know in English?
 	- Had this happened, Luis would have visit Leonardo.
 	- Had this happened, Luis would have known Leonardo's family.
 
+# Class 9
+
+- What is your favorite and least favorite thing to shop for?
+	- I love to shop 
+	- I hate to shop groceries shopping
+- store service
+- "tipti"
+
+- radio show: 
+- ![](assets/Pasted%20image%2020260311132730.png)
+- 1T 2T 3F 4F
+- problem makes end's need
+- earn good living
+- can't catch up
+- not enough for "savings"
+- he is drowing on debt
+- 10 - 12 (twelve) credit card
+
+- put something away for rainy day
+- put your loose change on a jar each evening
+- put that change you saved on the bank once a month
+- use only 2 credit cards there are enough take all the other cards and take them off
+- live within your means (expend less than you make)
+- plan a budget 
+- make a list of regular expenses (keep track of everything!) for 3 months
+- treat yourself to something nice some time
+
+![](assets/Pasted%20image%2020260311134232.png)
+
+- thrifty / frugal -> nice people who doesn't have a lot of money but are careful on how to spend their money
+![](assets/Pasted%20image%2020260311135333.png)
+
+- a cheapskate
+- generous
+- stingy
+- a big spender
+- thrifty
+- a spendthrift
+
+![](assets/Pasted%20image%2020260311141133.png)
+![](assets/Pasted%20image%2020260311141148.png)
+- D: look up into youtube or other free service
+- C: (this is not necessary)
+- C:  or A if close friends, they will do the same in the future
+- D: spend on a gift that is the expected range of price
+- B: 
+![](assets/Pasted%20image%2020260311141752.png)
+
+
