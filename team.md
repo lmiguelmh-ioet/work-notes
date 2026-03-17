@@ -48,8 +48,14 @@ YES: use dependencies
 	- 2026/02/11: +2 PRs
 - ARIEL:
 	- 2026/02/?: +2 PRs
+	- uses Github comments
 - GABRIEL:
 	- 2026/02/?: +2 PRs
+	- 2026/03/16: +1 PR
+- JOHNNY:
+	- 2026/03/16: +1 PR
+	- uses Github comments
+
 
 ## Note system: why
 [team.note-system](team.note-system.md)
@@ -96,7 +102,10 @@ fields @timestamp, @message, @logStream, @log
 ```
 
 ## JIRA
-- https://warbyparker.atlassian.net/issues/?jql=textfields%20~%20%22MFG-I-3021%22
+- all tickets reported by Ariel (errors)
+	- https://warbyparker.atlassian.net/issues?jql=textfields%20~%20%22WMS-I-3021%22%20AND%20reporter%20%3D%20633e0a9afedc6169aed9dc30
+- all tickets
+	- https://warbyparker.atlassian.net/issues/?jql=textfields%20~%20%22MFG-I-3021%22
 	- ![](assets/Pasted%20image%2020260120145024.png)
 
 - Astrid open tickets:

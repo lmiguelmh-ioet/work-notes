@@ -1,10 +1,14 @@
-- get shipment line from transfer order
+- Get WO material issue successfully executed:
+	- ![](assets/Pasted%20image%2020260317150152.png)
+- Get shipment line from transfer order
 	- Transfer Orders can be created by Kaio
+	- Supply Chain Execution > Inventory Management (Classic) > Manage Transfer Orders
 	- same can be obtained for each line in UI
 	- ![](assets/Pasted%20image%2020260306153218.png)
 	- View Shipment and Receipts
 	- ![](assets/Pasted%20image%2020260306153336.png)
 	- ![](assets/Pasted%20image%2020260306153405.png)
+	 
 ```
 curl --verbose --location 'https://fa-evdi-dev1-saasfaprod1.fa.ocs.oraclecloud.com:443/fscmRestApi/resources/11.13.18.05/shipmentLineChangeRequests/action/pickRelease' --header 'Content-Type: application/vnd.oracle.adf.action+json' --header "Authorization: Basic $ERP_BASIC_AUTH" --data '{"details": [{"EntityType": "Line", "ShipmentLine" : 3824163}]}'
 

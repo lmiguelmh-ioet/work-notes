@@ -1,3 +1,11 @@
+## CM-I-3007 - Event Listener and External Transaction Processing
+- tickets:
+	- https://warbyparker.atlassian.net/browse/OTCM-106697
+
+## Update S3 paths for cash/insurance reconciliation
+- tickets:
+	- https://warbyparker.atlassian.net/browse/OTCM-106693
+
 ## WMS-I-1005 - pick release line shipment
 - tickets:
 	- pickrelease adapter: https://warbyparker.atlassian.net/browse/OTCM-105690
@@ -5,6 +13,12 @@
 - docs:
 	- FSD: https://drive.google.com/file/d/1mbxE4J-vFY6PqVlBJw8J0eqashthZ4FH/
 	- API: https://docs.oracle.com/en/cloud/saas/supply-chain-and-manufacturing/25d/fasrp/api-inventory-management-shipment-line-change-requests.html
+- oracle erp:
+	- oracle get shipment lines from transfer order: see [requests](requests.md)
+- s3 files:
+	- stage: https://us-east-1.console.aws.amazon.com/s3/buckets/transfer-stage-data?prefix=vendors%2FManhattan%2FWMS-I-1005%2F&region=us-east-1
+- logs:
+	- `https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#logsV2:logs-insights$3FqueryDetail$3D~(end~0~start~-3600~timeType~'RELATIVE~tz~'LOCAL~unit~'seconds~editorString~'fields*20*40timestamp*2c*20*40message*2c*20*40logStream*2c*20*40log*0a*7c*20filter*20*40message*20like*20*2fWMS-I-1005*2f*0a*7c*20sort*20*40timestamp*20desc*0a*7c*20limit*201000~queryId~'adfba303-53c5-4036-95e6-792ef8f02d02~source~(~'*2faws*2flambda*2foic-monocle-integrations-lambda-stage-us-east-1)~lang~'CWLI~logClass~'STANDARD~queryBy~'logGroupName)`
 
 
 ---
@@ -72,7 +86,9 @@ curl --verbose -X POST https://sjlqdgbb5mesmduz4pw5oj6fsa0ykkxk.lambda-url.us-ea
 - original tickets: 
 	- https://warbyparker.atlassian.net/issues?jql=textfields%20~%20%22MFG-I-3021%22%20AND%20reporter%20!%3D%20633e0a9afedc6169aed9dc30
 	- https://github.com/WarbyParker/monocle_integrations/pull/1600
-
+- screens
+	- shared by Josué indicating that MFG-I-3021 finished successfully
+	- ![](assets/Pasted%20image%2020260317150152.png)
 
 ## S3-driven flows
 
