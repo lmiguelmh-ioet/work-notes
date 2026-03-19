@@ -441,4 +441,16 @@ What is the funniest word you know in English?
 - B: 
 ![](assets/Pasted%20image%2020260311141752.png)
 
+# Class 10: Charity
+![](assets/Pasted%20image%2020260318131643.png)
+- fundraising to help others
+![](assets/Pasted%20image%2020260318132738.png)
+- contribute to my family
+- invest in time and work
+![](assets/Pasted%20image%2020260318133347.png)
+- "salad dressing bottle"
+- "sincere and genuine"
+![](assets/Pasted%20image%2020260318140200.png)
+- 
+
 
