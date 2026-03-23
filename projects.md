@@ -1,7 +1,17 @@
+## WMS-I-1020 – Add Source Type Support and SNS Grouping for Wave Release
+
+- tickets:
+	- main: https://warbyparker.atlassian.net/browse/OTCM-107351
+	- SF parent: https://warbyparker.atlassian.net/browse/WMS-984
+	- OMG parent: https://warbyparker.atlassian.net/browse/OMG-240
+	- SF global parent: https://warbyparker.atlassian.net/browse/WMS-964
+	- OMG global parent: https://warbyparker.atlassian.net/browse/OMG-232
+
 ## CM-I-3007 - Event Listener and External Transaction Processing
 - tickets:
 	- https://warbyparker.atlassian.net/browse/OTCM-106697
-
+- s3 files:
+	- https://us-east-1.console.aws.amazon.com/s3/buckets/transfer-stage-data?prefix=vendors%2FManhattan%2FWMS-I-1020%2F&region=us-east-1
 ## Update S3 paths for cash/insurance reconciliation
 - tickets:
 	- https://warbyparker.atlassian.net/browse/OTCM-106693
