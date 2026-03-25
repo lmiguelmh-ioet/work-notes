@@ -6,12 +6,13 @@
 	- OMG parent: https://warbyparker.atlassian.net/browse/OMG-240
 	- SF global parent: https://warbyparker.atlassian.net/browse/WMS-964
 	- OMG global parent: https://warbyparker.atlassian.net/browse/OMG-232
+- s3 files:
+	- stage: https://us-east-1.console.aws.amazon.com/s3/buckets/transfer-stage-data?prefix=vendors%2FManhattan%2FWMS-I-1020%2F&region=us-east-1
 
 ## CM-I-3007 - Event Listener and External Transaction Processing
 - tickets:
 	- https://warbyparker.atlassian.net/browse/OTCM-106697
-- s3 files:
-	- https://us-east-1.console.aws.amazon.com/s3/buckets/transfer-stage-data?prefix=vendors%2FManhattan%2FWMS-I-1020%2F&region=us-east-1
+
 ## Update S3 paths for cash/insurance reconciliation
 - tickets:
 	- https://warbyparker.atlassian.net/browse/OTCM-106693
@@ -45,6 +46,10 @@
 	- S3 event listener: https://warbyparker.atlassian.net/browse/OTCM-104196
 	- integration (upload zip): https://warbyparker.atlassian.net/browse/OTCM-104332
 	- bank statement callback: https://warbyparker.atlassian.net/browse/OTCM-105215
+- s3:
+	- stage: https://us-east-1.console.aws.amazon.com/s3/buckets/transfer-stage-data?region=us-east-1&prefix=vendors%2Fcash_reconciliation%2FCM-I-3004%2F&tab=objects
+- classes:
+	- WpCmI3004PayoutBankStatementFilesListener
 - docs:
 	- FSD: https://docs.google.com/document/d/1RWzYl3VdoZdHLroiwXv3aiXXo4kWqZ9l
 - additional info about cash reconciliation report from Providers (Stripe, Paypal, Affirm)

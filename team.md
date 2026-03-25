@@ -94,6 +94,7 @@ description = "My description"  # ✅ OK to edit directly
 - https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#logsV2:logs-insights
 ```
 /aws/lambda/oic-monocle-integrations-lambda-stage-us-east-1
+/aws/lambda/oic-monocle-integrations-events_handler_lambda-stage-us-east-1
 ---
 fields @timestamp, @message, @logStream, @log
 | filter @message like /MFG-I-3021/
