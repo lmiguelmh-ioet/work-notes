@@ -1,9 +1,14 @@
+## WMS-I-1006 – Add Source Type Support and SNS Grouping (Ship)
+
+- tickets:
+	- https://warbyparker.atlassian.net/browse/OTCM-107354
+- s3:
+	- https://us-east-1.console.aws.amazon.com/s3/buckets/transfer-stage-data?prefix=vendors%2FManhattan%2FWMS-I-1006%2F&region=us-east-1
+
 ## WMS-I-1020 – Add Source Type Support and SNS Grouping for Wave Release
 
 - tickets:
 	- main: https://warbyparker.atlassian.net/browse/OTCM-107351
-	- SF parent: https://warbyparker.atlassian.net/browse/WMS-984
-	- OMG parent: https://warbyparker.atlassian.net/browse/OMG-240
 	- SF global parent: https://warbyparker.atlassian.net/browse/WMS-964
 	- OMG global parent: https://warbyparker.atlassian.net/browse/OMG-232
 - s3 files:
@@ -16,6 +21,8 @@
 ## Update S3 paths for cash/insurance reconciliation
 - tickets:
 	- https://warbyparker.atlassian.net/browse/OTCM-106693
+- s3 files:
+	- https://us-east-1.console.aws.amazon.com/s3/buckets/transfer-stage-data?prefix=vendors%2Fcash_reconciliation%2FCM-I-3004%2F&region=us-east-1
 
 ## WMS-I-1005 - pick release line shipment
 - tickets:
@@ -48,6 +55,32 @@
 	- bank statement callback: https://warbyparker.atlassian.net/browse/OTCM-105215
 - s3:
 	- stage: https://us-east-1.console.aws.amazon.com/s3/buckets/transfer-stage-data?region=us-east-1&prefix=vendors%2Fcash_reconciliation%2FCM-I-3004%2F&tab=objects
+- QA steps:
+	- Live tail the Cloudwatch logs:
+		- /aws/lambda/oic-monocle-integrations-events_handler_lambda-stage-us-east-1
+		- /aws/lambda/oic-monocle-integrations-lambda-stage-us-east-1
+	- Open OIC instances monitoring for WP Bank Statements Callback Integration:
+		- https://design.integration.us-phoenix-1.ocp.oraclecloud.com/?root=monitoringTracking&oj_Router=1N4IgTg9hAuIFzAL6KA&integrationInstance=oictest2-axhxufzsltne-px
+	- Then, upload CA-stripe-2026-03-15.zip to https://us-east-1.console.aws.amazon.com/s3/buckets/transfer-stage-data?region=us-east-1&prefix=vendors/cash_reconciliation/CM-I-3004/In/
+	- See logs on events_handler_lambda
+		- ![](assets/Pasted%20image%2020260325114609.png)
+	- Open OIC to see the instance being run.
+		- ![](assets/Pasted%20image%2020260325114257.png)
+	- See logs on lambda
+		- ![](assets/Pasted%20image%2020260325114442.png)
+```
+/aws/lambda/oic-monocle-integrations-events_handler_lambda-stage-us-east-1
+fields @timestamp, @message, @logStream, @log
+| filter @message like /CM-I-3004/
+| sort @timestamp desc
+| limit 1000
+
+/aws/lambda/oic-monocle-integrations-lambda-stage-us-east-1
+fields @timestamp, @message, @logStream, @log
+| filter @message like /callback/
+| sort @timestamp desc
+| limit 1000
+```
 - classes:
 	- WpCmI3004PayoutBankStatementFilesListener
 - docs:

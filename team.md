@@ -145,13 +145,15 @@ fields @timestamp, @message, @logStream, @log
 - Structure
 	- Team Updates
 		- https://warbyparker.atlassian.net/jira/software/c/projects/OTCM/boards/771
-		- (1) Rocio and (2) Fabiola and (3) Kio no están en el board de Jira
+		- "Good morning <>, any updates?"
+		- "Let's continue with <>."
+		- "Hello, <> do you have any updates regarding your ticket?"
+		- "Hello, <> do you have any updates?"
+		- "Hello, <> any updates you want to share?"
+		- Gabriel, Rocio, Fabiola are not in the board
 			- ![](assets/Pasted%20image%2020260220104144.png)
 			- Select Group None (to confirm)
-		- (4) Astrid and (5) Emilio
-		- "Hello, ??? do you have any updates regarding your ticket?"
-		- "Hello, ??? do you have any updates?"
-		- "Hello, ??? any updates you want to share?"
+		- Astrid and Emilio
 		- "That's everyone."
 	- Announcement section
 		- "Let's move to the announcements sections?"
