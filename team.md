@@ -18,7 +18,10 @@
 		- https://github.com/WarbyParker/infra-terraform/pull/8657
 		- ![](assets/Pasted%20image%2020260326164550.png)
 	- then wait for approval for dan
-		- 
+- after approval move a tag 
+	- 
+- and approve in Circle CI
+	- ![](assets/Pasted%20image%2020260327090657.png)
 
 ## TESTs
 - prefer `mocker.patch.object` over `patch.object`
