@@ -1,3 +1,6 @@
+- Scale WMS
+	- https://wpkrstg.manhscale.com/scale/trans/dashboard
+
 - books from oreilly:
 	- https://www.oreilly.com/ 
 

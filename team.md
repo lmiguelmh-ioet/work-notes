@@ -1,13 +1,26 @@
-
-## Dev Lead talks / Team 
-- Do not write a lot of comments
-	- when code reviewing people read comments, and that can be missleading
-- SOLID
-	- single responsability
-- "por cada cosa que puedas separar es bueno tener un PR, mientras mas puedas atomizar se hace mas facil, el review, el trabajar en paralelo, el estar continuamente enviando cambios"
+### Warby Parker
+- HELIOS - old monolito de WP
+	- SPRINGFIELD o HELIOS
 
 
-### TESTs
+### MOVING TO PROD / GOING LIVE
+- checklist (from Miguel)
+	- involucra algún reporte en oracle?
+	- involucra integracion en OIC? 
+	- ya estan todos los cambios de la integracion en main?
+- if code freeze: request code freeze release
+	- post a simple message in `#sre`
+		- ![](assets/Pasted%20image%2020260326164236.png)
+	- or a more elaborate one
+		- ![](assets/Pasted%20image%2020260326164342.png)
+		- https://warbyparker.atlassian.net/wiki/spaces/RA/pages/9944268802/RB-921+Code+Freeze+Release+3+-+RC5+to+main
+	- generate a PR enabling the deployment of repos
+		- https://github.com/WarbyParker/infra-terraform/pull/8657
+		- ![](assets/Pasted%20image%2020260326164550.png)
+	- then wait for approval for dan
+		- 
+
+## TESTs
 - prefer `mocker.patch.object` over `patch.object`
 ```
 from pytest_mocker import MockerFixture (DO NOT USE MockFIxture deprecated name)
@@ -41,7 +54,7 @@ YES: use dependencies
 	- https://github.com/WarbyParker/monocle_integrations/pull/1670/changes
 - E2E test (material transactions)
 	- https://github.com/WarbyParker/monocle_integrations/pull/1600/changes
-### PRs reviewed by me (-1) others reviewing mine (+1)
+## PRs reviewed by me (-1) others reviewing mine (+1)
 - MARCOS: 
 	- 2026/03/11: +1 PR
 	- 2026/02/12: +1 PR
@@ -765,7 +778,11 @@ This person handles stressful or challenging situations with professionalism and
 5 - A stabilizing force for the team in high-pressure situations
 ```
 
-## Warby Parker
-- HELIOS - old monolito de WP
-	- SPRINGFIELD o HELIOS
-- 
+
+## Dev Lead talks / Team 
+- Do not write a lot of comments
+	- when code reviewing people read comments, and that can be missleading
+- SOLID
+	- single responsability
+- "por cada cosa que puedas separar es bueno tener un PR, mientras mas puedas atomizar se hace mas facil, el review, el trabajar en paralelo, el estar continuamente enviando cambios"
+

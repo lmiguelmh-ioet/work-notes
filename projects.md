@@ -104,6 +104,8 @@ curl --verbose -X POST https://sjlqdgbb5mesmduz4pw5oj6fsa0ykkxk.lambda-url.us-ea
 	- FSD: 
 - PRs:
 	- Integration test: https://github.com/WarbyParker/monocle_integrations/pull/1641
+- classes:
+	- WpInI2060OMAFileDispatcher
 
 ---
 
