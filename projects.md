@@ -1,3 +1,9 @@
+## AR-I-3019 – Create SOAP Adapter for Credit Memo Refund Transaction Creation
+
+- tickets:
+	- https://warbyparker.atlassian.net/browse/OTCM-108230
+- 
+
 ## WMS-I-1006 – Add Source Type Support and SNS Grouping (Ship)
 
 - tickets:
