@@ -1,7 +1,7 @@
 ### Warby Parker
 - HELIOS - old monolito de WP
 	- SPRINGFIELD o HELIOS
-
+![](assets/Pasted%20image%2020260331070551.png)
 
 ### MOVING TO PROD / GOING LIVE
 - checklist (from Miguel)
@@ -788,4 +788,7 @@ This person handles stressful or challenging situations with professionalism and
 - SOLID
 	- single responsability
 - "por cada cosa que puedas separar es bueno tener un PR, mientras mas puedas atomizar se hace mas facil, el review, el trabajar en paralelo, el estar continuamente enviando cambios"
-
+- do not test private methods
+	- para qué probar métodos privados?
+- do not add inheritance of classes
+	- añade ifs isntanceof, factories, fixtures, etc.
