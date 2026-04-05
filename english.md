@@ -451,6 +451,82 @@ What is the funniest word you know in English?
 - "salad dressing bottle"
 - "sincere and genuine"
 ![](assets/Pasted%20image%2020260318140200.png)
-- 
+
+# Class 11
+
+- ![](assets/Pasted%20image%2020260401131808.png)
+- I expect to pay in full my debt with the bank. It is a mortgage.
+- ![](assets/Pasted%20image%2020260401132416.png)
+	- In 2026 my main financial goal is to pay my mortgage. These are the steps I am going to take
+	- First, I plan to tidy up my old apartment by the end of this month.
+	- Then, I expect to hire (contract) an agent so he/she can put my old apartment for sale.
+	- After that, once it's sold (having sold it), I **intend** to pay my debt in full.
+	- Finally, by the end of this year, I will be **debt-free** (hopefully)!
+- ![](assets/Pasted%20image%2020260401132834.png)
+- word tennis
+	- bank
+	- money
+	- credit card
+	- investment
+	- budget
+	- savings account
+	- salary
+	- credit
+	- lender
+	- mortgage
+	- credit score
+	- income
+	- wallet
+	- loan
+	- crypto
+	- currency
+	- expensive
+	- funds
+	- cents
+	- debt
+	- profit
+	- write transfer
+	- capital
+	- dollar
+	- loss
+	- broker
+	- bankroll
+	- stocks
+	- cash
+	- interest
+	- bills
+	- budget
+	- payroll
+	- ROI
+	- trading
+	- revenue
+	- divident
+	- assets
+	- markets
+	- payments
+	- accounting
+	- transaction
+	- accountant
+	- balance
+	- margin
+	- purchase orders***
+	- demand
+	- business
+	- cost
+	- equity
+	- analyst
+	- principal
+- ![](assets/Pasted%20image%2020260401141330.png)
+	- 1 - g
+	- 2 - d
+	- 3 - i
+	- 4 - b
+	- 5 - j
+	- 6 - a
+	- 7 - f
+	- 8 - h
+	- 9 - e
+	- 10 - c
+	- hustle -> ajetreo (schemer business - dishonest)
 
 
