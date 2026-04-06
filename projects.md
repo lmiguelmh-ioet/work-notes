@@ -2,7 +2,12 @@
 
 - tickets:
 	- https://warbyparker.atlassian.net/browse/OTCM-108230
-- 
+- oracle soap api:
+	- https://fa-evdi-dev1-saasfaprod1.fa.ocs.oraclecloud.com/fscmService/CreditMemoService?WSDL
+- docs:
+	- https://docs.oracle.com/en/cloud/saas/financials/25d/oeswf/receivablescreditmemo-d16509e18469.html#createOnAccountCreditMemoRefund
+- test data:
+	- Use this query: https://warbyparker.atlassian.net/browse/OTCM-108251
 
 ## WMS-I-1006 – Add Source Type Support and SNS Grouping (Ship)
 
@@ -19,6 +24,8 @@
 	- OMG global parent: https://warbyparker.atlassian.net/browse/OMG-232
 - s3 files:
 	- stage: https://us-east-1.console.aws.amazon.com/s3/buckets/transfer-stage-data?prefix=vendors%2FManhattan%2FWMS-I-1020%2F&region=us-east-1
+
+## 
 
 ## CM-I-3007 - Event Listener and External Transaction Processing
 - tickets:
