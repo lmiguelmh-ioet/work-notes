@@ -530,3 +530,6 @@ What is the funniest word you know in English?
 	- hustle -> ajetreo (schemer business - dishonest)
 
 
+# Class 12
+
+

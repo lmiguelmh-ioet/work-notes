@@ -792,3 +792,10 @@ This person handles stressful or challenging situations with professionalism and
 	- para qué probar métodos privados?
 - do not add inheritance of classes
 	- añade ifs isntanceof, factories, fixtures, etc.
+- for a new adapter:
+	- PR for the port (only the classes)
+		- this is the definition that is adjusted to the business (the adapter e.g. for Oracle might use its own formats)
+		- this is business related
+	- PR for the mock
+	- PR for the adapter (the implementation in Oracle)
+		- el adaptador es externo, esta fuera del dominio
