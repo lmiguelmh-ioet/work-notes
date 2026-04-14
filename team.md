@@ -799,3 +799,7 @@ This person handles stressful or challenging situations with professionalism and
 	- PR for the mock
 	- PR for the adapter (the implementation in Oracle)
 		- el adaptador es externo, esta fuera del dominio
+- names about:
+	- tratemos de no utilizar los terminos SNS o SQS en el step por favor, eso esta mas relacionado a temas de comunicacion externa, a nivel de la integracion/dominio lo que se busca es notificar/sincronizar la order(o entidad que esten trabajando en su flujo)
+	- 
+- 
