@@ -530,6 +530,42 @@ What is the funniest word you know in English?
 	- hustle -> ajetreo (schemer business - dishonest)
 
 
-# Class 12
+# Class 12 - MYSELF
+
+
+# Class 13 - Cryptocurrency
+
+- ![](assets/Pasted%20image%2020260415131416.png)
+- ![](assets/Pasted%20image%2020260415131815.png)
+- hustle -> similar to scam, a scheme business to make money quickly
+- ![](assets/Pasted%20image%2020260415133557.png)
+	- 1.C
+	- 2.B
+	- 3.A
+	- 4.D
+	- 5.D
+- ![](assets/Pasted%20image%2020260415134954.png)
+	- hustle
+	- hack
+	- volatile
+	- widespread/mainstream
+	- accessible
+- ![](assets/Pasted%20image%2020260415135713.png)
+- ![](assets/Pasted%20image%2020260415135655.png)
+	- verification
+	- 2 accessibility / democracy*
+	- 3 decentralized
+	- 4 ecosystem
+	- 5 cryptographic
+## Subordinating conjunction
+- *After* ...
+- ![](assets/Pasted%20image%2020260415141301.png)
+- ![](assets/Pasted%20image%2020260415141634.png)
+	- 1. because
+	- 2. before
+	- 3. Since
+	- 4. after
+	- 5. unless
+	- 6. when
 
 

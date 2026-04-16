@@ -15,6 +15,11 @@
 	- https://warbyparker.atlassian.net/browse/OTCM-107354
 - s3:
 	- https://us-east-1.console.aws.amazon.com/s3/buckets/transfer-stage-data?prefix=vendors%2FManhattan%2FWMS-I-1006%2F&region=us-east-1
+- query for new relic:
+```
+SELECT * FROM SpanEvent  where name = 'labs_integrations_transaction_handler' and helios.environment = 'stage'
+ SINCE 10 days ago UNTIL now
+```
 
 ## WMS-I-1020 – Add Source Type Support and SNS Grouping for Wave Release
 
