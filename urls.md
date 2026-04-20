@@ -1,4 +1,4 @@
- Scale WMS
+- Scale WMS
 	- https://wpkrstg.manhscale.com/scale/trans/dashboard
 
 - books from oreilly:
@@ -79,8 +79,10 @@
 - warby parker github
 	- https://github.com/WarbyParker/monocle_integrations
 
-- warby parker circle ci
+- circle ci
 	- https://app.circleci.com/organization/github/WarbyParker
+	- env vars for monocle (no values)
+	- https://app.circleci.com/settings/project/github/WarbyParker/monocle_integrations/environment-variables
 
 - directory/contacts:
 	- https://www.notion.so/ioet/Company-Directory-21553fa4fef4803eb6cff97e6918b716

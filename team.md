@@ -783,6 +783,11 @@ This person handles stressful or challenging situations with professionalism and
 
 
 ## Dev Lead talks / Team 
+- To create a new integration
+	- 1. skeleton: 
+		- mine: https://github.com/WarbyParker/monocle_integrations/pull/1926
+		- team: https://github.com/WarbyParker/monocle_integrations/pull/1904
+	- 2. 
 - Do not write a lot of comments
 	- when code reviewing people read comments, and that can be missleading
 - SOLID

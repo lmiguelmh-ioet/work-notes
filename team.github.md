@@ -65,8 +65,8 @@ git tag --sort=-taggerdate -n
 git show vstage28 --quiet
 
 # create annotated tag with empty description
-git tag -a vstage79 -m "[OTCM-109472] Modify S3 base path to vendors/OMG/CM-I-3005"
-git push origin vstage79
+git tag -a vstage93 -m "[OTCM-107354] Update source_type logic in WMS-I-1006"
+git push origin vstage93
 
 # remove tag
 git tag -d vstage26

@@ -1,3 +1,160 @@
+## Query to get INBOUND_TO_SHIPMENT_NUMBER and INBOUND_TO_SHIPMENT_TRACKING_NUMBER
+
+This is a query adadpted from WP_INBOUND_TRANSFER_ORDER_SHIPMENTS_TEMPLATE:
+```
+SELECT DISTINCT
+    rsh.shipment_num        AS shipment_number,
+    fwdd.tracking_number
+FROM rcv_shipment_headers rsh
+JOIN rcv_shipment_lines rsl
+    ON rsl.shipment_header_id = rsh.shipment_header_id
+   AND rsl.source_document_code = 'TRANSFER ORDER'
+   AND rsl.shipment_line_id IS NOT NULL
+   AND rsl.line_num IS NOT NULL
+   AND rsl.item_id IS NOT NULL
+   AND rsl.quantity_shipped IS NOT NULL
+JOIN egp_system_items_b esib
+    ON esib.organization_id = rsl.from_organization_id
+   AND esib.inventory_item_id = rsl.item_id
+JOIN wsh_new_deliveries fwnd
+    ON fwnd.delivery_name = rsh.shipment_num
+   AND fwnd.source_line_type = 'TRANSFER_ORDER'
+JOIN wsh_delivery_assignments wda
+    ON wda.delivery_id = fwnd.delivery_id
+JOIN wsh_delivery_details fwdd
+    ON fwdd.delivery_detail_id = wda.delivery_detail_id
+   AND fwdd.source_line_type = 'TRANSFER_ORDER'
+WHERE rsh.receipt_source_code = 'TRANSFER ORDER'
+  AND fwdd.tracking_number IS NOT NULL
+  AND rsh.creation_date >= TRUNC(SYSDATE) - 30   -- shrink if still slow (e.g. 7, 14)
+ORDER BY rsh.shipment_num
+FETCH FIRST 100 ROWS ONLY
+
+--
+
+WITH inbound_shipment_reference AS (
+    SELECT
+        fwnd.delivery_name   AS shipment_number,
+        fwdd.tracking_number
+    FROM wsh_delivery_assignments wda
+    JOIN wsh_new_deliveries fwnd
+        ON fwnd.delivery_id = wda.delivery_id
+       AND fwnd.source_line_type = 'TRANSFER_ORDER'
+    JOIN wsh_delivery_details fwdd
+        ON fwdd.delivery_detail_id = wda.delivery_detail_id
+       AND fwdd.source_line_type = 'TRANSFER_ORDER'
+    WHERE fwdd.tracking_number IS NOT NULL
+)
+SELECT DISTINCT
+    isr.shipment_number,
+    isr.tracking_number
+FROM inbound_shipment_reference isr
+WHERE EXISTS (
+        SELECT 1
+        FROM rcv_shipment_headers rsh
+        JOIN rcv_shipment_lines rsl
+            ON rsl.shipment_header_id = rsh.shipment_header_id
+           AND rsl.source_document_code = 'TRANSFER ORDER'
+           AND rsl.shipment_line_id IS NOT NULL
+           AND rsl.line_num IS NOT NULL
+           AND rsl.item_id IS NOT NULL
+           AND rsl.quantity_shipped IS NOT NULL
+        JOIN egp_system_items_b esib
+            ON esib.organization_id = rsl.from_organization_id
+           AND esib.inventory_item_id = rsl.item_id
+        WHERE rsh.shipment_num = isr.shipment_number
+          AND rsh.receipt_source_code = 'TRANSFER ORDER'
+    )
+ORDER BY isr.shipment_number
+FETCH FIRST 100 ROWS ONLY;
+
+-- 
+WITH inbound_shipment_reference AS (
+    SELECT
+        fwnd.delivery_name        AS shipment_number,
+        fwdd.tracking_number
+    FROM wsh_delivery_assignments wda
+    JOIN wsh_new_deliveries fwnd
+        ON fwnd.delivery_id = wda.delivery_id
+       AND fwnd.source_line_type = 'TRANSFER_ORDER'
+    JOIN wsh_delivery_details fwdd
+        ON fwdd.delivery_detail_id = wda.delivery_detail_id
+       AND fwdd.source_line_type = 'TRANSFER_ORDER'
+)
+SELECT DISTINCT
+    isr.shipment_number,
+    isr.tracking_number
+FROM inbound_shipment_reference isr
+JOIN rcv_shipment_headers rsh
+    ON rsh.shipment_num = isr.shipment_number
+   AND rsh.receipt_source_code = 'TRANSFER ORDER'
+JOIN rcv_shipment_lines rsl
+    ON rsl.shipment_header_id = rsh.shipment_header_id
+   AND rsl.source_document_code = 'TRANSFER ORDER'
+JOIN egp_system_items_b esib
+    ON esib.organization_id = rsl.from_organization_id
+   AND esib.inventory_item_id = rsl.item_id
+WHERE isr.tracking_number IS NOT NULL
+  AND rsl.shipment_line_id IS NOT NULL
+  AND rsl.line_num IS NOT NULL
+  AND rsl.item_id IS NOT NULL
+  AND rsl.quantity_shipped IS NOT NULL
+ORDER BY isr.shipment_number
+FETCH FIRST 100 ROWS ONLY;
+
+-- Shipment numbers that should produce DATA_DS with non-empty INBOUND_SHIPMENTS
+-- and each shipment with at least one INBOUND_SHIPMENT_LINES row (incl. ITEM_NUMBER).
+WITH inbound_shipment_reference AS (
+    SELECT
+        fwnd.delivery_name             AS shipment_number,
+        fwdd.tracking_number,
+        fwdd.source_header_number      AS transfer_order_number
+    FROM wsh_delivery_assignments wda
+    JOIN wsh_new_deliveries fwnd
+        ON fwnd.delivery_id = wda.delivery_id
+       AND fwnd.source_line_type = 'TRANSFER_ORDER'
+    JOIN wsh_delivery_details fwdd
+        ON fwdd.delivery_detail_id = wda.delivery_detail_id
+       AND fwdd.source_line_type = 'TRANSFER_ORDER'
+),
+headers AS (
+    SELECT DISTINCT
+        isr.shipment_number,
+        isr.tracking_number,
+        isr.transfer_order_number,
+        rsh.shipment_header_id
+    FROM inbound_shipment_reference isr
+    JOIN rcv_shipment_headers rsh
+        ON rsh.shipment_num = isr.shipment_number
+       AND rsh.receipt_source_code = 'TRANSFER ORDER'
+)
+SELECT DISTINCT
+    h.shipment_number,
+    h.tracking_number,
+    h.transfer_order_number,
+    h.shipment_header_id,
+    COUNT(DISTINCT rsl.shipment_line_id) AS inbound_line_count
+FROM headers h
+JOIN rcv_shipment_lines rsl
+    ON rsl.shipment_header_id = h.shipment_header_id
+   AND rsl.source_document_code = 'TRANSFER ORDER'
+JOIN egp_system_items_b esib
+    ON esib.organization_id = rsl.from_organization_id
+   AND esib.inventory_item_id = rsl.item_id
+WHERE rsl.shipment_line_id IS NOT NULL
+  AND rsl.line_num IS NOT NULL
+  AND rsl.item_id IS NOT NULL
+  AND rsl.quantity_shipped IS NOT NULL
+GROUP BY
+    h.shipment_number,
+    h.tracking_number,
+    h.transfer_order_number,
+    h.shipment_header_id
+HAVING COUNT(DISTINCT rsl.shipment_line_id) >= 1
+ORDER BY h.shipment_number
+FETCH FIRST 100 ROWS ONLY;
+```
+
 
 ## Query to get ShipmentLine statuses
 
