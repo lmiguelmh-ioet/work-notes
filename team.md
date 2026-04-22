@@ -100,7 +100,6 @@ poetry add "django>=4.0,<5.0"  # Version range
 name = "my-project"
 version = "0.1.0"
 description = "My description"  # ✅ OK to edit directly
-
 ```
 
 
@@ -211,7 +210,7 @@ Gabriel: tech lead
 Ariel: 3 years
 Jerson: developer 
 Johnny: developer 3 months
-Marcos: 
+Marcos: ?
 Michael: 4 years
 Miguel: 2 years
 Josué: Yos Yoshua 4 years
@@ -787,7 +786,8 @@ This person handles stressful or challenging situations with professionalism and
 	- 1. skeleton: 
 		- mine: https://github.com/WarbyParker/monocle_integrations/pull/1926
 		- team: https://github.com/WarbyParker/monocle_integrations/pull/1904
-	- 2. 
+	- 2. step utilities:
+		- mine: https://github.com/WarbyParker/monocle_integrations/pull/1929
 - Do not write a lot of comments
 	- when code reviewing people read comments, and that can be missleading
 - SOLID
@@ -806,4 +806,4 @@ This person handles stressful or challenging situations with professionalism and
 		- el adaptador es externo, esta fuera del dominio
 - names about:
 	- tratemos de no utilizar los terminos SNS o SQS en el step por favor, eso esta mas relacionado a temas de comunicacion externa, a nivel de la integracion/dominio lo que se busca es notificar/sincronizar la order(o entidad que esten trabajando en su flujo)
-- 
+- splitting the PRs to make them smaller(approx no more than 10 files.), for example, by layers(adapter, domain).

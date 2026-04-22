@@ -1,4 +1,4 @@
-Team
+# Classmates
 - Jipso Murillo - 4 years
 	- WP contractor (3 years)
 	- BE+FE
@@ -11,6 +11,11 @@ Team
 	- guitar + piano
 - Laura Fleming
 	- Cuenca Ecuador ~ 6 years teaching - business English
+
+# Questions
+
+- pronunciation: file vs fail
+- 
 
 
 # Class 1: Parallel structure
@@ -568,4 +573,74 @@ What is the funniest word you know in English?
 	- 5. unless
 	- 6. when
 
+# Class 14 - Clarifications
 
+![](assets/Pasted%20image%2020260422131439.png)
+
+- clear
+- clearly
+
+![](assets/Pasted%20image%2020260422131819.png)
+
+- tag question: question at the end:
+	- right?
+	- is that correct?
+
+![](assets/Pasted%20image%2020260422132526.png)
+- 
+- Excuse me. Could you repeat your phone number?
+- Could you give me more details about your address?
+- Who is coming with us?
+	- I'm sorry, I don't know her.
+- When is the meeting schedule?
+- What is the meeting about? Where can I find that information?
+	- It's on page 45
+- is there a parking available here?  (Do you know if )
+- Where are we going to have the meeting?
+
+My home address is **at** 450 Water St.
+My home address is **on** Water Street
+
+- Very informal (only for friends and family):
+![](assets/Pasted%20image%2020260422135153.png)
+
+
+![](assets/Pasted%20image%2020260422135338.png)
+- 1.a
+- 2.b
+- 3.c
+- 4.b
+- 5.b
+- 6.a / b
+
+![](assets/Pasted%20image%2020260422140034.png)
+- verb - noun - adjective
+- clear
+- clarify
+- clarification
+- clarify
+- clear
+
+![](assets/Pasted%20image%2020260422140136.png)
+
+![](assets/Pasted%20image%2020260422141846.png)
+
+![](assets/Pasted%20image%2020260422141829.png)
+
+The class is going to a trip for the holidays on May 1st, 
+we are going to visit the Titicaca lake's Uru's people that lives in the lake
+you need to bring a big jacket because the weather is tough
+we are going by plane
+the event is 
+
+- Work on: Mindo
+```
+Date: June 3
+Location: Mindo Cloud Forest
+Clothing/Equipment: Light clothes, rain jacket, insect repellent, sneakers
+Transportation: Private van leaving school at 7:30 AM
+Cost: $20 per student
+Special Rule: Do not feed the animals
+Important Reminder: Bring extra cash for snacks
+```
+- Work on: Titicaca Lake

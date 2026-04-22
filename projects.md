@@ -1,3 +1,8 @@
+## sdads
+
+- SFTP access (from Ivan Aguirre)
+	- https://github.com/WarbyParker/order-management-gateway/pull/225/changes#diff-942100cadaf12f140d496e256bea7b5788e2b5371de32534279ea603d1c434b4R265-R267
+
 ## AR-I-3019 – Create SOAP Adapter for Credit Memo Refund Transaction Creation
 
 - tickets:
@@ -31,6 +36,12 @@ SELECT * FROM SpanEvent  where name = 'labs_integrations_transaction_handler' an
 	- check: https://warbyparker.atlassian.net/browse/WMS-1029
 - s3 files:
 	- stage: https://us-east-1.console.aws.amazon.com/s3/buckets/transfer-stage-data?prefix=vendors%2FManhattan%2FWMS-I-1020%2F&region=us-east-1
+- expected error on production
+	- We **might** encounter old orders that won't have the Source field: Alternatives: 1) fail the whole request (according Miguel, the whole request is needed) 2) Assume that records that don't have the Source field are from SF
+		- ![](assets/Pasted%20image%2020260421165005.png)
+- FTP error (`SFTP Connection Error: [Errno None] Unable to connect to port 22869 on 172.20.20.144 or 172.20.21.230`)
+	- Channel: # lasvegas-wms-implementation
+	- ![](assets/Pasted%20image%2020260422084043.png)
 
 ## CM-I-3007 - Event Listener and External Transaction Processing
 - tickets:
