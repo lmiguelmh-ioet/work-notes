@@ -1,5 +1,8 @@
-## sdads
+## CM-I-3000P - PayPal SFTP Integration and File Sync to S3
 
+- tickets:
+	- integration: https://warbyparker.atlassian.net/browse/OTCM-109709
+	- oic sched: https://warbyparker.atlassian.net/browse/OTCM-109710
 - SFTP access (from Ivan Aguirre)
 	- https://github.com/WarbyParker/order-management-gateway/pull/225/changes#diff-942100cadaf12f140d496e256bea7b5788e2b5371de32534279ea603d1c434b4R265-R267
 
@@ -150,6 +153,9 @@ curl --verbose -X POST https://sjlqdgbb5mesmduz4pw5oj6fsa0ykkxk.lambda-url.us-ea
 ## MFG-I-3021 - material issue
 
 - ticket
+	- timezone: https://warbyparker.atlassian.net/browse/OTCM-105191
+	- oic integration: https://warbyparker.atlassian.net/browse/OTCM-94226
+	- new integration: https://warbyparker.atlassian.net/browse/OTCM-87918
 	- https://warbyparker.atlassian.net/issues/?jql=textfields%20~%20%22MFG-I-3021%22
 - 4 days for main integration
 	- [20260120: QA testing](day/day-20260120.md)
