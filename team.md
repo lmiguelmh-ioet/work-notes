@@ -786,6 +786,7 @@ This person handles stressful or challenging situations with professionalism and
 	- 1. skeleton: 
 		- mine: https://github.com/WarbyParker/monocle_integrations/pull/1926
 		- team: https://github.com/WarbyParker/monocle_integrations/pull/1904
+			- is missing custom exception
 	- 2. step utilities:
 		- mine: https://github.com/WarbyParker/monocle_integrations/pull/1929
 - Do not write a lot of comments
