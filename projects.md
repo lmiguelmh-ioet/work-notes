@@ -11,6 +11,15 @@
 	- oic sched: https://warbyparker.atlassian.net/browse/OTCM-109710
 - SFTP access (from Ivan Aguirre)
 	- https://github.com/WarbyParker/order-management-gateway/pull/225/changes#diff-942100cadaf12f140d496e256bea7b5788e2b5371de32534279ea603d1c434b4R265-R267
+- s3:
+	- https://us-east-1.console.aws.amazon.com/s3/buckets/transfer-stage-data?region=us-east-1&prefix=vendors/external_transactions/CM-I-3005/In/&showversions=false
+	- https://us-east-1.console.aws.amazon.com/s3/buckets/transfer-stage-data?region=us-east-1&prefix=vendors/cash_reconciliation/CM-I-3004/In/&showversions=false
+- test:
+```
+Calling lambda API endpoint with OIC creds
+$(aws2 configure export-credentials --profile oic --format env)
+curl -v -X POST 'https://sjlqdgbb5mesmduz4pw5oj6fsa0ykkxk.lambda-url.us-east-1.on.aws/paypal/sftp-file-sync' -H "x-amz-security-token: ${AWS_SESSION_TOKEN}" --aws-sigv4 "aws:amz:us-east-1:lambda" --user "${AWS_ACCESS_KEY_ID}:${AWS_SECRET_ACCESS_KEY}" -H 'Content-Type: application/json' -d '{"target_date" : "2026-03-01"}'
+```
 
 ## AR-I-3019 – Create SOAP Adapter for Credit Memo Refund Transaction Creation
 

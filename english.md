@@ -15,8 +15,9 @@
 # Questions
 
 - pronunciation: file vs fail
-- 
-
+- pronunciations:
+	- vowels: long + short + teams
+	- -ed: 3 ways of pronunciate
 
 # Class 1: Parallel structure
 - sentence has the same structure
@@ -644,3 +645,41 @@ Special Rule: Do not feed the animals
 Important Reminder: Bring extra cash for snacks
 ```
 - Work on: Titicaca Lake
+
+# Class 15
+![](assets/Pasted%20image%2020260429132427.png)
+- Keeping up with the Joneses
+	- a race with the neighbor to have the same things
+
+![](assets/Pasted%20image%2020260429133108.png)
+- 1. successful
+- 2. unsuccessful
+- 3. successful
+- 4. successful
+- 5. unsuccessful
+- 6. successful
+- 7. unsuccessful
+![](assets/Pasted%20image%2020260429134808.png)
+- 1. "made it to"
+- 2. "prosper"
+- 3. "be for nothing" / "fell through" / "failed"
+- 4. "prosper" / "work out"
+- 5. "fell through" / "failed"
+- 6. "was for nothing" / "didn't work out" / "failed"
+
+![](assets/Pasted%20image%2020260429140942.png)
+- 1 - b
+- 2 - a --> having the sense of bring something to reality "realize"
+- 3 - d
+- 4 - c --> think of it as an obligation
+- 5 - e --> accomplish is when we complete something, a project, a task
+
+![](assets/Pasted%20image%2020260429142253.png)
+- 1. reach / achieve
+- 2. realize (no accomplish, this is not a goal)
+- 3. fulfilling (obligations)
+- 4. 
+- 5. 
+
+- ZXMOTORS
+- https://www.youtube.com/shorts/JmWZUShK3EA

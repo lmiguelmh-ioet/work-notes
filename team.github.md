@@ -65,8 +65,8 @@ git tag --sort=-taggerdate -n
 git show vstage28 --quiet
 
 # create annotated tag with empty description
-git tag -a vstage93 -m "[OTCM-107354] Update source_type logic in WMS-I-1006"
-git push origin vstage93
+git tag -a vstage105 -m "[OTCM-109709] Fix PayPal settlement upload filename date format"
+git push origin vstage105
 
 # remove tag
 git tag -d vstage26
