@@ -3,6 +3,25 @@
 	- SPRINGFIELD o HELIOS
 ![](assets/Pasted%20image%2020260331070551.png)
 
+### New monocles integration
+- To create a new integration
+	- 1. skeleton: 
+		- mine: https://github.com/WarbyParker/monocle_integrations/pull/1926
+		- team: https://github.com/WarbyParker/monocle_integrations/pull/1904
+			- is missing custom exception
+	- 2. step utilities:
+		- mine: https://github.com/WarbyParker/monocle_integrations/pull/1929
+
+### OIC scheduled task
+- To create an OIC scheduled task
+	- samples:
+		- simple: https://github.com/WarbyParker/oracle-integration-cloud/pull/953
+		- more complete: https://github.com/WarbyParker/oracle-integration-cloud/pull/891
+	- parts:
+		- SQL similar to this: `INSERT INTO WP_PAAS.WP_INT_GENERIC_REPORT_PARAM (RICE_ID, INTEGRATION_NAME, REPORT_NAME, LAST_RUN_TO_DATE, LAST_RUN_FROM_DATE, ENT_DATE) VALUES ('CM-I-3000S', 'WP CM-I-3000S Stripe Payout Reconciliation Report Generation', 'Stripe Payout', '01-FEB-26 12.00.00.000000000 AM', '01-FEB-26 12.00.00.000000000 AM', '01-FEB-26')`
+		- IAR the integration itself
+		- CSV updating the lookup
+
 ### MOVING TO PROD / GOING LIVE
 - checklist (from Miguel)
 	- involucra algún reporte en oracle?
@@ -126,6 +145,11 @@ fields @timestamp, @message, @logStream, @log
 
 - Astrid open tickets:
 	- https://warbyparker.atlassian.net/issues?jql=project%20%3D%20%22Monocle%20%28Oracle%29%20Production%20Issues%22%20and%20created%20%3E%3D%20%222026-02-01%22%20and%20created%20%3C%3D%20%222026-03-01%22%20and%20type%20%3D%20Bug%20and%20summary%20~%20%22Error%7CPROD%7CNon-Payables%22%20AND%20status%20NOT%20IN%20%28Rejected%2C%20Resolved%29%20ORDER%20BY%20created%20DESC%2C%20status%20DESC
+
+## Oracle ATP
+- oracle developer
+- credentials in a wallet
+
 ## OIC
 - enable debug logs to see payload
 	- ![](assets/Pasted%20image%2020260223144551.png)
@@ -782,13 +806,6 @@ This person handles stressful or challenging situations with professionalism and
 
 
 ## Dev Lead talks / Team 
-- To create a new integration
-	- 1. skeleton: 
-		- mine: https://github.com/WarbyParker/monocle_integrations/pull/1926
-		- team: https://github.com/WarbyParker/monocle_integrations/pull/1904
-			- is missing custom exception
-	- 2. step utilities:
-		- mine: https://github.com/WarbyParker/monocle_integrations/pull/1929
 - Do not write a lot of comments
 	- when code reviewing people read comments, and that can be missleading
 - SOLID

@@ -49,6 +49,10 @@
 - OIC Prod changes
 	- [https://docs.google.com/spreadsheets/d/1C4WTH_EPQ6BKwL22b8qnJT8NillpYmhv0gRhnX7c9ec/edit?usp=sharing](https://docs.google.com/spreadsheets/d/1C4WTH_EPQ6BKwL22b8qnJT8NillpYmhv0gRhnX7c9ec/edit?usp=sharing)
 
+- Oracle ATP
+	- credentials and urls:
+	- https://docs.google.com/spreadsheets/d/10INW7gW6qiGM-gqHDwU2H-7Qy_g0bMpm98DHpvhQAEk/edit?pli=1&gid=0#gid=0
+
 - OIC platform
 	- ??? works: https://design.integration.us-phoenix-1.ocp.oraclecloud.com/?integrationInstance=oictest2-axhxufzsltne-px
 	- prod changes: https://docs.google.com/spreadsheets/d/1C4WTH_EPQ6BKwL22b8qnJT8NillpYmhv0gRhnX7c9ec/edit?usp=sharing&pli=1&authuser=0

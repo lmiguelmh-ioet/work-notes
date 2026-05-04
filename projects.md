@@ -1,8 +1,20 @@
+- point to dev1/evdi-test
+	- https://github.com/WarbyParker/monocle_integrations/pull/1700/changes
+- circle ci
+	- https://app.circleci.com/pipelines/github/WarbyParker/monocle_integrations
+
 ## AR-I-3019 – Create Integration to Perform Credit Memo Processing
 
 - tickets:
 	- integration: https://warbyparker.atlassian.net/browse/OTCM-112853
-- 
+- s3:
+	- 
+- test:
+```
+Calling lambda API endpoint with OIC creds
+$(aws2 configure export-credentials --profile oic --format env)
+curl -v -X POST 'https://sjlqdgbb5mesmduz4pw5oj6fsa0ykkxk.lambda-url.us-east-1.on.aws/ar/credit-memo-processing' -H "x-amz-security-token: ${AWS_SESSION_TOKEN}" --aws-sigv4 "aws:amz:us-east-1:lambda" --user "${AWS_ACCESS_KEY_ID}:${AWS_SECRET_ACCESS_KEY}" -H 'Content-Type: application/json' -d '{"start_date" : "2026-04-01T00:00:00", "end_date": "2026-04-02T00:00:00"}'
+```
 
 ## CM-I-3000P - PayPal SFTP Integration and File Sync to S3
 
