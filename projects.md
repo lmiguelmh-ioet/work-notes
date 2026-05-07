@@ -2,9 +2,17 @@
 	- https://github.com/WarbyParker/monocle_integrations/pull/1700/changes
 - circle ci
 	- https://app.circleci.com/pipelines/github/WarbyParker/monocle_integrations
+- create adapter
+	- 
+
+## OM-I-3015 – Create EasyPost Adapter to Create and Retrieve Trackers
+- tickets:
+	- adapter: https://warbyparker.atlassian.net/browse/OTCM-115284
+- docs:
+	- https://docs.easypost.com/docs/trackers
+
 
 ## AR-I-3019 – Create Integration to Perform Credit Memo Processing
-
 - tickets:
 	- integration: https://warbyparker.atlassian.net/browse/OTCM-112853
 - s3:

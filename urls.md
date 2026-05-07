@@ -50,6 +50,7 @@
 	- [https://docs.google.com/spreadsheets/d/1C4WTH_EPQ6BKwL22b8qnJT8NillpYmhv0gRhnX7c9ec/edit?usp=sharing](https://docs.google.com/spreadsheets/d/1C4WTH_EPQ6BKwL22b8qnJT8NillpYmhv0gRhnX7c9ec/edit?usp=sharing)
 
 - Oracle ATP
+	- `select * from WP_INT_GENERIC_REPORT_PARAM`
 	- credentials and urls:
 	- https://docs.google.com/spreadsheets/d/10INW7gW6qiGM-gqHDwU2H-7Qy_g0bMpm98DHpvhQAEk/edit?pli=1&gid=0#gid=0
 

@@ -3,7 +3,32 @@
 	- SPRINGFIELD o HELIOS
 ![](assets/Pasted%20image%2020260331070551.png)
 
-### New monocles integration
+```
+Dan Morel  [11:01 AM]
+
+two different flows... when its received at Fedex from a CX initiated flow:  
+
+1. Flare return received
+2. Flare -> OIC (return received)
+3. OIC -> Oracle (return received)
+4. Oracle scheduled jobs run
+5. Oracle -> OIC (issue credit memo)
+6. OIC -> OMG (issue refund)
+
+[11:02 AM]
+
+when its received at store its:  
+
+1.  POE/ROM mark return received
+2. ROM -> WAPI -> OS -> OMG... create return with item received
+3. OMG -> Oracle ... item received
+4. Oracle scheduled jobs run
+5. Oracle -> OIC (issue credit memo)
+6. OIC -> OMG (issue refund)
+7. OMG -> Payment Services (issue refund)
+```
+
+### Create/add integration
 - To create a new integration
 	- 1. skeleton: 
 		- mine: https://github.com/WarbyParker/monocle_integrations/pull/1926
@@ -12,7 +37,10 @@
 	- 2. step utilities:
 		- mine: https://github.com/WarbyParker/monocle_integrations/pull/1929
 
-### OIC scheduled task
+## Create/add adapter
+- 
+
+## Create/add OIC scheduled task
 - To create an OIC scheduled task
 	- samples:
 		- simple: https://github.com/WarbyParker/oracle-integration-cloud/pull/953

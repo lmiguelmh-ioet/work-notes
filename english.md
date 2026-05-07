@@ -683,3 +683,83 @@ Important Reminder: Bring extra cash for snacks
 
 - ZXMOTORS
 - https://www.youtube.com/shorts/JmWZUShK3EA
+
+
+# Class 16 - Trip to Titicaca and Bariloche
+
+- truck from Guayaquil - Cuenca
+- ![](assets/Pasted%20image%2020260506131936.png)
+
+```
+Date: June 24th (the new year of the andes)
+Location: Titicaca lake
+Clothing/Equipment: Winter clothes / warm clothing (a winter coat or a jacket, a scarf, gloves, wool clothes), for equipment, sun protection, and wide hat, maybe a camera
+Transportation: Puno's main port at 8 AM to take a boat
+Cost: $15 per person
+Special Rule: No trash, and watch your step, as the totora islands are slippery 
+Important Reminder: Bring extra cash if you want to take other activities (kayaking, taking a traditional boat)
+```
+![](assets/Pasted%20image%2020260422131819.png)
+![](assets/Pasted%20image%2020260422132526.png)
+![](assets/Pasted%20image%2020260506134425.png)
+
+- ![](assets/Pasted%20image%2020260506134505.png)
+- Example:
+	- I am going on vacation and I'm bringing
+		- a sun hat
+	- Yes, you can come
+	- Try to guess what is the rule:
+		- a word that start with "S"
+		- a shape, a color, a noun, an adjective
+- Laura:
+	- grapes ->
+	- an apple -> ok
+	- a banana -> NO
+	- a coconut
+	- cherrys
+	- round shape
+
+- Leonardo:
+	- pencil -> ok
+	- notebook
+	- pen
+	- office related items 
+
+- My
+	- special rule: mesa para comer - object in dinning room
+	- plate
+	- fork
+	- napkin
+	- soup
+	- glass of water
+	- dinning room table
+	- refrigerator - NO
+	- spoon
+
+- Team:
+	- hard one: plural words
+	- hard one: concatenating words (last vowel start another word)
+
+![](assets/Pasted%20image%2020260429142253.png)
+- 1. reach / achieve
+- 2. realize (no accomplish, this is not a goal)
+- 3. fulfilling (obligations)
+- 4. accomplish (task or goal that has been completed)
+- 5. reach / achieve / accomplish
+- 6. fulfilled / achieve / realize 
+
+![](assets/Pasted%20image%2020260506141101.png)
+
+![](assets/Pasted%20image%2020260506141227.png)
+- 1. success
+- 2. achievable
+- 3. realization/fulfillment (accomplishment NOT as much - task or goals)
+- 4. failure
+- 5. accomplished / successful
+- 6. failed
+- 7. realization/fulfillment (accomplishment NOT as much - task or goals)
+
+> Learning to ride a bike was such a big realization for me since he was a child.
+> I was very happy after the fulfillment of my certification in AWS services. (fulfill - a big goal or ambition)
+
+- task: collocations
