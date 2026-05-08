@@ -9,7 +9,10 @@
 - tickets:
 	- adapter: https://warbyparker.atlassian.net/browse/OTCM-115284
 - docs:
-	- https://docs.easypost.com/docs/trackers
+	- easypost: https://docs.easypost.com/docs/trackers
+	- usps 3.2: https://apis.usps.com/tracking/v3r2
+	- usps legacy: https://apis.usps.com/tracking/v3
+		- https://developers.usps.com/sites/default/files/apidoc_specs/tracking-v3r2_11.yaml
 
 
 ## AR-I-3019 – Create Integration to Perform Credit Memo Processing
