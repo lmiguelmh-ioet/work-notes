@@ -763,3 +763,27 @@ Important Reminder: Bring extra cash if you want to take other activities (kayak
 > I was very happy after the fulfillment of my certification in AWS services. (fulfill - a big goal or ambition)
 
 - task: collocations
+
+
+# Class 17 - Collocations (2nd review)
+
+![](assets/Pasted%20image%2020260513132254.png)
+
+> I was very happy after the fulfillment of my certification in AWS services. (fulfill - a big goal or ambition)
+> I accomplished to grasp the OIC integrations
+> I was very happy to realize my dream of learning to drive a car
+> We were very happy when we achieved to buy our first department
+> Yes, 
+
+![](assets/Pasted%20image%2020260513134517.png)
+- 1 - f 
+- 2 - d: you can also use it in personal / business: investing time on a relationship 
+- 3 - g:
+	- I was really happy when I passed the Java certification exam with flying colors.
+- 4 - c
+	- I think I already tell you about this experience of mine. So, we wanted to meet with some close friend and we couldn't because we got sick so our plan went up in smoke.
+- 5 - e
+- 6 - b
+	- Peru made a come back after many years of being out of the world cup.
+- 7 - a
+

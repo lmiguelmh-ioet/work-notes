@@ -3,7 +3,8 @@
 - circle ci
 	- https://app.circleci.com/pipelines/github/WarbyParker/monocle_integrations
 - create adapter
-	- 
+	- ?
+- each one of these projects must have a CURL to the Oracle 
 
 ## OM-I-3015 – Create EasyPost Adapter to Create and Retrieve Trackers
 - tickets:
@@ -19,12 +20,16 @@
 - tickets:
 	- integration: https://warbyparker.atlassian.net/browse/OTCM-112853
 - s3:
-	- 
+	- https://us-east-1.console.aws.amazon.com/s3/buckets/transfer-stage-data?region=us-east-1&prefix=vendors/credit_memos/AR-I-3019/Archive/&showversions=false
 - test:
+	- see Postman for CURL command
 ```
 Calling lambda API endpoint with OIC creds
 $(aws2 configure export-credentials --profile oic --format env)
-curl -v -X POST 'https://sjlqdgbb5mesmduz4pw5oj6fsa0ykkxk.lambda-url.us-east-1.on.aws/ar/credit-memo-processing' -H "x-amz-security-token: ${AWS_SESSION_TOKEN}" --aws-sigv4 "aws:amz:us-east-1:lambda" --user "${AWS_ACCESS_KEY_ID}:${AWS_SECRET_ACCESS_KEY}" -H 'Content-Type: application/json' -d '{"start_date" : "2026-04-01T00:00:00", "end_date": "2026-04-02T00:00:00"}'
+
+curl -v -X POST 'https://sjlqdgbb5mesmduz4pw5oj6fsa0ykkxk.lambda-url.us-east-1.on.aws/ar/credit-memo-processing' -H "x-amz-security-token: ${AWS_SESSION_TOKEN}" --aws-sigv4 "aws:amz:us-east-1:lambda" --user "${AWS_ACCESS_KEY_ID}:${AWS_SECRET_ACCESS_KEY}" -H 'Content-Type: application/json' -d '{"start_date" : "2026-04-01T00:00:00", "end_date": "2026-04-09T00:00:00"}'
+
+curl -v -X POST 'https://sjlqdgbb5mesmduz4pw5oj6fsa0ykkxk.lambda-url.us-east-1.on.aws/ar/credit-memo-processing' -H "x-amz-security-token: ${AWS_SESSION_TOKEN}" --aws-sigv4 "aws:amz:us-east-1:lambda" --user "${AWS_ACCESS_KEY_ID}:${AWS_SECRET_ACCESS_KEY}" -H 'Content-Type: application/json' -d '{"credit_memo_trx_numbers" : ["16001"]}'
 ```
 
 ## CM-I-3000P - PayPal SFTP Integration and File Sync to S3

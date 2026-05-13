@@ -250,26 +250,102 @@ fields @timestamp, @message, @logStream, @log
 	- @joel.malchuk @tony.huang @alexis we are getting Status Code: 401\nResponse: \nError: 401, message='Unauthorized'  when we try to use the API with the WP_SCM_INTEGRATION_USER user in evdi-test, I've already reviewed the credentials and are correct I'm able to login into evdi-test
 	- https://warbyparker.slack.com/archives/C06746714GZ/p1768945897493579
 
+
+## Teams
+
+- ??? (?)
+	- Marcos Meli
+		- ![](assets/Pasted%20image%2020260513121336.png)
+	- Luis Abrie
+		- 
+- Oracle tech team
+	- Gabriel Viera
+	- Emilio Lopez
+- ??? (?)
+	- 
+- Findev
+	- Daniela Palacios
+		- ![](assets/Pasted%20image%2020260513115804.png)
+- Tiger team: replace Springfield admin (only frontend)
+	- Marcelo Gallegos
+		- ![](assets/Pasted%20image%2020260513120526.png)
+- SCP: oracle-related?
+	- María Guncay
+		- ![](assets/Pasted%20image%2020260513120957.png)
+- Atlas: customer experience team
+	- Nathalia Garcia
+		- ![](assets/Pasted%20image%2020260513121153.png)
+	- Abraham Matus
+		- ![](assets/Pasted%20image%2020260513121318.png)
+- Catalog: ?
+	- Martina Rozo
+		- ![](assets/Pasted%20image%2020260513121514.png)
+	- Lenin Pico
+		- ![](assets/Pasted%20image%2020260513121554.png)
+
 ## Team
 
 - proyecto
 	- Dan Morel (WP - principal engineer)
 	- Gabriel Viera
 
-Astrid: 3 projects
-Emilio: PM
-Gabriel: tech lead
-Ariel: 3 years
-Jerson: developer 
+Astrid:
+- in charge of all WP's PMs
+- 2017
+Emilio:
+- PM / BA / in charge of some PMs
+- 2021
+- different projects from WP
+Gabriel: 
+- Tech lead
+Ariel:
+- Developer
+- 3 years
+- Argentina
+Jerson: 
+- Developer
+- ~2021
+- They started the team with Gabo and Emi
+- Ecuador, Loja
 Johnny: developer 3 months
-Marcos: ?
+- started 
+- 7 months ()
+Marcos:
+- dev
+- 2025
+- Ecuador
 Michael: 4 years
-Miguel: 2 years
-Josué: Yos Yoshua 4 years
-Fabiola: QA -
-Kaio: QA Brazil 3 years
+- 2022
+- live in Quito
+Miguel:
+- dev
+- 2024
+- Ecuador
+Josué:
+- Yos Yoshua 
+- 4 years
+- Ecuador
+Fabiola:
+- QA
+Kaio:
+- QA 
+- ~2023
+- Brazil
 Rocio: Arg
-Justo: 2 weeks
+- works for WP (business analyst)
+- 2025
+- Argentina
+- she can give us permission to roles
+- she can send Oracle questions
+Justo: 
+- dev
+- 12/2025
+Leonor
+- dev
+- 05/2026
+- comes from Kyzen
+- ?
+
 
 - top-performer
 	- 1 Ariel - bueno técnicamente
