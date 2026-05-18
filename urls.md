@@ -64,8 +64,8 @@
 		- OIC: [https://oictest2-axhxufzsltne-px.integration.ocp.oraclecloud.com/](https://oictest2-axhxufzsltne-px.integration.ocp.oraclecloud.com/)  
 		- Oracle ERP: https://fa-evdi-test-saasfaprod1.fa.ocs.oraclecloud.com/
 	- Prod 
-		- OIC: [http://oic-prod-axhxufzsltne-ia.integration.ocp.oraclecloud.com:443/](http://oic-prod-axhxufzsltne-ia.integration.ocp.oraclecloud.com:443/)  
-		- Oracle ERP: [https://fa-evdi-saasfaprod1.fa.ocs.oraclecloud.com/](https://fa-evdi-saasfaprod1.fa.ocs.oraclecloud.com/)
+		- OIC: http://oic-prod-axhxufzsltne-ia.integration.ocp.oraclecloud.com:443/
+		- Oracle ERP: https://fa-evdi-saasfaprod1.fa.ocs.oraclecloud.com/
 			- Reports: Hamburger > Tools > Report and analytics
 
 	- OIC Credentials (same for all environments) 

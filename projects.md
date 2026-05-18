@@ -6,6 +6,27 @@
 	- ?
 - each one of these projects must have a CURL to the Oracle 
 
+
+## ON-CALL: MAY18-MAY25
+### MAY18
+- [x] [OEH-68166](https://warbyparker.atlassian.net/browse/OEH-68166) — Error|prod|Non-Payables|WP WMS-I-1009 SCALE WMS to Oracle Inv Transactions Inbound|lwwzalLFEfGwnImYdwL8Rw
+	- assigned to Josue
+- [x] [OEH-68165](https://warbyparker.atlassian.net/browse/OEH-68165) — Error|prod|Non-Payables|IN-I-2017A Fedex Warehouse Transactions Receiving Inbound|82109c93-4314-498b-8934-cf40ad3cfca5
+	- on review - rejected
+- [x] [OEH-68164](https://warbyparker.atlassian.net/browse/OEH-68164) — Error|prod|Non-Payables|WP WMS-I-1009 SCALE WMS to Oracle Inv Transactions Inbound|M-yBOFK9EfGsSK3kcBpqQA
+	- assigned to Josue
+- [x] [OEH-68162](https://warbyparker.atlassian.net/browse/OEH-68162) — Error|prod|Non-Payables|WP WMS-I-1001 Oracle to SCALE WMS Items Outbound|kIftYlG6EfGRRCGvOXmT4w
+	- on review - rejected
+- [ ] [OEH-68161](https://warbyparker.atlassian.net/browse/OEH-68161) — Error|prod|Non-Payables|WP GL-I-1060 Payroll to Anaplan|0ZyKB1J-EfG5FrXjBi66GQ
+	- on review
+- [OEH-68170](https://warbyparker.atlassian.net/browse/OEH-68170) — Error|prod|Non-Payables|IN-I-2017A Fedex Warehouse Transactions Receiving Inbound|abedde12-df50-4051-9e49-05e815ca1398
+	- 
+- [OEH-68172](https://warbyparker.atlassian.net/browse/OEH-68172) — Error|prod|Non-Payables|WMS-I-1038 Oracle to SCALE WMS Deleted Transfer Orders Out|gcRRUlLeEfGmDlncoSI4Zw
+- [OEH-68173](https://warbyparker.atlassian.net/browse/OEH-68173) — Error|prod|Non-Payables|WP WMS-I-1009 SCALE WMS to Oracle Inv Transactions Inbound|h8wsLlLhEfGwnImYdwL8Rw
+- [OEH-68175](https://warbyparker.atlassian.net/browse/OEH-68175) — Error|prod|Non-Payables|WP WMS-I-1009 SCALE WMS to Oracle Inv Transactions Inbound|GkP0N1LnEfGsSK3kcBpqQA
+- [OEH-68176](https://warbyparker.atlassian.net/browse/OEH-68176) — Error|prod|Non-Payables|WP WMS-I-1009 SCALE WMS to Oracle Inv Transactions Inbound|5PX9KVLpEfGwnImYdwL8Rw
+- [OEH-68178](https://warbyparker.atlassian.net/browse/OEH-68178) — Error|prod|Non-Payables|WP WMS-I-1009 SCALE WMS to Oracle Inv Transactions Inbound|F90laFL1EfGsSK3kcBpqQA
+
 ## OM-I-3015 – Create EasyPost Adapter to Create and Retrieve Trackers
 - tickets:
 	- adapter: https://warbyparker.atlassian.net/browse/OTCM-115284
@@ -19,6 +40,7 @@
 ## AR-I-3019 – Create Integration to Perform Credit Memo Processing
 - tickets:
 	- integration: https://warbyparker.atlassian.net/browse/OTCM-112853
+	- michael: https://warbyparker.atlassian.net/browse/OTCM-108251
 - s3:
 	- https://us-east-1.console.aws.amazon.com/s3/buckets/transfer-stage-data?region=us-east-1&prefix=vendors/credit_memos/AR-I-3019/Archive/&showversions=false
 - test:
