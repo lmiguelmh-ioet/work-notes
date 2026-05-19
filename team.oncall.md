@@ -62,6 +62,16 @@ see @on-call-agent/skills/erp-skill/SKILL.md
 ## IN-I-2017A Fedex Warehouse Transactions Receiving Inbound
 
 ```
+Jira  → order 1101961, shipment 1421164
+          ↓
+S3 FedEx JSON  → customerASNNumber: "TO_1421164"
+                 purchaseOrderNumber: "1101961" (on each line)
+                 item: "846864054298" / "846864054915"  ← what I called “FedEx UPC”
+          ↓
+Oracle inboundShipments  → ShipmentNumber 1421164, TransferOrderNumber 1101961
+                           ItemNumber 10001221 / 10001218
+
+
 Check inbound shipment line statuses in Oracle:  
 1. Fetch inbound shipment lines: GET /fscmRestApi/resources/11.13.18.05/inboundShipments?finder=findByOrgOrderSupplierShipment;bindTONumber={ORDER_NUMBER}&expand=all
 
@@ -79,15 +89,6 @@ jq '
     line_count: (.shipmentLines.items | length),
     all_fully_received: ([.shipmentLines.items[].ShipmentLineStatusCode] | all(. == "FULLY RECEIVED")),
     not_fully_received: [.shipmentLines.items[] | select(.ShipmentLineStatusCode != "FULLY RECEIVED") | {
-      ShipmentLineId,
-      ItemNumber,
-      ShipmentLineStatus,
-      ShipmentLineStatusCode,
-      QuantityShipped,
-      QuantityReceived,
-      qty_remaining: (.QuantityShipped - .QuantityReceived)
-    }],
-    failed_line_from_ticket: [.shipmentLines.items[] | select(.ShipmentLineId == 11085765) | {
       ShipmentLineId,
       ItemNumber,
       ShipmentLineStatus,

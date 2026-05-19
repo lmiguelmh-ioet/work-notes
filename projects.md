@@ -31,7 +31,10 @@
 - tickets:
 	- adapter: https://warbyparker.atlassian.net/browse/OTCM-115284
 - docs:
-	- easypost: https://docs.easypost.com/docs/trackers
+	- joshua: 
+	- easypost: 
+		- https://docs.easypost.com/docs/trackers
+		- https://docs.easypost.com/guides/tracking-guide
 	- usps 3.2: https://apis.usps.com/tracking/v3r2
 	- usps legacy: https://apis.usps.com/tracking/v3
 		- https://developers.usps.com/sites/default/files/apidoc_specs/tracking-v3r2_11.yaml
