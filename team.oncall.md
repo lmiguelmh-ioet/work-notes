@@ -29,7 +29,15 @@
 ```
 Get me the NOT STARTED tickets for today. Additionally, add a list of tickets (hiperlinked) each one with its title (sorted from oldest to recent).
 ---
-only for not started one, can you investigate further, try to find the root cause for each problem, and if possible propose a solution
+Can you investigate further, try to find the root cause for each problem, and if possible propose a solution
+-
+For each  ticket, can you investigate further, try to find the root cause for each problem, and if possible propose a solution.
+Look up for similar ticket using the tittle and the description. And see who was assigned, if it had comments, anything that give a glimpse of how this was solved.
+Do not execute the solution without user authorization, lay out your plan instead.
+-
+For each  ticket, look up for similar ticket using the tittle and the description. And see who was assigned, if it had comments, anything that give a glimpse of how this was solved.
+Do not execute the solution without user authorization, lay out your plan instead.
+
 ---
 for each one, give me who will be the possible owner? e.g. the main author or the one who has more lines modified in git
 ---
@@ -54,6 +62,16 @@ see @on-call-agent/skills/erp-skill/SKILL.md
 - file should exist on S3 
 	- https://us-east-1.console.aws.amazon.com/s3/buckets/wp-payroll-to-anaplan-prod?region=us-east-1&prefix=Archive/&showversions=false
 - retry may succeed (process run at 6AM/6PM)
+- old tickets:
+
+| Ticket                                                          | Status   | Assignee                            | How it was “solved”                                                                |
+| --------------------------------------------------------------- | -------- | ----------------------------------- | ---------------------------------------------------------------------------------- |
+| [OEH-68023](https://warbyparker.atlassian.net/browse/OEH-68023) | Rejected | Johnny Coral                        | _“trial balance payroll file was recently updated”_ + screenshot → Rejected May 15 |
+| [OEH-67963](https://warbyparker.atlassian.net/browse/OEH-67963) | Rejected | Johnny Coral                        | Same wording + screenshot                                                          |
+| [OEH-67854](https://warbyparker.atlassian.net/browse/OEH-67854) | Rejected | Ariel Sperduti                      | _“Closing: trial balance was recently updated today”_ + screenshot                 |
+| [OEH-67608](https://warbyparker.atlassian.net/browse/OEH-67608) | Rejected | Emilio → Marcos Hernandez commented | _“Trial Balance payroll file exists in S3”_ + screenshot                           |
+| [OEH-67438](https://warbyparker.atlassian.net/browse/OEH-67438) | Rejected | Emilio → Marcos Hernandez           | _“file was uploaded”_ + screenshot                                                 |
+| [OEH-65567](https://warbyparker.atlassian.net/browse/OEH-65567) | Rejected | Jerson Morocho                      | _“trial balance was recently updated today”_ (no screenshot)                       |
 
 ## WMS-I-1001 Oracle to SCALE WMS Items Outbound
 
@@ -106,4 +124,36 @@ jq '
 5. Compare received quantities per item between FedEx payload and Oracle
 6. If quantities match → reject with a detailed line-by-line comment  
 7. If quantities mismatch → ticket needs manual attention
+- in a case reprocessing with (beware there are two integrations with the name 2017As):
+	  "WPIN-I-2017A Receipts Fedex Inbound OrchestratorV1 (1.0.1)"
 ```
+
+## WMS-I-1038 Oracle to SCALE WMS Deleted Transfer Orders Out
+
+- review old tickets
+- TO CONFIRM: solved automatically every day at 8am / or someone did run a script. This comment was added:
+
+**Status:** ✅ **RECOVERED** — Transient error
+
+| **Failed Instance** | **First Clean Instance (recovery)**               |                                 |
+| ------------------- | ------------------------------------------------- | ------------------------------- |
+| **Instance ID**     | `gcRRUlLeEfGmDlncoSI4Zw`                          | `6Uc61VLfEfGmDlncoSI4Zw`        |
+| **OIC Status**      | COMPLETED (fault handler)                         | COMPLETED (clean)               |
+| **Error Stages**    | Transfer_Order_Out Read timed out → Fault Handler | 0 errors (59 stages, all clean) |
+| **Timestamp**       | May 18, 17:35 UTC                                 | May 18, 17:45 UTC               |
+
+Integration actively running every ~10 minute. Recovery confirmed on next clean run. No data loss.
+
+
+## WMS-I-1009 SCALE WMS to Oracle Inv Transactions Inbound
+
+- NOTE: this is related to NEGATIVE inventory
+- TO CONFIRM: solved automatically every day at 8am / or someone did run a script. This comment was added:
+
+Andrew’s team will handle the transactions with the negative inventory balances error [as part of the monthly close process]([https://warbyparker.atlassian.net/browse/OEH-33303?focusedCommentId=801660](https://warbyparker.atlassian.net/browse/OEH-33303?focusedCommentId=801660 "https://warbyparker.atlassian.net/browse/OEH-33303?focusedCommentId=801660")). Therefore, this ticket can be marked as REJECTED.
+
+
+## WP IN-I-2048B Inbound IOT to Oracle ASN
+
+- Review the CSV and check if data is valid
+- 

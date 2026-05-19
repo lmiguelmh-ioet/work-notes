@@ -17,15 +17,24 @@
 	- assigned to Josue
 - [x] [OEH-68162](https://warbyparker.atlassian.net/browse/OEH-68162) — Error|prod|Non-Payables|WP WMS-I-1001 Oracle to SCALE WMS Items Outbound|kIftYlG6EfGRRCGvOXmT4w
 	- on review - rejected
-- [ ] [OEH-68161](https://warbyparker.atlassian.net/browse/OEH-68161) — Error|prod|Non-Payables|WP GL-I-1060 Payroll to Anaplan|0ZyKB1J-EfG5FrXjBi66GQ
+- [x] [OEH-68161](https://warbyparker.atlassian.net/browse/OEH-68161) — Error|prod|Non-Payables|WP GL-I-1060 Payroll to Anaplan|0ZyKB1J-EfG5FrXjBi66GQ
+	- on review - rejected
+- [ ] [OEH-68170](https://warbyparker.atlassian.net/browse/OEH-68170) — Error|prod|Non-Payables|IN-I-2017A Fedex Warehouse Transactions Receiving Inbound|abedde12-df50-4051-9e49-05e815ca1398
 	- on review
-- [OEH-68170](https://warbyparker.atlassian.net/browse/OEH-68170) — Error|prod|Non-Payables|IN-I-2017A Fedex Warehouse Transactions Receiving Inbound|abedde12-df50-4051-9e49-05e815ca1398
+- [x] [OEH-68172](https://warbyparker.atlassian.net/browse/OEH-68172) — Error|prod|Non-Payables|WMS-I-1038 Oracle to SCALE WMS Deleted Transfer Orders Out|gcRRUlLeEfGmDlncoSI4Zw
+	- automatically closed
+- [x] [OEH-68173](https://warbyparker.atlassian.net/browse/OEH-68173) — Error|prod|Non-Payables|WP WMS-I-1009 SCALE WMS to Oracle Inv Transactions Inbound|h8wsLlLhEfGwnImYdwL8Rw
+	- automatically closed
+### MAY19
+
+- [OEH-68192](https://warbyparker.atlassian.net/browse/OEH-68192) | Error\|prod\|Non-Payables\|WP WMS-I-1009 SCALE WMS to Oracle Inv Transactions Inbound\|yIrZFVOOEfGwnImYdwL8Rw
 	- 
-- [OEH-68172](https://warbyparker.atlassian.net/browse/OEH-68172) — Error|prod|Non-Payables|WMS-I-1038 Oracle to SCALE WMS Deleted Transfer Orders Out|gcRRUlLeEfGmDlncoSI4Zw
-- [OEH-68173](https://warbyparker.atlassian.net/browse/OEH-68173) — Error|prod|Non-Payables|WP WMS-I-1009 SCALE WMS to Oracle Inv Transactions Inbound|h8wsLlLhEfGwnImYdwL8Rw
-- [OEH-68175](https://warbyparker.atlassian.net/browse/OEH-68175) — Error|prod|Non-Payables|WP WMS-I-1009 SCALE WMS to Oracle Inv Transactions Inbound|GkP0N1LnEfGsSK3kcBpqQA
-- [OEH-68176](https://warbyparker.atlassian.net/browse/OEH-68176) — Error|prod|Non-Payables|WP WMS-I-1009 SCALE WMS to Oracle Inv Transactions Inbound|5PX9KVLpEfGwnImYdwL8Rw
-- [OEH-68178](https://warbyparker.atlassian.net/browse/OEH-68178) — Error|prod|Non-Payables|WP WMS-I-1009 SCALE WMS to Oracle Inv Transactions Inbound|F90laFL1EfGsSK3kcBpqQA
+- [OEH-68184](https://warbyparker.atlassian.net/browse/OEH-68184) | Error\|prod\|Non-Payables\|WP WMS-I-1001 Oracle to SCALE WMS Items Outbound\|tHrc1lKDEfGRRCGvOXmT4w
+	- 
+- [OEH-68181](https://warbyparker.atlassian.net/browse/OEH-68181) | Error\|prod\|Non-Payables\|WP IN-I-2048B Inbound IOT to Oracle ASN\|b687f7aa-609b-4b49-bf6e-38b27b4b7b2a
+	- 
+- [OEH-68180](https://warbyparker.atlassian.net/browse/OEH-68180) | Error\|prod\|Non-Payables\|WP IN-I-2048B Inbound IOT to Oracle ASN\|ca036ae9-2e63-406d-9115-3e3626611fdf
+	- 
 
 ## OM-I-3015 – Create EasyPost Adapter to Create and Retrieve Trackers
 - tickets:
