@@ -27,7 +27,9 @@
 - Prompts inside the on-call-agent:
 
 ```
-Get me the NOT STARTED tickets for today. Additionally, add a list of tickets (hiperlinked) each one with its title (sorted from oldest to recent).
+Get me the NOT STARTED tickets for today, yesterday and the day before yesterday. Additionally, add a list of tickets (hiperlinked) each one with its title (sorted from oldest to recent).
+-
+Get me the NOT STARTED tickets since start of week on Monday. Additionally, add a list of tickets (hiperlinked) each one with its title (sorted from oldest to recent).
 ---
 Can you investigate further, try to find the root cause for each problem, and if possible propose a solution
 -

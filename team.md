@@ -253,17 +253,14 @@ fields @timestamp, @message, @logStream, @log
 
 ## Teams
 
-- ??? (?)
+- Argon
 	- Marcos Meli
 		- ![](assets/Pasted%20image%2020260513121336.png)
 	- Luis Abrie
-		- 
 - Oracle tech team
 	- Gabriel Viera
 	- Emilio Lopez
-- ??? (?)
-	- 
-- Findev
+- Findev: credit memos
 	- Daniela Palacios
 		- ![](assets/Pasted%20image%2020260513115804.png)
 - Tiger team: replace Springfield admin (only frontend)

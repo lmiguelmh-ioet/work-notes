@@ -536,8 +536,9 @@ What is the funniest word you know in English?
 	- hustle -> ajetreo (schemer business - dishonest)
 
 
-# Class 12 - MYSELF
+# Class 12 - private class #1
 
+- variety of topic to talk
 
 # Class 13 - Cryptocurrency
 
@@ -787,3 +788,40 @@ Important Reminder: Bring extra cash if you want to take other activities (kayak
 	- Peru made a come back after many years of being out of the world cup.
 - 7 - a
 
+
+# Class 18 - private class #2
+
+- ![](assets/Pasted%20image%2020260520131209.png)![](assets/Pasted%20image%2020260520131850.png)
+- 1 - B
+- 2 - D - not neccesary work related but life related
+- 3 - G <= **a lot of difficult work**
+- 4 - I <= infer meaning
+- 5 - E
+	- expression comes from throw into the deep end of the pool
+- 6 - C
+- 7 - H
+	- put something on the back burner - give some less focus or importance
+- 8 - F
+	- e.g. bureocratic processes
+- 9 - A
+	- not neccesarily a person but a deadline, a situation
+- cut corners
+	- doing something faster but with less quality
+- "I will have my work cut out for me"
+	- is an expression
+	- so you cannot say my work
+- "I had my work cout for me, last week"
+- "This week I was thrown into the deep end, they gave me a new job role to solve"
+- "When I am shopping is a no brainer for me to choose clothes"
+
+![](assets/Pasted%20image%2020260520141106.png)
+- read between the lines 
+- 
+- a no brainer
+- to go through a lot of red tape
+- is under pressure -> A LOT OF WORK IN A SHORT TIME
+	- NO: has out work cut out for us -> A LOT OF WORK BUT SOME OF THEM IS DIFFICULT -> the first one fits better
+- thrown in the deep end
+- have our work cut out
+- to cut corners
+- lot of plate
