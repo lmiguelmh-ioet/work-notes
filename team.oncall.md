@@ -1,5 +1,7 @@
 # On-Call OEH
 
+- status flow
+	- ![](assets/Pasted%20image%2020260521111558.png)
 - On call google sheet instructions: 
 	- https://docs.google.com/spreadsheets/d/1np28IorbDKbEWFQo-hn-a4TGyz7jqHbSCaT48b66U6k/edit?gid=0#gid=0
 
@@ -34,12 +36,22 @@ Get me the NOT STARTED tickets since start of week on Monday. Additionally, add 
 Can you investigate further, try to find the root cause for each problem, and if possible propose a solution
 -
 For each  ticket, can you investigate further, try to find the root cause for each problem, and if possible propose a solution.
-Look up for similar ticket using the tittle and the description. And see who was assigned, if it had comments, anything that give a glimpse of how this was solved.
+Look up for similar tickets using the tittle and the description that has at least 1 comment. And see who was assigned, if it had comments, anything that give a glimpse of how this was solved.
+Do not execute the solution without user authorization, lay out your plan instead.
+- 
+Regarding OEH-68225:
+
+Can you investigate further, try to find the root cause for each problem, and if possible propose a solution.
+
+Look up for similar tickets using the tittle and the description ("Errors occurred during ship confirmation processing") and attachment if any ("There are no staged shipment line(s) for the transfer order") that has at least 1 comment. And see who was assigned, if it had comments, anything that give a glimpse of how this was solved.
+
 Do not execute the solution without user authorization, lay out your plan instead.
 -
 For each  ticket, look up for similar ticket using the tittle and the description. And see who was assigned, if it had comments, anything that give a glimpse of how this was solved.
 Do not execute the solution without user authorization, lay out your plan instead.
 
+---
+The ticket was reprocessed, can you mark the ticket as REJECTED and add a comment stating it was reprocessed, before applying send me the coment you are going to use. Apply the same process for the 26 remaining tickets with same error "There are no staged lines to process for Transfer Order" from yesterday between 5pm-6pm gmt-5
 ---
 for each one, give me who will be the possible owner? e.g. the main author or the one who has more lines modified in git
 ---
@@ -47,6 +59,7 @@ From:
 @chat-id
 Look up similar ticket for OEH-68165 (using the tittle and the description with text: "Error receiving order number: XXX and shipment number: XXX.").
 And see who was assigned, if it had comments, anything that give a glimpse of how this was solved.
+
 ---
 From: chat
  
@@ -62,8 +75,10 @@ see @on-call-agent/skills/erp-skill/SKILL.md
 ## GL-I-1060 Payroll to Anaplan
 
 - file should exist on S3 
-	- https://us-east-1.console.aws.amazon.com/s3/buckets/wp-payroll-to-anaplan-prod?region=us-east-1&prefix=Archive/&showversions=false
+	- https://us-east-1.console.aws.amazon.com/s3/buckets/wp-payroll-to-anaplan-prod?region=us-east-1&prefix=Out/&showversions=false
 - retry may succeed (process run at 6AM/6PM)
+- comment https://warbyparker.atlassian.net/browse/OEH-68216:
+	- File was updated today.
 - old tickets:
 
 | Ticket                                                          | Status   | Assignee                            | How it was “solved”                                                                |
@@ -77,7 +92,8 @@ see @on-call-agent/skills/erp-skill/SKILL.md
 
 ## WMS-I-1001 Oracle to SCALE WMS Items Outbound
 
-- UPC `9000000000001` is an intended inactive item so it is not synced to SCALE, stated by Alexis here: https://warbyparker.atlassian.net/browse/OEH-67855?focusedCommentId=906458
+- comment https://warbyparker.atlassian.net/browse/OEH-68217:
+	- UPC `9000000000001` is an intended inactive item so it is not synced to SCALE, stated by Alexis here: https://warbyparker.atlassian.net/browse/OEH-67855?focusedCommentId=906458
 
 ## IN-I-2017A Fedex Warehouse Transactions Receiving Inbound
 
@@ -147,15 +163,110 @@ jq '
 Integration actively running every ~10 minute. Recovery confirmed on next clean run. No data loss.
 
 
+## IN-I-2048B Inbound IOT to Oracle ASN
+
+- Review the CSV and check if data is valid
+
+## IN-I-2017B Fedex Warehouse - Pick Ship Confirm Inbound
+
+- Gabriel: 
+	- entonces falta el pick confirm en todas ellas
+	- Yep todas estan en ready to release
+	- bueno de ahí reviso, si recibimos el mensaje de pick para esas ordenes
+	- parece que si recibimos :open_mouth:
+	- Ya estoy descargando todos los archivos del pick confirm para poder reprocesarlos
+	- Confirmado que tenemos todos los pick requests
+	- hare un reintento con el primero a ver que tal nos va
+	- funcionó sin problemas
+	- es solo de reprocesarlos
+	- no hay nada que corregir, dame un seg ya envio todos los pick y ship conf, tengo un script para eso
+	- solo me falta ajustar un par de cosas
+	- me: eso es todo?
+	- son los picks, de aqui vienen los ships
+	- ahí si los podemos cerrar
+- comment https://warbyparker.atlassian.net/browse/OEH-68261:
+	- "Transfer Order 1112297 successfully reprocessed."
+
+| Status                | Plain meaning                                                            |
+| --------------------- | ------------------------------------------------------------------------ |
+| Ready to release      | Oracle knows about the line; warehouse/FedEx flow not really started yet |
+| Released to warehouse | Oracle released the line to the warehouse; pick can be recorded          |
+| Staged                | Pick confirmed in Oracle; ready for ship confirm                         |
+| Interfaced            | Ship confirmed; Oracle considers it fully shipped for this integration   |
+
+Pick confirm = FedEx says “we picked it” → Oracle prepares lines for shipping (Staged).  
+Ship confirm = FedEx says “we shipped it” → Oracle closes the shipment (Interfaced).  
+Ship cannot run before pick (and staging) succeeds.
+
+## WMS-I-1041 Breakage Notification from LMS to Springfield
+
+### File located at '...' could not be moved to '...'.
+
+- check if file is already on Archive:
+	- https://us-east-1.console.aws.amazon.com/s3/buckets/transfer-prod-data?region=us-east-1&prefix=vendors%2Finnovations_lms%2FArchive%2FLLAS%2F20260519%2F&showversions=false&tab=objects
+- confirm there was a second try that failed:
+	- `https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#logsV2:logs-insights$3FqueryDetail$3D~(end~'2026-05-20T04*3a59*3a59.000Z~start~'2026-05-19T05*3a00*3a00.000Z~timeType~'ABSOLUTE~tz~'LOCAL~editorString~'fields*20*40timestamp*2c*20*40message*2c*20*40logStream*2c*20*40log*0a*7c*20filter*20*40message*20like*20*2fAttempting*20to*20move*20file*20from*20*27vendors*5c*2finnovations_lms*5c*2fOut*5c*2fLLAS*5c*2fLV3K3N2Q5-LV3K3N2Q5-1.RXT*27*2f*0a*7c*20sort*20*40timestamp*20desc*0a*7c*20limit*201000~queryId~'46175e02-b93a-4886-9d32-da2f3e50996c~source~(~'*2faws*2flambda*2foic-monocle-integrations-events_handler_lambda-prod-us-east-1~'*2faws*2flambda*2foic-monocle-integrations-lambda-prod-us-east-1)~lang~'CWLI~logClass~'STANDARD~queryBy~'logGroupName)`
+- comment from https://warbyparker.atlassian.net/browse/OEH-68209:
+	- "This is the second try. First try was successful."
+
 ## WMS-I-1009 SCALE WMS to Oracle Inv Transactions Inbound
+
+### Negative inventory
 
 - NOTE: this is related to NEGATIVE inventory
 - TO CONFIRM: solved automatically every day at 8am / or someone did run a script. This comment was added:
 
 Andrew’s team will handle the transactions with the negative inventory balances error [as part of the monthly close process]([https://warbyparker.atlassian.net/browse/OEH-33303?focusedCommentId=801660](https://warbyparker.atlassian.net/browse/OEH-33303?focusedCommentId=801660 "https://warbyparker.atlassian.net/browse/OEH-33303?focusedCommentId=801660")). Therefore, this ticket can be marked as REJECTED.
+### Invalid product code
 
+- check: https://warbyparker.atlassian.net/browse/OEH-68201
+- - Invalid product code — no product identifier found in Oracle
+- notify andrew
+- message:
+```
+- **Error:** Invalid product code — no product identifier found in Oracle
+    
+- **UPC/OPC:** `846864059019`
+    
+- **Warehouse:** LLAS
+  
+Similar to [OEH-67327: Error|prod|Non-Payables|WP WMS-I-1009 SCALE WMS to Oracle Inv Transactions Inbound|2ec35a96-fec3-44a3-85e4-c84f651a8d1dRejected](https://warbyparker.atlassian.net/browse/OEH-67327) :  
+  
+@Andrew Galloway @Alexis Tomacruz, could you please confirm whether that product code has already been updated in Oracle? If so, could you share the new value so we can manually update the WMS file we received and reprocess only the transaction involved in this incident?
+```
 
-## WP IN-I-2048B Inbound IOT to Oracle ASN
+## Oracle ERP to Coupa COA Integration
 
-- Review the CSV and check if data is valid
-- 
+JQL used: `project = OEH AND summary ~ "Coupa COA"` (15 hits; filtered to those with comments).
+
+|Ticket|Status|Assignee|How it was solved|
+|---|---|---|---|
+|[OEH-67733](https://warbyparker.atlassian.net/browse/OEH-67733) (May 6)|Rejected|Tony Huang|Same CSV pattern (4 malls). Tony: _“AP confirm these facilities are present on coupa, we can close out”_|
+|[OEH-67293](https://warbyparker.atlassian.net/browse/OEH-67293)|Resolved|Marcos Hernandez|@Sean Jung — facilities listed; Sean: all exist in Coupa|
+|[OEH-65625](https://warbyparker.atlassian.net/browse/OEH-65625)|Resolved|Miguel Munoz|Same loop with Sean Jung|
+|[OEH-65057](https://warbyparker.atlassian.net/browse/OEH-65057)|Resolved|Josue Cando|Sean: facilities already exist|
+|[OEH-62428](https://warbyparker.atlassian.net/browse/OEH-62428)|Rejected|Marcos Hernandez|_“These facilities exist in Coup…”_ — close for that reason|
+|[OEH-62292](https://warbyparker.atlassian.net/browse/OEH-62292)|Resolved|Miguel Munoz|Exception: naming ambiguity (Union Square CA vs NY) — not a simple “already exists”|
+- message https://warbyparker.atlassian.net/browse/OEH-68218:
+```
+Hi @Sean Jung ! Could you kindly help us check if the following facilities were created in Coupa? Thanks in advance for your help  
+
+`Cary Court Liberty Center Orchard Town Center Woodbury Lakes`
+
+cc: @Tony Huang
+```
+
+## WMS-I-1006 Ship Confirmation from WMS to Oracle/Springfield/LMS
+
+- lookup in cloudwatch logs:
+- `monocle_integrations/_api/_routes/_pick_ship_confirm/_scale_wms_pick_confirmation_routes.py`
+```
+WMS-I-1005
+Transfer Orders: 1, Sales Orders (ERP pick required): 0, Sales Orders (fulfillment only): 0
+Processing pick confirmation for order number: 1112364
+Oracle Reader - Requested shipment lines for order '1112364' with OrderTypeCode='TRANSFER_ORDER'
+...
+Successfully processed pick confirmation for order: 1112364
+...
+File created: scale_pick_conf_05212026170402_8590b819-8d23-4e97-abcf-f1839753fbe8.json in vendors/Manhattan/WMS-I-1005/Archive/05212026
+```

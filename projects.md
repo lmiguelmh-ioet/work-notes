@@ -6,6 +6,10 @@
 	- ?
 - each one of these projects must have a CURL to the Oracle 
 
+Ser padre me ha enseñado que existe un nuevo sentido a la vida.
+Que entre momentos dulces y salados, uno encuentra dicha y felicidad.
+
+
 
 ## ON-CALL: MAY18-MAY25
 ### MAY18
@@ -63,7 +67,7 @@ $(aws2 configure export-credentials --profile oic --format env)
 
 curl -v -X POST 'https://sjlqdgbb5mesmduz4pw5oj6fsa0ykkxk.lambda-url.us-east-1.on.aws/ar/credit-memo-processing' -H "x-amz-security-token: ${AWS_SESSION_TOKEN}" --aws-sigv4 "aws:amz:us-east-1:lambda" --user "${AWS_ACCESS_KEY_ID}:${AWS_SECRET_ACCESS_KEY}" -H 'Content-Type: application/json' -d '{"start_date" : "2026-04-01T00:00:00", "end_date": "2026-05-15T00:00:00"}'
 
-curl -v -X POST 'https://sjlqdgbb5mesmduz4pw5oj6fsa0ykkxk.lambda-url.us-east-1.on.aws/ar/credit-memo-processing' -H "x-amz-security-token: ${AWS_SESSION_TOKEN}" --aws-sigv4 "aws:amz:us-east-1:lambda" --user "${AWS_ACCESS_KEY_ID}:${AWS_SECRET_ACCESS_KEY}" -H 'Content-Type: application/json' -d '{"credit_memo_trx_numbers" : ["CM_Refund_Test1"]}'  -- 300000820155229
+curl -v -X POST 'https://sjlqdgbb5mesmduz4pw5oj6fsa0ykkxk.lambda-url.us-east-1.on.aws/ar/credit-memo-processing' -H "x-amz-security-token: ${AWS_SESSION_TOKEN}" --aws-sigv4 "aws:amz:us-east-1:lambda" --user "${AWS_ACCESS_KEY_ID}:${AWS_SECRET_ACCESS_KEY}" -H 'Content-Type: application/json' -d '{"credit_memo_trx_numbers" : ["1001"]}'  -- 1001 / 300000820155229 / CM_Refund_Test1
 ```
 - notes
 	- Credit memo number  e invoice tienen el mismo transaction reference

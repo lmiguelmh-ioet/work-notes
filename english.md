@@ -823,5 +823,5 @@ Important Reminder: Bring extra cash if you want to take other activities (kayak
 	- NO: has out work cut out for us -> A LOT OF WORK BUT SOME OF THEM IS DIFFICULT -> the first one fits better
 - thrown in the deep end
 - have our work cut out
-- to cut corners
+- to cut cornersr
 - lot of plate
