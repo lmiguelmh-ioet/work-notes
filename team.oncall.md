@@ -36,7 +36,8 @@ Get me the NOT STARTED tickets since start of week on Monday. Additionally, add 
 Can you investigate further, try to find the root cause for each problem, and if possible propose a solution
 -
 For each  ticket, can you investigate further, try to find the root cause for each problem, and if possible propose a solution.
-Look up for similar tickets using the tittle and the description that has at least 1 comment. And see who was assigned, if it had comments, anything that give a glimpse of how this was solved.
+Look up for similar tickets using the tittle and the description that has at least 1 comment. And see who was assigned, if it had comments, anything that give a glimpse of how this was solved. 
+For your working and thought proccess, create a directory for it and put it whatever you consider necessary.
 Do not execute the solution without user authorization, lay out your plan instead.
 - 
 Regarding OEH-68225:
@@ -44,10 +45,11 @@ Regarding OEH-68225:
 Can you investigate further, try to find the root cause for each problem, and if possible propose a solution.
 
 Look up for similar tickets using the tittle and the description ("Errors occurred during ship confirmation processing") and attachment if any ("There are no staged shipment line(s) for the transfer order") that has at least 1 comment. And see who was assigned, if it had comments, anything that give a glimpse of how this was solved.
-
+For your working and thought proccess, create a directory for it and put it whatever you consider necessary.
 Do not execute the solution without user authorization, lay out your plan instead.
 -
 For each  ticket, look up for similar ticket using the tittle and the description. And see who was assigned, if it had comments, anything that give a glimpse of how this was solved.
+For your working and thought proccess, create a directory for it and put it whatever you consider necessary.
 Do not execute the solution without user authorization, lay out your plan instead.
 
 ---
@@ -258,6 +260,10 @@ cc: @Tony Huang
 
 ## WMS-I-1006 Ship Confirmation from WMS to Oracle/Springfield/LMS
 
+- ?
+
+## WMS-I-1005 failed or not called (happens!)
+
 - lookup in cloudwatch logs:
 - `monocle_integrations/_api/_routes/_pick_ship_confirm/_scale_wms_pick_confirmation_routes.py`
 ```
@@ -270,3 +276,24 @@ Successfully processed pick confirmation for order: 1112364
 ...
 File created: scale_pick_conf_05212026170402_8590b819-8d23-4e97-abcf-f1839753fbe8.json in vendors/Manhattan/WMS-I-1005/Archive/05212026
 ```
+- message https://warbyparker.atlassian.net/browse/OEH-65462
+	- ask for payload
+
+
+## IN-I-2043 Case Optics To Oracle ASN - Inbound
+
+- old tickets
+
+| Ticket                                                          | Integration        | Assignee         | Resolution pattern                                                                  |
+| --------------------------------------------------------------- | ------------------ | ---------------- | ----------------------------------------------------------------------------------- |
+| [OEH-67070](https://warbyparker.atlassian.net/browse/OEH-67070) | IN-I-2043          | Miguel Munoz     | Same error for `PO3131`; reprocessed → “ASN reprocessed successfully”               |
+| [OEH-67033](https://warbyparker.atlassian.net/browse/OEH-67033) | IN-I-2043          | Miguel Munoz     | Shipment reprocessed successfully                                                   |
+| [OEH-65325](https://warbyparker.atlassian.net/browse/OEH-65325) | IN-I-2043          | Johnny Coral     | “Reprocessed and shipment created” → Rejected                                       |
+| [OEH-54380](https://warbyparker.atlassian.net/browse/OEH-54380) | IN-I-2043          | Jerson Morocho   | Re-ran with file → ASN created                                                      |
+| [OEH-67191](https://warbyparker.atlassian.net/browse/OEH-67191) | (missing shipment) | Alexis Tomacruz  | ASN file reprocessed                                                                |
+| [OEH-18357](https://warbyparker.atlassian.net/browse/OEH-18357) | IN-I-2043          | —                | Diego Pardo: line missing at first run; later run fully shipped → close as expected |
+| [OEH-14999](https://warbyparker.atlassian.net/browse/OEH-14999) | IN-I-2043          | —                | Kaio Amaral: “PO line number missing, this is normal behavior”                      |
+| [OEH-64911](https://warbyparker.atlassian.net/browse/OEH-64911) | IN-I-2043          | Marcos Hernandez | Rejected — PO already fully shipped                                                 |
+| [OEH-61505](https://warbyparker.atlassian.net/browse/OEH-61505) | IN-I-2048 (SOMO)   | Emilio Lopez     | Different integration; PO re-processed after fix elsewhere                          |
+- 
+
