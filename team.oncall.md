@@ -1,5 +1,6 @@
 # On-Call OEH
 
+- "Hunter is working on Roosevelt only and should not be tagged in prod issues, @Hunter Governale please disregard"
 - status flow
 	- ![](assets/Pasted%20image%2020260521111558.png)
 - On call google sheet instructions: 
@@ -23,15 +24,25 @@
 	- https://github.com/WarbyParker/monocle_integrations/tree/on-call-agent
 - Tablero OEH:
 	- https://warbyparker.atlassian.net/jira/software/c/projects/OEH/issues?jql=project%20%3D%20%22OEH%22%20ORDER%20BY%20created%20DESC
+	- https://warbyparker.atlassian.net/jira/software/c/projects/OEH/issues?jql=project%20%3D%20%22OEH%22%20AND%20created%20%3E%3D%20%222026-05-18%22%20AND%20created%20%3C%3D%20%222026-05-25%22%20ORDER%20BY%20created%20DESC
 - Gabriel:
 	- El objetivo es que tomes ownership de todo lo que salga en el tablero de OEH que este involucrado a nuestra integración
 	- Eso no significa que debas arreglar absolutamente todo, hay varios casos que el equipo te puede ayudar y ya sabe como hacerlo
-- Prompts inside the on-call-agent:
+
+ ## PROMPTS
 
 ```
 Get me the NOT STARTED tickets for today, yesterday and the day before yesterday. Additionally, add a list of tickets (hiperlinked) each one with its title (sorted from oldest to recent).
 -
 Get me the NOT STARTED tickets since start of week on Monday. Additionally, add a list of tickets (hiperlinked) each one with its title (sorted from oldest to recent).
+---
+Regarding OEH-68321:
+Find similar issues with similar:
+- status: REJECTED/RESOLVED
+- title: WP WMS-I-1009 SCALE WMS to Oracle Inv Transactions Inbound
+- desc: The inventory transaction import process in Oracle has failed
+- at least one attachment that contains: Negative inventory balances are not allowed in this organization.
+Last 10 tickets.
 ---
 Can you investigate further, try to find the root cause for each problem, and if possible propose a solution
 -
@@ -100,15 +111,48 @@ see @on-call-agent/skills/erp-skill/SKILL.md
 ## IN-I-2017A Fedex Warehouse Transactions Receiving Inbound
 
 ```
-Jira  → order 1101961, shipment 1421164
-          ↓
-S3 FedEx JSON  → customerASNNumber: "TO_1421164"
-                 purchaseOrderNumber: "1101961" (on each line)
-                 item: "846864054298" / "846864054915"  ← what I called “FedEx UPC”
-          ↓
-Oracle inboundShipments  → ShipmentNumber 1421164, TransferOrderNumber 1101961
-                           ItemNumber 10001221 / 10001218
+For OEH-68312 ticket:
 
+1. create ./tmp/{TICKET} and use it as working directory
+2. read the ticket including description
+3. fetch inbound shipment lines and save the complete payload `oracle_inboundShipments_{ORDER_NUMBER}.json`: GET /fscmRestApi/resources/11.13.18.05/inboundShipments?finder=findByOrgOrderSupplierShipment;bindTONumber={ORDER_NUMBER}&expand=all
+	- e.g. https://fa-evdi-saasfaprod1.fa.ocs.oraclecloud.com:443/fscmRestApi/resources/11.13.18.05/inboundShipments?expand=all&finder=findByOrgOrderSupplierShipment%3BbindTONumber%3D1101961
+	- run to generate a summary: jq '
+  .items[] | {
+    ShipmentNumber,
+    ShipmentHeaderId,
+    ReceiptNumber,
+    HeaderInterfaceId,
+    TransferOrderNumber: (.shipmentLines.items[0].TransferOrderNumber // null),
+    line_count: (.shipmentLines.items | length),
+    all_fully_received: ([.shipmentLines.items[].ShipmentLineStatusCode] | all(. == "FULLY RECEIVED")),
+    not_fully_received: [.shipmentLines.items[] | select(.ShipmentLineStatusCode != "FULLY RECEIVED") | {
+      ShipmentLineId,
+      ItemNumber,
+      ShipmentLineStatus,
+      ShipmentLineStatusCode,
+      QuantityShipped,
+      QuantityReceived,
+      qty_remaining: (.QuantityShipped - .QuantityReceived)
+    }]
+  }
+'
+4. Download FedEx receipt confirm payload from S3 (vendors/OIC-Proxy/IN-I-2017A/Errors/fedex_receipts_receipt_confirm_TO_{SHIPMENT_NUMBER}_???.json)
+	- use the wp profile and device-code to login if needed
+	- use stdout to communicate with awscli
+	- list using the full prefix (not the directory)
+	- use the same name for the file in disk
+5. Check if ALL lines are 'Fully received' in the inboundShipments file, if true receipt already completed. DONE.
+6. If not, make a summary of the lines, status, item numbers and other important information. Include the itemNumbers separated by commas.
+7. Wait for the user to give the UPCs and use it to find and compare received quantities per item between FedEx payload and Oracle.
+8. Give a final summary like the following:
+
+44/45 inbound lines Fully received; 1 line Expected.
+1. Line ERP: `ShipmentLineId` 11099362 / FedEx: `lineNumber` 4:
+    - ERP: Item 10001305 - shipped 1, received 0.
+    - FedEx: UPC 846864069308 - shipped 0, received 2.
+
+---
 
 Check inbound shipment line statuses in Oracle:  
 1. Fetch inbound shipment lines: GET /fscmRestApi/resources/11.13.18.05/inboundShipments?finder=findByOrgOrderSupplierShipment;bindTONumber={ORDER_NUMBER}&expand=all
@@ -218,7 +262,7 @@ Ship cannot run before pick (and staging) succeeds.
 - NOTE: this is related to NEGATIVE inventory
 - TO CONFIRM: solved automatically every day at 8am / or someone did run a script. This comment was added:
 
-Andrew’s team will handle the transactions with the negative inventory balances error [as part of the monthly close process]([https://warbyparker.atlassian.net/browse/OEH-33303?focusedCommentId=801660](https://warbyparker.atlassian.net/browse/OEH-33303?focusedCommentId=801660 "https://warbyparker.atlassian.net/browse/OEH-33303?focusedCommentId=801660")). Therefore, this ticket can be marked as REJECTED.
+Andrew’s team will handle the transactions with the negative inventory balances error [as part of the monthly close process](https://warbyparker.atlassian.net/browse/OEH-33303?focusedCommentId=801660). Therefore, this ticket can be marked as REJECTED.
 ### Invalid product code
 
 - check: https://warbyparker.atlassian.net/browse/OEH-68201
@@ -264,6 +308,8 @@ cc: @Tony Huang
 
 ## WMS-I-1005 failed or not called (happens!)
 
+- s3
+	- https://us-east-1.console.aws.amazon.com/s3/buckets/transfer-prod-data?region=us-east-1&prefix=vendors/Manhattan/WMS-I-1005/&showversions=false
 - lookup in cloudwatch logs:
 - `monocle_integrations/_api/_routes/_pick_ship_confirm/_scale_wms_pick_confirmation_routes.py`
 ```
@@ -282,6 +328,12 @@ File created: scale_pick_conf_05212026170402_8590b819-8d23-4e97-abcf-f1839753fbe
 
 ## IN-I-2043 Case Optics To Oracle ASN - Inbound
 
+- S3:
+	- https://us-east-1.console.aws.amazon.com/s3/buckets/transfer-prod-data?region=us-east-1&prefix=vendors/case_optics/In/&showversions=false
+- Purchase orders:
+	- Home > Procurement > Purcharse Orders: Search icon, choose Orders, write PO3180
+
+### PO line number is missing
 - old tickets
 
 | Ticket                                                          | Integration        | Assignee         | Resolution pattern                                                                  |
@@ -295,5 +347,35 @@ File created: scale_pick_conf_05212026170402_8590b819-8d23-4e97-abcf-f1839753fbe
 | [OEH-14999](https://warbyparker.atlassian.net/browse/OEH-14999) | IN-I-2043          | —                | Kaio Amaral: “PO line number missing, this is normal behavior”                      |
 | [OEH-64911](https://warbyparker.atlassian.net/browse/OEH-64911) | IN-I-2043          | Marcos Hernandez | Rejected — PO already fully shipped                                                 |
 | [OEH-61505](https://warbyparker.atlassian.net/browse/OEH-61505) | IN-I-2048 (SOMO)   | Emilio Lopez     | Different integration; PO re-processed after fix elsewhere                          |
-- 
+- steps
+	- copy the file from error to In
+	- run the OIC integration
+	- wait ~10 minutes, 
+	- ERP: In purchase order, View Details, shipped should be moving in quantity until reach the same height as ordered, invoiced
+- message https://warbyparker.atlassian.net/browse/OEH-68263:
+	- Attempting to re-process using this file: ...
 
+
+## WMS-I-1031 Production Status Updates from LMS to WMS/Springfield
+
+- Check if file is in Archive, JUST REPLACE Out FOR Archive AND VERIFY IF EXIST (DO NOT ADD 20260521 IN THE PATH!!!)
+- S3:
+	- 
+- https://warbyparker.atlassian.net/browse/OEH-68273
+	- Duplicate S3 event (NoSuchKey). File already processed and present under `vendors/innovations_lms/Archive/`.
+
+## IN-I-2055 Oracle ERP to Fedex TO Outbound
+
+- see excel
+- "This is a transient error that occurs when calling the report. This integration run every 10 minutes. A sequential run was successful so no further action is required."
+
+## WMS-I-1003 Oracle to SCALE WMS Inbound TO ASNs
+
+- see excel
+- "This is a transient error that occurs when calling the report. This integration run every 10 minutes. A sequential run was successful so no further action is required."
+
+## ERP to Anaplan PO Sync
+
+- S3:
+	- https://us-east-1.console.aws.amazon.com/s3/buckets/wp-oracle-anaplan-datahub-prod?region=us-east-1&prefix=Out/&showversions=false
+- 

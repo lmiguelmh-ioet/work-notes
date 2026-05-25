@@ -159,7 +159,7 @@ description = "My description"  # ✅ OK to edit directly
 /aws/lambda/oic-monocle-integrations-events_handler_lambda-stage-us-east-1
 ---
 fields @timestamp, @message, @logStream, @log
-| filter @message like /MFG-I-3021/
+| filter @message like /MFG-I-3021|3020/
 | sort @timestamp desc
 | limit 1000
 ```
