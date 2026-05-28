@@ -291,10 +291,11 @@ Astrid:
 - 2017
 Emilio:
 - PM / BA / in charge of some PMs
-- 2021
+- 2021 IOET
 - different projects from WP
 Gabriel: 
 - Tech lead
+- 5 years in IOET
 Ariel:
 - Developer
 - 3 years
@@ -304,8 +305,10 @@ Jerson:
 - ~2021
 - They started the team with Gabo and Emi
 - Ecuador, Loja
-Johnny: developer 3 months
+Johnny:
+- developer
 - started 
+- Loja
 - 7 months ()
 Marcos:
 - dev
@@ -316,7 +319,7 @@ Michael: 4 years
 - live in Quito
 Miguel:
 - dev
-- 2024
+- 2023-2024
 - Ecuador
 Josué:
 - Yos Yoshua 
@@ -328,10 +331,11 @@ Kaio:
 - QA 
 - ~2023
 - Brazil
-Rocio: Arg
+Rocio:
 - works for WP (business analyst)
 - 2025
-- Argentina
+- Argentina, Buenos Aires
+- 4 years with Oracle
 - she can give us permission to roles
 - she can send Oracle questions
 Justo: 
@@ -340,9 +344,13 @@ Justo:
 Leonor
 - dev
 - 05/2026
+- Paraguay
 - comes from Kyzen
 - ?
-
+Guillermo
+- Chile
+- IOET 2025/01 (1.5 years)
+- 5-6 years experience
 
 - top-performer
 	- 1 Ariel - bueno técnicamente

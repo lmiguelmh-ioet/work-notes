@@ -12,39 +12,14 @@ Que entre momentos dulces y salados, uno encuentra dicha y felicidad.
 
 
 ## ON-CALL: MAY18-MAY25
-### MAY18
-- [x] [OEH-68166](https://warbyparker.atlassian.net/browse/OEH-68166) — Error|prod|Non-Payables|WP WMS-I-1009 SCALE WMS to Oracle Inv Transactions Inbound|lwwzalLFEfGwnImYdwL8Rw
-	- assigned to Josue
-- [x] [OEH-68165](https://warbyparker.atlassian.net/browse/OEH-68165) — Error|prod|Non-Payables|IN-I-2017A Fedex Warehouse Transactions Receiving Inbound|82109c93-4314-498b-8934-cf40ad3cfca5
-	- on review - rejected
-- [x] [OEH-68164](https://warbyparker.atlassian.net/browse/OEH-68164) — Error|prod|Non-Payables|WP WMS-I-1009 SCALE WMS to Oracle Inv Transactions Inbound|M-yBOFK9EfGsSK3kcBpqQA
-	- assigned to Josue
-- [x] [OEH-68162](https://warbyparker.atlassian.net/browse/OEH-68162) — Error|prod|Non-Payables|WP WMS-I-1001 Oracle to SCALE WMS Items Outbound|kIftYlG6EfGRRCGvOXmT4w
-	- on review - rejected
-- [x] [OEH-68161](https://warbyparker.atlassian.net/browse/OEH-68161) — Error|prod|Non-Payables|WP GL-I-1060 Payroll to Anaplan|0ZyKB1J-EfG5FrXjBi66GQ
-	- on review - rejected
-- [ ] [OEH-68170](https://warbyparker.atlassian.net/browse/OEH-68170) — Error|prod|Non-Payables|IN-I-2017A Fedex Warehouse Transactions Receiving Inbound|abedde12-df50-4051-9e49-05e815ca1398
-	- on review
-- [x] [OEH-68172](https://warbyparker.atlassian.net/browse/OEH-68172) — Error|prod|Non-Payables|WMS-I-1038 Oracle to SCALE WMS Deleted Transfer Orders Out|gcRRUlLeEfGmDlncoSI4Zw
-	- automatically closed
-- [x] [OEH-68173](https://warbyparker.atlassian.net/browse/OEH-68173) — Error|prod|Non-Payables|WP WMS-I-1009 SCALE WMS to Oracle Inv Transactions Inbound|h8wsLlLhEfGwnImYdwL8Rw
-	- automatically closed
-### MAY19
-
-- [OEH-68192](https://warbyparker.atlassian.net/browse/OEH-68192) | Error\|prod\|Non-Payables\|WP WMS-I-1009 SCALE WMS to Oracle Inv Transactions Inbound\|yIrZFVOOEfGwnImYdwL8Rw
-	- 
-- [OEH-68184](https://warbyparker.atlassian.net/browse/OEH-68184) | Error\|prod\|Non-Payables\|WP WMS-I-1001 Oracle to SCALE WMS Items Outbound\|tHrc1lKDEfGRRCGvOXmT4w
-	- 
-- [OEH-68181](https://warbyparker.atlassian.net/browse/OEH-68181) | Error\|prod\|Non-Payables\|WP IN-I-2048B Inbound IOT to Oracle ASN\|b687f7aa-609b-4b49-bf6e-38b27b4b7b2a
-	- 
-- [OEH-68180](https://warbyparker.atlassian.net/browse/OEH-68180) | Error\|prod\|Non-Payables\|WP IN-I-2048B Inbound IOT to Oracle ASN\|ca036ae9-2e63-406d-9115-3e3626611fdf
-	- 
+- 10 tickets on hold
 
 ## OM-I-3015 – Create EasyPost Adapter to Create and Retrieve Trackers
 - tickets:
 	- adapter: https://warbyparker.atlassian.net/browse/OTCM-115284
 - docs:
-	- joshua: 
+	- joshua&luis abrie: 
+		- [day-20260508](day/day-20260508.md)
 	- easypost: 
 		- https://docs.easypost.com/docs/trackers
 		- https://docs.easypost.com/guides/tracking-guide

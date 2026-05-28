@@ -2,9 +2,10 @@
 
 - "Hunter is working on Roosevelt only and should not be tagged in prod issues, @Hunter Governale please disregard"
 - status flow
-	- ![](assets/Pasted%20image%2020260521111558.png)
-- On call google sheet instructions: 
+- On call google instructions: 
 	- https://docs.google.com/spreadsheets/d/1np28IorbDKbEWFQo-hn-a4TGyz7jqHbSCaT48b66U6k/edit?gid=0#gid=0
+	- https://warbyparker.atlassian.net/wiki/spaces/OT/pages/7726531192/Common+Oracle+Integration+On-Call+Issues
+	- https://uncovered-harp-6f7.notion.site/Tony-Hands-off-notes-2ed3bf22ce4b807b8842c7d84852d9a2
 
 - Github tree with Ariel scripts:
 	- https://github.com/WarbyParker/monocle_integrations/pull/1924
@@ -110,6 +111,50 @@ see @on-call-agent/skills/erp-skill/SKILL.md
 
 ## IN-I-2017A Fedex Warehouse Transactions Receiving Inbound
 
+### Cases
+- received quantities match:
+	- https://warbyparker.atlassian.net/browse/OEH-65121
+		- Item 10000781: status 'Expected', this is ok — item is not in the FedEx payload, meaning FedEx did not send this item. Received quantity is 0 on both sides.
+		- The received quantities in the FedEx payload and Oracle match. No manual intervention required.
+	- https://warbyparker.atlassian.net/browse/OEH-65165
+		- Item 1158506: status 'Expected', this is ok — item is not in the FedEx payload, meaning FedEx did not send this item. Received quantity is 0 on both sides.
+		- Item 1504640 (OPC 846864060589): status 'Partially received', this is ok — FedEx only sends the received quantities. Received quantities in the payload sent by FedEx (3) and Oracle (3) match.
+- integration triggered twice:
+	- https://warbyparker.atlassian.net/browse/OEH-65344
+		- second attempt fails with: Oracle rejected it with `RCV_ASN_SHIPMT_NOT_OPEN`_: "You cannot receive the PO shipment 3 because it is not open.", as it was already received in the first attempt._
+- received quantities don't match:
+	- https://warbyparker.atlassian.net/browse/OEH-67976
+		- reprocessed
+	- https://warbyparker.atlassian.net/browse/OEH-67974
+		- reprocessed
+	- https://warbyparker.atlassian.net/browse/OEH-67981
+		- reprocessed
+	- https://warbyparker.atlassian.net/browse/OEH-67984
+		- reprocessed
+- duplicated entry for item
+	- https://warbyparker.atlassian.net/browse/OEH-68054
+		- reprocessed
+- PO closed: Goods Closure Error in Put Away for Transfer Order
+	- https://warbyparker.atlassian.net/browse/OEH-66998
+	- https://warbyparker.atlassian.net/browse/OEH-65095
+- Over-receipt:
+	- https://warbyparker.atlassian.net/browse/OEH-58407
+- Fully received:
+	- https://warbyparker.atlassian.net/browse/OEH-65073
+	- https://warbyparker.atlassian.net/browse/OEH-65054
+- Header error: "You must enter a transaction quantity that's up to the available quantity of 1"/"There is no quantity to be processed for this transaction"
+	- https://warbyparker.atlassian.net/browse/OEH-68329
+		- MINE
+	- https://warbyparker.atlassian.net/browse/OEH-58563
+		- Contacting FedEx Adding @Chelsey Almonte (previouly Danna Williams)
+	- https://warbyparker.atlassian.net/browse/OEH-58564
+		- Contacting @Chelsey Almonte (previouly Danna Williams)
+	- https://warbyparker.atlassian.net/browse/OEH-58569
+		- Contacting @Chelsey Almonte (previouly Danna Williams)
+	- https://warbyparker.atlassian.net/browse/OEH-58573
+		- Contacting @Chelsey Almonte (previouly Danna Williams)
+
+### Instructions
 ```
 For OEH-68312 ticket:
 
@@ -190,7 +235,34 @@ jq '
 7. If quantities mismatch → ticket needs manual attention
 - in a case reprocessing with (beware there are two integrations with the name 2017As):
 	  "WPIN-I-2017A Receipts Fedex Inbound OrchestratorV1 (1.0.1)"
+---
+
+CASO Uccuco
+2008->2012->2047  
+Creacion de PO->Creacion de Shipment-> Receiving
+
+CASO Fedex
+pasos anteriores:
+1. ? 2017B : pick + ship
+2. ?
+
+confirmar en 2 pasos:
+- contabilizar: RECEIPT_CONFIRMATION (receipt)
+- mover a destino: GOODS_CLOSURE  (put away)
+
+falta: llamar a un reporte para obtener los errores
+WP IN Get Errored PO Recepits Report (uses for TOs, SOs, etc)
+- purge the tablas interface (por el error de 404)
+- reprocesar el registro para obtener el error
+
+- no puedes hacer la recepción si no hay un envío
+
+CASO WMS
+en 1 paso: via FBDI
+
 ```
+
+![](assets/Pasted%20image%2020260528112837.png)
 
 ## WMS-I-1038 Oracle to SCALE WMS Deleted Transfer Orders Out
 

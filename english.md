@@ -9,8 +9,19 @@
 	- Loja
 - Michael Guanolisa - 4 years
 	- guitar + piano
+- Jerson
+	- 5 years in IOET
+	- 29 years
 - Laura Fleming
 	- Cuenca Ecuador ~ 6 years teaching - business English
+	- 5 years left USA
+	- 3 years working on IOET
+- Melvin Juarez
+	- 29 years
+	- Guatemala
+	- "geek" - books
+	- collector of funko pets
+	- 2-year old girl
 
 # Questions
 
@@ -825,3 +836,32 @@ Important Reminder: Bring extra cash if you want to take other activities (kayak
 - have our work cut out
 - to cut cornersr
 - lot of plate
+
+
+# Class 19 - Melvin enters class
+![](assets/Pasted%20image%2020260527130450.png)
+- "pick Melvin's brain on a topic"
+- ![](assets/Pasted%20image%2020260527131622.png)
+- 1g
+- 2e
+- 3h
+- 4b
+- 5k
+- 6j
+- 7n
+- 8m
+- 9c
+- 10o
+- 11l
+- 12f
+- 13a
+- 14d
+- 15i
+
+![](assets/Pasted%20image%2020260527132829.png)
+- afraid no but cautious
+- Melvin is the most experienced here, I think the leash 
+
+![](assets/Pasted%20image%2020260527135751.png)
+- 
+
