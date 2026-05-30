@@ -9,8 +9,11 @@
 Ser padre me ha enseñado que existe un nuevo sentido a la vida.
 Que entre momentos dulces y salados, uno encuentra dicha y felicidad.
 
+## AP-I-3006 – Create Report and Monocle Reader for Refund Information
 
-
+- query:
+[projects.AP-I-3006](projects.AP-I-3006.md)
+- 
 ## ON-CALL: MAY18-MAY25
 - 10 tickets on hold
 
