@@ -202,7 +202,7 @@ If you have any question or doubt or assumption about anything (including column
 
 ```
 
-## V4 - not validated - simplest!
+## V4 - being validated - simplest!
 
 ```sql
 /*
@@ -213,32 +213,13 @@ WITH eligible_receipt_methods AS (
     SELECT
         rm.receipt_method_id,
         rm.name AS receipt_method_name
-    FROM ar_receipt_methods_vl rm
+    FROM ar_receipt_methods rm
     WHERE rm.name IN (
         'CHASUS-0257-Stripe',
         'ROYCCA-2198-Stripe',
         'CHASUS-0257-PayPal',
         'CHASUS-0257-Affirm'
     )
-),
-cm_transaction_amounts AS (
-    SELECT
-        ctl.customer_trx_id,
-        ctl.org_id,
-        SUM(ctl.extended_amount) AS transaction_amount
-    FROM ra_customer_trx_lines_all ctl
-    GROUP BY
-        ctl.customer_trx_id,
-        ctl.org_id
-),
-unpaid_ap_refunds AS (
-    SELECT
-        aia.invoice_id,
-        aia.invoice_num
-    FROM ap_invoices_all aia
-    WHERE aia.invoice_type_lookup_code = 'PAYMENT REQUEST'
-      AND aia.source = 'Receivables'
-      AND aia.payment_status_flag = 'N'
 ),
 receipt_refunds AS (
     SELECT
@@ -257,8 +238,11 @@ receipt_refunds AS (
             THEN cr.attribute1
         END AS sales_order_payment_id
     FROM ar_receivable_applications_all app
-    INNER JOIN unpaid_ap_refunds ap
-        ON ap.invoice_id = app.application_ref_id               -- confirm APPLICATION_REF_ID vs invoice_num / reference_key1
+    INNER JOIN ap_invoices_all aia
+        ON aia.invoice_id = app.application_ref_id              -- confirm APPLICATION_REF_ID vs invoice_num / reference_key1
+        AND aia.invoice_type_lookup_code = 'PAYMENT REQUEST'
+        AND aia.source = 'Receivables'
+        AND aia.payment_status_flag = 'N'
     INNER JOIN ar_cash_receipts_all cr
         ON cr.cash_receipt_id = app.cash_receipt_id
     INNER JOIN eligible_receipt_methods erm
@@ -269,38 +253,39 @@ receipt_refunds AS (
         ON rem.cash_receipt_id = cr.cash_receipt_id
     WHERE app.application_ref_type = 'AP_REFUND_REQUEST'
       AND app.application_type = 'CASH'                         -- added for clear intent
-      AND app.status = 'APP'                                    -- not in mapping; excludes reversed applications
 ),
 credit_memo_refunds AS (
     SELECT
         bu.bu_name AS business_unit,
-        cm.ct_reference AS sales_order_number,                  -- ra_customer_trx_all.ct_reference; exchange-order / non-insurance method not implemented
+        cm.ct_reference AS sales_order_number,                  -- exchange-order / non-insurance method not implemented
         cm.trx_number AS transaction_number,
         erm.receipt_method_name AS transaction_type,
         cm.trx_date AS transaction_date,
-        cmt.transaction_amount AS transaction_amount,           -- SUM(extended_amount); CM totals often negative
-        cr.currency_code AS currency,
+        (
+            SELECT SUM(ctl.extended_amount)
+            FROM ra_customer_trx_lines_all ctl
+            WHERE ctl.customer_trx_id = cm.customer_trx_id
+              AND ctl.org_id = cm.org_id
+        ) AS transaction_amount,                                -- SUM(extended_amount); CM totals often negative
+        cm.invoice_currency_code AS currency,
         app.amount_applied AS refund_amount,
         app.application_ref_num AS refund_number,
         app.apply_date AS refund_date,
         NULL AS sales_order_payment_id
     FROM ar_receivable_applications_all app
-    INNER JOIN unpaid_ap_refunds ap
-        ON ap.invoice_id = app.application_ref_id
+    INNER JOIN ap_invoices_all aia
+        ON aia.invoice_id = app.application_ref_id              -- confirm APPLICATION_REF_ID vs invoice_num / reference_key1
+        AND aia.invoice_type_lookup_code = 'PAYMENT REQUEST'
+        AND aia.source = 'Receivables'
+        AND aia.payment_status_flag = 'N'
     INNER JOIN ra_customer_trx_all cm
         ON cm.customer_trx_id = app.customer_trx_id
-    INNER JOIN cm_transaction_amounts cmt
-        ON cmt.customer_trx_id = cm.customer_trx_id
-       AND cmt.org_id = cm.org_id
     INNER JOIN fun_all_business_units_v bu
         ON bu.bu_id = cm.org_id
-    INNER JOIN ar_cash_receipts_all cr
-        ON cr.cash_receipt_id = app.cash_receipt_id             -- required to apply receipt-method extraction criteria on CM refunds
     INNER JOIN eligible_receipt_methods erm
-        ON erm.receipt_method_id = cr.receipt_method_id
+        ON erm.receipt_method_id = cm.receipt_method_id
     WHERE app.application_ref_type = 'AP_REFUND_REQUEST'
       AND app.application_type = 'CM'                           -- added for clear intent
-      AND app.status = 'APP'                                    -- not in mapping; excludes reversed applications
 )
 SELECT
     business_unit,
@@ -329,12 +314,11 @@ SELECT
     refund_date,
     sales_order_payment_id
 FROM credit_memo_refunds
-
 ```
 
 
 ## V3 - not validated - complicated
-```
+```sql
 -- AP-I-3006: Initiate B2C Customer Refund in Payment Services
 -- Source: Receivables refunds (AP_REFUND_REQUEST) with AP payment request not yet paid.
 

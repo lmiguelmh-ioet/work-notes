@@ -38,7 +38,12 @@ when its received at store its:
 		- mine: https://github.com/WarbyParker/monocle_integrations/pull/1929
 
 ## Create/add adapter
-- 
+- To create a new adapter
+	- 1. interface + mock
+		- https://github.com/WarbyParker/monocle_integrations/pull/2042
+		- https://github.com/WarbyParker/monocle_integrations/pull/2062 (mine)
+	- 2. implementation + integration
+		- https://github.com/WarbyParker/monocle_integrations/pull/2043
 
 ## Create/add OIC scheduled task
 - To create an OIC scheduled task
