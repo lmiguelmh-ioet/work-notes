@@ -39,11 +39,14 @@ when its received at store its:
 
 ## Create/add adapter
 - To create a new adapter
-	- 1. interface + mock
+	- 1. interface + mock + contract tests
+		- contract tests should test every field existence using:
+			- ![](assets/Pasted%20image%2020260603112742.png)
 		- https://github.com/WarbyParker/monocle_integrations/pull/2042
 		- https://github.com/WarbyParker/monocle_integrations/pull/2062 (mine)
 	- 2. implementation + integration
 		- https://github.com/WarbyParker/monocle_integrations/pull/2043
+		- https://github.com/WarbyParker/monocle_integrations/pull/2066 (mine)
 
 ## Create/add OIC scheduled task
 - To create an OIC scheduled task
@@ -55,7 +58,7 @@ when its received at store its:
 		- IAR the integration itself
 		- CSV updating the lookup
 
-### MOVING TO PROD / GOING LIVE
+## MOVING TO PROD / GOING LIVE
 - checklist (from Miguel)
 	- involucra algún reporte en oracle?
 	- involucra integracion en OIC? 

@@ -863,5 +863,69 @@ Important Reminder: Bring extra cash if you want to take other activities (kayak
 - Melvin is the most experienced here, I think the leash 
 
 ![](assets/Pasted%20image%2020260527135751.png)
+
+
+# Class 20 - leash discussion
+
+- ![](assets/Pasted%20image%2020260603131214.png)
+- dress code
+	- respect for the uniform -> delinquency
+- leash
+	- animals are impredecible
+		- reacción estímulos
+		- el ambiente, el entorno, el dueño
+	- por su propia protección 
+		- susto
+		- comerse un bocado
+		- otros animales
+	- por seguridad de las personas alrededor
+		- perros peligrosos
+		- niños impredecibles
+- for its own protection
+	- dogs as any animal can be unpredictable
+	- we don't know how a dog could react to some stimuli (environment, kids)
+- for peoples' safety
+	- some breeds can grow larger
+	- kids or others animals can be unpredictable
+
+```
+2- for its own protection
+	- dogs as any animal can be unpredictable
+	- we don't know how a dog could react to some stimuli (environment, kids)
+
+3- We can prevent actions and reactions through the leash (the dog is nervous, in an strange position, different energy)
+   - feel the energy of the dog
+   - look for the dog is complicated
+
+4- for peoples' safety
+	- some breeds can grow larger
+	- kids or others animals can be unpredictable
+	  
+1- it acts like seat belt
+
+- systematic review has studies who back this up for dog bites preventions strategies
+the study I was talking about: https://injuryprevention.bmj.com/content/injuryprev/28/3/288.full.pdf
+
+- any animal need space
+- well trained dog
+	  - controlled environment like 
+- places for dogs like dog parks
 - 
+
+```
+## Playing taboo
+
+- you cannot say the word, you only describe it
+- "say the next word without saying it"
+- retirement
+
+- behavior in Latin America
+- go jail from it
+	- drugs
+
+- when
+	- jail
+	- excercise
+	- workout
+
 

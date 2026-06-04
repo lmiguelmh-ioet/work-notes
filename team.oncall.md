@@ -450,4 +450,6 @@ File created: scale_pick_conf_05212026170402_8590b819-8d23-4e97-abcf-f1839753fbe
 
 - S3:
 	- https://us-east-1.console.aws.amazon.com/s3/buckets/wp-oracle-anaplan-datahub-prod?region=us-east-1&prefix=Out/&showversions=false
-- 
+
+- reprocesar para timeout
+- eventos duplicados
