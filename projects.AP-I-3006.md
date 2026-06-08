@@ -1,4 +1,288 @@
+
 # QUERY
+
+![](assets/Pasted%20image%2020260608100046.png)
+
+## FINAL - VIJAY
+
+```sql
+/* AP-I-3006 - Initiate B2C Customer Refund in Payment Services */  
+SELECT bu.bu_name              Business_Unit,  
+       rem.invoice_reference   Sales_Order_Number,  
+       cr.receipt_number       Transaction_Number,  
+       rm.name                 Transaction_Type,  
+       cr.receipt_date         Transaction_Date,  
+       cr.amount               Transaction_Amount,  
+       cr.currency_code        Currency,  
+       app.amount_applied      Refund_Amount,  
+       app.application_ref_num Refund_Number,  
+       app.apply_date          Refund_Date,  
+       cr.attribute1           Sales_Order_Payment_ID  
+FROM ar_cash_receipts_all cr,  
+     ar_cash_remit_refs_all rem,  
+     ar_receipt_methods rm,  
+     ar_receivable_applications_all app,  
+     ap_invoices_all aia,  
+     fun_all_business_units_v bu  
+WHERE 1 = 1  
+  AND bu.bu_id = cr.org_id  
+  AND rem.cash_receipt_id = cr.cash_receipt_id  
+  AND rm.receipt_method_id = cr.receipt_method_id  
+  AND aia.invoice_id = app.application_ref_id  
+  AND aia.invoice_type_lookup_code = 'PAYMENT REQUEST'  
+  AND aia.source = 'Receivables'  
+  AND aia.payment_status_flag = 'N'  
+  AND cr.cash_receipt_id = app.cash_receipt_id  
+  AND app.application_ref_type = 'AP_REFUND_REQUEST'  
+  AND app.applied_payment_schedule_id = -8  
+  AND app.application_type = 'CASH'  
+  AND cr.attribute_category = 'Non Insurance'  
+  AND rm.name IN ('CHASUS-0257-Stripe',  
+                  'ROYCCA-2198-Stripe',  
+                  'CHASUS-0257-PayPal',  
+                  'CHASUS-0257-Affirm')  
+  AND (  
+    (  
+        :P_FROM_DATE IS NOT NULL  
+            AND :P_TO_DATE IS NOT NULL  
+            AND app.apply_date >= CAST(:P_FROM_DATE AS DATE)  
+            AND app.apply_date <= CAST(:P_TO_DATE AS DATE)  
+        )  
+        OR rem.invoice_reference IN (:P_SALES_ORDER_NUMBERS)  
+    )  
+UNION ALL  
+SELECT bu.bu_name                     Business_Unit,  
+       (SELECT ddr.doc_user_key  
+        FROM doo_document_references ddr,  
+             doo_headers_all rdha  
+        WHERE 1 = 1  
+          AND ddr.doc_ref_type = 'ORIGINAL_SALES_ORDER'  
+          AND ddr.header_id = rdha.header_id  
+          AND rdha.order_number = cm.ct_reference  
+          AND ROWNUM = 1)             Sales_Order_Number,  
+       cm.trx_number                  Transaction_Number,  
+       rct.name                       Transaction_Type,  
+       cm.trx_date                    Transaction_Date,  
+       (SELECT SUM(ctl.extended_amount)  
+        FROM ra_customer_trx_lines_all ctl  
+        WHERE ctl.customer_trx_id = cm.customer_trx_id  
+          AND ctl.org_id = cm.org_id) Transaction_Amount,  
+       cm.invoice_currency_code       Currency,  
+       app.amount_applied             Refund_Amount,  
+       app.application_ref_num        Refund_Number,  
+       app.apply_date                 Refund_Date,  
+       NULL                           Sales_Order_Payment_ID  
+FROM ra_customer_trx_all cm,  
+     ra_cust_trx_types_all rct,  
+     fun_all_business_units_v bu,  
+     ar_receivable_applications_all app,  
+     ap_invoices_all aia  
+WHERE 1 = 1  
+  AND bu.bu_id = cm.org_id  
+  AND rct.cust_trx_type_seq_id = cm.cust_trx_type_seq_id  
+  AND aia.invoice_id = app.application_ref_id  
+  AND aia.invoice_type_lookup_code = 'PAYMENT REQUEST'  
+  AND aia.source = 'Receivables'  
+  AND aia.payment_status_flag = 'N'  
+  AND cm.customer_trx_id = app.customer_trx_id  
+  AND app.application_ref_type = 'AP_REFUND_REQUEST'  
+  AND app.applied_payment_schedule_id = -8  
+  AND app.application_type = 'CM'  
+  AND (  
+    (  
+        :P_FROM_DATE IS NOT NULL  
+            AND :P_TO_DATE IS NOT NULL  
+            AND app.apply_date >= CAST(:P_FROM_DATE AS DATE)  
+            AND app.apply_date <= CAST(:P_TO_DATE AS DATE)  
+        )  
+        OR cm.ct_reference IN (:P_SALES_ORDER_NUMBERS)  
+    )
+```
+
+### IA ANALYSIS
+
+```
+1. Inconsistent Transaction_Type across branches
+Branch	Source	Meaning
+Cash receipts
+rm.name
+Receipt method (Stripe, PayPal, Affirm)
+Credit memos
+rct.name
+AR customer transaction type
+Downstream code that treats Transaction_Type as a payment channel will get incompatible values from the two halves of the union. The refactored DM aligns both branches on receipt method name via eligible_receipt_methods + cm.receipt_method_id; this query does not on the CM side.
+
+2. CM branch has no B2C payment-channel filter
+Branch 1 restricts to:
+
+rm.name IN ('CHASUS-0257-Stripe', 'ROYCCA-2198-Stripe',
+            'CHASUS-0257-PayPal', 'CHASUS-0257-Affirm')
+Branch 2 has no equivalent filter. Any credit memo tied to an AP_REFUND_REQUEST application will be returned, including non-B2C channels. That is likely unintended scope creep for a B2C refund integration.
+
+3. Duplicate rows on the cash-receipt branch
+ar_cash_remit_refs_all can have multiple rows per cash_receipt_id. The comma-join to rem with no DISTINCT or aggregation can emit one row per remittance reference for the same refund:
+
+FROM ar_cash_receipts_all cr,
+     ar_cash_remit_refs_all rem,
+     ...
+WHERE rem.cash_receipt_id = cr.cash_receipt_id
+Same app.application_ref_num / refund could appear multiple times with different Sales_Order_Number values.
+
+4. ROWNUM = 1 makes Sales_Order_Number non-deterministic
+(SELECT ddr.doc_user_key
+ FROM   doo_document_references ddr,
+        doo_headers_all rdha
+ WHERE  ddr.doc_ref_type = 'ORIGINAL_SALES_ORDER'
+   AND  ddr.header_id = rdha.header_id
+   AND  rdha.order_number = cm.ct_reference
+   AND  ROWNUM = 1)
+If more than one ORIGINAL_SALES_ORDER reference exists, Oracle picks an arbitrary row. No ORDER BY, no tie-breaker, no org_id guard on DOO tables. Integrations can get unstable or wrong sales order keys run to run.
+
+5. Asymmetric Non Insurance handling
+Branch 1 hard-filters:
+
+AND cr.attribute_category = 'Non Insurance'
+Insurance cash-receipt refunds are excluded entirely. Branch 2 has no parallel filter. If the integration is meant to cover all B2C refunds, insurance paths are missing on the receipt side; if it is Non Insurance only, the CM side may be over-inclusive.
+
+6. Missing org_id on several joins (multi-BU risk)
+app ↔ aia: joined only on invoice_id = application_ref_id — no org_id correlation.
+rct ↔ cm: only cust_trx_type_seq_id — ra_cust_trx_types_all is often org-scoped; missing rct.org_id = cm.org_id can mis-join in multi-org setups.
+DOO subquery: no org_id / BU filter on doo_headers_all or doo_document_references.
+
+```
+
+## FINAL - PROPOSED
+
+```sql
+/* AP-I-3006 - Initiate B2C Customer Refund in Payment Services */
+WITH eligible_receipt_methods AS (
+    SELECT
+        rm.receipt_method_id,
+        rm.name AS receipt_method_name
+    FROM ar_receipt_methods rm
+    WHERE rm.name IN (
+        'CHASUS-0257-Stripe',
+        'ROYCCA-2198-Stripe',
+        'CHASUS-0257-PayPal',
+        'CHASUS-0257-Affirm'
+    )
+),
+receipt_refunds AS (
+    SELECT DISTINCT
+        bu.bu_name AS business_unit,
+        rem.invoice_reference AS sales_order_number,
+        cr.receipt_number AS transaction_number,
+        erm.receipt_method_name AS transaction_type,
+        cr.receipt_date AS transaction_date,
+        cr.amount AS transaction_amount,
+        cr.currency_code AS currency,
+        app.amount_applied AS refund_amount,                    -- confirm sign (refund rows may be negative)
+        app.application_ref_num AS refund_number,               -- mapping also says "use receipt_id to derive" — confirm meaning
+        app.apply_date AS refund_date,
+        CASE
+            WHEN cr.attribute_category = 'Non Insurance'
+            THEN cr.attribute1
+        END AS sales_order_payment_id
+    FROM ar_receivable_applications_all app
+    INNER JOIN ap_invoices_all aia                              -- should we add aia.org_id = app.org_id?
+        ON aia.invoice_id = app.application_ref_id              -- confirm APPLICATION_REF_ID vs invoice_num / reference_key1
+        AND aia.invoice_type_lookup_code = 'PAYMENT REQUEST'
+        AND aia.source = 'Receivables'
+        AND aia.payment_status_flag = 'N'
+    INNER JOIN ar_cash_receipts_all cr
+        ON cr.cash_receipt_id = app.cash_receipt_id
+    INNER JOIN eligible_receipt_methods erm
+        ON erm.receipt_method_id = cr.receipt_method_id
+    INNER JOIN fun_all_business_units_v bu
+        ON bu.bu_id = cr.org_id
+    LEFT JOIN ar_cash_remit_refs_all rem
+        ON rem.cash_receipt_id = cr.cash_receipt_id
+    WHERE app.application_ref_type = 'AP_REFUND_REQUEST'
+      AND app.applied_payment_schedule_id = -8
+      AND app.application_type = 'CASH'
+      AND (
+            (
+                :P_FROM_DATE IS NOT NULL
+                AND :P_TO_DATE IS NOT NULL
+                AND app.apply_date >= CAST(:P_FROM_DATE AS DATE)
+                AND app.apply_date <= CAST(:P_TO_DATE AS DATE)
+            )
+            OR rem.invoice_reference IN (:P_SALES_ORDER_NUMBERS)
+      )
+),
+credit_memo_refunds AS (
+    SELECT DISTINCT
+        bu.bu_name AS business_unit,
+        cm.ct_reference AS sales_order_number,                  -- exchange-order / non-insurance method not implemented
+        cm.trx_number AS transaction_number,
+        erm.receipt_method_name AS transaction_type,
+        cm.trx_date AS transaction_date,
+        (
+            SELECT SUM(ctl.extended_amount)
+            FROM ra_customer_trx_lines_all ctl
+            WHERE ctl.customer_trx_id = cm.customer_trx_id
+              AND ctl.org_id = cm.org_id
+        ) AS transaction_amount,                                -- SUM(extended_amount); CM totals often negative
+        cm.invoice_currency_code AS currency,
+        app.amount_applied AS refund_amount,
+        app.application_ref_num AS refund_number,
+        app.apply_date AS refund_date,
+        NULL AS sales_order_payment_id
+    FROM ar_receivable_applications_all app
+    INNER JOIN ap_invoices_all aia                              -- should we add aia.org_id = app.org_id?
+        ON aia.invoice_id = app.application_ref_id              -- confirm APPLICATION_REF_ID vs invoice_num / reference_key1
+        AND aia.invoice_type_lookup_code = 'PAYMENT REQUEST'
+        AND aia.source = 'Receivables'
+        AND aia.payment_status_flag = 'N'
+    INNER JOIN ra_customer_trx_all cm
+        ON cm.customer_trx_id = app.customer_trx_id
+    INNER JOIN fun_all_business_units_v bu
+        ON bu.bu_id = cm.org_id
+    INNER JOIN eligible_receipt_methods erm
+        ON erm.receipt_method_id = cm.receipt_method_id
+    WHERE app.application_ref_type = 'AP_REFUND_REQUEST'
+      AND app.applied_payment_schedule_id = -8
+      AND app.application_type = 'CM'
+      AND (
+            (
+                :P_FROM_DATE IS NOT NULL
+                AND :P_TO_DATE IS NOT NULL
+                AND app.apply_date >= CAST(:P_FROM_DATE AS DATE)
+                AND app.apply_date <= CAST(:P_TO_DATE AS DATE)
+            )
+            OR cm.ct_reference IN (:P_SALES_ORDER_NUMBERS)
+      )
+)
+SELECT
+    business_unit,
+    sales_order_number,
+    transaction_number,
+    transaction_type,
+    transaction_date,
+    transaction_amount,
+    currency,
+    refund_amount,
+    refund_number,
+    refund_date,
+    sales_order_payment_id
+FROM receipt_refunds
+UNION ALL
+SELECT
+    business_unit,
+    sales_order_number,
+    transaction_number,
+    transaction_type,
+    transaction_date,
+    transaction_amount,
+    currency,
+    refund_amount,
+    refund_number,
+    refund_date,
+    sales_order_payment_id
+FROM credit_memo_refunds
+
+```
+
 
 ## V4 Questions
 
