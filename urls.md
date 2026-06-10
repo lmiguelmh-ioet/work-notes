@@ -61,7 +61,7 @@
 		- OIC: https://oic-test-inst-axhxufzsltne-px.integration.ocp.oraclecloud.com/ 
 		- Oracle ERP: [https://fa-evdi-dev1-saasfaprod1.fa.ocs.oraclecloud.com/fscmUI/faces/FuseWelcome?_adf.ctrl-state=165[…]M=0&_afrMFR=192&_afrMFG=0&_afrMFS=0&_afrMFO=0](https://fa-evdi-dev1-saasfaprod1.fa.ocs.oraclecloud.com/fscmUI/faces/FuseWelcome?_adf.ctrl-state=165x65j434_1&_adf.no-new-window-redirect=true&_afrLoop=72736312678623741&_afrWindowMode=2&_afrWindowId=null&_afrFS=16&_afrMT=screen&_afrMFW=1641&_afrMFH=943&_afrMFDW=1643&_afrMFDH=947&_afrMFC=10&_afrMFCI=0&_afrMFM=0&_afrMFR=192&_afrMFG=0&_afrMFS=0&_afrMFO=0)
 	- Stage  
-		- OIC: [https://oictest2-axhxufzsltne-px.integration.ocp.oraclecloud.com/](https://oictest2-axhxufzsltne-px.integration.ocp.oraclecloud.com/)  
+		- OIC: https://oictest2-axhxufzsltne-px.integration.ocp.oraclecloud.com/
 		- Oracle ERP: https://fa-evdi-test-saasfaprod1.fa.ocs.oraclecloud.com/
 	- Prod 
 		- OIC: https://oic-prod-axhxufzsltne-ia.integration.ocp.oraclecloud.com/ic/home/

@@ -928,4 +928,50 @@ the study I was talking about: https://injuryprevention.bmj.com/content/injurypr
 	- excercise
 	- workout
 
+# Class 21 - work outfit
+
+![](assets/Pasted%20image%2020260610131530.png)
+- sweatshirt + sweatpant
+	- ![](assets/Pasted%20image%2020260610131819.png)
+- shirt
+- suit
+
+![](assets/Pasted%20image%2020260610132516.png)
+- 1e
+- 2g
+- 3b
+- 4h
+- 5a
+- 6d
+- 7f
+- 8c
+
+![](assets/Pasted%20image%2020260610133501.png)
+1. T
+2. /
+3. T
+4. F
+5. T
+
+- bow tie, tie
+	- ![](assets/Pasted%20image%2020260610133929.png)
+
+![](assets/Pasted%20image%2020260610134033.png)
+
+
+![](assets/Pasted%20image%2020260610135503.png)
+1. a
+2. c
+3. e
+4. d - f
+5. f - b
+6. b - d
+
+active => subject doing the action
+passive => subject receiving the action
+
+![](assets/Pasted%20image%2020260610140416.png)
+
+
+
 
