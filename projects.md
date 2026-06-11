@@ -8,16 +8,24 @@
 	- [team](team.md)
 - each one of these projects must have a CURL to the Oracle 
 
-Ser padre me ha enseñado que existe un nuevo sentido a la vida.
-Que entre momentos dulces y salados, uno encuentra dicha y felicidad.
+"Ser padre me ha enseñado que existe un nuevo sentido a la vida.
+Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
+
+
+## OM-I-3015 – Create Scheduled Sync for Tracking Numbers with EasyPost
+- tickets:
+	- https://warbyparker.atlassian.net/browse/OTCM-120426
+- test
 
 ## AP-I-3006 – Create Report and Monocle Reader for Refund Information
 
 - query:
-[projects.AP-I-3006](projects.AP-I-3006.md)
-- 
+	- [projects.AP-I-3006](projects.AP-I-3006.md)
+- tickets:
+	- https://warbyparker.atlassian.net/browse/OTCM-117265
+
 ## ON-CALL: MAY18-MAY25
-- 10 tickets on hold
+- 2 tickets on hold
 
 ## OM-I-3015 – Create EasyPost Adapter to Create and Retrieve Trackers
 - tickets:
