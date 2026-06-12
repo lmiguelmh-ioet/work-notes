@@ -28,7 +28,7 @@ when its received at store its:
 7. OMG -> Payment Services (issue refund)
 ```
 
-### Create/add integration
+### Create/add monocle integration
 - To create a new integration
 	- 1. skeleton: 
 		- mine: https://github.com/WarbyParker/monocle_integrations/pull/1926
@@ -48,7 +48,9 @@ when its received at store its:
 		- https://github.com/WarbyParker/monocle_integrations/pull/2043
 		- https://github.com/WarbyParker/monocle_integrations/pull/2066 (mine)
 
-## Create/add OIC scheduled task
+## Create/add OIC integration / scheduled task
+- ALWAYS CHECK THE **GLOBAL FAULT** AS IT HAS A MAPPING
+	- ![](assets/Pasted%20image%2020260611084106.png)
 - To create an OIC scheduled task
 	- samples:
 		- simple: https://github.com/WarbyParker/oracle-integration-cloud/pull/953

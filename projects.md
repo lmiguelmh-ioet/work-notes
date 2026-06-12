@@ -16,6 +16,16 @@ Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 - tickets:
 	- https://warbyparker.atlassian.net/browse/OTCM-120426
 - test
+```
+curl -v -X POST 'https://sjlqdgbb5mesmduz4pw5oj6fsa0ykkxk.lambda-url.us-east-1.on.aws/easypost/tracker/sync' -H "x-amz-security-token: ${AWS_SESSION_TOKEN}" --aws-sigv4 "aws:amz:us-east-1:lambda" --user "${AWS_ACCESS_KEY_ID}:${AWS_SECRET_ACCESS_KEY}" -H "OIC-Instance-ID: 1"
+```
+- logs
+```
+fields @timestamp, @message, @logStream, @log
+| filter @message like /OM-I-3015/
+| sort @timestamp desc
+| limit 1000
+```
 
 ## AP-I-3006 – Create Report and Monocle Reader for Refund Information
 
@@ -51,7 +61,7 @@ Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 	- see Postman for CURL command
 ```
 Calling lambda API endpoint with OIC creds
-$(aws2 configure export-credentials --profile oic --format env)
+$(aws configure export-credentials --profile oic --format env)
 
 curl -v -X POST 'https://sjlqdgbb5mesmduz4pw5oj6fsa0ykkxk.lambda-url.us-east-1.on.aws/ar/credit-memo-processing' -H "x-amz-security-token: ${AWS_SESSION_TOKEN}" --aws-sigv4 "aws:amz:us-east-1:lambda" --user "${AWS_ACCESS_KEY_ID}:${AWS_SECRET_ACCESS_KEY}" -H 'Content-Type: application/json' -d '{"start_date" : "2026-04-01T00:00:00", "end_date": "2026-05-15T00:00:00"}'
 

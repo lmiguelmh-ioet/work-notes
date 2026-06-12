@@ -3,6 +3,11 @@
 
 ![](assets/Pasted%20image%2020260608100046.png)
 
+- use date parameters
+![](assets/Pasted%20image%2020260611172838.png)
+
+- 
+
 ## FINAL - VIJAY
 
 ```sql
