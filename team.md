@@ -60,6 +60,19 @@ when its received at store its:
 		- IAR the integration itself
 		- CSV updating the lookup
 
+## RUN CONTRACT TEST
+
+```
+$ cd /home/ml/projects/ioet/monocle_integrations && \
+export ORACLE_URL='https://fa-evdi-dev2-saasfaprod1.fa.ocs.oraclecloud.com:443' && \
+export ORACLE_USER='WP_SCM_INTEGRATION_USER' && \
+export ORACLE_PASS='A8s0vOz2u@4pe$R1TGjykelj' && \
+export TEST_PATH=contract && \
+docker compose -f test/docker-compose-test.yml run --rm monocle_integrations_test_runner \
+  pytest oracle_scheduled_job_contract_test.py -q --tb=short 2>&1
+```
+
+
 ## MOVING TO PROD / GOING LIVE
 - checklist (from Miguel)
 	- involucra algún reporte en oracle?
