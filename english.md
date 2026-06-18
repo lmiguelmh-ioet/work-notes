@@ -972,6 +972,65 @@ passive => subject receiving the action
 
 ![](assets/Pasted%20image%2020260610140416.png)
 
+# Class 22 - active/passive voice
 
+![](assets/Pasted%20image%2020260617131925.png)
 
+![](assets/Pasted%20image%2020260617132202.png)
 
+![](assets/Pasted%20image%2020260617132429.png)
+- 1: active => because the subject (employees) is DOING the thing (not receiving)
+	- any tense 
+- 2: passive => because SOMEONE ELSE is asking them to do something, they are not doing anything 
+	- are not required
+- 3: passive => SOMEONE ELSE established
+	- was established
+- 4: active => we are doing the job
+	- are working - HAS NOT FINISHED YET
+- 5: passive => the Spanish office is using the conference room
+	- is being used
+- 6: A => 
+- 7: P => 
+- 8: A => we DECIDED
+	- decided
+- 9: P => Leung was promoted
+	- has been promoted
+	- was promoted
+- 10: P => someone else is bringing news / is actually A => Am I hearing or no?
+	- Have you heard the new about John's promotion? No, I haven't
+
+![](assets/Pasted%20image%2020260617134746.png)
+- 11: P => they don't know SOMEONE else is going to 
+	- have not been told
+- 12: P => someone else is completing the work 
+	- will the work be completed
+	- WRONG: is the work being completed (IS NOT CONTINUOUS)
+- 13: A
+	- 
+- 14: P
+
+![](assets/Pasted%20image%2020260617135532.png)
+
+![](assets/Pasted%20image%2020260617140340.png)
+1. P -> were domesticated (subject: coffee)
+2. P -> was amazed subject: everyone
+	1. ACTIVE -> they are FEELING it, they are being AMAZED (subject: everyone)
+3. A -> produce (subject: farmers)
+	1. PASSIVE -> the main subject on this sentence is BEANS
+4. P -> are paid
+5. A -> are used to making (subject: baristas)
+6. P -> are stirred (subject: beans) 
+7. P -> was offered (subject: me)
+8. P -> is grown (subject: coffee)
+
+- soar
+	 - move quickly / growth rapidly
+	 - "stock numbers soared"
+	 - "ball soared to the net"
+- loose
+	- 
+- tight
+
+- I don't like clothes that are really tight to my body, I'd prefer the loose ones.
+- He needs to tighten the gap to cross the ...
+- Iran and NZ had a tight marker.

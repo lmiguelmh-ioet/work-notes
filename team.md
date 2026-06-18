@@ -60,6 +60,14 @@ when its received at store its:
 		- IAR the integration itself
 		- CSV updating the lookup
 
+## FORMAT TERRAFORM FILES
+
+```
+docker run --rm -v /home/ml/projects/ioet/monocle_integrations/infrastructure:/infra hashicorp/terraform:1.6 fmt /infra/us-east-1/main.tf /infra/localstack/lambda_function.tf 2>&1
+
+`docker run --rm -v /home/ml/projects/ioet/monocle_integrations/infrastructure:/infra hashicorp/terraform:1.6 fmt -check -diff /infra/us-east-1/main.tf /infra/localstack/lambda_function.tf /infra/localstack/main.tf 2>&1; echo "exit: $?"`
+```
+
 ## RUN CONTRACT TEST
 
 ```

@@ -14,7 +14,9 @@ Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 
 ## OM-I-3015 – Create Scheduled Sync for Tracking Numbers with EasyPost
 - tickets:
-	- https://warbyparker.atlassian.net/browse/OTCM-120426
+	- initial monolith: https://warbyparker.atlassian.net/browse/OTCM-120426
+	- sqs: https://warbyparker.atlassian.net/browse/OTCM-125481
+	- enqueue process: https://warbyparker.atlassian.net/browse/OTCM-125483
 - test
 ```
 curl -v -X POST 'https://sjlqdgbb5mesmduz4pw5oj6fsa0ykkxk.lambda-url.us-east-1.on.aws/easypost/tracker/sync' -H "x-amz-security-token: ${AWS_SESSION_TOKEN}" --aws-sigv4 "aws:amz:us-east-1:lambda" --user "${AWS_ACCESS_KEY_ID}:${AWS_SECRET_ACCESS_KEY}" -H "OIC-Instance-ID: 1"
