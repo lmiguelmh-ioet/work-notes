@@ -13,6 +13,7 @@ Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 
 
 ## OM-I-3015 – Create Scheduled Sync for Tracking Numbers with EasyPost
+- TODO: CREATE THE API KEY WE ARE GOING TO USE IN PROD
 - tickets:
 	- initial monolith: https://warbyparker.atlassian.net/browse/OTCM-120426
 	- sqs: https://warbyparker.atlassian.net/browse/OTCM-125481

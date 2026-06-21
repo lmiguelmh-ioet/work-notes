@@ -68,9 +68,17 @@ docker run --rm -v /home/ml/projects/ioet/monocle_integrations/infrastructure:/i
 `docker run --rm -v /home/ml/projects/ioet/monocle_integrations/infrastructure:/infra hashicorp/terraform:1.6 fmt -check -diff /infra/us-east-1/main.tf /infra/localstack/lambda_function.tf /infra/localstack/main.tf 2>&1; echo "exit: $?"`
 ```
 
-## RUN CONTRACT TEST
+## RUN INTEGRATION / CONTRACT TEST
 
 ```
+cd /home/ml/projects/ioet/monocle_integrations && docker compose --env-file infrastructure/local_env/hot_reload.env -f infrastructure/local_env/docker-compose.yml exec -T dev_container poetry run pytest \
+  monocle_integrations/_domain/_integrations/_wp_om_i_3015_enqueue_tracking_references/_enqueue_tracking_references_integration_test.py \
+  monocle_integrations/_domain/_integrations/_wp_om_i_3015_enqueue_tracking_references/_sync_tracking_references_flow_integration_test.py \
+  monocle_integrations/_domain/_integrations/_wp_om_i_3015_process_tracking_reference/_process_tracking_reference_integration_test.py \
+  monocle_integrations/_domain/_integrations/_wp_om_i_3015_fail_tracking_reference/_fail_tracking_reference_integration_test.py \
+  -q --tb=short 2>&1
+
+
 $ cd /home/ml/projects/ioet/monocle_integrations && \
 export ORACLE_URL='https://fa-evdi-dev2-saasfaprod1.fa.ocs.oraclecloud.com:443' && \
 export ORACLE_USER='WP_SCM_INTEGRATION_USER' && \
