@@ -11,7 +11,72 @@
 "Ser padre me ha enseñado que existe un nuevo sentido a la vida.
 Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 
+# RMCS-I-3001 - Proof of delivery upload in RMCS - FBDI Approach
+- query
+```sql
+-- get DOO_HEADERS_ALL.ORDER_TYPE_CODE e.g. WP_B2C, WP_B2C_CPU, WP_B2C_TAKEAWAY, WP_B2B_WHOLESALE
+SELECT lookup_code,
+       meaning,
+       description,
+       tag,
+       enabled_flag
+FROM   fnd_lookup_values_vl
+WHERE  lookup_type = 'ORA_DOO_ORDER_TYPES'
+ORDER BY display_sequence, meaning;
 
+
+-- get doo_fulfill_lines_all.status_code e.g 'SHIPPED', 'AWAITING_BILLING', 'BILLED'
+SELECT s.status_code,
+       s.display_name
+FROM   doo_statuses_vl s
+WHERE  s.orchestration_application_id = 10008   -- fulfill line statuses
+ORDER BY s.display_name;
+```
+- info
+```
+RMCS stands for Revenue Management Cloud Service. It is an Oracle Fusion Cloud ERP module whose job is to decide when and how much revenue a company can recognize, according to accounting rules (especially ASC 606 / IFRS 15).
+1. A B2C sales order is created on 05/29/2026.
+2. Items ship on 06/03/2026.
+3. The customer actually receives them on 06/05/2026.
+
+OM: What did the customer order, ship, and receive?
+AR: What do we bill and collect?
+RMCS: When can we count that sale as revenue in the books?
+
+OM knows about the order and shipment. RMCS needs to know that delivery happened before it can treat the revenue obligation as satisfied.
+That is exactly what RMCS-I-3001 does: upload **Proof of Delivery** (POD) into RMCS so revenue can be recognized at the right time.
+
+   Customer places order
+        ↓
+   Order Management (OM)     ← operational truth: order, ship, deliver
+        ↓
+   Revenue Management (RMCS) ← accounting truth: when revenue is earned
+        ↓
+   General Ledger (GL)       ← financial postings
+
+Flow:
+1. A sales order line is shipped and delivered in OM
+2. Delivery date is stored on the shipment line (from EasyPost, in Warby’s case)
+3. Integration finds new/changed delivered lines since last run
+4. Integration maps OM/RMCS IDs into FBDI sheet 4
+5. FBDI file is uploaded to Oracle Fusion
+6. RMCS validates against existing contract lines
+7. If valid → satisfaction event recorded → revenue recognition can proceed
+8. If invalid → errors appear in “Correct Contract Document Errors in Spreadsheet”
+```
+- tickets
+	- https://warbyparker.atlassian.net/browse/OTCM-129759
+- related tickets from others
+	- 3002: https://warbyparker.atlassian.net/browse/OTCM-129764
+	- 3003: https://warbyparker.atlassian.net/browse/OTCM-129771
+```
+RMCS-I-3001
+“When was it shipped/delivered?” → feeds POD / fulfillment events in RMCS
+RMCS-I-3003
+“What was sold or returned?” → feeds contract / source document creation in RMCS
+RMCS-I-3002
+“What was billed or credited?” → feeds AR billing events in RMCS
+```
 ## OM-I-3015 – Create Scheduled Sync for Tracking Numbers with EasyPost
 - TODO: CREATE THE API KEY WE ARE GOING TO USE IN PROD
 - tickets:
@@ -25,6 +90,7 @@ curl -v -X POST 'https://sjlqdgbb5mesmduz4pw5oj6fsa0ykkxk.lambda-url.us-east-1.o
 
 ```
 $(aws configure export-credentials --profile oic --format env)
+
 python scripts_local/seed_tracking_references_stage.py --confirm stage --pending 1 --enqueued 0 --created 0 --failed 0 --skipped 0 --table oic-monocle-integrations-stage-tracking-references --single-write
 
 ```
