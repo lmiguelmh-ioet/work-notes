@@ -1034,3 +1034,102 @@ passive => subject receiving the action
 - I don't like clothes that are really tight to my body, I'd prefer the loose ones.
 - He needs to tighten the gap to cross the ...
 - Iran and NZ had a tight marker.
+
+# Class 23 - active/passive practice
+
+- ![](assets/Pasted%20image%2020260624131806.png)
+- 1. Passive (subject: food)
+	- Be verb + past participle
+- 2. Active (subject: I)
+- 3. P (mail)
+- 4. A (mailman)
+- 5. P (meeting)
+
+![](assets/Pasted%20image%2020260624132116.png)
+- plant / have planted
+- to be harvested (for the harvest)
+- are picked
+- are used
+- process
+- ~~mill them~~ / are milled (the beans <- they refer to the bean)
+- are graded
+- sorted
+
+![](assets/Pasted%20image%2020260624133823.png)
+- IN THE PASSIVE "WHO DOES THE ACTION" IS NOT IMPORTANT
+- the beans are passed by machines through a series of screens...
+- 1. defective beans are removed by hand (by the workers)
+- 2. the process called cupping is when beans are tested by tasters for quality and taste.
+- 3. the beans are constantly moved by roasting machines to keep them from burning.
+- 4. when they complete roasting, product is shipped by producers to retailers ...
+	- when roasting is completed, product is shipped by producers to retailers ... (better)
+- 5. coffee is drunk by millions first thing in the morning...
+
+30 seconds for a piece of clothing
+- hoody
+- socks
+- cardigan
+- jeans
+- cloak
+- sweater
+- boots
+- headband
+- scarf
+- cargo pants
+- hat
+- dress
+- underpants
+- globes
+- skirt
+- shirt
+- blouse
+- boxers
+- belt
+- tie
+- jacket
+- leggings
+- coat
+- jumper
+- pants
+- uniform
+- sneakers
+- vest
+- blazer
+- bikini
+- glasses
+- bathrobe
+- pijamas
+- cap
+- suit
+- bra
+- cufflinks?
+- underwear
+- shorts
+- insulated vest
+- flipflop
+- fur coat
+- gauntlets
+
+
+![](assets/Pasted%20image%2020260624140308.png)
+- 1. ferment
+- 2. equatorial
+- 3. fleet
+- 4. harvester
+- 5. logistics
+- 6. marvel
+- 7. stability
+- 8. complexity
+
+![](assets/Pasted%20image%2020260624141242.png)
+- 1 stable
+- 2 equator
+- 3 ~~logistics~~ logistical
+- 4 harvesting
+- 5 fleeting (short-lived, brief)
+- 6 marvelous
+- 7 fermentation
+- 8 complex
+
+I marvel at the rapid pace of development of some Asian countries.
+I marvel at games with a minimum set of rules being so fun.

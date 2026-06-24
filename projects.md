@@ -11,7 +11,7 @@
 "Ser padre me ha enseñado que existe un nuevo sentido a la vida.
 Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 
-# RMCS-I-3001 - Proof of delivery upload in RMCS - FBDI Approach
+## RMCS-I-3001 - Proof of delivery upload in RMCS - FBDI Approach
 - query
 ```sql
 -- get DOO_HEADERS_ALL.ORDER_TYPE_CODE e.g. WP_B2C, WP_B2C_CPU, WP_B2C_TAKEAWAY, WP_B2B_WHOLESALE
@@ -77,6 +77,11 @@ RMCS-I-3003
 RMCS-I-3002
 “What was billed or credited?” → feeds AR billing events in RMCS
 ```
+- docs
+	- FSD: https://docs.google.com/document/d/1BZInnIPHh0s6zG6n6Q6I93yGBVjl28Z8/edit
+	- FSD mapping: https://docs.google.com/spreadsheets/d/1ZTlE9RFYYRHej9ZPCi3zxAwbA0hv9MoF/edit?gid=470165428#gid=470165428
+	- FBDI sheet: https://docs.google.com/spreadsheets/d/19e-Ga-ryrvCWIXhlQ4JdYJaeDIcrCCik/edit?gid=2037721153#gid=2037721153
+
 ## OM-I-3015 – Create Scheduled Sync for Tracking Numbers with EasyPost
 - TODO: CREATE THE API KEY WE ARE GOING TO USE IN PROD
 - tickets:
