@@ -38,15 +38,23 @@ when its received at store its:
 		- mine: https://github.com/WarbyParker/monocle_integrations/pull/1929
 
 ## Create/add adapter
-- To create a new adapter
+- To create a new adapter for Oracle API
 	- 1. interface + mock + contract tests
 		- contract tests should test every field existence using:
-			- ![](assets/Pasted%20image%2020260603112742.png)
+			- In Data Model > Properties
+			- ![](assets/Pasted%20image%2020260625115302.png)
+			- In Report > View a list
+			- ![](assets/Pasted%20image%2020260625115028.png)
 		- https://github.com/WarbyParker/monocle_integrations/pull/2042
 		- https://github.com/WarbyParker/monocle_integrations/pull/2062 (mine)
-	- 2. implementation + integration
+	- 2. implementation + integration tests
 		- https://github.com/WarbyParker/monocle_integrations/pull/2043
 		- https://github.com/WarbyParker/monocle_integrations/pull/2066 (mine)
+- To create a new adapter for Report
+	- 1. interface + mock + contract tests
+		- https://github.com/WarbyParker/monocle_integrations/pull/2157
+	- 2. implementation + integration tests
+		- https://github.com/WarbyParker/monocle_integrations/pull/2161
 
 ## Create/add OIC integration / scheduled task
 - ALWAYS CHECK THE **GLOBAL FAULT** AS IT HAS A MAPPING
