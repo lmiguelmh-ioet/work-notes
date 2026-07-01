@@ -43,8 +43,7 @@
 
 - Oracle ERP (reports and "queries")
 	- dev1: https://fa-evdi-dev1-saasfaprod1.fa.ocs.oraclecloud.com/fscmUI/faces/AtkHomePageWelcome
-	- evdi-test (they call it "stage"): https://fa-evdi-test-saasfaprod1.fa.ocs.oraclecloud.com/fscmUI/faces/AtkHomePageWelcome
-	- https://fa-evdi-test-saasfaprod1.fa.ocs.oraclecloud.com/fscmUI/faces/AtkHomePageWelcome?_adf.ctrl-state=1a1g9ckgym_1&_adf.no-new-window-redirect=true&_afrLoop=18960188241766294&_afrWindowMode=2&_afrWindowId=null&_afrFS=16&_afrMT=screen&_afrMFW=1365&_afrMFH=968&_afrMFDW=1920&_afrMFDH=1080&_afrMFC=8&_afrMFCI=0&_afrMFM=0&_afrMFR=96&_afrMFG=0&_afrMFS=0&_afrMFO=0
+	- evdi-test ("stage"): https://fa-evdi-test-saasfaprod1.fa.ocs.oraclecloud.com/fscmUI/faces/AtkHomePageWelcome
 
 - OIC Prod changes
 	- [https://docs.google.com/spreadsheets/d/1C4WTH_EPQ6BKwL22b8qnJT8NillpYmhv0gRhnX7c9ec/edit?usp=sharing](https://docs.google.com/spreadsheets/d/1C4WTH_EPQ6BKwL22b8qnJT8NillpYmhv0gRhnX7c9ec/edit?usp=sharing)

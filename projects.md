@@ -33,6 +33,7 @@ WHERE  s.orchestration_application_id = 10008   -- fulfill line statuses
 ORDER BY s.display_name;
 ```
 - info
+- CURSOR REQUEST ID: bcfca2bf-e172-41a0-bc62-89cc14a53c1f
 ```
 RMCS stands for Revenue Management Cloud Service. It is an Oracle Fusion Cloud ERP module whose job is to decide when and how much revenue a company can recognize, according to accounting rules (especially ASC 606 / IFRS 15).
 1. A B2C sales order is created on 05/29/2026.
@@ -63,6 +64,31 @@ Flow:
 6. RMCS validates against existing contract lines
 7. If valid → satisfaction event recorded → revenue recognition can proceed
 8. If invalid → errors appear in “Correct Contract Document Errors in Spreadsheet”
+
+|Document type|Module|Typical purpose|Relation to RMCS tickets|
+|---|---|---|---|
+|Sales order|OM|Customer buys product|3001 (fulfillment/POD), 3003 (order details)|
+|RMA / return order|OM|Customer returns product|3003 (order details), not POD|
+|AR invoice|AR|Bill the customer|3002 (billing lines)|
+|AR credit memo|AR|Reverse/adjust billing|3002|
+|Transfer order|OM/INV|Move stock between warehouses|Not in these RMCS tickets|
+|Purchase order|Procurement|Buy from supplier|Not in these RMCS tickets|
+|Work order|Manufacturing|Build/assemble items|Not in these RMCS tickets|
+
+3003 → What was sold or returned? (master order data → RMCS contract/source doc)
+3001 → Was the sale fulfilled? (POD → satisfaction event → earn revenue)
+3002 → What was billed/credited? (AR invoice / credit memo → billing side)
+
+> 3001 records proof that we delivered on a sales order so RMCS can recognize revenue.  
+> 3003 supplies order and RMA master data so RMCS can create the contract/source document in the first place.  
+> 3002 handles the billing and credit side in AR.  
+> Returns are not negative POD; they are separate documents and events (3003 + 3002).
+
+why not one report?
+1. Different triggers — contract creation (3003) vs delivery date change (3001) vs invoice posted (3002).
+2. Different RMCS FBDI targets — source documents vs additional satisfaction events vs billing lines.
+3. RMA in 3003 only — product owners already split the domain.
+4. POD is meaningless for RMA — returns use return/receipt/credit semantics, not “proof of delivery to customer.”
 ```
 - tickets
 	- https://warbyparker.atlassian.net/browse/OTCM-129759
@@ -113,6 +139,12 @@ fields @timestamp, @message, @logStream, @log
 	- [projects.AP-I-3006](projects.AP-I-3006.md)
 - tickets:
 	- https://warbyparker.atlassian.net/browse/OTCM-117265
+
+
+## WMS-I-1005 – Update Pick Slip Confirmation Adapter to Send Short Pick Reason Only When Applicable
+- tickets
+	- https://warbyparker.atlassian.net/browse/OTCM-119708
+
 
 ## ON-CALL: MAY18-MAY25
 - 2 tickets on hold
