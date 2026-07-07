@@ -1,5 +1,8 @@
 # On-Call OEH
 
+- From Monday to Sunday
+	- ALL should be closed
+- You might need more time, so ask Emilio
 - "Hunter is working on Roosevelt only and should not be tagged in prod issues, @Hunter Governale please disregard"
 - status flow
 - On call google instructions: 
@@ -26,6 +29,7 @@
 - Tablero OEH:
 	- https://warbyparker.atlassian.net/jira/software/c/projects/OEH/issues?jql=project%20%3D%20%22OEH%22%20ORDER%20BY%20created%20DESC
 	- https://warbyparker.atlassian.net/jira/software/c/projects/OEH/issues?jql=project%20%3D%20%22OEH%22%20AND%20created%20%3E%3D%20%222026-05-18%22%20AND%20created%20%3C%3D%20%222026-05-25%22%20ORDER%20BY%20created%20DESC
+	- https://warbyparker.atlassian.net/jira/software/c/projects/OEH/list?jql=project%20%3D%20%22OEH%22%0AAND%20created%20%3E%3D%20%222026-07-06%22%0AAND%20created%20%3C%3D%20%222026-07-12%22%0AAND%20status%20NOT%20IN%20(Rejected%2C%20Resolved)%0AORDER%20BY%20created%20DESC
 - Gabriel:
 	- El objetivo es que tomes ownership de todo lo que salga en el tablero de OEH que este involucrado a nuestra integración
 	- Eso no significa que debas arreglar absolutamente todo, hay varios casos que el equipo te puede ayudar y ya sabe como hacerlo

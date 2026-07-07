@@ -246,11 +246,8 @@ fields @timestamp, @message, @logStream, @log
 	- ![](assets/Pasted%20image%2020260227090258.png)
 	- 
 
-## TIckets for oncall
-- From Monday to Sunday
-	- ALL should be closed
-- Next monday close the ones from weekend
-- You might need more time, so ask Emilio
+## OnCall
+[team.oncall](team.oncall)
 
 ## Scrum meet
 - scrum moderator is announced on Monday:
@@ -265,8 +262,8 @@ fields @timestamp, @message, @logStream, @log
 		- "Hello, <> do you have any updates regarding your ticket?"
 		- "Hello, <> do you have any updates?"
 		- "Hello, <> any updates you want to share?"
-		- Guillermo, Rocio, Fabiola are not in the board
-			- ![](assets/Pasted%20image%2020260220104144.png)<
+		- Kaio, Fabiola, Rocio are not in the board
+			- ![](assets/Pasted%20image%2020260220104144.png)
 			- Select Group None (to confirm)
 		- Astrid and Emilio
 		- "That's everyone."

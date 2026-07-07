@@ -11,6 +11,25 @@
 "Ser padre me ha enseñado que existe un nuevo sentido a la vida.
 Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 
+## ON-CALL: JUL6-JUL12
+- https://warbyparker.atlassian.net/jira/software/c/projects/OEH/list?jql=project%20%3D%20%22OEH%22%0AAND%20created%20%3E%3D%20%222026-07-06%22%0AAND%20created%20%3C%3D%20%222026-07-12%22%0AAND%20status%20NOT%20IN%20(Rejected%2C%20Resolved)%0AORDER%20BY%20created%20DESC
+
+## FLARE to OIC: Ship Confirmation (AI SRW)
+- tickets
+	- https://warbyparker.atlassian.net/browse/OTCM-118998
+
+## RMCS-I-3001 Create monocle-app domain integration
+- tickets
+	- https://warbyparker.atlassian.net/browse/OTCM-129762
+
+## RMCS-I-3001 Create monocle-app Customer Contract Source Data Import FBDI
+- tickets
+	- https://warbyparker.atlassian.net/browse/OTCM-129760
+
+## RMCS-I-3001 Create BIP report to retrieve deliver and shipped date of SOs
+- tickets
+	- https://warbyparker.atlassian.net/browse/OTCM-129759
+
 ## RMCS-I-3001 - Proof of delivery upload in RMCS - FBDI Approach
 - query
 ```sql
@@ -114,6 +133,7 @@ why not one report?
 ```
 - tickets
 	- https://warbyparker.atlassian.net/browse/OTCM-129759
+	- 
 - related tickets from others
 	- 3002: https://warbyparker.atlassian.net/browse/OTCM-129764
 	- 3003: https://warbyparker.atlassian.net/browse/OTCM-129771
@@ -169,6 +189,7 @@ fields @timestamp, @message, @logStream, @log
 
 
 ## ON-CALL: MAY18-MAY25
+- https://warbyparker.atlassian.net/jira/software/c/projects/OEH/issues?jql=project%20%3D%20%22OEH%22%20AND%20created%20%3E%3D%20%222026-05-18%22%20AND%20created%20%3C%3D%20%222026-05-25%22%20ORDER%20BY%20created%20DESC
 - 2 tickets on hold
 
 ## OM-I-3015 – Create EasyPost Adapter to Create and Retrieve Trackers
