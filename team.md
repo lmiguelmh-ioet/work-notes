@@ -334,6 +334,8 @@ fields @timestamp, @message, @logStream, @log
 	- Dan Morel (WP - principal engineer)
 	- Gabriel Viera
 
+![](assets/Pasted%20image%2020260706104304.png)
+
 Astrid:
 - in charge of all WP's PMs
 - 2017

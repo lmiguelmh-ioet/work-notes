@@ -33,6 +33,28 @@ WHERE  s.orchestration_application_id = 10008   -- fulfill line statuses
 ORDER BY s.display_name;
 ```
 - info
+```
+Proof of Delivery upload (RMCS-I-3001) → Import Revenue Basis Data
+
+1. POD is an additional satisfaction event on `VRM_SOURCE_DOC_ADDL_SUBLINES` [https://docs.oracle.com/en/cloud/saas/financials/26b/fafrm/guidelines-for-importing-additional-satisfaction-events.html](https://docs.oracle.com/en/cloud/saas/financials/26b/fafrm/guidelines-for-importing-additional-satisfaction-events.html)
+    
+2. That sheet belongs to `RevenueDataImportTemplate.xlsm`; scheduled process is Import Revenue Basis Data [https://docs.oracle.com/en/cloud/saas/financials/26b/oefbf/revenuebasisdataimport-3195.html](https://docs.oracle.com/en/cloud/saas/financials/26b/oefbf/revenuebasisdataimport-3195.html)
+    
+3. Manual load steps: "Select Import Revenue Basis Data as the import process" [https://docs.oracle.com/en/cloud/saas/financials/26b/fafrm/how-revenue-basis-import-data-is-processed.html](https://docs.oracle.com/en/cloud/saas/financials/26b/fafrm/how-revenue-basis-import-data-is-processed.html)
+    
+4. Billing is a different process (for contrast) [https://docs.oracle.com/en/cloud/saas/financials/26b/fafrm/how-billing-data-import-data-is-processed.html](https://docs.oracle.com/en/cloud/saas/financials/26b/fafrm/how-billing-data-import-data-is-processed.html) [https://docs.oracle.com/en/cloud/saas/financials/26b/oefbf/billingdataimport-3228.html](https://docs.oracle.com/en/cloud/saas/financials/26b/oefbf/billingdataimport-3228.html)
+    
+5. Warby internal spec (section 1.2) `docs/RMCS-I-3001/RMCS-I-3001 - Proof of delivery upload in RMCS - FBDI Approach.docx.md`
+    
+6. Stage pod confirmation — ESS job `111610505`, argument1 = `54`, Import Process = Import Revenue Basis Data
+
+---
+
+|[Revenue Basis Data Import (FBDI catalog)](https://docs.oracle.com/en/cloud/saas/financials/26b/oefbf/revenuebasisdataimport-3195.html)|UCM account: `fin/revenueManagement/import`|
+|[How Revenue Basis Import Data Is Processed](https://docs.oracle.com/en/cloud/saas/financials/26b/fafrm/how-revenue-basis-import-data-is-processed.html)|_"Select fin/revenueManagement/import as the account"_ in File Import and Export|
+|[ERP Integrations REST API](https://docs.oracle.com/en/cloud/saas/financials/26b/farfa/op-erpintegrations-post.html)|`DocumentAccount` format with `$` escaping|
+
+```
 - CURSOR REQUEST ID: bcfca2bf-e172-41a0-bc62-89cc14a53c1f
 ```
 RMCS stands for Revenue Management Cloud Service. It is an Oracle Fusion Cloud ERP module whose job is to decide when and how much revenue a company can recognize, according to accounting rules (especially ASC 606 / IFRS 15).
