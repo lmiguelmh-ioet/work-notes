@@ -358,6 +358,20 @@ Similar to [OEH-67327: Error|prod|Non-Payables|WP WMS-I-1009 SCALE WMS to Oracle
 @Andrew Galloway @Alexis Tomacruz, could you please confirm whether that product code has already been updated in Oracle? If so, could you share the new value so we can manually update the WMS file we received and reprocess only the transaction involved in this incident?
 ```
 
+### Internal Server Error 500 s3.us-east-1.amazonaws.com
+
+- see: https://warbyparker.atlassian.net/browse/OEH-60818
+```
+This error was caused by a stream closed issue.
+
+<<image>>
+
+The file has been successfully moved to the destination specified in the ticket.
+During the next integration execution, the files were successfully read and moved.
+
+<<image>>
+```
+
 ## Oracle ERP to Coupa COA Integration
 
 JQL used: `project = OEH AND summary ~ "Coupa COA"` (15 hits; filtered to those with comments).
