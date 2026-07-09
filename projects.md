@@ -13,10 +13,15 @@ Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 
 ## ON-CALL: JUL6-JUL12
 - https://warbyparker.atlassian.net/jira/software/c/projects/OEH/list?jql=project%20%3D%20%22OEH%22%0AAND%20created%20%3E%3D%20%222026-07-06%22%0AAND%20created%20%3C%3D%20%222026-07-12%22%0AAND%20status%20NOT%20IN%20(Rejected%2C%20Resolved)%0AORDER%20BY%20created%20DESC
+- self-heal maybe?
+	- https://warbyparker.atlassian.net/browse/OEH-69691
 
 ## FLARE to OIC: Ship Confirmation (AI SRW)
 - tickets
 	- https://warbyparker.atlassian.net/browse/OTCM-118998
+- s3:
+	- https://us-east-1.console.aws.amazon.com/s3/buckets/transfer-stage-data?region=us-east-1&prefix=vendors/OIC-Proxy/IN-I-2017B/Archive/&showversions=false
+	- https://us-east-1.console.aws.amazon.com/s3/object/transfer-stage-data?region=us-east-1&prefix=vendors/OIC-Proxy/IN-I-2017B/Archive/fedex_ship_conf_TO_1123866_07072026214943_v2G9LnpNEfGCVXfkx3ah-g.json
 
 ## RMCS-I-3001 Create monocle-app domain integration
 - tickets

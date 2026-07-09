@@ -1133,3 +1133,36 @@ passive => subject receiving the action
 
 I marvel at the rapid pace of development of some Asian countries.
 I marvel at games with a minimum set of rules being so fun.
+
+# Class 24
+
+![](assets/Pasted%20image%2020260708130747.png)
+- expert with something work related, to make it more productive maybe 
+- clear and well defined FSDs
+- muchacho provinciano
+![](assets/Pasted%20image%2020260708131546.png)
+1. P: B
+2. P: A
+3. A: B: Did / C: Have you eaten
+4. P: C
+5. P: C
+6. P: A
+7. P: B
+8. P: A
+9. A: C
+10. P: B
+![](assets/Pasted%20image%2020260708133530.png)
+![](assets/Pasted%20image%2020260708133537.png)
+1- B 25kg
+2- C density (heaviest - flavorous)
+3- A density, size and color
+4- D taste aroma and flavour
+5- C 70 KG
+6- C 12
+7- B
+8- A
+
+![](assets/Pasted%20image%2020260708141220.png)
+- children - memes on twitter
+- no, it depends 
+

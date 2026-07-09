@@ -107,6 +107,7 @@ see @on-call-agent/skills/erp-skill/SKILL.md
 | [OEH-67608](https://warbyparker.atlassian.net/browse/OEH-67608) | Rejected | Emilio → Marcos Hernandez commented | _“Trial Balance payroll file exists in S3”_ + screenshot                           |
 | [OEH-67438](https://warbyparker.atlassian.net/browse/OEH-67438) | Rejected | Emilio → Marcos Hernandez           | _“file was uploaded”_ + screenshot                                                 |
 | [OEH-65567](https://warbyparker.atlassian.net/browse/OEH-65567) | Rejected | Jerson Morocho                      | _“trial balance was recently updated today”_ (no screenshot)                       |
+|                                                                 |          |                                     |                                                                                    |
 
 ## WMS-I-1001 Oracle to SCALE WMS Items Outbound
 
