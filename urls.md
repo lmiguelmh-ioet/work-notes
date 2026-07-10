@@ -1,4 +1,4 @@
-- Scale WMS
+ - Scale WMS
 	- https://wpkrstg.manhscale.com/scale/trans/dashboard
 
 - books from oreilly:
@@ -43,6 +43,7 @@
 
 - Oracle ERP (reports and "queries")
 	- dev1: https://fa-evdi-dev1-saasfaprod1.fa.ocs.oraclecloud.com/fscmUI/faces/AtkHomePageWelcome
+	- dev2: https://fa-evdi-dev2-saasfaprod1.fa.ocs.oraclecloud.com/fscmUI/faces/AtkHomePageWelcome
 	- evdi-test ("stage"): https://fa-evdi-test-saasfaprod1.fa.ocs.oraclecloud.com/fscmUI/faces/AtkHomePageWelcome
 
 - OIC Prod changes

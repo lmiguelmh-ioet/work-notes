@@ -366,7 +366,19 @@ This error was caused by a stream closed issue.
 
 <<image>>
 
-The file has been successfully moved to the destination specified in the ticket.
+It was verified that the JOB ID finished successfully.
+
+WP Integrations/SCM/Data Model/WP_IN_ERRORED_INV_TRANSACTIONS_DM.sql
+WP IN Errored Inv Transactions ReportWP IN Errored Inv Transactions Report
+
+<<image>>
+
+File was moved manually.
+
+<<image>>
+
+--- OR ---
+
 During the next integration execution, the files were successfully read and moved.
 
 <<image>>

@@ -22,7 +22,14 @@ Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 - s3:
 	- https://us-east-1.console.aws.amazon.com/s3/buckets/transfer-stage-data?region=us-east-1&prefix=vendors/OIC-Proxy/IN-I-2017B/Archive/&showversions=false
 	- https://us-east-1.console.aws.amazon.com/s3/object/transfer-stage-data?region=us-east-1&prefix=vendors/OIC-Proxy/IN-I-2017B/Archive/fedex_ship_conf_TO_1123866_07072026214943_v2G9LnpNEfGCVXfkx3ah-g.json
-
+- docs:
+	- https://docs.google.com/document/d/1LRj62d2Dr8EMAyL275a3F4wCJlFQ58_f/edit
+	- https://docs.google.com/document/d/1aV-YWDpvOCI7EvY5_e27J0iurPMAC5sT/edit
+- notes
+```
+- SCAC = Standard Carrier Alpha Code — identifies the carrier (who ships it). Examples from this file: `UPS`, `FDEG` (FedEx Ground), `UPSW`, `BGLF`.
+- SCSC = Standard Carrier Service Code — identifies the service level / ship method (how it ships). Examples: `GND`, `2DA`, `NDA`, `FEDEX_GROUND`.
+```
 ## RMCS-I-3001 Create monocle-app domain integration
 - tickets
 	- https://warbyparker.atlassian.net/browse/OTCM-129762
