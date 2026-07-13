@@ -112,7 +112,7 @@ see @on-call-agent/skills/erp-skill/SKILL.md
 ## WMS-I-1001 Oracle to SCALE WMS Items Outbound
 
 - comment https://warbyparker.atlassian.net/browse/OEH-68217:
-	- UPC `9000000000001` is an intended inactive item so it is not synced to SCALE, stated by Alexis here: https://warbyparker.atlassian.net/browse/OEH-67855?focusedCommentId=906458
+	UPC `9000000000001` is an intended inactive item so it is not synced to SCALE, stated by Alexis here: https://warbyparker.atlassian.net/browse/OEH-67855?focusedCommentId=906458
 
 ## IN-I-2017A Fedex Warehouse Transactions Receiving Inbound
 
@@ -360,7 +360,9 @@ Similar to [OEH-67327: Error|prod|Non-Payables|WP WMS-I-1009 SCALE WMS to Oracle
 
 ### Internal Server Error 500 s3.us-east-1.amazonaws.com
 
-- see: https://warbyparker.atlassian.net/browse/OEH-60818
+- see: 
+	- me: 
+	- Josué: https://warbyparker.atlassian.net/browse/OEH-60818
 ```
 This error was caused by a stream closed issue.
 
@@ -382,6 +384,26 @@ File was moved manually.
 During the next integration execution, the files were successfully read and moved.
 
 <<image>>
+```
+
+### An error occurred while retrieving lookup items
+
+- see:
+	- me: https://warbyparker.atlassian.net/browse/OEH-69731
+```
+https://warbyparker.atlassian.net/browse/OEH-67364
+The retrieval of transaction types from the **WP_WMS_ADJUSTMENT_TYPE** lookup failed during the processing of transactions for the following files:
+
+
+--- OR ---
+https://warbyparker.atlassian.net/browse/OEH-69576
+
+This issue was caused by a temporary timeout while querying the Oracle ERP lookup values through its API.
+
+<<image cloudwatch instance lambda id>>
+
+
+
 ```
 
 ## Oracle ERP to Coupa COA Integration
@@ -470,17 +492,15 @@ File created: scale_pick_conf_05212026170402_8590b819-8d23-4e97-abcf-f1839753fbe
 ## IN-I-2055 Oracle ERP to Fedex TO Outbound
 
 - see excel
-- "This is a transient error that occurs when calling the report. This integration run every 10 minutes. A sequential run was successful so no further action is required."
+This is a transient error that occurs when calling the report. This integration run every 10 minutes. A sequential run was successful so no further action is required.
 
 ## WMS-I-1003 Oracle to SCALE WMS Inbound TO ASNs
 
 - see excel
-- "This is a transient error that occurs when calling the report. This integration run every 10 minutes. A sequential run was successful so no further action is required."
+This is a transient error that occurs when calling the report. This integration run every 10 minutes. A sequential run was successful so no further action is required.
 
 ## ERP to Anaplan PO Sync
 
 - S3:
 	- https://us-east-1.console.aws.amazon.com/s3/buckets/wp-oracle-anaplan-datahub-prod?region=us-east-1&prefix=Out/&showversions=false
 
-- reprocesar para timeout
-- eventos duplicados
