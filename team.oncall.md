@@ -145,6 +145,7 @@ see @on-call-agent/skills/erp-skill/SKILL.md
 - Over-receipt:
 	- https://warbyparker.atlassian.net/browse/OEH-58407
 - Fully received:
+	- MINE: https://warbyparker.atlassian.net/browse/OEH-69744
 	- https://warbyparker.atlassian.net/browse/OEH-65073
 	- https://warbyparker.atlassian.net/browse/OEH-65054
 - Header error: "You must enter a transaction quantity that's up to the available quantity of 1"/"There is no quantity to be processed for this transaction"
@@ -394,6 +395,26 @@ During the next integration execution, the files were successfully read and move
 https://warbyparker.atlassian.net/browse/OEH-67364
 The retrieval of transaction types from the **WP_WMS_ADJUSTMENT_TYPE** lookup failed during the processing of transactions for the following files:
 
+<<this list comes after reviewing carefully the logs, 
+then download them from:
+https://us-east-1.console.aws.amazon.com/s3/buckets/transfer-prod-data?region=us-east-1&prefix=vendors/Manhattan/WMS-I-1009/Error/07092026/&showversions=false
+>>
+InventoryTransaction-2026-07-09@18-26-00e5381b01-586f-4a59-9aab-ce4945630e79.xml
+InventoryTransaction-2026-07-09@18-31-0073e4e887-a4d1-481f-85cd-d8d4c421689f.xml
+
+After verification, there are already some transactions completed.
+
+<<Josue: has a script to verify the transactions for these files>>
+
+<<if there are some transactions completed you might need to edit the file>>
+
+Reprocess adding the suffix _<<ticket>>
+- drop the ID that was completed
+- edit the NumRec
+
+One file was edited and both uploaded for reprocessing.
+
+<<files>>
 
 --- OR ---
 https://warbyparker.atlassian.net/browse/OEH-69576
@@ -501,6 +522,9 @@ This is a transient error that occurs when calling the report. This integration 
 
 ## ERP to Anaplan PO Sync
 
+- ticket
+	- https://warbyparker.atlassian.net/browse/OEH-69774
 - S3:
 	- https://us-east-1.console.aws.amazon.com/s3/buckets/wp-oracle-anaplan-datahub-prod?region=us-east-1&prefix=Out/&showversions=false
 
+File exists in S3

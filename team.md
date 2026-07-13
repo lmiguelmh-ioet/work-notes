@@ -1,3 +1,5 @@
+IMPORTANT: all reviews if done in Github should be sent throuhg Slack DM's so is easy for later evaluation form (also keep things in one place)
+
 ### Warby Parker
 - HELIOS - old monolito de WP
 	- SPRINGFIELD o HELIOS
