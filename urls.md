@@ -45,6 +45,7 @@
 	- dev1: https://fa-evdi-dev1-saasfaprod1.fa.ocs.oraclecloud.com/fscmUI/faces/AtkHomePageWelcome
 	- dev2: https://fa-evdi-dev2-saasfaprod1.fa.ocs.oraclecloud.com/fscmUI/faces/AtkHomePageWelcome
 	- evdi-test ("stage"): https://fa-evdi-test-saasfaprod1.fa.ocs.oraclecloud.com/fscmUI/faces/AtkHomePageWelcome
+	- prod: https://fa-evdi-saasfaprod1.fa.ocs.oraclecloud.com:443/fscmRestApi/resources/11.13.18.05
 
 - OIC Prod changes
 	- [https://docs.google.com/spreadsheets/d/1C4WTH_EPQ6BKwL22b8qnJT8NillpYmhv0gRhnX7c9ec/edit?usp=sharing](https://docs.google.com/spreadsheets/d/1C4WTH_EPQ6BKwL22b8qnJT8NillpYmhv0gRhnX7c9ec/edit?usp=sharing)

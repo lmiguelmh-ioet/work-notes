@@ -35,6 +35,20 @@ Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 ## RMCS-I-3001 Create monocle-app domain integration
 - tickets
 	- https://warbyparker.atlassian.net/browse/OTCM-129762
+- test
+```
+data: https://fa-evdi-dev1-saasfaprod1.fa.ocs.oraclecloud.com/analytics/saw.dll?bipublisherEntry&Action=open&itemType=.xdo&bipPath=%2FCustom%2FWP%20Integrations%2FFIN%2FWP%20RMCS%20Order%20Details%20Additional%20Sub%20Lines%20Report.xdo&path=%2Fshared%2FCustom%2FWP%20Integrations%2FFIN%2FWP%20RMCS%20Order%20Details%20Additional%20Sub%20Lines%20Report.xdo
+
+Calling lambda API endpoint with OIC creds
+$(aws configure export-credentials --profile oic --format env)
+$(aws configure export-credentials --profile ott --format env)
+
+# OTT
+curl -v -X POST 'https://bocjed6ra6ycbe2wampw2idkiq0hihsg.lambda-url.us-east-1.on.aws/rmcs/proof-of-delivery-upload' -H "x-amz-security-token: ${AWS_SESSION_TOKEN}" --aws-sigv4 "aws:amz:us-east-1:lambda" --user "${AWS_ACCESS_KEY_ID}:${AWS_SECRET_ACCESS_KEY}" -H 'Content-Type: application/json' -d '{"sales_order_numbers" : ["19"]}' -H "OIC-Instance-ID: 1"
+
+# STAGE
+curl -v -X POST 'https://sjlqdgbb5mesmduz4pw5oj6fsa0ykkxk.lambda-url.us-east-1.on.aws/rmcs/proof-of-delivery-upload' -H "x-amz-security-token: ${AWS_SESSION_TOKEN}" --aws-sigv4 "aws:amz:us-east-1:lambda" --user "${AWS_ACCESS_KEY_ID}:${AWS_SECRET_ACCESS_KEY}" -H 'Content-Type: application/json' -d '{"sales_order_numbers" : ["19"]}' -H "OIC-Instance-ID: 1"
+```
 
 ## RMCS-I-3001 Create monocle-app Customer Contract Source Data Import FBDI
 - tickets
@@ -46,163 +60,8 @@ Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 
 ## RMCS-I-3001 - Proof of delivery upload in RMCS - FBDI Approach
 - query
-```sql
--- get DOO_HEADERS_ALL.ORDER_TYPE_CODE e.g. WP_B2C, WP_B2C_CPU, WP_B2C_TAKEAWAY, WP_B2B_WHOLESALE
-SELECT lookup_code,
-       meaning,
-       description,
-       tag,
-       enabled_flag
-FROM   fnd_lookup_values_vl
-WHERE  lookup_type = 'ORA_DOO_ORDER_TYPES'
-ORDER BY display_sequence, meaning;
+[projects.RMCS-I-3001](projects.RMCS-I-3001.md)
 
-
--- get doo_fulfill_lines_all.status_code e.g 'SHIPPED', 'AWAITING_BILLING', 'BILLED'
-SELECT s.status_code,
-       s.display_name
-FROM   doo_statuses_vl s
-WHERE  s.orchestration_application_id = 10008   -- fulfill line statuses
-ORDER BY s.display_name;
-```
-
-```DEBUG query
--- RMCS-I-3001 - Run each step in BI Publisher to find where row count drops to zero.
--- Replace '42' with a known sales order number (e.g. :P_ORDER_NUMBERS value).
---
--- 1) Funnel counts
-SELECT '1_base_fulfill_lines' AS step, COUNT(*) AS row_count
-FROM doo_headers_all h
-INNER JOIN doo_lines_all l ON l.header_id = h.header_id
-INNER JOIN doo_fulfill_lines_all fl
-    ON fl.header_id = h.header_id AND fl.line_id = l.line_id AND fl.shippable_flag = 'Y'
-WHERE h.source_order_number = '42'
-
-UNION ALL
-
-SELECT '2_status_filter', COUNT(*)
-FROM doo_headers_all h
-INNER JOIN doo_lines_all l ON l.header_id = h.header_id
-INNER JOIN doo_fulfill_lines_all fl
-    ON fl.header_id = h.header_id AND fl.line_id = l.line_id AND fl.shippable_flag = 'Y'
-WHERE h.source_order_number = '42'
-  AND fl.status_code IN ('SHIPPED', 'AWAIT_BILLING', 'BILLED', 'CLOSED')
-
-UNION ALL
-
-SELECT '3_qty_filter', COUNT(*)
-FROM doo_headers_all h
-INNER JOIN doo_lines_all l ON l.header_id = h.header_id
-INNER JOIN doo_fulfill_lines_all fl
-    ON fl.header_id = h.header_id AND fl.line_id = l.line_id AND fl.shippable_flag = 'Y'
-WHERE h.source_order_number = '42'
-  AND fl.status_code IN ('SHIPPED', 'AWAIT_BILLING', 'BILLED', 'CLOSED')
-  AND NVL(fl.fulfilled_qty, 0) > 0
-
-UNION ALL
-
-SELECT '4_rmcs_line_join', COUNT(*)
-FROM doo_headers_all h
-INNER JOIN doo_lines_all l ON l.header_id = h.header_id
-INNER JOIN doo_fulfill_lines_all fl
-    ON fl.header_id = h.header_id AND fl.line_id = l.line_id AND fl.shippable_flag = 'Y'
-INNER JOIN vrm_source_doc_lines sdl
-    ON sdl.doc_line_id_char_1 = h.source_order_number
-   AND sdl.doc_line_id_int_1 = l.line_id
-   AND sdl.doc_line_id_int_2 = CASE
-       WHEN fl.fulfill_line_number != TRUNC(fl.fulfill_line_number)
-           THEN fl.fulfill_line_number ELSE l.line_number END
-WHERE h.source_order_number = '42'
-  AND fl.status_code IN ('SHIPPED', 'AWAIT_BILLING', 'BILLED', 'CLOSED')
-  AND NVL(fl.fulfilled_qty, 0) > 0
-
-UNION ALL
-
-SELECT '5_perf_obligation_join', COUNT(*)
-FROM doo_headers_all h
-INNER JOIN doo_lines_all l ON l.header_id = h.header_id
-INNER JOIN doo_fulfill_lines_all fl
-    ON fl.header_id = h.header_id AND fl.line_id = l.line_id AND fl.shippable_flag = 'Y'
-INNER JOIN vrm_source_doc_lines sdl
-    ON sdl.doc_line_id_char_1 = h.source_order_number
-   AND sdl.doc_line_id_int_1 = l.line_id
-   AND sdl.doc_line_id_int_2 = CASE
-       WHEN fl.fulfill_line_number != TRUNC(fl.fulfill_line_number)
-           THEN fl.fulfill_line_number ELSE l.line_number END
-INNER JOIN vrm_perf_obligation_lines pol
-    ON pol.document_line_id = sdl.document_line_id
-   AND NVL(pol.removed_flag, 'N') = 'N'
-WHERE h.source_order_number = '42'
-  AND fl.status_code IN ('SHIPPED', 'AWAIT_BILLING', 'BILLED', 'CLOSED')
-  AND NVL(fl.fulfilled_qty, 0) > 0
-
-UNION ALL
-
-SELECT '6_not_already_uploaded', COUNT(*)
-FROM doo_headers_all h
-INNER JOIN doo_lines_all l ON l.header_id = h.header_id
-INNER JOIN doo_fulfill_lines_all fl
-    ON fl.header_id = h.header_id AND fl.line_id = l.line_id AND fl.shippable_flag = 'Y'
-INNER JOIN vrm_source_doc_lines sdl
-    ON sdl.doc_line_id_char_1 = h.source_order_number
-   AND sdl.doc_line_id_int_1 = l.line_id
-   AND sdl.doc_line_id_int_2 = CASE
-       WHEN fl.fulfill_line_number != TRUNC(fl.fulfill_line_number)
-           THEN fl.fulfill_line_number ELSE l.line_number END
-INNER JOIN vrm_perf_obligation_lines pol
-    ON pol.document_line_id = sdl.document_line_id
-   AND NVL(pol.removed_flag, 'N') = 'N'
-WHERE h.source_order_number = '42'
-  AND fl.status_code IN ('SHIPPED', 'AWAIT_BILLING', 'BILLED', 'CLOSED')
-  AND NVL(fl.fulfilled_qty, 0) > 0
-  AND NOT EXISTS (
-      SELECT 1 FROM vrm_source_doc_addl_sublines ads
-      WHERE ads.document_line_id = sdl.document_line_id
-        AND ads.doc_additional_sline_id_int_1 = TO_NUMBER(
-            TO_CHAR(pol.customer_contract_header_id) || TO_CHAR(pol.document_line_id))
-        AND UPPER(ads.additional_se_type_code) LIKE '%PROOF%DELIVERY%'
-  )
-
-UNION ALL
-
-SELECT '7_date_not_null_by_type', COUNT(*)
-FROM doo_headers_all h
-INNER JOIN doo_lines_all l ON l.header_id = h.header_id
-INNER JOIN doo_fulfill_lines_all fl
-    ON fl.header_id = h.header_id AND fl.line_id = l.line_id AND fl.shippable_flag = 'Y'
-LEFT JOIN (
-    SELECT fulfill_line_id, MAX(actual_delivery_date) AS actual_delivery_date
-    FROM doo_fulfill_line_details
-    WHERE actual_delivery_date IS NOT NULL
-    GROUP BY fulfill_line_id
-) fld ON fld.fulfill_line_id = fl.fulfill_line_id
-INNER JOIN vrm_source_doc_lines sdl
-    ON sdl.doc_line_id_char_1 = h.source_order_number
-   AND sdl.doc_line_id_int_1 = l.line_id
-   AND sdl.doc_line_id_int_2 = CASE
-       WHEN fl.fulfill_line_number != TRUNC(fl.fulfill_line_number)
-           THEN fl.fulfill_line_number ELSE l.line_number END
-INNER JOIN vrm_perf_obligation_lines pol
-    ON pol.document_line_id = sdl.document_line_id
-   AND NVL(pol.removed_flag, 'N') = 'N'
-WHERE h.source_order_number = '42'
-  AND fl.status_code IN ('SHIPPED', 'AWAIT_BILLING', 'BILLED', 'CLOSED')
-  AND NVL(fl.fulfilled_qty, 0) > 0
-  AND NOT EXISTS (
-      SELECT 1 FROM vrm_source_doc_addl_sublines ads
-      WHERE ads.document_line_id = sdl.document_line_id
-        AND ads.doc_additional_sline_id_int_1 = TO_NUMBER(
-            TO_CHAR(pol.customer_contract_header_id) || TO_CHAR(pol.document_line_id))
-        AND UPPER(ads.additional_se_type_code) LIKE '%PROOF%DELIVERY%'
-  )
-  AND CASE
-      WHEN h.order_type_code IN ('WP_B2C', 'WP_B2C_CPU') THEN fld.actual_delivery_date
-      WHEN h.order_type_code = 'WP_B2C_TAKEAWAY' THEN fl.fulfillment_date
-      WHEN h.order_type_code = 'WP_B2B_WHOLESALE' THEN fl.actual_ship_date
-  END IS NOT NULL
-
-ORDER BY 1;
-```
 - info
 ```
 Proof of Delivery upload (RMCS-I-3001) → Import Revenue Basis Data
@@ -301,7 +160,14 @@ RMCS-I-3002
 	- FSD: https://docs.google.com/document/d/1BZInnIPHh0s6zG6n6Q6I93yGBVjl28Z8/edit
 	- FSD mapping: https://docs.google.com/spreadsheets/d/1ZTlE9RFYYRHej9ZPCi3zxAwbA0hv9MoF/edit?gid=470165428#gid=470165428
 	- FBDI sheet: https://docs.google.com/spreadsheets/d/19e-Ga-ryrvCWIXhlQ4JdYJaeDIcrCCik/edit?gid=2037721153#gid=2037721153
+- test:
+```
+El reporte se encuentra en:  
 
+- https://fa-evdi-dev1-saasfaprod1.fa.ocs.oraclecloud.com/analytics/saw.dll?bipublisherEntry&Action=open&itemType=.xdo&bipPath=%2FCustom%2FWP%20Integrations%2FFIN%2FWP%20RMCS%20Order%20Details%20Additional%20Sub%20Lines%20Report.xdo&path=%2Fshared%2FCustom%2FWP%20Integrations%2FFIN%2FWP%20RMCS%20Order%20Details%20Additional%20Sub%20Lines%20Report.xdo
+  
+- https://fa-evdi-test-saasfaprod1.fa.ocs.oraclecloud.com/analytics/saw.dll?bipublisherEntry&Action=open&itemType=.xdo&bipPath=%2FCustom%2FWP%20Integrations%2FFIN%2FWP%20RMCS%20Order%20Details%20Additional%20Sub%20Lines%20Report.xdo&path=%2Fshared%2FCustom%2FWP%20Integrations%2FFIN%2FWP%20RMCS%20Order%20Details%20Additional%20Sub%20Lines%20Report.xdo
+```
 ## OM-I-3015 – Create Scheduled Sync for Tracking Numbers with EasyPost
 - TODO: CREATE THE API KEY WE ARE GOING TO USE IN PROD
 - tickets:
@@ -310,6 +176,8 @@ RMCS-I-3002
 	- enqueue process: https://warbyparker.atlassian.net/browse/OTCM-125483
 - test
 ```
+$(aws configure export-credentials --profile oic --format env)
+
 curl -v -X POST 'https://sjlqdgbb5mesmduz4pw5oj6fsa0ykkxk.lambda-url.us-east-1.on.aws/easypost/tracker/sync' -H "x-amz-security-token: ${AWS_SESSION_TOKEN}" --aws-sigv4 "aws:amz:us-east-1:lambda" --user "${AWS_ACCESS_KEY_ID}:${AWS_SECRET_ACCESS_KEY}" -H "OIC-Instance-ID: 1"
 ```
 

@@ -1166,3 +1166,78 @@ I marvel at games with a minimum set of rules being so fun.
 - children - memes on twitter
 - no, it depends 
 
+
+# Class 25 - power of smiling
+
+1 - d
+2 - e
+3 - a
+4 - g
+5 - c
+6 - f
+7 - b
+
+Luis incurred in a $500 fine.
+![](assets/Pasted%20image%2020260715132615.png)
+
+- make everyone happy
+- berkeley study: measurement of student smiles
+- how fullfilling: lasting marriage will be
+- how inspiring will be to others (std test)
+- baseball cards:
+	- span of his life -> span of smile
+- from developing babies even in the womb
+- smile: basic uniform social expression
+	- tribe from papue new guinea - canibalistic
+- people: > 20 (14% just 5)
+- babies: 400
+- smile + frown = smile
+- mimic vs experience => fake vs real
+- mimic the smile of the subjects: with a pencil in his mouth
+	- predict and judgement impair
+- 1
+	- marriage
+- 2
+	- how long they will live
+- 3
+	- 20
+- 4
+	- 400
+
+![](assets/Pasted%20image%2020260715134351.png)
+- charles darwin , facial feedback response theory
+	- smiling -> feel better
+	- feeling good -> smiling
+- facial feedback -> modifies the emotional processing of our brain
+- longer, healthier, happier 
+
+1. one smile = 2K bars of chocolate
+2. stimulating = 25K bucks - 50K pound
+3. smiling = like and cortiouos, capable of doing your job
+
+![](assets/Pasted%20image%2020260715135747.png)
+1. **tap into** (!)
+2. stumbled upon
+3. standardized tests
+4. jolts (!)
+5. enhancing
+6. attributed to
+
+![](assets/Pasted%20image%2020260715135815.png)
+
+![](assets/Pasted%20image%2020260715141159.png)
+1. embark on
+2. yield
+3. determine
+4. mimic
+5. induce
+6. suppress
+
+## Taboo game
+- smile
+	- facial expression from today's class
+- laugh
+	- bigger smile
+- hilarious
+	- a person who makes you laugh
+
