@@ -61,7 +61,9 @@ curl -v -X POST 'https://sjlqdgbb5mesmduz4pw5oj6fsa0ykkxk.lambda-url.us-east-1.o
 ## RMCS-I-3001 - Proof of delivery upload in RMCS - FBDI Approach
 - query
 [projects.RMCS-I-3001](projects.RMCS-I-3001.md)
-
+- flow:
+	- callback: WP Revenue Basis Data Import Callback
+	- https://design.integration.us-phoenix-1.ocp.oraclecloud.com/?root=monitoringTracking&oj_Router=1N4IgTg9hAuIFzAL6KA&integrationInstance=oictest2-axhxufzsltne-px
 - info
 ```
 Proof of Delivery upload (RMCS-I-3001) → Import Revenue Basis Data
@@ -148,6 +150,8 @@ why not one report?
 - related tickets from others
 	- 3002: https://warbyparker.atlassian.net/browse/OTCM-129764
 	- 3003: https://warbyparker.atlassian.net/browse/OTCM-129771
+	- callback 3001/3003: https://warbyparker.atlassian.net/browse/OTCM-105309
+		- `monocle_integrations/_domain/_integrations/_wp_import_verification_callback/_wp_import_verification_callback.py`
 ```
 RMCS-I-3001
 “When was it shipped/delivered?” → feeds POD / fulfillment events in RMCS
