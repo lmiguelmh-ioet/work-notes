@@ -36,9 +36,8 @@ Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 - tickets
 	- https://warbyparker.atlassian.net/browse/OTCM-129762
 - test
+	- data: https://fa-evdi-dev1-saasfaprod1.fa.ocs.oraclecloud.com/analytics/saw.dll?bipublisherEntry&Action=open&itemType=.xdo&bipPath=%2FCustom%2FWP%20Integrations%2FFIN%2FWP%20RMCS%20Order%20Details%20Additional%20Sub%20Lines%20Report.xdo&path=%2Fshared%2FCustom%2FWP%20Integrations%2FFIN%2FWP%20RMCS%20Order%20Details%20Additional%20Sub%20Lines%20Report.xdo
 ```
-data: https://fa-evdi-dev1-saasfaprod1.fa.ocs.oraclecloud.com/analytics/saw.dll?bipublisherEntry&Action=open&itemType=.xdo&bipPath=%2FCustom%2FWP%20Integrations%2FFIN%2FWP%20RMCS%20Order%20Details%20Additional%20Sub%20Lines%20Report.xdo&path=%2Fshared%2FCustom%2FWP%20Integrations%2FFIN%2FWP%20RMCS%20Order%20Details%20Additional%20Sub%20Lines%20Report.xdo
-
 Calling lambda API endpoint with OIC creds
 $(aws configure export-credentials --profile oic --format env)
 $(aws configure export-credentials --profile ott --format env)
@@ -67,6 +66,8 @@ curl -v -X POST 'https://sjlqdgbb5mesmduz4pw5oj6fsa0ykkxk.lambda-url.us-east-1.o
 - info
 ```
 Proof of Delivery upload (RMCS-I-3001) → Import Revenue Basis Data
+
+> After importing your revenue data: 1) Run Validate Customer Contract Source Data, 2) correct errors, 3) run Identify Customer Contracts.
 
 1. POD is an additional satisfaction event on `VRM_SOURCE_DOC_ADDL_SUBLINES` [https://docs.oracle.com/en/cloud/saas/financials/26b/fafrm/guidelines-for-importing-additional-satisfaction-events.html](https://docs.oracle.com/en/cloud/saas/financials/26b/fafrm/guidelines-for-importing-additional-satisfaction-events.html)
     
