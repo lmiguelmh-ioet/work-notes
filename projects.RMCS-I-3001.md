@@ -92,139 +92,183 @@ ORDER BY s.display_name;
 ```
 
 ```sql
--- RMCS-I-3001 - Run each step in BI Publisher to find where row count drops to zero.
--- Replace '42' with a known sales order number (e.g. :P_ORDER_NUMBERS value).
---
--- 1) Funnel counts
-SELECT '1_base_fulfill_lines' AS step, COUNT(*) AS row_count
-FROM doo_headers_all h
-INNER JOIN doo_lines_all l ON l.header_id = h.header_id
-INNER JOIN doo_fulfill_lines_all fl
-    ON fl.header_id = h.header_id AND fl.line_id = l.line_id AND fl.shippable_flag = 'Y'
-WHERE h.source_order_number = '42'
-
-UNION ALL
-
-SELECT '2_status_filter', COUNT(*)
-FROM doo_headers_all h
-INNER JOIN doo_lines_all l ON l.header_id = h.header_id
-INNER JOIN doo_fulfill_lines_all fl
-    ON fl.header_id = h.header_id AND fl.line_id = l.line_id AND fl.shippable_flag = 'Y'
-WHERE h.source_order_number = '42'
-  AND fl.status_code IN ('SHIPPED', 'AWAIT_BILLING', 'BILLED', 'CLOSED')
-
-UNION ALL
-
-SELECT '3_qty_filter', COUNT(*)
-FROM doo_headers_all h
-INNER JOIN doo_lines_all l ON l.header_id = h.header_id
-INNER JOIN doo_fulfill_lines_all fl
-    ON fl.header_id = h.header_id AND fl.line_id = l.line_id AND fl.shippable_flag = 'Y'
-WHERE h.source_order_number = '42'
-  AND fl.status_code IN ('SHIPPED', 'AWAIT_BILLING', 'BILLED', 'CLOSED')
-  AND NVL(fl.fulfilled_qty, 0) > 0
-
-UNION ALL
-
-SELECT '4_rmcs_line_join', COUNT(*)
-FROM doo_headers_all h
-INNER JOIN doo_lines_all l ON l.header_id = h.header_id
-INNER JOIN doo_fulfill_lines_all fl
-    ON fl.header_id = h.header_id AND fl.line_id = l.line_id AND fl.shippable_flag = 'Y'
-INNER JOIN vrm_source_doc_lines sdl
-    ON sdl.doc_line_id_char_1 = h.source_order_number
-   AND sdl.doc_line_id_int_1 = l.line_id
-   AND sdl.doc_line_id_int_2 = CASE
-       WHEN fl.fulfill_line_number != TRUNC(fl.fulfill_line_number)
-           THEN fl.fulfill_line_number ELSE l.line_number END
-WHERE h.source_order_number = '42'
-  AND fl.status_code IN ('SHIPPED', 'AWAIT_BILLING', 'BILLED', 'CLOSED')
-  AND NVL(fl.fulfilled_qty, 0) > 0
-
-UNION ALL
-
-SELECT '5_perf_obligation_join', COUNT(*)
-FROM doo_headers_all h
-INNER JOIN doo_lines_all l ON l.header_id = h.header_id
-INNER JOIN doo_fulfill_lines_all fl
-    ON fl.header_id = h.header_id AND fl.line_id = l.line_id AND fl.shippable_flag = 'Y'
-INNER JOIN vrm_source_doc_lines sdl
-    ON sdl.doc_line_id_char_1 = h.source_order_number
-   AND sdl.doc_line_id_int_1 = l.line_id
-   AND sdl.doc_line_id_int_2 = CASE
-       WHEN fl.fulfill_line_number != TRUNC(fl.fulfill_line_number)
-           THEN fl.fulfill_line_number ELSE l.line_number END
-INNER JOIN vrm_perf_obligation_lines pol
-    ON pol.document_line_id = sdl.document_line_id
-   AND NVL(pol.removed_flag, 'N') = 'N'
-WHERE h.source_order_number = '42'
-  AND fl.status_code IN ('SHIPPED', 'AWAIT_BILLING', 'BILLED', 'CLOSED')
-  AND NVL(fl.fulfilled_qty, 0) > 0
-
-UNION ALL
-
-SELECT '6_not_already_uploaded', COUNT(*)
-FROM doo_headers_all h
-INNER JOIN doo_lines_all l ON l.header_id = h.header_id
-INNER JOIN doo_fulfill_lines_all fl
-    ON fl.header_id = h.header_id AND fl.line_id = l.line_id AND fl.shippable_flag = 'Y'
-INNER JOIN vrm_source_doc_lines sdl
-    ON sdl.doc_line_id_char_1 = h.source_order_number
-   AND sdl.doc_line_id_int_1 = l.line_id
-   AND sdl.doc_line_id_int_2 = CASE
-       WHEN fl.fulfill_line_number != TRUNC(fl.fulfill_line_number)
-           THEN fl.fulfill_line_number ELSE l.line_number END
-INNER JOIN vrm_perf_obligation_lines pol
-    ON pol.document_line_id = sdl.document_line_id
-   AND NVL(pol.removed_flag, 'N') = 'N'
-WHERE h.source_order_number = '42'
-  AND fl.status_code IN ('SHIPPED', 'AWAIT_BILLING', 'BILLED', 'CLOSED')
-  AND NVL(fl.fulfilled_qty, 0) > 0
-  AND NOT EXISTS (
-      SELECT 1 FROM vrm_source_doc_addl_sublines ads
-      WHERE ads.document_line_id = sdl.document_line_id
-        AND ads.doc_additional_sline_id_int_1 = TO_NUMBER(
-            TO_CHAR(pol.customer_contract_header_id) || TO_CHAR(pol.document_line_id))
-        AND UPPER(ads.additional_se_type_code) LIKE '%PROOF%DELIVERY%'
-  )
-
-UNION ALL
-
-SELECT '7_date_not_null_by_type', COUNT(*)
-FROM doo_headers_all h
-INNER JOIN doo_lines_all l ON l.header_id = h.header_id
-INNER JOIN doo_fulfill_lines_all fl
-    ON fl.header_id = h.header_id AND fl.line_id = l.line_id AND fl.shippable_flag = 'Y'
-LEFT JOIN (
-    SELECT fulfill_line_id, MAX(actual_delivery_date) AS actual_delivery_date
-    FROM doo_fulfill_line_details
-    WHERE actual_delivery_date IS NOT NULL
-    GROUP BY fulfill_line_id
-) fld ON fld.fulfill_line_id = fl.fulfill_line_id
-INNER JOIN vrm_source_doc_lines sdl
-    ON sdl.doc_line_id_char_1 = h.source_order_number
-   AND sdl.doc_line_id_int_1 = l.line_id
-   AND sdl.doc_line_id_int_2 = CASE
-       WHEN fl.fulfill_line_number != TRUNC(fl.fulfill_line_number)
-           THEN fl.fulfill_line_number ELSE l.line_number END
-INNER JOIN vrm_perf_obligation_lines pol
-    ON pol.document_line_id = sdl.document_line_id
-   AND NVL(pol.removed_flag, 'N') = 'N'
-WHERE h.source_order_number = '42'
-  AND fl.status_code IN ('SHIPPED', 'AWAIT_BILLING', 'BILLED', 'CLOSED')
-  AND NVL(fl.fulfilled_qty, 0) > 0
-  AND NOT EXISTS (
-      SELECT 1 FROM vrm_source_doc_addl_sublines ads
-      WHERE ads.document_line_id = sdl.document_line_id
-        AND ads.doc_additional_sline_id_int_1 = TO_NUMBER(
-            TO_CHAR(pol.customer_contract_header_id) || TO_CHAR(pol.document_line_id))
-        AND UPPER(ads.additional_se_type_code) LIKE '%PROOF%DELIVERY%'
-  )
-  AND CASE
-      WHEN h.order_type_code IN ('WP_B2C', 'WP_B2C_CPU') THEN fld.actual_delivery_date
-      WHEN h.order_type_code = 'WP_B2C_TAKEAWAY' THEN fl.fulfillment_date
-      WHEN h.order_type_code = 'WP_B2B_WHOLESALE' THEN fl.actual_ship_date
-  END IS NOT NULL
-
-ORDER BY 1;
+-- RMCS-I-3001 - Run each step in BI Publisher to find where row count drops to zero.  
+-- Replace '42' with a known sales order number (e.g. :P_ORDER_NUMBERS value).  
+--  
+-- 1) Funnel counts  
+SELECT '1_base_fulfill_lines' AS step, COUNT(*) AS row_count  
+FROM doo_headers_all h  
+INNER JOIN doo_lines_all l ON l.header_id = h.header_id  
+INNER JOIN doo_fulfill_lines_all fl  
+    ON fl.header_id = h.header_id AND fl.line_id = l.line_id AND fl.shippable_flag = 'Y'  
+WHERE h.source_order_number = '42'  
+  
+UNION ALL  
+  
+SELECT '2_status_filter', COUNT(*)  
+FROM doo_headers_all h  
+INNER JOIN doo_lines_all l ON l.header_id = h.header_id  
+INNER JOIN doo_fulfill_lines_all fl  
+    ON fl.header_id = h.header_id AND fl.line_id = l.line_id AND fl.shippable_flag = 'Y'  
+WHERE h.source_order_number = '42'  
+  AND fl.status_code IN ('SHIPPED', 'AWAIT_BILLING', 'BILLED', 'CLOSED')  
+  
+UNION ALL  
+  
+SELECT '3_qty_filter', COUNT(*)  
+FROM doo_headers_all h  
+INNER JOIN doo_lines_all l ON l.header_id = h.header_id  
+INNER JOIN doo_fulfill_lines_all fl  
+    ON fl.header_id = h.header_id AND fl.line_id = l.line_id AND fl.shippable_flag = 'Y'  
+WHERE h.source_order_number = '42'  
+  AND fl.status_code IN ('SHIPPED', 'AWAIT_BILLING', 'BILLED', 'CLOSED')  
+  AND NVL(fl.fulfilled_qty, 0) > 0  
+  
+UNION ALL  
+  
+SELECT '4_rmcs_line_join', COUNT(*)  
+FROM doo_headers_all h  
+INNER JOIN doo_lines_all l ON l.header_id = h.header_id  
+INNER JOIN doo_fulfill_lines_all fl  
+    ON fl.header_id = h.header_id AND fl.line_id = l.line_id AND fl.shippable_flag = 'Y'  
+INNER JOIN vrm_source_doc_lines sdl  
+    ON sdl.doc_line_id_char_1 = h.source_order_number  
+   AND sdl.doc_line_id_int_1 = l.line_id  
+   AND sdl.doc_line_id_int_2 = l.line_number  
+WHERE h.source_order_number = '42'  
+  AND fl.status_code IN ('SHIPPED', 'AWAIT_BILLING', 'BILLED', 'CLOSED')  
+  AND NVL(fl.fulfilled_qty, 0) > 0  
+  
+UNION ALL  
+  
+SELECT '5_perf_obligation_join', COUNT(*)  
+FROM doo_headers_all h  
+INNER JOIN doo_lines_all l ON l.header_id = h.header_id  
+INNER JOIN doo_fulfill_lines_all fl  
+    ON fl.header_id = h.header_id AND fl.line_id = l.line_id AND fl.shippable_flag = 'Y'  
+INNER JOIN vrm_source_doc_lines sdl  
+    ON sdl.doc_line_id_char_1 = h.source_order_number  
+   AND sdl.doc_line_id_int_1 = l.line_id  
+   AND sdl.doc_line_id_int_2 = l.line_number  
+INNER JOIN vrm_perf_obligation_lines pol  
+    ON pol.document_line_id = sdl.document_line_id  
+   AND NVL(pol.removed_flag, 'N') = 'N'  
+WHERE h.source_order_number = '42'  
+  AND fl.status_code IN ('SHIPPED', 'AWAIT_BILLING', 'BILLED', 'CLOSED')  
+  AND NVL(fl.fulfilled_qty, 0) > 0  
+  
+UNION ALL  
+  
+SELECT '6_not_already_uploaded', COUNT(*)  
+FROM doo_headers_all h  
+INNER JOIN doo_lines_all l ON l.header_id = h.header_id  
+INNER JOIN doo_fulfill_lines_all fl  
+    ON fl.header_id = h.header_id AND fl.line_id = l.line_id AND fl.shippable_flag = 'Y'  
+INNER JOIN vrm_source_doc_lines sdl  
+    ON sdl.doc_line_id_char_1 = h.source_order_number  
+   AND sdl.doc_line_id_int_1 = l.line_id  
+   AND sdl.doc_line_id_int_2 = l.line_number  
+INNER JOIN vrm_perf_obligation_lines pol  
+    ON pol.document_line_id = sdl.document_line_id  
+   AND NVL(pol.removed_flag, 'N') = 'N'  
+WHERE h.source_order_number = '42'  
+  AND fl.status_code IN ('SHIPPED', 'AWAIT_BILLING', 'BILLED', 'CLOSED')  
+  AND NVL(fl.fulfilled_qty, 0) > 0  
+  AND NOT EXISTS (  
+      SELECT 1 FROM vrm_source_doc_addl_sublines ads  
+      WHERE ads.document_line_id = sdl.document_line_id  
+        AND ads.doc_additional_sline_id_int_1 = TO_NUMBER(  
+            TO_CHAR(pol.customer_contract_header_id) || TO_CHAR(pol.document_line_id))  
+        AND UPPER(ads.additional_se_type_code) LIKE '%PROOF%DELIVERY%'  
+  )  
+  
+UNION ALL  
+  
+SELECT '7_date_not_null_by_type', COUNT(*)  
+FROM doo_headers_all h  
+INNER JOIN doo_lines_all l ON l.header_id = h.header_id  
+INNER JOIN doo_fulfill_lines_all fl  
+    ON fl.header_id = h.header_id AND fl.line_id = l.line_id AND fl.shippable_flag = 'Y'  
+LEFT JOIN (  
+    SELECT fulfill_line_id, MAX(actual_delivery_date) AS actual_delivery_date  
+    FROM doo_fulfill_line_details  
+    WHERE actual_delivery_date IS NOT NULL  
+    GROUP BY fulfill_line_id  
+) fld ON fld.fulfill_line_id = fl.fulfill_line_id  
+INNER JOIN vrm_source_doc_lines sdl  
+    ON sdl.doc_line_id_char_1 = h.source_order_number  
+   AND sdl.doc_line_id_int_1 = l.line_id  
+   AND sdl.doc_line_id_int_2 = l.line_number  
+INNER JOIN vrm_perf_obligation_lines pol  
+    ON pol.document_line_id = sdl.document_line_id  
+   AND NVL(pol.removed_flag, 'N') = 'N'  
+WHERE h.source_order_number = '42'  
+  AND fl.status_code IN ('SHIPPED', 'AWAIT_BILLING', 'BILLED', 'CLOSED')  
+  AND NVL(fl.fulfilled_qty, 0) > 0  
+  AND NOT EXISTS (  
+      SELECT 1 FROM vrm_source_doc_addl_sublines ads  
+      WHERE ads.document_line_id = sdl.document_line_id  
+        AND ads.doc_additional_sline_id_int_1 = TO_NUMBER(  
+            TO_CHAR(pol.customer_contract_header_id) || TO_CHAR(pol.document_line_id))  
+        AND UPPER(ads.additional_se_type_code) LIKE '%PROOF%DELIVERY%'  
+  )  
+  AND CASE  
+      WHEN h.order_type_code IN ('WP_B2C', 'WP_B2C_CPU') THEN fld.actual_delivery_date  
+      WHEN h.order_type_code = 'WP_B2C_TAKEAWAY' THEN fl.fulfillment_date  
+      WHEN h.order_type_code = 'WP_B2B_WHOLESALE' THEN fl.actual_ship_date  
+  END IS NOT NULL  
+  
+ORDER BY 1;  
+  
+-- 2) Per-line pass/fail flags (run separately)  
+-- SELECT  
+--     h.source_order_number,  
+--     h.order_type_code,  
+--     l.line_id,  
+--     l.line_number,  
+--     fl.fulfill_line_id,  
+--     fl.fulfill_line_number,  
+--     fl.status_code,  
+--     fl.fulfilled_qty,  
+--     fld.actual_delivery_date,  
+--     fl.fulfillment_date,  
+--     fl.actual_ship_date,  
+--     sdl.document_line_id AS rmcs_document_line_id,  
+--     pol.document_line_id AS pol_document_line_id,  
+--     pol.removed_flag,  
+--     CASE WHEN fl.status_code IN ('SHIPPED', 'AWAIT_BILLING', 'BILLED', 'CLOSED')  
+--          THEN 'Y' ELSE 'N' END AS pass_status,  
+--     CASE WHEN NVL(fl.fulfilled_qty, 0) > 0 THEN 'Y' ELSE 'N' END AS pass_qty,  
+--     CASE WHEN sdl.document_line_id IS NOT NULL THEN 'Y' ELSE 'N' END AS pass_rmcs_join,  
+--     CASE WHEN pol.document_line_id IS NOT NULL AND NVL(pol.removed_flag, 'N') = 'N'  
+--          THEN 'Y' ELSE 'N' END AS pass_pol,  
+--     CASE WHEN EXISTS (  
+--         SELECT 1 FROM vrm_source_doc_addl_sublines ads  
+--         WHERE ads.document_line_id = sdl.document_line_id  
+--           AND ads.doc_additional_sline_id_int_1 = TO_NUMBER(  
+--               TO_CHAR(pol.customer_contract_header_id) || TO_CHAR(pol.document_line_id))  
+--           AND UPPER(ads.additional_se_type_code) LIKE '%PROOF%DELIVERY%'  
+--     ) THEN 'N' ELSE 'Y' END AS pass_not_uploaded,  
+--     CASE WHEN CASE  
+--         WHEN h.order_type_code IN ('WP_B2C', 'WP_B2C_CPU') THEN fld.actual_delivery_date  
+--         WHEN h.order_type_code = 'WP_B2C_TAKEAWAY' THEN fl.fulfillment_date  
+--         WHEN h.order_type_code = 'WP_B2B_WHOLESALE' THEN fl.actual_ship_date  
+--     END IS NOT NULL THEN 'Y' ELSE 'N' END AS pass_date  
+-- FROM doo_headers_all h  
+-- INNER JOIN doo_lines_all l ON l.header_id = h.header_id  
+-- INNER JOIN doo_fulfill_lines_all fl  
+--     ON fl.header_id = h.header_id AND fl.line_id = l.line_id AND fl.shippable_flag = 'Y'  
+-- LEFT JOIN (  
+--     SELECT fulfill_line_id, MAX(actual_delivery_date) AS actual_delivery_date  
+--     FROM doo_fulfill_line_details  
+--     GROUP BY fulfill_line_id  
+-- ) fld ON fld.fulfill_line_id = fl.fulfill_line_id  
+-- LEFT JOIN vrm_source_doc_lines sdl  
+--     ON sdl.doc_line_id_char_1 = h.source_order_number  
+--    AND sdl.doc_line_id_int_1 = l.line_id  
+--    AND sdl.doc_line_id_int_2 = l.line_number  
+-- LEFT JOIN vrm_perf_obligation_lines pol  
+--     ON pol.document_line_id = sdl.document_line_id  
+-- WHERE h.source_order_number = '42'  
+-- ORDER BY l.line_number, fl.fulfill_line_number;
 ```

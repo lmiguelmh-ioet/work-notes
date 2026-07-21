@@ -12,6 +12,13 @@
 Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 
 
+## AP-I-3006 Update integration logic
+- tickets:
+	- https://warbyparker.atlassian.net/browse/OTCM-135373
+
+## RMCS-I-3001 Update BIP report to include split lines 
+- tickets:
+	- https://warbyparker.atlassian.net/browse/OTCM-135308
 
 ## ON-CALL: JUL6-JUL12
 - https://warbyparker.atlassian.net/jira/software/c/projects/OEH/list?jql=project%20%3D%20%22OEH%22%0AAND%20created%20%3E%3D%20%222026-07-06%22%0AAND%20created%20%3C%3D%20%222026-07-13%22%0AAND%20status%20NOT%20IN%20(Rejected%2C%20Resolved)%0AORDER%20BY%20created%20DESC
