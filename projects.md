@@ -42,8 +42,25 @@ Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 ## RMCS-I-3001 Create monocle-app domain integration
 - tickets
 	- https://warbyparker.atlassian.net/browse/OTCM-129762
+- info:
+	- This is the endpoint used to listen for callback events using SOAP (onJobCompletion) -> to create a new SOAP Connection
+		- https://fa-evdi-dev1-saasfaprod1.fa.ocs.oraclecloud.com/ess/esswebservice?WSDL=ESSWebServiceAbstract.wsdl
+	- After adding an integration that will acts as a Callback URL:
+		- https://oictest2-axhxufzsltne-px.integration.us-phoenix-1.ocp.oraclecloud.com/ic/ws/integration/v1/flows/soap/ERP_RMCS_SOAP_CALLB_HANDL_TEST/1.0?wsdl
+	- This is one similar, but uses internally the onJobCompletion operation
+		- https://fa-evdi-dev1-saasfaprod1.fa.ocs.oraclecloud.com/ess/esswebservice?WSDL
+	- Revenue guide from scribd
+		- https://docs.google.com/document/d/12VRKsYwkh6lv4MtG9K0LKcpCtTPYzCfE/edit
+	- Revenue data import guide
+		- https://docs.oracle.com/en/cloud/saas/financials/26b/fafrm/import-additional-satisfaction-events-for-revenue-contracts.html#Suspend-Revenue-Recognition
+		- https://docs.oracle.com/en/cloud/saas/financials/26b/fafrm/guidelines-for-working-with-additional-satisfaction-events.html
+		- https://docs.oracle.com/en/cloud/saas/financials/26b/fafrm/revenue-recognition-for-additional-satisfaction-events.html
+		- https://docs.oracle.com/en/cloud/saas/financials/25c/fafrm/how-revenue-basis-import-data-is-processed.html#How-Revenue-Data-Is-Processed
+> You can import the fulfillment of additional satisfaction events using the VRM_SOURCE_DOC_ADDL_SUBLINES tab in the Revenue Basis Data Import template. Run the Validate Customer Contracts process to validate the additional satisfaction event data. You can view and correct validation and data errors using the Correct Contract Document Errors spreadsheet.
+
 - test
 	- data: https://fa-evdi-dev1-saasfaprod1.fa.ocs.oraclecloud.com/analytics/saw.dll?bipublisherEntry&Action=open&itemType=.xdo&bipPath=%2FCustom%2FWP%20Integrations%2FFIN%2FWP%20RMCS%20Order%20Details%20Additional%20Sub%20Lines%20Report.xdo&path=%2Fshared%2FCustom%2FWP%20Integrations%2FFIN%2FWP%20RMCS%20Order%20Details%20Additional%20Sub%20Lines%20Report.xdo
+	- jobs: https://fa-evdi-dev1-saasfaprod1.fa.ocs.oraclecloud.com/fscmUI/faces/FuseOverview?fndGlobalItemNodeId=itemNode_tools_scheduled_processes_fuse_plus&_afrLoop=4032567672262117&_afrWindowMode=0&_afrWindowId=ymJiUJowDFqk&_adf.ctrl-state=VxVI2bFa4q27_6&_afrFS=16&_afrMT=screen&_afrMFW=1920&_afrMFH=993&_afrMFDW=1920&_afrMFDH=1080&_afrMFC=8&_afrMFCI=0&_afrMFM=0&_afrMFR=96&_afrMFG=0&_afrMFS=0&_afrMFO=0
 ```
 Calling lambda API endpoint with OIC creds
 $(aws configure export-credentials --profile oic --format env)

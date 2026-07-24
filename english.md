@@ -14,14 +14,24 @@
 	- 29 years
 - Laura Fleming
 	- Cuenca Ecuador ~ 6 years teaching - business English
+	- Degrees: Computer Information System + Spanish
 	- 5 years left USA
 	- 3 years working on IOET
-- Melvin Juarez
+- Melvin Juarez (since may-2026)
 	- 29 years
-	- Guatemala
-	- "geek" - books
+	- Guatemala, Totonicapan
+	- Degree: Software engineering (informática & sistemas)
+	- "geek" - books (art collector)
 	- collector of funko pets
 	- 2-year old girl
+- David Yandum (since 2026-07-22)
+	- Ecuador, Ocambando
+	- 4 years on IOET
+	- several clients/projects
+	- Degree: sustained engineering (config/fixing/changes on infra)
+	- 2 1/2 months baby girl
+	- psychologist
+
 
 # Questions
 
@@ -1241,3 +1251,19 @@ Luis incurred in a $500 fine.
 - hilarious
 	- a person who makes you laugh
 
+# Class 26
+- piece of advice for an existing parent
+	- brace yourselves: baby doesn't know anything
+		- life will change
+		- just accept it
+	- and you must be unite as a couple
+		- women is having a hormonal change
+			- all this hormones that help 
+		- try to take care of your relation
+- goal you are working right now
+	- current goal: 
+		- trying to finish some personal projects I had before
+		- trying to get me some time
+		- bio metrics 
+- as a tourist, one thing the tourist would od
+	- encebollado
