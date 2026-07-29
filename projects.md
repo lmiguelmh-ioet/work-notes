@@ -12,6 +12,11 @@
 Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 
 
+## AR-I-3005 Update payment method code
+- tickets:
+	- https://warbyparker.atlassian.net/browse/OTCM-135075
+
+
 ## AP-I-3006 Update integration logic
 - tickets:
 	- https://warbyparker.atlassian.net/browse/OTCM-135373
@@ -277,7 +282,7 @@ curl -v -X POST 'https://sjlqdgbb5mesmduz4pw5oj6fsa0ykkxk.lambda-url.us-east-1.o
 	- un Credit memo number  e invoice por transaction reference
 
 
-## CM-I-3000P - PayPal SFTP Integration and File Sync to S3
+## CM-I-3000P (CM-I-3004? CM-I-3007?) - PayPal SFTP Integration and File Sync to S3
 
 - tickets:
 	- integration: https://warbyparker.atlassian.net/browse/OTCM-109709
