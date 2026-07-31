@@ -3,8 +3,10 @@
 - From Monday to Sunday
 	- ALL should be closed
 - You might need more time, so ask Emilio
-- "Hunter is working on Roosevelt only and should not be tagged in prod issues, @Hunter Governale please disregard"
-- status flow
+- Any change on S3 for reprocessing always add a prefix with  the `_OEH_xxx.ext` for facilitating later identification
+	- S3 file changes on prod are compiled into a sheet and must be associated with an OEH ticket or some auth
+	- ![](assets/Pasted%20image%2020260730175030.png)
+
 - On call google instructions: 
 	- https://docs.google.com/spreadsheets/d/1np28IorbDKbEWFQo-hn-a4TGyz7jqHbSCaT48b66U6k/edit?gid=0#gid=0
 	- https://warbyparker.atlassian.net/wiki/spaces/OT/pages/7726531192/Common+Oracle+Integration+On-Call+Issues
