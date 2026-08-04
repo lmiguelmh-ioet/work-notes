@@ -36,7 +36,7 @@ Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 - self-heal maybe?
 	- https://warbyparker.atlassian.net/browse/OEH-69691
 
-## FLARE to OIC: Ship Confirmation (AI SRW)
+## IN-I-2017B FLARE to OIC: Ship Confirmation (AI SRW)
 - tickets
 	- https://warbyparker.atlassian.net/browse/OTCM-118998
 - s3:
@@ -54,10 +54,18 @@ Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 - [cloudwatch](https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#logsV2:logs-insights)
 ```
 fields @timestamp, @message, @logStream, @log
-| filter @message like /pick-ship-confirmation/   -- /Published Flare ship event to SNS/
+| filter @message like /Published Flare ship event to SNS/
 | sort @timestamp desc
 | limit 1000
 ```
+- test
+```
+$(aws configure export-credentials --profile oic --format env)
+
+# STAGE
+curl -v -X POST 'https://sjlqdgbb5mesmduz4pw5oj6fsa0ykkxk.lambda-url.us-east-1.on.aws/fedex/pick-ship-confirmation' -H "x-amz-security-token: ${AWS_SESSION_TOKEN}" --aws-sigv4 "aws:amz:us-east-1:lambda" --user "${AWS_ACCESS_KEY_ID}:${AWS_SECRET_ACCESS_KEY}" -H 'Content-Type: application/json' -d @OTCM-118998_flare_to_oic_payload.json
+```
+
 
 ## RMCS-I-3001 Create monocle-app domain integration
 - tickets
