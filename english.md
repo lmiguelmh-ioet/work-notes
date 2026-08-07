@@ -1267,3 +1267,35 @@ Luis incurred in a $500 fine.
 		- bio metrics 
 - as a tourist, one thing the tourist would od
 	- encebollado
+
+# Class 27
+- HOLIDAY
+
+# Class 28
+- 2026/08/05
+![](assets/Pasted%20image%2020260805131609.png)
+1D
+2E => to weaken or damage something
+3B => tap into - TO MAKE USE OF A RESOURCE OR SOURCE OF SOMETHING
+4C -*
+5A
+
+![](assets/Pasted%20image%2020260805132539.png)
+1 incur
+2 impair
+3 stumble upon
+4 **tap into**
+5 jolt
+
+![](assets/Pasted%20image%2020260805133140.png)
+
+I felt a jolt of surprise the first time an earthquake hit the capital city of Lima.
+
+The new changes pushed on Friday impaired the client system during the weekend.
+
+When walking through the forest I stumbled upon an old house that was in ruins.
+
+Whenever I had issues on the past I tapped into stackoverflow to ask a question and wait for a response.
+
+FOR NEXT WEEK:
+![](assets/Pasted%20image%2020260805142331.png)

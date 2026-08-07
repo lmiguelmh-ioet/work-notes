@@ -11,6 +11,18 @@
 "Ser padre me ha enseñado que existe un nuevo sentido a la vida.
 Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 
+
+## WMS-I-1005 – Update Integration to Transmit Orders to OMG Only After Successful Oracle Processing - includes main/stage merge
+- tickets:
+	- https://warbyparker.atlassian.net/browse/OTCM-135592
+- [cloudwatch](https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#logsV2:logs-insights)
+```
+fields @timestamp, @message, @logStream, @log
+| filter @message like /Processing WMS pick confirmation request/
+| sort @timestamp desc
+| limit 1000
+```
+
 ## AP-I-3006 – Update Credit Memo Report to Retrieve Only AR REFUND Payment Request Invoices
 - tickets:
 	- https://warbyparker.atlassian.net/browse/OTCM-135713
@@ -80,6 +92,7 @@ curl -v -X POST 'https://sjlqdgbb5mesmduz4pw5oj6fsa0ykkxk.lambda-url.us-east-1.o
 	- Revenue guide from scribd
 		- https://docs.google.com/document/d/12VRKsYwkh6lv4MtG9K0LKcpCtTPYzCfE/edit
 	- Revenue data import guide
+		- https://docs.oracle.com/en/cloud/saas/financials/26b/fafrm/how-revenue-basis-import-data-is-processed.html#s20057541
 		- https://docs.oracle.com/en/cloud/saas/financials/26b/fafrm/import-additional-satisfaction-events-for-revenue-contracts.html#Suspend-Revenue-Recognition
 		- https://docs.oracle.com/en/cloud/saas/financials/26b/fafrm/guidelines-for-working-with-additional-satisfaction-events.html
 		- https://docs.oracle.com/en/cloud/saas/financials/26b/fafrm/revenue-recognition-for-additional-satisfaction-events.html
