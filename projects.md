@@ -34,6 +34,16 @@ fields @timestamp, @message, @logStream, @log
 ## AR-I-3005 Update payment method code
 - tickets:
 	- https://warbyparker.atlassian.net/browse/OTCM-135075
+- oracle:
+	- Home > Receivables > Accounts Receivable, then in right menu Manage Receipts
+	- ![](assets/Pasted%20image%2020260810111449.png)
+- [cloudwatch](https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#logsV2:logs-insights)
+```
+fields @timestamp, @message, @logStream, @log
+| filter @message like /Starting unapplied receipt refund process/
+| sort @timestamp desc
+| limit 1000
+```
 
 ## AP-I-3006 Update integration logic
 - tickets:
@@ -66,7 +76,7 @@ fields @timestamp, @message, @logStream, @log
 - [cloudwatch](https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#logsV2:logs-insights)
 ```
 fields @timestamp, @message, @logStream, @log
-| filter @message like /Published Flare ship event to SNS/
+| filter @message like /Published Flare ship event to SNS/   -- Processing FedEx ship confirmation
 | sort @timestamp desc
 | limit 1000
 ```
