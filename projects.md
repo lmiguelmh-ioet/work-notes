@@ -12,6 +12,83 @@
 Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 
 
+## OM-I-3002 – Update Integration to Transmit B2B Order Type
+- tickets:
+	- https://warbyparker.atlassian.net/browse/OTCM-136039
+- test data
+```
+y para probar es buscar alguna sales order, las que conozco ya las usamos, y te va a dar error fedex, indicando que ya existe la orden, por ejemplo la 160
+162
+
+<nstrgmpr:execute xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:ns2="http://xmlns.oracle.com/cloud/generic/rest/fault/REST/Outbound_TOs" xmlns:ns1="http://xmlns.oracle.com/cloud/adapter/REST/Outbound_TOs_REQUEST" xmlns:plnk="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:ns3="http://www.oracle.com/XSL/Transform/java/com.bea.wli.sb.resources.icsxpathfunctions.ICSInstanceTrackingFunctions" xmlns:nsmpr2="http://xmlns.oracle.com/types/CallReport/1658214879994/OutboundSOAPRequestDocument" xmlns:nsmpr3="http://xmlns.oracle.com/cloud/adapter/nxsd/surrogate/ReadFileIn_OIC" xmlns:nsmpr4="http://xmlns.oracle.com/cloud/adapter/stagefile/ReadReportFile_IN_OIC_REQUEST/types" xmlns:xml="http://www.w3.org/XML/1998/namespace" xmlns:nsmpr5="http://www.oracle.com/2014/03/ic/integration/metadata" xmlns:dvm="http://www.oracle.com/XSL/Transform/java/com.bea.wli.sb.functions.dvm.DVMFunctions" xmlns:nsmpr1="http://xmlns.oracle.com/oxp/service/PublicReportService" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd" xmlns:orajs9="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.JsExecutor_xpath196296991" xmlns:orajs7="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.JsExecutor_xpath128480575" xmlns:orajs8="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.JsExecutor_xpath1493882859" xmlns:orajs5="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.JsExecutor_xpath162298817" xmlns:orajs6="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.JsExecutor_xpath737211451" xmlns:orajs3="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.JsExecutor_xpath691264191" xmlns:orajs4="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.JsExecutor_xpath1031972521" xmlns:orajs1="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.JsExecutor_xpath331242329" xmlns:orajs2="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.JsExecutor_xpath86288" xmlns:orajs0="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.JsExecutor_xpath746293685" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns30="http://xmlns.oracle.com/cloud/adapter/connectivityproperties/REST/Outbound_TOs_REQUEST/RESTOUTRES" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:orajs10="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.JsExecutor_xpath1137717541" xmlns:orajs11="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.JsExecutor_xpath1561472592" xmlns:orajs16="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.JsExecutor_xpath1083094489" xmlns:orajs17="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.JsExecutor_xpath543998698" xmlns:orajs18="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.JsExecutor_xpath961648758" xmlns:orajs19="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.JsExecutor_xpath1879359763" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:orajs12="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.JsExecutor_xpath695453143" xmlns:orajs13="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.JsExecutor_xpath32568430" xmlns:orajs14="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.JsExecutor_xpath893301193" xmlns:orajs15="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.JsExecutor_xpath1058324145" xmlns:nstrgdfl="http://xmlns.oracle.com/cloud/adapter/REST/Outbound_TOs/types" xmlns:ns28="http://xmlns.oracle.com/cloud/adapter/stagefile/ReadReportFile_IN_OIC_REQUEST" xmlns:nstrgmpr="http://xmlns.oracle.com/cloud/adapter/REST/Outbound_TOs_REQUEST/types" xmlns:ns29="http://xmlns.oracle.com/cloud/adapter/connectivityproperties/REST/Outbound_TOs_REQUEST/RESTOUTREQ">
+  <nstrgdfl:request-wrapper>
+    <nstrgdfl:order>
+      <nstrgdfl:actionType>Create</nstrgdfl:actionType>
+      <nstrgdfl:messageType>DistributionOrder</nstrgdfl:messageType>
+      <nstrgdfl:dataSource>API</nstrgdfl:dataSource>
+      <nstrgdfl:user>API</nstrgdfl:user>
+      <nstrgdfl:customerOrderNumber>160</nstrgdfl:customerOrderNumber>
+      <nstrgdfl:orderType>B2B</nstrgdfl:orderType>
+      <nstrgdfl:orderDistributionType>Customer Order</nstrgdfl:orderDistributionType>
+      <nstrgdfl:orderPriority />
+      <nstrgdfl:orderDate>2026-08-06 09:06:29 EDT</nstrgdfl:orderDate>
+      <nstrgdfl:deliveryStartDate>2026-08-06 19:59:59 EDT 2026-08-06 19:59:59 EDT 2026-08-06 19:59:59 EDT</nstrgdfl:deliveryStartDate>
+      <nstrgdfl:deliveryEndDate>2026-08-06 19:59:59 EDT 2026-08-06 19:59:59 EDT 2026-08-06 19:59:59 EDT</nstrgdfl:deliveryEndDate>
+      <nstrgdfl:dsgShipVia />
+      <nstrgdfl:routeTo />
+      <nstrgdfl:inventoryType />
+      <nstrgdfl:residentialDeliveryRequired>C</nstrgdfl:residentialDeliveryRequired>
+      <nstrgdfl:shipFrom>
+        <nstrgdfl:businessUnit>WRBYUAT</nstrgdfl:businessUnit>
+        <nstrgdfl:facility>WMDU</nstrgdfl:facility>
+        <nstrgdfl:source>1</nstrgdfl:source>
+        <nstrgdfl:companyID>WRBYUAT</nstrgdfl:companyID>
+      </nstrgdfl:shipFrom>
+      <nstrgdfl:customerInformation>
+        <nstrgdfl:customerName>Google LLC</nstrgdfl:customerName>
+        <nstrgdfl:shipTo>
+          <nstrgdfl:name>Google LLC</nstrgdfl:name>
+          <nstrgdfl:addressLine1>76 9th Ave</nstrgdfl:addressLine1>
+          <nstrgdfl:addressLine2 />
+          <nstrgdfl:addressLine3 />
+          <nstrgdfl:city>New York</nstrgdfl:city>
+          <nstrgdfl:countryCode>US</nstrgdfl:countryCode>
+          <nstrgdfl:state>NY</nstrgdfl:state>
+          <nstrgdfl:postalCode>10011</nstrgdfl:postalCode>
+          <nstrgdfl:phone>1234567890</nstrgdfl:phone>
+        </nstrgdfl:shipTo>
+        <nstrgdfl:billTo>
+          <nstrgdfl:billingMethod>PP</nstrgdfl:billingMethod>
+        </nstrgdfl:billTo>
+      </nstrgdfl:customerInformation>
+      <nstrgdfl:lines>
+        <nstrgdfl:lineNumber>1</nstrgdfl:lineNumber>
+        <nstrgdfl:item>846864072971</nstrgdfl:item>
+        <nstrgdfl:orderedQuantity>10</nstrgdfl:orderedQuantity>
+        <nstrgdfl:inventoryType />
+        <nstrgdfl:quantityUOM>EA</nstrgdfl:quantityUOM>
+      </nstrgdfl:lines>
+      <nstrgdfl:lines>
+        <nstrgdfl:lineNumber>3</nstrgdfl:lineNumber>
+        <nstrgdfl:item>846864072995</nstrgdfl:item>
+        <nstrgdfl:orderedQuantity>30</nstrgdfl:orderedQuantity>
+        <nstrgdfl:inventoryType />
+        <nstrgdfl:quantityUOM>EA</nstrgdfl:quantityUOM>
+      </nstrgdfl:lines>
+      <nstrgdfl:lines>
+        <nstrgdfl:lineNumber>4</nstrgdfl:lineNumber>
+        <nstrgdfl:item>846864073008</nstrgdfl:item>
+        <nstrgdfl:orderedQuantity>40</nstrgdfl:orderedQuantity>
+        <nstrgdfl:inventoryType />
+        <nstrgdfl:quantityUOM>EA</nstrgdfl:quantityUOM>
+      </nstrgdfl:lines>
+    </nstrgdfl:order>
+  </nstrgdfl:request-wrapper>
+</nstrgmpr:execute>
+```
+- ![](assets/Pasted%20image%2020260811114032.png)
+- 
+
 ## WMS-I-1005 – Update Integration to Transmit Orders to OMG Only After Successful Oracle Processing - includes main/stage merge
 - tickets:
 	- https://warbyparker.atlassian.net/browse/OTCM-135592
@@ -35,10 +112,12 @@ fields @timestamp, @message, @logStream, @log
 - tickets:
 	- https://warbyparker.atlassian.net/browse/OTCM-135075
 - oracle:
+	- WP_GET_RECEIPT_REFUND_INFORMATION
 	- Home > Receivables > Accounts Receivable, then in right menu Manage Receipts
 	- ![](assets/Pasted%20image%2020260810111449.png)
 - [cloudwatch](https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#logsV2:logs-insights)
 ```
+SOURCE "arn:aws:logs:us-east-1:844647875270:log-group:/aws/lambda/oic-monocle-integrations-lambda-stage-us-east-1" START=-172800s END=0s |
 fields @timestamp, @message, @logStream, @log
 | filter @message like /Starting unapplied receipt refund process/
 | sort @timestamp desc
@@ -75,6 +154,7 @@ fields @timestamp, @message, @logStream, @log
 ```
 - [cloudwatch](https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#logsV2:logs-insights)
 ```
+SOURCE "arn:aws:logs:us-east-1:844647875270:log-group:/aws/lambda/oic-monocle-integrations-lambda-stage-us-east-1" START=-604800s END=0s |
 fields @timestamp, @message, @logStream, @log
 | filter @message like /Published Flare ship event to SNS/   -- Processing FedEx ship confirmation
 | sort @timestamp desc
