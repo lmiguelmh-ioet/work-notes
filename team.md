@@ -226,6 +226,16 @@ fields @timestamp, @message, @logStream, @log
 ## Oracle ATP
 - oracle developer
 - credentials in a wallet
+	- Gabo: And here are the details for the new wallet: [https://docs.google.com/spreadsheets/d/10INW7gW6qiGM-gqHDwU2H-7Qy_g0bMpm98DHpvhQAEk/edit?gid=0#gid=0](https://docs.google.com/spreadsheets/d/10INW7gW6qiGM-gqHDwU2H-7Qy_g0bMpm98DHpvhQAEk/edit?gid=0#gid=0)
+	- key: https://us-east-1.console.aws.amazon.com/secretsmanager/secret?name=oic%2Fdev%2Foracle%2FWP_PAAS&region=us-east-1
+- PR con insert: https://github.com/WarbyParker/oracle-integration-cloud/pull/891
+```
+select * 
+from WP_PAAS.WP_INT_GENERIC_REPORT_PARAM;
+
+`INSERT INTO WP_PAAS.WP_INT_GENERIC_REPORT_PARAM (RICE_ID, INTEGRATION_NAME, REPORT_NAME, LAST_RUN_TO_DATE, LAST_RUN_FROM_DATE, ENT_DATE) VALUES ('OM-I-3002', 'OM-I-3002 Transmit Sales Order Shipments Outbound', 'WP_IN_FEDEX_SALES_ORDER_REPORT', '01-FEB-26 12.00.00.000000000 AM', '01-FEB-26 12.00.00.000000000 AM', '01-FEB-26');`
+```
+
 
 ## OIC
 - enable debug logs to see payload

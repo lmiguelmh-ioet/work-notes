@@ -7,6 +7,9 @@
 	- WP contractor (6 years)
 	- FE (+littel BE)
 	- Loja
+	- Jobs on many teams:
+		- Java 8 OFFICE > API OHM > Helios
+		- migración para microservicios (usuarios, pagos, )
 - Michael Guanolisa - 4 years
 	- guitar + piano
 - Jerson
@@ -1299,3 +1302,31 @@ Whenever I had issues on the past I tapped into stackoverflow to ask a question 
 
 FOR NEXT WEEK:
 ![](assets/Pasted%20image%2020260805142331.png)
+
+
+# Class 29 - 2026/08/12
+
+- ![](assets/Pasted%20image%2020260812131436.png)
+- ![](assets/Pasted%20image%2020260812132304.png)
+- ![](assets/Pasted%20image%2020260812132611.png)
+- 3 sentences 3 different idioms
+
+- 2 truths 1 lie: me + leonardo
+	- My stomach is no laughing matter it could be a serious illness.
+	- I was laughing my head's off when I saw that cat video on social media, I laughed so hard that my wife had to come in to ask.
+	- Some time ago I was working in a construction site, I was having a good time until a brick fell on my foot (NO feet) that wipe the smile of my face.
+- 2 truths 1 lie:
+	- I entered the office with a smile that could light up a room because it was my birthday.
+	- The jokes I tell are so good that I should have a book and laughing all the way to the bank.
+	- Nobody thought that I could beat them all in Halo, but when they saw the leaderboard I had the last laugh.
+- have the last laugh
+	- 
+- laugh in someones face
+	- When I was a kid some of my friends thought I could not use the slingshot, I had the last laugh when I use it successfully.
+- laugh off
+	- I was on the beach when I bough me an ice cream, I had the wrapper in one hand and the ice cream on the other, when I tried to throw the wrapper I accidentally throw the ice cream instead! I laugh off and had to bough another one.
+
+
+![](assets/Pasted%20image%2020260812141515.png)
+
+![](assets/Pasted%20image%2020260812142532.png)
