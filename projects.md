@@ -12,6 +12,17 @@
 Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 
 
+## OM-I-3028 - ???
+
+- tickets:
+	- 
+- report
+	- `/Custom/WP Integrations/SCM/WP Get Uncuts PO Information by Date or PO Report.xdo`
+	- [dev-1](https://fa-evdi-dev1-saasfaprod1.fa.ocs.oraclecloud.com/analytics/saw.dll?bipublisherEntry&Action=open&itemType=.xdo&bipPath=%2FCustom%2FWP%20Integrations%2FSCM%2FWP%20Get%20Uncuts%20PO%20Information%20by%20Date%20or%20PO%20Report.xdo&path=%2Fshared%2FCustom%2FWP%20Integrations%2FSCM%2FWP%20Get%20Uncuts%20PO%20Information%20by%20Date%20or%20PO%20Report.xdo)
+	- 
+- S3
+	- `vendors/Manhattan/OM-I-3028/Archive/OM_I_3028_UNCUTS_PO_MTO_<MMddyyyyHHmmssffff>_<instanceId>.json`
+
 ## OM-I-3002 – Update Integration to Transmit B2B Order Type
 - tickets:
 	- https://warbyparker.atlassian.net/browse/OTCM-136039
