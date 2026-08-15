@@ -11,9 +11,16 @@
 "Ser padre me ha enseñado que existe un nuevo sentido a la vida.
 Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 
+## RMCS-I-3001 / RMCS-I-3003 – Detect Source Data Errors After Revenue Basis FBDI Validation
+
+- ticket:
+	- https://warbyparker.atlassian.net/browse/OTCM-136283
+- 
+
 
 ## AR-I-3005 - Pass pay group and remittance messages to Oracle refund SOAP
 - ticket
+	- https://warbyparker.atlassian.net/browse/OTCM-136458
 - docs
 ```
 WSDL
