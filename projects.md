@@ -12,6 +12,22 @@
 Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 
 
+## AR-I-3005 - Pass pay group and remittance messages to Oracle refund SOAP
+- ticket
+- docs
+```
+WSDL
+https://fa-evdi-dev1-saasfaprod1.fa.ocs.oraclecloud.com/fscmService/StandardReceiptService?WSDL
+
+Service XSD (createActivityApplicationResponse.result → ActivityApplicationResult)
+https://fa-evdi-dev1-saasfaprod1.fa.ocs.oraclecloud.com:443/fscmService/StandardReceiptService?XSD=/oracle/apps/financials/receivables/receipts/shared/standardReceiptService/commonService/StandardReceiptService.xsd
+
+SDO XSD (ActivityApplicationResult.Value → ActivityApplication, including pay group and remittance)
+https://fa-evdi-dev1-saasfaprod1.fa.ocs.oraclecloud.com:443/fscmService/StandardReceiptService?XSD=/oracle/apps/financials/receivables/receipts/shared/standardReceiptService/commonService/ActivityApplication.xsd
+
+Prod is the same paths on https://fa-evdi-saasfaprod1.fa.ocs.oraclecloud.com.
+```
+
 ## OM-I-3028 - ???
 
 - tickets:
@@ -123,9 +139,15 @@ fields @timestamp, @message, @logStream, @log
 - tickets:
 	- https://warbyparker.atlassian.net/browse/OTCM-135075
 - oracle:
-	- WP_GET_RECEIPT_REFUND_INFORMATION
+	- SCM : WP_GET_RECEIPT_REFUND_INFORMATION
 	- Home > Receivables > Accounts Receivable, then in right menu Manage Receipts
-	- ![](assets/Pasted%20image%2020260810111449.png)
+		- ![](assets/Pasted%20image%2020260810111449.png)
+		- ![](assets/Pasted%20image%2020260814151746.png)
+	- Payables > Manage Invoices, use the transaction number of the application
+		- ![](assets/Pasted%20image%2020260814151809.png)
+		- 
+- test
+	- OIC
 - [cloudwatch](https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#logsV2:logs-insights)
 ```
 SOURCE "arn:aws:logs:us-east-1:844647875270:log-group:/aws/lambda/oic-monocle-integrations-lambda-stage-us-east-1" START=-172800s END=0s |
