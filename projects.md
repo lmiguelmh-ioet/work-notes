@@ -15,7 +15,9 @@ Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 
 - ticket:
 	- https://warbyparker.atlassian.net/browse/OTCM-136283
-- 
+- query:
+	- [projects.RMCS-I-3001](projects.RMCS-I-3001.md)
+
 
 
 ## AR-I-3005 - Pass pay group and remittance messages to Oracle refund SOAP
