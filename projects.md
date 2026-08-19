@@ -17,7 +17,17 @@ Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 	- https://warbyparker.atlassian.net/browse/OTCM-136283
 - query:
 	- [projects.RMCS-I-3001](projects.RMCS-I-3001.md)
+- logs:
+- [cloudwatch](https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#logsV2:logs-insights)
+```
+SOURCE "arn:aws:logs:us-east-1:844647875270:log-group:/aws/lambda/oic-monocle-integrations-lambda-ott-us-east-1" START=-30m END=0s |
+SOURCE "arn:aws:logs:us-east-1:844647875270:log-group:/aws/lambda/oic-monocle-integrations-lambda-stage-us-east-1" START=-30m END=0s |
+fields @timestamp, @message, @logStream, @log
+| filter @message like /Starting proof of delivery upload|Import verification callback - Start/
+| sort @timestamp desc
+| limit 1000
 
+```
 
 
 ## AR-I-3005 - Pass pay group and remittance messages to Oracle refund SOAP
