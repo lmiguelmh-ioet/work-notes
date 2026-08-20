@@ -1330,3 +1330,71 @@ FOR NEXT WEEK:
 ![](assets/Pasted%20image%2020260812141515.png)
 
 ![](assets/Pasted%20image%2020260812142532.png)
+
+
+# Class 30 - 2026/08/19 - taking notes
+
+- warm-up for taking notes
+![](assets/Pasted%20image%2020260819131300.png)
+- What you think the world will be like in 100 years
+	- This is really exciting excercise
+	- I think in 100 years I think we will have a permanent moon base
+	- And the Mars will have some temporary habitational places and in the process of terraforming
+	- Robots everywhere and for everything
+	- There will be cyber world where different to the real world
+	- Cibernetics will be everywhere so people might live more than hundreds of years
+	- Basic necessities will be covered for almost every human on planet and planetary events (earthquakes etc) for 
+	- I think we will be in path to be a I-type civilization, 
+	- it means a civilization that uses all the energy produces for the planet, that manages the weather
+	- Depending on what happens on the following years 
+	- appearance of multipolar world, not wars
+	- it might be inequalities around the world or we will go 
+	- But I think overall the future is bright!
+	- social changes 
+	- less births
+	- culture will be shared between the world
+
+![](assets/Pasted%20image%2020260819134230.png)
+
+![](assets/Pasted%20image%2020260819134441.png)
+
+![](assets/Pasted%20image%2020260819134927.png)
+
+- what is the definition of wildfires?
+	- forest fires
+	- blazes in wilderness that spreads quickly
+- what are the two types of wildfires?
+	- natural and man-made
+- what are the three components of a fire triangle?
+	- heat
+	- oxygen
+	- fuel
+
+![](assets/Pasted%20image%2020260819135716.png)
+1. prick test (allergen)
+2. blood test
+3. accurate
+4. biolumination test
+5. milk
+
+![](assets/Pasted%20image%2020260819140622.png)
+
+![](assets/Pasted%20image%2020260819141148.png)
+
+- what is waitangi day?
+	- public holiday celebrating the treaty of Waitangi (New Zealand)
+- what does maori refer to?
+	- indigenous people of New Zealand
+- how is waitangi day celebrated?
+	- celebrate with war canoe, food, dancing, wearing of national colors, waving flags
+
+![](assets/Pasted%20image%2020260819141759.png)
+1. 
+2. 
+3. 
+4. 
+5. fugitive act
+6. 1861
+
+
+

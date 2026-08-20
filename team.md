@@ -364,12 +364,12 @@ Jerson:
 - ~2021
 - They started the team with Gabo and Emi
 - Ecuador, Loja
-Johnny:
+Johnny: 2025-MAR
 - developer
 - started 
 - Loja
 - 7 months ()
-Marcos:
+Marcos: 2025-MAR
 - dev
 - 2025
 - Ecuador
