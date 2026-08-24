@@ -11,6 +11,24 @@
 "Ser padre me ha enseñado que existe un nuevo sentido a la vida.
 Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 
+## Move FedEx-to-Oracle shipping method mapping to Oracle lookup table
+- tickets
+	- https://warbyparker.atlassian.net/browse/OTCM-137468
+- logs
+- [cloudwatch](https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#logsV2:logs-insights)
+```
+SOURCE "arn:aws:logs:us-east-1:844647875270:log-group:/aws/lambda/oic-monocle-integrations-lambda-ott-us-east-1" START=-30m END=0s |
+SOURCE "arn:aws:logs:us-east-1:844647875270:log-group:/aws/lambda/oic-monocle-integrations-lambda-stage-us-east-1" START=-30m END=0s |
+fields @timestamp, @message, @logStream, @log
+| filter @message like /Retrieving FedEx shipping methods|Retrieving inventory type/
+| sort @timestamp desc
+| limit 1000
+```
+
+## Update AR-I-3005 query for partial cancellation and partial payments
+- tickets
+	- https://warbyparker.atlassian.net/browse/OTCM-137422
+
 ## RMCS-I-3001 / RMCS-I-3003 – Detect Source Data Errors After Revenue Basis FBDI Validation
 
 - ticket:
@@ -26,7 +44,6 @@ fields @timestamp, @message, @logStream, @log
 | filter @message like /Starting proof of delivery upload|Import verification callback - Start/
 | sort @timestamp desc
 | limit 1000
-
 ```
 
 

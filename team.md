@@ -347,45 +347,51 @@ from WP_PAAS.WP_INT_GENERIC_REPORT_PARAM;
 
 Astrid:
 - in charge of all WP's PMs
-- 2017
+- 2017 IOET 2021 WP
+- "al cliente vamos con soluciones"
+- 3 proyectos diferentes
 Emilio:
 - PM / BA / in charge of some PMs
 - 2021 IOET
 - different projects from WP
 Gabriel: 
-- Tech lead
-- 5 years in IOET
+- Tech lead/Operation lead
+- 2021/08 IOET
+- 5 years in IOET siempre en WP
+- antes de IOET con WP trabajaron:
+	- 3 consultoras (PWC, Peloton, ..., Deloitte)
 Ariel:
 - Developer
-- 3 years
+- 09/2022 IOET + WP
 - Argentina
 Jerson: 
 - Developer
-- ~2021
+- 08/2020 IOET y desde 2021 en WP 
 - They started the team with Gabo and Emi
 - Ecuador, Loja
-Johnny: 2025-MAR
+Johnny: 
 - developer
 - started 
 - Loja
-- 7 months ()
+- 09/2025 IOET
 Marcos: 2025-MAR
 - dev
-- 2025
+- 01/2025 WP
 - Ecuador
 Michael: 4 years
-- 2022
-- live in Quito
+- 01-08?/2022
+- Quito, Ecuador
 Miguel:
 - dev
-- 2023-2024
+- 01-06?/2023 WP/IOET
 - Ecuador
 Josué:
 - Yos Yoshua 
-- 4 years
-- Ecuador
+- ¿01-06?/2022 IOET
+- Quito, Ecuador
 Fabiola:
 - QA
+- Guayaquil, Ecuador
 Kaio:
 - QA 
 - ~2023
@@ -400,16 +406,25 @@ Rocio:
 Justo: 
 - dev
 - 12/2025
-Leonor
+Leonor (05/2026)
 - dev
 - 05/2026
 - Paraguay
 - comes from Kyzen
-- ?
-Guillermo
+Guillermo (06/2026?)
 - Chile
 - IOET 2025/01 (1.5 years)
 - 5-6 years experience
+Jefferson de la Cruz (24/08/26)
+- ![](assets/Pasted%20image%2020260824104720.png)
+- IOET
+- 1 año en IOET 
+- 18 años desarrolador
+- arquitectura
+Agustin Frire (24/08/26)
+- ![](assets/Pasted%20image%2020260824104709.png)
+- 3 meses IOET
+- Argentina
 
 ### top performers
 - 1 Ariel - bueno técnicamente
