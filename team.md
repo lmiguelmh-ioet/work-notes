@@ -1,5 +1,5 @@
 IMPORTANT: all reviews if done in Github should be sent throuhg Slack DM's so is easy for later evaluation form (also keep things in one place)
-
+OIC: a low code app, but it keeps access to code to e.g. mappings, why is that? maybe because it is easier to edit complex XLST expressions using XML!? rather than fighting the UI!
 ### Warby Parker
 - HELIOS - old monolito de WP
 	- SPRINGFIELD o HELIOS
