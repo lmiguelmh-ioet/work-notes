@@ -113,8 +113,12 @@ see @on-call-agent/skills/erp-skill/SKILL.md
 
 ## WMS-I-1001 Oracle to SCALE WMS Items Outbound
 
+- s3:
+	- transfer-prod-data/vendors/Manhattan/WMS-I-1001/
 - comment https://warbyparker.atlassian.net/browse/OEH-68217:
 	UPC `9000000000001` is an intended inactive item so it is not synced to SCALE, stated by Alexis here: https://warbyparker.atlassian.net/browse/OEH-67855?focusedCommentId=906458
+
+- "Rejecting this, report is returning 0 rows." (https://warbyparker.atlassian.net/browse/OEH-75583)
 
 ## IN-I-2017A Fedex Warehouse Transactions Receiving Inbound
 
@@ -530,3 +534,29 @@ This is a transient error that occurs when calling the report. This integration 
 	- https://us-east-1.console.aws.amazon.com/s3/buckets/wp-oracle-anaplan-datahub-prod?region=us-east-1&prefix=Out/&showversions=false
 
 File exists in S3
+
+## WP WMS-I-1020 Order Release from WMS to Springfield/LMS
+- ticket
+	- https://warbyparker.atlassian.net/browse/OEH-75307
+- S3
+	- vendors/Manhattan/WMS-I-1020/Error/08242026/scale-wave-released_
+	- Filename pattern: `scale-wave-released_{uuid}_{MMDDYYYYHHMM}.json`
+
+## WP WMS-I-1024 LR and Uncut Receipt Confirmation from WMS to LMS/Springfield
+- skill
+```
+@on-call-agent/skills/wms-i-1024-reprocess
+1. Find the list of ticket from today and yesterday where we can apply this skill.
+2. Execute the skill one by one. 
+   When no dry-run execute one by one sequentially (not all at once) after executing each one put the link to the ticket, the oic instance id, name of the payload (only the filename), date of the payload, and also the SHA1 of the payload this way we know if the ones we are sending are failing again.
+```
+- ticket:
+	- https://warbyparker.atlassian.net/browse/OEH-75706
+- S3
+	- transfer-prod-data/vendors/Manhattan/WMS-I-1024/Error/08252026/scale_uncut_lr_receipt_conf_Nq6tFqCeEfGtEkF1njIZmw_08252026160120.json
+```
+Reprocessed after connection error.
+
+Instance ID: m6ezPqCmEfGtEkF1njIZmw  
+Payload: scale_uncut_lr_receipt_conf_Nq6tFqCeEfGtEkF1njIZmw_08252026160120.json
+```
