@@ -1356,6 +1356,8 @@ FOR NEXT WEEK:
 
 ![](assets/Pasted%20image%2020260819134230.png)
 
+## Mapping method for notetaking
+
 ![](assets/Pasted%20image%2020260819134441.png)
 
 ![](assets/Pasted%20image%2020260819134927.png)
@@ -1377,6 +1379,8 @@ FOR NEXT WEEK:
 4. biolumination test
 5. milk
 
+## Charting method for notetaking
+
 ![](assets/Pasted%20image%2020260819140622.png)
 
 ![](assets/Pasted%20image%2020260819141148.png)
@@ -1395,6 +1399,82 @@ FOR NEXT WEEK:
 4. 
 5. fugitive act
 6. 1861
+
+
+# Class 31 - 2026/08/26
+
+- ![](assets/Pasted%20image%2020260826131718.png)
+
+- 1879 pacific war
+	- to see what was like
+	- why Peru had to be close
+	- I'd like to be part of the Caceres team, who came from the Andes and 
+		- guerra de guerrillas
+	- Andres Avelino Caceres
+	- resisted the occupation
+	- 3 major victories are done by this man
+	- "the wizard of the Andes"
+		- he was just a commander
+	- Miguel Grau
+- in those moments of turmoil and struggle is where you can see the true character of men
+
+![](assets/Pasted%20image%2020260826132701.png)
+- enslaves scret slaved
+- 1865
+- as far as
+- abolutionist, black simpatizers
+- former slaves
+- runaways
+- fugitive act
+- 100K scaped
+- 4M slaves
+- 1. who: former slaves, abolutionists, black simpatizers, enslaves free seekeers
+- 2. where: south to north
+- 3. how: passengers - runaways slaves themselves
+- 4. how: homes and hideouts
+- package
+- 5. what: Fugitive Slave Act
+- 6. when: 1861-1865
+
+## Short-form method for note taking
+![](assets/Pasted%20image%2020260826133924.png)
+
+![](assets/Pasted%20image%2020260826134547.png)
+
+
+1. Where was the Titanic going?
+2. What was the name of John Lennon's first band?
+3. How many names did the band have before it was called the Beatles?
+	1. 3 names: Quarrymen, x, y
+
+![](assets/Pasted%20image%2020260826134812.png)
+1. Turner
+2. 6:30
+3. 65
+4. Republican
+5. Panama
+6. Cuba
+7. exagerated
+8. 1995 (not the amount - that was my mistake)
+
+## Outlining method for notetaking
+
+![](assets/Pasted%20image%2020260826140509.png)
+
+ ![](assets/Pasted%20image%2020260826140655.png)
+
+![](assets/Pasted%20image%2020260826140734.png)
+
+![](assets/Pasted%20image%2020260826140842.png)
+
+1. what was the purpose of the pyramids?
+	1. tombs for kings 
+	2. to ensure own afterlife
+	3. to make Egypt prosperous
+2. what is the main topic of the fourth paragraph?
+	1. how the structure evolved over time
+3. recreate paragraph 2 using complete sentences
+	1. The pyramid represents the king’s palace, the Egyptians believed they became gods when they passed to another life. The physical structure was divided into multiple rooms that holds furniture, jewerly, treasures and other stuff needed in afterlife. They also put wives and servants who become close to the king. They were buried in nearby rooms. (Jerson, good writting skills!)
 
 
 

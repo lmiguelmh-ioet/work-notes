@@ -47,8 +47,6 @@
 	- evdi-test ("stage"): https://fa-evdi-test-saasfaprod1.fa.ocs.oraclecloud.com/fscmUI/faces/AtkHomePageWelcome
 	- prod: https://fa-evdi-saasfaprod1.fa.ocs.oraclecloud.com:443/fscmRestApi/resources/11.13.18.05
 
-- OIC Prod changes
-	- [https://docs.google.com/spreadsheets/d/1C4WTH_EPQ6BKwL22b8qnJT8NillpYmhv0gRhnX7c9ec/edit?usp=sharing](https://docs.google.com/spreadsheets/d/1C4WTH_EPQ6BKwL22b8qnJT8NillpYmhv0gRhnX7c9ec/edit?usp=sharing)
 
 - Oracle ATP
 	- `select * from WP_INT_GENERIC_REPORT_PARAM`
@@ -70,7 +68,13 @@
 			- Reports: Hamburger > Tools > Report and analytics
 
 	- OIC Credentials (same for all environments) 
-		- [https://us-east-1.console.aws.amazon.com/secretsmanager/secret?name=prod%2FOracle%2Fwp.integration_user&region=us-east-1#](https://us-east-1.console.aws.amazon.com/secretsmanager/secret?name=prod%2FOracle%2Fwp.integration_user&region=us-east-1#)
+		- https://us-east-1.console.aws.amazon.com/secretsmanager/secret?name=stage%2FOracle%2Fwms_oauth&region=us-east-1
+			- stage/Oracle/wms_oauth
+			- prod/Oracle/wms_oauth
+		- https://us-east-1.console.aws.amazon.com/secretsmanager/secret?name=prod%2FOracle%2Fwp.integration_user&region=us-east-1#
+
+	- OIC Prod changes
+		- [https://docs.google.com/spreadsheets/d/1C4WTH_EPQ6BKwL22b8qnJT8NillpYmhv0gRhnX7c9ec/edit?usp=sharing](https://docs.google.com/spreadsheets/d/1C4WTH_EPQ6BKwL22b8qnJT8NillpYmhv0gRhnX7c9ec/edit?usp=sharing)
 
 - JIRA boards
 	- https://warbyparker.atlassian.net/jira/software/c/projects/OTCM/boards/771

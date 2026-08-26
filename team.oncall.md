@@ -454,10 +454,6 @@ Hi @Sean Jung ! Could you kindly help us check if the following facilities were 
 cc: @Tony Huang
 ```
 
-## WMS-I-1006 Ship Confirmation from WMS to Oracle/Springfield/LMS
-
-- ?
-
 ## WMS-I-1005 failed or not called (happens!)
 
 - s3
