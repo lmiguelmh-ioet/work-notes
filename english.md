@@ -38,7 +38,10 @@
 
 # Questions
 
-- pronunciation: file vs fail
+- pronunciation: 
+	- file vs fail
+	- warm vs worm
+
 - pronunciations:
 	- vowels: long + short + teams
 	- -ed: 3 ways of pronunciate
