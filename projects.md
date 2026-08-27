@@ -17,7 +17,18 @@ Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 	- https://warbyparker.atlassian.net/jira/software/c/projects/OEH/list?jql=project%20%3D%20%22OEH%22%0AAND%20created%20%3E%3D%20%222026-08-24%22%0AAND%20created%20%3C%3D%20%222026-08-31%22%0AAND%20status%20NOT%20IN%20(Rejected%2C%20Resolved)%0AORDER%20BY%20created%20DESC
 - important tickets:
 	- https://warbyparker.atlassian.net/browse/OEH-75264
-- 
+### WMS-I-1006 Alex wiley
+- TO: 1152721
+- TO ASN (shipment number): 1445306
+- [cloudwatch](https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#logsV2:logs-insights)
+```
+SOURCE "arn:aws:logs:us-east-1:844647875270:log-group:/aws/lambda/oic-monocle-integrations-lambda-prod-us-east-1" START=-4w END=0s |
+SOURCE "arn:aws:logs:us-east-1:844647875270:log-group:/aws/lambda/oic-monocle-integrations-events_handler_lambda-prod-us-east-1" START=-4w END=0s |
+fields @timestamp, @message, @logStream, @log
+| filter @message like /\b1152721\b|\b1445306\b/
+| sort @timestamp desc
+| limit 1000
+```
 ## Fix OM-I-3028 to store the last success run, store the transmitted payload
 - tickets
 	- https://warbyparker.atlassian.net/browse/OTCM-137748

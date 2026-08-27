@@ -1,5 +1,12 @@
 IMPORTANT: all reviews if done in Github should be sent throuhg Slack DM's so is easy for later evaluation form (also keep things in one place)
 OIC: a low code app, but it keeps access to code to e.g. mappings, why is that? maybe because it is easier to edit complex XLST expressions using XML!? rather than fighting the UI!
+
+- WMS-I-1003: requiere TO ASN (SHIPMENT NUMBER which is different from TO!)
+- It accepts the shipment number: e.g for TO 1152721 -> the TO ASN (shipment number) is  1445306
+	- ![](assets/Pasted%20image%2020260827120748.png)
+- Check in the for each every row, to see if everything is OK!
+- ![](assets/Pasted%20image%2020260827120520.png)
+
 ### Warby Parker
 - HELIOS - old monolito de WP
 	- SPRINGFIELD o HELIOS

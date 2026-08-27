@@ -45,7 +45,8 @@
 	- dev1: https://fa-evdi-dev1-saasfaprod1.fa.ocs.oraclecloud.com/fscmUI/faces/AtkHomePageWelcome
 	- dev2: https://fa-evdi-dev2-saasfaprod1.fa.ocs.oraclecloud.com/fscmUI/faces/AtkHomePageWelcome
 	- evdi-test ("stage"): https://fa-evdi-test-saasfaprod1.fa.ocs.oraclecloud.com/fscmUI/faces/AtkHomePageWelcome
-	- prod: https://fa-evdi-saasfaprod1.fa.ocs.oraclecloud.com:443/fscmRestApi/resources/11.13.18.05
+	- prod: https://fa-evdi-saasfaprod1.fa.ocs.oraclecloud.com:443/fscmUI/faces/AtkHomePageWelcome
+		- https://fa-evdi-saasfaprod1.fa.ocs.oraclecloud.com:443/fscmRestApi/resources/11.13.18.05
 
 
 - Oracle ATP
