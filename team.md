@@ -11,6 +11,7 @@ OIC: a low code app, but it keeps access to code to e.g. mappings, why is that? 
 - HELIOS - old monolito de WP
 	- SPRINGFIELD o HELIOS
 ![](assets/Pasted%20image%2020260331070551.png)
+- ![](assets/Pasted%20image%2020260902121325.png)
 
 ```
 Dan Morel  [11:01 AM]

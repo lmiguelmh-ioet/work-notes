@@ -1479,5 +1479,54 @@ FOR NEXT WEEK:
 3. recreate paragraph 2 using complete sentences
 	1. The pyramid represents the king’s palace, the Egyptians believed they became gods when they passed to another life. The physical structure was divided into multiple rooms that holds furniture, jewerly, treasures and other stuff needed in afterlife. They also put wives and servants who become close to the king. They were buried in nearby rooms. (Jerson, good writting skills!)
 
+# Class 32 - phrasal verbs
 
+![](assets/Pasted%20image%2020260902132319.png)
+1. 2.1 milions of square miles
+2. ecosystem in the world
+3. oxygen for us to breathe
+4. big lumber companies
+5. indigenous 
+6. negatively impacting it 
+
+- advantages to owning your own business
+	- be your own boss
+	- make your own decisions
+	- enjoy life if business grow big
+	- time flexibility for other activities
+- disadvantages
+	- lose money
+	- work for 24/7 schedules
+	- handle stressful situations
+	- employee related issues (managing employees)
+	- make bad decissions
+
+![](assets/Pasted%20image%2020260902135250.png)
+
+![](assets/Pasted%20image%2020260902135448.png)
+
+![](assets/Pasted%20image%2020260902140131.png)
+1. keep up (stay informed about)
+2. find out (learn something)
+3. come across (found unexpectedly - you are not looking for it)
+4. take up (consume)
+5. cut down (reduce)
+
+![](assets/Pasted%20image%2020260902140712.png)
+1. d 
+2. c
+3. b
+4. a
+5. e
+
+![](assets/Pasted%20image%2020260902141342.png)
+1. a
+2. b
+3. d
+4. e
+5. c
+
+put off -> postpone (rescheduling)
+call off -> cancel (NO rescheduling)
+finish off -> complete
 
