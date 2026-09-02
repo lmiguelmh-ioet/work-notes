@@ -29,6 +29,7 @@ fields @timestamp, @message, @logStream, @log
 | sort @timestamp desc
 | limit 1000
 ```
+
 ## Fix OM-I-3028 to store the last success run, store the transmitted payload
 - tickets
 	- https://warbyparker.atlassian.net/browse/OTCM-137748
