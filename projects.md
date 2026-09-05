@@ -12,6 +12,39 @@
 Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 
 
+## Update lms-files-sync-queue to include origin execution details
+
+- ticket
+	- https://warbyparker.atlassian.net/browse/OTCM-138107
+- test
+```
+WMS-I-1005 pick
+Processing WMS pick confirmation request
+
+WMS-I-1005 ship
+Starting WMS ship confirmation process
+
+WMS-I-1006 (queue consumer)
+Processing file
+
+WMS-I-1024
+Starting WP WMS-I-1024 LR and Uncut Receipt Confirmation from WMS to LMS/Springfield
+Backing up confirmation receipt
+
+IN-I-2060
+Starting IN-I-2060 processing for file
+```
+- [cloudwatch](https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#logsV2:logs-insights)
+```
+SOURCE "arn:aws:logs:us-east-1:844647875270:log-group:/aws/lambda/oic-monocle-integrations-lambda-ott-us-east-1" START=-30m END=0s |
+SOURCE "arn:aws:logs:us-east-1:844647875270:log-group:/aws/lambda/oic-monocle-integrations-lambda-stage-us-east-1" START=-30m END=0s |
+fields @timestamp, @message, @logStream, @log
+| filter @message like /|Processing file/
+| sort @timestamp desc
+| limit 1000
+```
+
+
 ## ON-CALL: AGO25-AGO31
 - board
 	- https://warbyparker.atlassian.net/jira/software/c/projects/OEH/list?jql=project%20%3D%20%22OEH%22%0AAND%20created%20%3E%3D%20%222026-08-24%22%0AAND%20created%20%3C%3D%20%222026-08-31%22%0AAND%20status%20NOT%20IN%20(Rejected%2C%20Resolved)%0AORDER%20BY%20created%20DESC

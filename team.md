@@ -1016,3 +1016,25 @@ This person handles stressful or challenging situations with professionalism and
 - names about:
 	- tratemos de no utilizar los terminos SNS o SQS en el step por favor, eso esta mas relacionado a temas de comunicacion externa, a nivel de la integracion/dominio lo que se busca es notificar/sincronizar la order(o entidad que esten trabajando en su flujo)
 - splitting the PRs to make them smaller(approx no more than 10 files.), for example, by layers(adapter, domain).
+
+
+Risk control management
+- WP sale a bolsa -> cotnrata IOET
+- 5 años
+- PWC recomienda Oracle ERP
+	- supply chain: 
+	- payment portal: (never mind)
+		- borramos todo
+		- luego migra OIC a la lambda
+		- stop todo fedex al nuevo sistema flare
+		- stop luego migramos
+- Supply Chain FE sobre ERP (PWC)
+- WP contrata 3 consultoras
+- WP contrata proveedor finacials (ROCIO)
+- WP contrata proveedor supply chain (??)
+- WP contrata nuevo proveedor supply chain (Alexis)
+- Alexis estaba en PWC
+	- "desaparece en PARis"
+	- Lead del project roosevelt
+	- "not quite appropriate about Emilio"
+	- big image of Emilio
