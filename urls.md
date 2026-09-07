@@ -26,7 +26,7 @@
 - monocles lambda - event handler (S3)
 	- stage https://us-east-1.console.aws.amazon.com/lambda/home?region=us-east-1#/functions/oic-monocle-integrations-events_handler_lambda-stage-us-east-1?tab=code
 
-- S3 bucket:
+https://oictest2-axhxufzsltne-px.integration.ocp.oraclecloud.com/- S3 bucket:
 	- stage: https://us-east-1.console.aws.amazon.com/s3/buckets/transfer-stage-data?region=us-east-1&prefix=vendors/advanced_photochromics/In/compensated_rx/&showversions=false
 	- stage: https://us-east-1.console.aws.amazon.com/s3/buckets/transfer-stage-data?prefix=vendors%2FManhattan%2FMFG-I-3021%2F&region=us-east-1&tab=objects
 
