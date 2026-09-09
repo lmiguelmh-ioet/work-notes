@@ -527,6 +527,13 @@ $(aws configure export-credentials --profile oic --format env)
 curl -v -X POST 'https://sjlqdgbb5mesmduz4pw5oj6fsa0ykkxk.lambda-url.us-east-1.on.aws/ar/credit-memo-processing' -H "x-amz-security-token: ${AWS_SESSION_TOKEN}" --aws-sigv4 "aws:amz:us-east-1:lambda" --user "${AWS_ACCESS_KEY_ID}:${AWS_SECRET_ACCESS_KEY}" -H 'Content-Type: application/json' -d '{"start_date" : "2026-04-01T00:00:00", "end_date": "2026-05-15T00:00:00"}'
 
 curl -v -X POST 'https://sjlqdgbb5mesmduz4pw5oj6fsa0ykkxk.lambda-url.us-east-1.on.aws/ar/credit-memo-processing' -H "x-amz-security-token: ${AWS_SESSION_TOKEN}" --aws-sigv4 "aws:amz:us-east-1:lambda" --user "${AWS_ACCESS_KEY_ID}:${AWS_SECRET_ACCESS_KEY}" -H 'Content-Type: application/json' -d '{"credit_memo_trx_numbers" : ["1001"]}'  -- 1001 / 300000820155229 / CM_Refund_Test1
+
+dev1:
+?
+```
+- logs
+```
+Starting AR-I-3019 credit memo processing
 ```
 - notes
 	- Credit memo number  e invoice tienen el mismo transaction reference
