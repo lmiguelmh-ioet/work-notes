@@ -1530,3 +1530,56 @@ put off -> postpone (rescheduling)
 call off -> cancel (NO rescheduling)
 finish off -> complete
 
+# Class 33 - Phrasal verbs I (practice)
+
+![](assets/Pasted%20image%2020260909141022.png)
+
+![](assets/Pasted%20image%2020260909131327.png)
+
+- brought up - mention something / ~~propose~~ / bring up (phrasal verb)
+- call off - cancel
+- put off - reeschule / postpone
+- turn up - arrive
+- draw up - write / prepare
+- deal with - manage / handle
+- look into - investigate / search for
+- catch up on - be on schedule / get through / make up for lost time / work through
+
+![](assets/Pasted%20image%2020260909133638.png)
+
+- separable vs inseparable
+- put an object in between
+
+![](assets/Pasted%20image%2020260909134013.png)
+
+![](assets/Pasted%20image%2020260909134249.png)
+1. turned up
+2. bring up
+3. call it off
+4. look into / figure it out
+5. deal with
+6. put off
+7. catch up on
+8. draw up
+
+![](assets/Pasted%20image%2020260909135053.png)
+
+1. Sometime in the past I turned up late for a work interview, but I deal with the situation and got the job.
+2. I really need to take my car to the mechanic for its 6 month mechanical revision.
+3. I was trying to finish a PR but that was called off because the requirements changed.
+4. I really need to deal with my car situation, it is time for its mechanical revision.
+5. I need to look into some issue that happens in some integration that I've worked.
+6. .
+7. I need to catch up on my job I had some situation in my house that made it difficult to continue working on my jobs.
+8. There are people that is sensitive to certain topics like sports or politics, so I try not bring up those topics.
+
+
+![](assets/Pasted%20image%2020260909140919.png)
+- 2 truths and 1 lie
+	- I need to deal with my car situtation, there has been six months since the last time I took it to the mechanic.
+	- I drew up a document for my neighboors so we all can follow certain guidelines on how to use our elevator.
+	- I turned up late to the English class today.
+- leonardo
+	- T wedding covid 19
+	- T pick up daughter first day
+	- T car drive
