@@ -1,0 +1,8 @@
+# macOS / sync script log
+.DS_Store
+.cache/
+
+# Obsidian per-device UI state (keep the rest of .obsidian/ synced)
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/cache/

@@ -11,6 +11,126 @@
 "Ser padre me ha enseñado que existe un nuevo sentido a la vida.
 Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 
+## Update WMS-I-1021 to store failures into the new dynamo table
+
+- ticket
+	- https://warbyparker.atlassian.net/browse/OTCM-138124
+- data
+	- see integrations/
+- test
+```
+# other credentials can't invoke function url
+$(aws configure export-credentials --profile oic --format env)
+curl -X POST "https://sjlqdgbb5mesmduz4pw5oj6fsa0ykkxk.lambda-url.us-east-1.on.aws/wms/pack-confirmation" \
+  --aws-sigv4 "aws:amz:us-east-1:lambda" \
+  --user "$AWS_ACCESS_KEY_ID:$AWS_SECRET_ACCESS_KEY" \
+  -H "x-amz-security-token: $AWS_SESSION_TOKEN" \
+  -H "Content-Type: application/json" \
+  -H "oic-instance-id: manual-test-to-global-001" \
+  -H "created-timestamp: 2026-09-22T15:00:00" \
+  --data-binary @integrations/WMS-I-1021/data/pack_conf_fail_to_unknown_order.json
+
+
+curl -v -X POST 'https://sjlqdgbb5mesmduz4pw5oj6fsa0ykkxk.lambda-url.us-east-1.on.aws/fedex/pick-ship-confirmation' -H "x-amz-security-token: ${AWS_SESSION_TOKEN}" --aws-sigv4 "aws:amz:us-east-1:lambda" --user "${AWS_ACCESS_KEY_ID}:${AWS_SECRET_ACCESS_KEY}" -H 'Content-Type: application/json' -d @OTCM-118998_flare_to_oic_payload.json
+```
+
+## Oracle 26C update regression testing P1
+- ticket
+	- https://warbyparker.atlassian.net/browse/OTCM-137969
+- info
+	- sheet: https://docs.google.com/spreadsheets/d/1CLFVupfJpZIsa2F3UD6hB6rxz7vpzfmj
+
+## IN-I-2019 – Consume Flare file via WP SFTP with updated mapping and Oracle Subinventory lookup
+- ticket
+	- https://warbyparker.atlassian.net/browse/OTCM-138416
+- urls
+	- s3 https://us-east-1.console.aws.amazon.com/s3/buckets/transfer-stage-data?region=us-east-1&prefix=vendors/fedex/In/&showversions=false
+- [cloudwatch](https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#logsV2:logs-insights)
+```
+SOURCE "arn:aws:logs:us-east-1:844647875270:log-group:/aws/lambda/oic-monocle-integrations-lambda-ott-us-east-1" START=-30m END=0s |
+SOURCE "arn:aws:logs:us-east-1:844647875270:log-group:/aws/lambda/oic-monocle-integrations-lambda-stage-us-east-1" START=-30m END=0s |
+SOURCE "arn:aws:logs:us-east-1:844647875270:log-group:/aws/lambda/oic-monocle-integrations-events_handler_lambda-ott-us-east-1" START=-30m END=0s |
+SOURCE "arn:aws:logs:us-east-1:844647875270:log-group:/aws/lambda/oic-monocle-integrations-events_handler_lambda-stage-us-east-1" START=-30m END=0s |
+fields @timestamp, @message, @logStream, @log
+| filter @message like /Starting IN-I-2019/
+| sort @timestamp desc
+| limit 1000
+```
+- data
+	- https://docs.google.com/spreadsheets/d/1HY3LrmESXlm-laJtoIo3ZFAyabfzMRex
+- info
+```
+## On my own words
+The integration is used to syncrhonize inventory between what physically exists (fedex) vs what exist in Oracle (ours). It is one-directional, FedEx is the source of truth (it seems). Daily.
+
+## Summary
+Bridge between the "physical world" (a warehouse) and the "system of record" (Oracle). 
+
+## Problem:
+Warby Parker doesn't ship glasses from its own warehouse — a 3PL (third-party logistics company, in this case FedEx) stores the inventory and ships orders on WP's behalf.
+
+That creates a classic problem: two versions of the truth.
+
+- Oracle ERP thinks it knows how much inventory exists (based on receipts, shipments, adjustments it has processed).
+- FedEx's warehouse floor is the physical reality (things get lost, damaged, mis-scanned, stolen...).
+
+These drift apart over time. IN-I-2019 exists to reconcile them: FedEx counts what's physically there and tells Oracle, and Oracle corrects itself to match reality.
+
+## Cycle count
+Counting everything in a warehouse at once is called a full physical inventory — expensive, disruptive, usually done once a year (you literally stop operations).
+
+A cycle count is the smarter alternative: you count a subset of items on a rotating schedule (daily/weekly), so everything gets counted eventually without shutting down. Think of it like a bank teller counting their cash drawer at the end of each shift instead of the bank closing for a day to count all its money.
+
+In Oracle, a cycle count has two levels:
+
+- Cycle count definition (header) — the "event": which organization, which subinventories, which items are in scope, plus tolerances (more below). In the code, this is `create_count_definition`.
+- Count entries (lines) — the actual counted quantities per item, uploaded afterward. In the code, this is the FBDI CSV built by `__build_csv_data`.
+
+Oracle then compares counted quantity vs. system on-hand quantity and, if the difference is within tolerance, posts an inventory adjustment (a transaction that adds/removes stock so the system matches reality).
+
+## Terminology
+Oracle Fusion Cloud ERP / SCM — Warby Parker's system of record. "SCM" = Supply Chain Management, the module family that owns inventory.
+
+Inventory Organization — a logical warehouse inside Oracle. `organization_code = "3FED"` in the code is the org representing the FedEx facility. All inventory balances live under an org.
+
+Subinventory — a subdivision _within_ an org, like labeled areas of the warehouse: `Active` (sellable), `Damaged`, `Quarantine`, `Shrink` (lost/stolen), `Cleaning`, `Rework`... That's why every count line is keyed by (item, subinventory) — this is also why the ticket cares about the `inventoryType → subinventory` mapping: Flare/FedEx tells you _where_ in the building the item was counted, and that must translate to Oracle's subinventory names.
+> CORRECTION: glasses can exist in both simultaneoly... it's not the same physical unit in two places. It's the same item (SKU) having _different units_ in different areas: Item "Durand / Whiskey Tortoise / 52mm": 97 units in `Active`, 3 units in `Damaged`. Each physical pair of glasses is in exactly one place at a time.
+> Think of subinventories as labeled rooms in the warehouse: sellable stock lives in Active; when a worker finds a scratched frame, they physically move it to the damaged area and record an inventory transaction moving 1 unit from Active → Damaged in Oracle.
+> For serialized items it's even stricter: a given serial number lives in exactly one subinventory.
+
+Item Number vs. UPC — Oracle's internal identifier is the item number; FedEx/Flare only knows the UPC (the barcode). The integration must translate UPC → item number before talking to Oracle (read_cycle_count_products with identifier_type = UPC does exactly this). If a UPC doesn't resolve, the line can't be counted — that's the "No counted lines matched ERP product identifiers" error you saw.
+
+On-hand quantity — what Oracle currently believes the stock level is, per (item, subinventory).
+
+Serialized item / serial number — some items are tracked individually (each unit has a unique serial, like frames with unique IDs), not just as a quantity. Rule of thumb in this codebase: if a line has serials, quantity must equal the number of serials — that's the validation in __validate_serialized_line_quantities. Serials also enable precise zeroing: if Oracle thinks serial ABC123 is on-hand but the file doesn't list it, the integration sends a zero-count line for that specific serial.
+
+Tolerances — how much discrepancy Oracle will auto-approve. If the count differs from on-hand by more than the tolerance, the adjustment is held for human approval instead of posting automatically. The integration reads tolerances (`_tolerances_reader`) and attaches them to the count definition.
+
+RICE ID — Warby Parker naming convention for custom components: Reports, Interfaces, Conversions, Extensions. `IN-I-2019` is just the catalog number of this interface ("Inventory – Interface – 2019"). You'll see it in logs as `rice_id`.
+
+FBDI (File-Based Data Import) — Oracle publishes Excel/CSV templates per entity (here: "Cycle Count Import"). You fill the template, zip it, upload it, and Oracle loads it into interface tables (staging tables), validates it, and finally moves it into the real tables. The giant _build_csv_row function with ~100 columns is literally that Oracle template — that's why most columns are None.
+
+UCM (Universal Content Management, a.k.a. WebCenter Content) — Oracle's built-in file server, think "Oracle's Dropbox". The zip is uploaded there first (that's the `savefile_path="scm$/cycleCount$/import$"` — the `$` are UCM path separators).
+
+ESS job (Enterprise Scheduler Service) — Oracle's background job runner. After the file lands in UCM, you submit a job (here InvCcIntrfRecordsProcessJob) that reads the file from UCM and processes it. So the flow is: build CSV → zip → upload to UCM → submit ESS job → Oracle imports.
+
+All of that is hidden behind one port call: import_bulk_data_action.import_data(...).
+
+OIC (Oracle Integration Cloud) — Oracle's middleware/iPaaS. In the current design, OIC sits between FedEx and this service: it receives the FedEx snapshot, drops JSON files into S3 (hence the path vendors/OIC-Proxy/IN-I-2019/...), then calls our POST /fedex/cycle-count endpoint saying "N pages are ready". The ticket removes OIC from this flow — Flare will drop a CSV directly on WP's own SFTP server.
+
+AI vs. non-AI items — items carry a class in Oracle (AI_Frames, AI_Accessories, AI_Consumables vs. everything else). The Roosevelt path splits lines by class and creates two separate cycle counts (FEDEX_AI and FEDEX providers) so the two populations can be approved/adjusted independently in Oracle.
+
+Why zero-count lines matter — this is subtle and central to your ticket. In a file-based interface, absence of a line means "no information", not "zero". If Oracle thinks you have 5 units of item X in Active and the file simply doesn't mention X, Oracle will not zero it out — it assumes X just wasn't counted. To make Oracle correct the balance to zero, you must send an explicit line: item X, subinventory Active, counted quantity = 0. That's the entire purpose of _validate_and_complete_counts (and of the legacy __map_and_include_missing_zero_subinventory_lines): reconcile the file against Oracle's on-hand set and generate explicit zeros for anything missing. The ticket explicitly says to keep this behavior.
+
+Lock codes — FedEx tags each counted transaction with a status (`Available` / `Unavailable`). The integration only trusts lines whose lock code is a known, consistent pair — a data-quality guardrail.
+
+Line. A "line" is just one record in the count file we send to Oracle — one row saying: 
+> "Item X, subinventory Y, we physically counted N units."
+The critical subtlety: Oracle only processes the lines it receives. If a line is _absent_, Oracle interprets that as _"this item wasn't counted — no information"_ and leaves its balance untouched. It does not interpret absence as zero.
+
+
+```
+
 
 ## Update lms-files-sync-queue to include origin execution details
 
@@ -50,6 +170,7 @@ fields @timestamp, @message, @logStream, @log
 	- https://warbyparker.atlassian.net/jira/software/c/projects/OEH/list?jql=project%20%3D%20%22OEH%22%0AAND%20created%20%3E%3D%20%222026-08-24%22%0AAND%20created%20%3C%3D%20%222026-08-31%22%0AAND%20status%20NOT%20IN%20(Rejected%2C%20Resolved)%0AORDER%20BY%20created%20DESC
 - important tickets:
 	- https://warbyparker.atlassian.net/browse/OEH-75264
+
 ### WMS-I-1006 Alex wiley
 - TO: 1152721
 - TO ASN (shipment number): 1445306

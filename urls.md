@@ -1,116 +1,113 @@
- - Scale WMS
-	- https://wpkrstg.manhscale.com/scale/trans/dashboard
+# URL Catalog
 
-- books from oreilly:
-	- https://www.oreilly.com/ 
+> **Agent contract** (used by the `open-note-url` skill):
+> - One row per entry. **Aliases** are lowercase, comma-separated — match user requests against them case-insensitively (substring OK).
+> - **URL** holds exactly one bare URL (no markdown link syntax). Extra links go in **Notes** as plain text.
+> - To extend: append a row to the most specific section, with memorable lowercase aliases.
 
-- Support
-	- https://support.warbyparker.com/support/login
+## Oracle ERP (Fusion) pods
 
-- Github stage:
-	- https://github.com/WarbyParker/monocle_integrations/pull/1592
+| Aliases | URL | Notes |
+| --- | --- | --- |
+| erp dev1, fusion dev1 | https://fa-evdi-dev1-saasfaprod1.fa.ocs.oraclecloud.com/ | |
+| erp dev2, fusion dev2 | https://fa-evdi-dev2-saasfaprod1.fa.ocs.oraclecloud.com/ | |
+| erp stage, erp test, fusion stage | https://fa-evdi-test-saasfaprod1.fa.ocs.oraclecloud.com/ | evdi-test pod |
+| erp prod, fusion prod | https://fa-evdi-saasfaprod1.fa.ocs.oraclecloud.com/ | Reports: menu → Tools → Reports and Analytics |
+| erp prod rest, fusion rest api | https://fa-evdi-saasfaprod1.fa.ocs.oraclecloud.com/fscmRestApi/resources/11.13.18.05 | REST API base (prod) |
 
-- Project whole documentation, including other FSD, user stories, testing scenarios:
-	- https://drive.google.com/drive/folders/1XOXP7l5cug2MGherdoMZ33RjTmAB98Pr
+## OIC (Oracle Integration Cloud)
 
-- Lean Specs for development
-	- https://drive.google.com/drive/folders/1Pf3JoT1biPQzUnHoPIJ74yE2DaUyJovc
+| Aliases | URL | Notes |
+| --- | --- | --- |
+| oic dev | https://oic-test-inst-axhxufzsltne-px.integration.ocp.oraclecloud.com/ | |
+| oic stage, oic test | https://oictest2-axhxufzsltne-px.integration.ocp.oraclecloud.com/ | |
+| oic designer, oic stage designer | https://design.integration.us-phoenix-1.ocp.oraclecloud.com/?integrationInstance=oictest2-axhxufzsltne-px | Designer view of the stage instance |
+| oic prod | https://oic-prod-axhxufzsltne-ia.integration.ocp.oraclecloud.com/ic/home/ | |
+| oic prod changes | https://docs.google.com/spreadsheets/d/1C4WTH_EPQ6BKwL22b8qnJT8NillpYmhv0gRhnX7c9ec/edit | Change-tracking sheet |
+| oic creds stage, wms oauth stage | https://us-east-1.console.aws.amazon.com/secretsmanager/secret?name=stage%2FOracle%2Fwms_oauth&region=us-east-1 | AWS secret `stage/Oracle/wms_oauth` (prod equivalent: `prod/Oracle/wms_oauth`) |
+| oic creds prod, integration user | https://us-east-1.console.aws.amazon.com/secretsmanager/secret?name=prod%2FOracle%2Fwp.integration_user&region=us-east-1 | AWS secret `prod/Oracle/wp.integration_user` |
 
-- Process flows diagrams (entire flow)
-	- https://drive.google.com/drive/folders/13erUp3Q-iicFzzpXfMKWe4b9fmgj3PO4
+## AWS — monocle Lambdas (us-east-1)
 
-- monocles lambda - API
-	- prod: https://us-east-1.console.aws.amazon.com/lambda/home?region=us-east-1#/functions/oic-monocle-integrations-lambda-stage-us-east-1?subtab=url&tab=monitoring
-	- stage: https://us-east-1.console.aws.amazon.com/lambda/home?region=us-east-1#/functions/oic-monocle-integrations-lambda-stage-us-east-1?subtab=url&tab=monitoring
+| Aliases | URL | Notes |
+| --- | --- | --- |
+| lambda stage, monocle api stage | https://us-east-1.console.aws.amazon.com/lambda/home?region=us-east-1#/functions/oic-monocle-integrations-lambda-stage-us-east-1?subtab=url&tab=monitoring | REST API lambda |
+| lambda prod, monocle api prod | https://us-east-1.console.aws.amazon.com/lambda/home?region=us-east-1#/functions/oic-monocle-integrations-lambda-prod-us-east-1?subtab=url&tab=monitoring | REST API lambda |
+| lambda events stage, event handler stage | https://us-east-1.console.aws.amazon.com/lambda/home?region=us-east-1#/functions/oic-monocle-integrations-events_handler_lambda-stage-us-east-1?tab=code | S3/SQS event handler |
+| lambda events prod, event handler prod | https://us-east-1.console.aws.amazon.com/lambda/home?region=us-east-1#/functions/oic-monocle-integrations-events_handler_lambda-prod-us-east-1?tab=code | S3/SQS event handler |
 
-- monocles lambda - event handler (S3)
-	- stage https://us-east-1.console.aws.amazon.com/lambda/home?region=us-east-1#/functions/oic-monocle-integrations-events_handler_lambda-stage-us-east-1?tab=code
+## AWS — S3 buckets
 
-https://oictest2-axhxufzsltne-px.integration.ocp.oraclecloud.com/- S3 bucket:
-	- stage: https://us-east-1.console.aws.amazon.com/s3/buckets/transfer-stage-data?region=us-east-1&prefix=vendors/advanced_photochromics/In/compensated_rx/&showversions=false
-	- stage: https://us-east-1.console.aws.amazon.com/s3/buckets/transfer-stage-data?prefix=vendors%2FManhattan%2FMFG-I-3021%2F&region=us-east-1&tab=objects
+| Aliases | URL | Notes |
+| --- | --- | --- |
+| s3 stage ap, s3 advanced photochromics | https://us-east-1.console.aws.amazon.com/s3/buckets/transfer-stage-data?region=us-east-1&prefix=vendors/advanced_photochromics/In/compensated_rx/&showversions=false | transfer-stage-data · vendors/advanced_photochromics/In/compensated_rx |
+| s3 stage manhattan, s3 mfg-i-3021 | https://us-east-1.console.aws.amazon.com/s3/buckets/transfer-stage-data?prefix=vendors%2FManhattan%2FMFG-I-3021%2F&region=us-east-1&tab=objects | transfer-stage-data · vendors/Manhattan/MFG-I-3021 |
 
-- monocles lambda ??
-	- prod: https://us-east-1.console.aws.amazon.com/lambda/home?region=us-east-1#/functions/oic-monocle-integrations-events_handler_lambda-prod-us-east-1?tab=code
-	- stage: https://us-east-1.console.aws.amazon.com/lambda/home?region=us-east-1#/functions/oic-monocle-integrations-events_handler_lambda-stage-us-east-1?tab=code
+## Scale WMS (Manhattan)
 
-- OIC docs
-	- https://docs.oracle.com/en/cloud/saas/supply-chain-and-manufacturing/25d/fasrp/op-materialtransactions-post.html
+| Aliases | URL | Notes |
+| --- | --- | --- |
+| scale, wms, scale stage | https://wpkrstg.manhscale.com/scale/trans/dashboard | STG environment |
+| scale receipt example | https://wpkrstg.manhscale.com/scale/details/receipt/133961 | Example receipt deep-link (TO/PO shipments) |
 
-- Oracle ERP docs tables description
-	- https://docs.oracle.com/en/cloud/saas/financials/25d/books.html
-	- https://docs.oracle.com/en/cloud/saas/supply-chain-and-manufacturing/25d/oedsc/egoitemeffb-23612.html#Details
+## Jira
 
-- Oracle ERP (reports and "queries")
-	- dev1: https://fa-evdi-dev1-saasfaprod1.fa.ocs.oraclecloud.com/fscmUI/faces/AtkHomePageWelcome
-	- dev2: https://fa-evdi-dev2-saasfaprod1.fa.ocs.oraclecloud.com/fscmUI/faces/AtkHomePageWelcome
-	- evdi-test ("stage"): https://fa-evdi-test-saasfaprod1.fa.ocs.oraclecloud.com/fscmUI/faces/AtkHomePageWelcome
-	- prod: https://fa-evdi-saasfaprod1.fa.ocs.oraclecloud.com:443/fscmUI/faces/AtkHomePageWelcome
-		- https://fa-evdi-saasfaprod1.fa.ocs.oraclecloud.com:443/fscmRestApi/resources/11.13.18.05
+| Aliases | URL | Notes |
+| --- | --- | --- |
+| jira, jira otcm, otcm board | https://warbyparker.atlassian.net/jira/software/c/projects/OTCM/boards/771 | |
+| jira oeh, error tickets | https://warbyparker.atlassian.net/jira/software/c/projects/OEH/boards/725 | Auto-created error tickets |
+| jira search, jira jql | https://warbyparker.atlassian.net/issues/?jql=textfields%20~%20%22MFG-I-3021%22 | Template — replace MFG-I-3021 with any ticket/RICE ID |
 
+## GitHub & CI
 
-- Oracle ATP
-	- `select * from WP_INT_GENERIC_REPORT_PARAM`
-	- credentials and urls:
-	- https://docs.google.com/spreadsheets/d/10INW7gW6qiGM-gqHDwU2H-7Qy_g0bMpm98DHpvhQAEk/edit?pli=1&gid=0#gid=0
+| Aliases | URL | Notes |
+| --- | --- | --- |
+| github, monocle repo | https://github.com/WarbyParker/monocle_integrations | |
+| github stage, stage pr | https://github.com/WarbyParker/monocle_integrations/pull/1592 | Specific PR |
+| circleci, ci | https://app.circleci.com/organization/github/WarbyParker | |
+| circleci env vars | https://app.circleci.com/settings/project/github/WarbyParker/monocle_integrations/environment-variables | Variable names only, no values |
 
-- OIC platform
-	- ??? works: https://design.integration.us-phoenix-1.ocp.oraclecloud.com/?integrationInstance=oictest2-axhxufzsltne-px
-	- prod changes: https://docs.google.com/spreadsheets/d/1C4WTH_EPQ6BKwL22b8qnJT8NillpYmhv0gRhnX7c9ec/edit?usp=sharing&pli=1&authuser=0
-	- Dev  
-		- OIC: https://oic-test-inst-axhxufzsltne-px.integration.ocp.oraclecloud.com/ 
-		- Oracle ERP: [https://fa-evdi-dev1-saasfaprod1.fa.ocs.oraclecloud.com/fscmUI/faces/FuseWelcome?_adf.ctrl-state=165[…]M=0&_afrMFR=192&_afrMFG=0&_afrMFS=0&_afrMFO=0](https://fa-evdi-dev1-saasfaprod1.fa.ocs.oraclecloud.com/fscmUI/faces/FuseWelcome?_adf.ctrl-state=165x65j434_1&_adf.no-new-window-redirect=true&_afrLoop=72736312678623741&_afrWindowMode=2&_afrWindowId=null&_afrFS=16&_afrMT=screen&_afrMFW=1641&_afrMFH=943&_afrMFDW=1643&_afrMFDH=947&_afrMFC=10&_afrMFCI=0&_afrMFM=0&_afrMFR=192&_afrMFG=0&_afrMFS=0&_afrMFO=0)
-	- Stage  
-		- OIC: https://oictest2-axhxufzsltne-px.integration.ocp.oraclecloud.com/
-		- Oracle ERP: https://fa-evdi-test-saasfaprod1.fa.ocs.oraclecloud.com/
-	- Prod 
-		- OIC: https://oic-prod-axhxufzsltne-ia.integration.ocp.oraclecloud.com/ic/home/
-		- Oracle ERP: https://fa-evdi-saasfaprod1.fa.ocs.oraclecloud.com/
-			- Reports: Hamburger > Tools > Report and analytics
+## Project docs (Google Drive)
 
-	- OIC Credentials (same for all environments) 
-		- https://us-east-1.console.aws.amazon.com/secretsmanager/secret?name=stage%2FOracle%2Fwms_oauth&region=us-east-1
-			- stage/Oracle/wms_oauth
-			- prod/Oracle/wms_oauth
-		- https://us-east-1.console.aws.amazon.com/secretsmanager/secret?name=prod%2FOracle%2Fwp.integration_user&region=us-east-1#
+| Aliases | URL | Notes |
+| --- | --- | --- |
+| project docs, fsd docs | https://drive.google.com/drive/folders/1XOXP7l5cug2MGherdoMZ33RjTmAB98Pr | FSDs, user stories, testing scenarios |
+| lean specs | https://drive.google.com/drive/folders/1Pf3JoT1biPQzUnHoPIJ74yE2DaUyJovc | |
+| process flows, flow diagrams | https://drive.google.com/drive/folders/13erUp3Q-iicFzzpXfMKWe4b9fmgj3PO4 | End-to-end flow diagrams |
+| atp creds, atp urls | https://docs.google.com/spreadsheets/d/10INW7gW6qiGM-gqHDwU2H-7Qy_g0bMpm98DHpvhQAEk/edit | ATP credentials/URLs sheet; see also `WP_INT_GENERIC_REPORT_PARAM` |
 
-	- OIC Prod changes
-		- [https://docs.google.com/spreadsheets/d/1C4WTH_EPQ6BKwL22b8qnJT8NillpYmhv0gRhnX7c9ec/edit?usp=sharing](https://docs.google.com/spreadsheets/d/1C4WTH_EPQ6BKwL22b8qnJT8NillpYmhv0gRhnX7c9ec/edit?usp=sharing)
+## Oracle product docs
 
-- JIRA boards
-	- https://warbyparker.atlassian.net/jira/software/c/projects/OTCM/boards/771
-	- Errors tickets:
-		- https://warbyparker.atlassian.net/jira/software/c/projects/OEH/boards/725
-	- Filter issues by ticket:
-		- https://warbyparker.atlassian.net/issues/?jql=textfields%20~%20%22MFG-I-3021%22
+| Aliases | URL | Notes |
+| --- | --- | --- |
+| oracle rest docs, scm rest docs | https://docs.oracle.com/en/cloud/saas/supply-chain-and-manufacturing/25d/fasrp/op-materialtransactions-post.html | 25d REST API (materialTransactions POST) |
+| oracle financials docs, erp docs | https://docs.oracle.com/en/cloud/saas/financials/25d/books.html | 25d Financials books |
+| oracle scm docs, item docs | https://docs.oracle.com/en/cloud/saas/supply-chain-and-manufacturing/25d/oedsc/egoitemeffb-23612.html#Details | 25d SCM tables |
 
-- warby parker
-	- https://warbyparker.okta.com/
+## Warby Parker internal
 
-- warby parker github
-	- https://github.com/WarbyParker/monocle_integrations
+| Aliases | URL | Notes |
+| --- | --- | --- |
+| okta, warby okta | https://warbyparker.okta.com/ | SSO portal |
+| wp support | https://support.warbyparker.com/support/login | |
+| slack warby | https://warbyparker.enterprise.slack.com/ | |
+| slack warby client | https://app.slack.com/client/T03VCBF1Z | |
 
-- circle ci
-	- https://app.circleci.com/organization/github/WarbyParker
-	- env vars for monocle (no values)
-	- https://app.circleci.com/settings/project/github/WarbyParker/monocle_integrations/environment-variables
+## ioet internal
 
-- directory/contacts:
-	- https://www.notion.so/ioet/Company-Directory-21553fa4fef4803eb6cff97e6918b716
-- notion
-	- https://www.notion.so/ioet/Internal-ioet-Home-Page-20253fa4fef480c89b7dd5f6ea748a96
-- slack
-	- https://warbyparker.enterprise.slack.com/
-	- https://ioetec.slack.com/
-	- https://app.slack.com/client/T03VCBF1Z
-- karma
-	- created with slack account
-	- https://app.karmabot.chat/rewards#/
-- secure store: to share secrets like keys, creds
-	- https://www.securestore.ioet.com/dashboard
-- desk: to book a workspace
-	- https://reservations.ioet.com/en
-- snipe-it: inventory management of equipment
-	- https://ioet.snipe-it.io/
-- houses
-	- https://www.notion.so/ioet/Houses-21053fa4fef4804a93ead5f23bac9d53
+| Aliases | URL | Notes |
+| --- | --- | --- |
+| slack ioet | https://ioetec.slack.com/ | |
+| notion, ioet notion | https://www.notion.so/ioet/Internal-ioet-Home-Page-20253fa4fef480c89b7dd5f6ea748a96 | |
+| directory, contacts | https://www.notion.so/ioet/Company-Directory-21553fa4fef4803eb6cff97e6918b716 | |
+| houses | https://www.notion.so/ioet/Houses-21053fa4fef4804a93ead5f23bac9d53 | |
+| karma | https://app.karmabot.chat/rewards#/ | Uses Slack account |
+| securestore, share secrets | https://www.securestore.ioet.com/dashboard | Share keys/creds securely |
+| desk, book desk, office booking | https://reservations.ioet.com/en | |
+| snipe-it, equipment inventory | https://ioet.snipe-it.io/ | |
+
+## Misc
+
+| Aliases | URL | Notes |
+| --- | --- | --- |
+| oreilly, books | https://www.oreilly.com/ | |

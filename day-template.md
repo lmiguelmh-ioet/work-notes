@@ -2,17 +2,20 @@
 ## Plan
 - 
 
-## Done (append during day)
+## Done
 - 
+```
+```
 
-## Decisions / Notes / Context
-- 
+## Meetings
+- _First meeting on a new requirement? See [[meetings.new-requirement]]_
 
-## Meetings / Async Threads
 ### Stand Up
 - 
+```
+```
 
-## Tasks (carry forward)
+## Tasks
 - 
 
 ## Insights/Ideas

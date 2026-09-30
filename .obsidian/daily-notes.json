@@ -1,0 +1,5 @@
+{
+  "format": "[day-]YYYYMMDD",
+  "folder": "/day/",
+  "template": "day-template.md"
+}
