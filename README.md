@@ -44,10 +44,10 @@ On this machine the steps below are automated by `sync.sh` (see above).
 ### Creating subtree
 
 ```
-git remote add work-notes git@github.com:luis-mamani-wp/work-notes.git
+git remote add work-notes git@github.com:lmiguelmh-ioet/work-notes.git
 git subtree push --prefix=ioet work-notes main
-# add a remote key
-git config remote.work-notes.sshCommand 'ssh -i /home/ml/.ssh/ioet_wp -o IdentitiesOnly=yes'
+# authenticate as the personal GitHub account — on this machine the remote uses
+# the `ioet` SSH host alias (git@ioet:lmiguelmh-ioet/work-notes.git, key ~/.ssh/ioet)
 ```
 
 ### On personal device
