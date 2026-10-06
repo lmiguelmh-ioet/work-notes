@@ -1,3 +1,8 @@
+> ARCHIVED 2026-10-06 — frozen. RICE-level notes are superseded by per-ticket
+> files (see [README](README.md) → "Project notes (ticket-scoped)"); operational
+> knowledge lives in skills (`rmcs-test-data`, `om-order-lifecycle`). Kept for
+> the query collection and the 2026-09 spike logs. The PR-series section below
+> is STALE — current status: [projects.RMCS-I-3001.OTCM-139313](projects.RMCS-I-3001.OTCM-139313.md).
 
 ## PR series (OTCM-139313) — status 2026-09-29
 

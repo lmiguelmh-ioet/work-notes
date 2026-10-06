@@ -11,6 +11,13 @@
 "Ser padre me ha enseñado que existe un nuevo sentido a la vida.
 Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 
+## OTCM-139313 – RMCS-I-3001 PoD data model: warranty split lines
+- **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-139313
+- **RICE**: RMCS-I-3001
+- **Dates**: 2026-09-22 → 2026-10-06
+- **Outcome**: PoD DM handles warranty commission split lines (.1/.2/.3); validated ott→dev1 (ESS 117067194), ticket Done; U-row regression + monocle activation PR carried as follow-ups.
+- **Notes**: [projects.RMCS-I-3001.OTCM-139313](projects.RMCS-I-3001.OTCM-139313.md)
+
 ## Update WMS-I-1021 to store failures into the new dynamo table
 
 - ticket
@@ -212,7 +219,7 @@ fields @timestamp, @message, @logStream, @log
 - ticket:
 	- https://warbyparker.atlassian.net/browse/OTCM-136283
 - query:
-	- [projects.RMCS-I-3001](projects.RMCS-I-3001.md)
+	- [projects.RMCS-I-3001.archive](projects.RMCS-I-3001.archive.md)
 - logs:
 - [cloudwatch](https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#logsV2:logs-insights)
 ```
@@ -461,7 +468,7 @@ curl -v -X POST 'https://sjlqdgbb5mesmduz4pw5oj6fsa0ykkxk.lambda-url.us-east-1.o
 
 ## RMCS-I-3001 - Proof of delivery upload in RMCS - FBDI Approach
 - query
-[projects.RMCS-I-3001](projects.RMCS-I-3001.md)
+[projects.RMCS-I-3001.archive](projects.RMCS-I-3001.archive.md)
 - flow:
 	- callback: WP Revenue Basis Data Import Callback
 	- https://design.integration.us-phoenix-1.ocp.oraclecloud.com/?root=monitoringTracking&oj_Router=1N4IgTg9hAuIFzAL6KA&integrationInstance=oictest2-axhxufzsltne-px
