@@ -11,6 +11,13 @@
 "Ser padre me ha enseñado que existe un nuevo sentido a la vida.
 Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 
+## OTCM-139192 – transaction_failures read API
+- **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-139192
+- **RICE**: none (epic OTCM-106900 OIC Integration Error Handling)
+- **Dates**: 2026-10-05 → —
+- **Outcome**: In flight — port contract, cursor codec, and by-id reader open as PRs #2649/#2652/#2653 (4 of 8 up).
+- **Notes**: [projects.transaction_failures.OTCM-139192](projects.transaction_failures.OTCM-139192.md)
+
 ## OTCM-139313 – RMCS-I-3001 PoD data model: warranty split lines
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-139313
 - **RICE**: RMCS-I-3001

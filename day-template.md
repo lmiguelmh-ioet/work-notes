@@ -3,7 +3,7 @@
 - 
 
 ## Done
-- 
+- HH:MM — 
 ```
 ```
 
@@ -19,4 +19,4 @@
 - 
 
 ## Insights/Ideas
-- 
+- HH:MM — 
