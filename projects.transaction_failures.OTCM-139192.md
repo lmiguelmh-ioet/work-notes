@@ -14,7 +14,7 @@
 - [PR #2630](https://github.com/WarbyParker/monocle_integrations/pull/2630) — PR 1: auth whitelist path-template matching + presence-only Cloudflare JWT authenticator (inert groundwork). Open, base `main`. Self-review `7155976db`.
 - [PR #2649](https://github.com/WarbyParker/monocle_integrations/pull/2649) — PR 2: port contract — reader ABCs, frozen Query/Record/Page models, disjoint exceptions. Open, base `main`. Hardening `eba49fc8a` after the 12-agent panel.
 - [PR #2654](https://github.com/WarbyParker/monocle_integrations/pull/2654) — PR 3a: cursor encoder + filters hasher. Open, stacked on #2649.
-- [PR #2652](https://github.com/WarbyParker/monocle_integrations/pull/2652) — PR 3b: cursor decoder (keeps the original codec PR's history). Open, stacked on #2654. Hardening `fdaa3da9d` after the 12-agent panel (18 findings).
+- [PR #2652](https://github.com/WarbyParker/monocle_integrations/pull/2652) — PR 3b: cursor decoder (keeps the original codec PR's history). Open, stacked on #2654. Hardening `fdaa3da9d` after the 12-agent panel (18 findings). Review fix `96b9a5a27` dropped the unused `from_table` (Johnny's comment).
 - [PR #2653](https://github.com/WarbyParker/monocle_integrations/pull/2653) — PR 4: by-id DynamoDB reader, item mapper, adapter wiring. Open, stacked on #2652. Hardening `29ff3ef8e` after the 12-agent panel (20 findings, 12 applied).
 - [PR #2659](https://github.com/WarbyParker/monocle_integrations/pull/2659) — PR 5: list DynamoDB reader with the GSI picker. Open, stacked on #2653. Hardening `765cc4ba1` after the 12-agent panel (23 findings, 1 BLOCKER: `rice_id` was dropped when `order_id` drove the index).
 
@@ -38,6 +38,7 @@
 10. The bare-listing `FAILED` default and the UTC ISO normalization are single-sourced in `_shared.py`, used by both the list reader and the cursor hasher (PR5 panel, applied 2026-10-07).
 11. The cursor decoder wires statically from `_constants.KEY_ATTRIBUTES`; no live schema read at wiring or first use. Supersedes the wiring half of decision 3; `from_table` stays available (Luis, PR5 panel, 2026-10-07).
 12. Every DynamoDB `ClientError` raises `TransactionFailureReaderError`; no start-key → 400 translation. Substring-matching an AWS-owned error message was too fragile to own (Luis, PR5 panel, 2026-10-07).
+13. The decoder's `from_table` live-schema constructor was removed with `_FakeTable` and its two tests (`96b9a5a27`) — nothing in the series calls it, so the static `_constants.KEY_ATTRIBUTES` wiring is the only construction path (Johnny, PR #2652 review, 2026-10-12). Supersedes the "`from_table` stays available" half of decision 11.
 
 ## Evidence
 - No QA runs yet; all code is inert. Unit gates before each push: PR2 6599 tests, PR3 6633, PR4 6662, PR5 6693 — 100% coverage each time.

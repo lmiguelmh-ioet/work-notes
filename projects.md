@@ -11,6 +11,13 @@
 "Ser padre me ha enseñado que existe un nuevo sentido a la vida.
 Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 
+## OTCM-139198 – retire IN-I-2019L / FEDEX_LEGACY
+- **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-139198
+- **RICE**: IN-I-2019L
+- **Dates**: 2026-10-12 → —
+- **Outcome**: In flight — PR #2700 gates IN-I-2019L callbacks behind retire-in-i-2019l with a controlled 400; PR #2704 (draft) deletes the legacy path, merge-gated on deploy + 30 days; PR 3 (endgame) removes the flag machinery.
+- **Notes**: [projects.IN-I-2019L.OTCM-139198](projects.IN-I-2019L.OTCM-139198.md)
+
 ## OTCM-139192 – transaction_failures read API
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-139192
 - **RICE**: none (epic OTCM-106900 OIC Integration Error Handling)
