@@ -11,6 +11,13 @@
 "Ser padre me ha enseñado que existe un nuevo sentido a la vida.
 Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 
+## OTCM-143188 – AR-I-3018: cap credit memos at the invoice balance
+- **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-143188
+- **RICE**: AR-I-3018
+- **Dates**: 2026-10-12 → —
+- **Outcome**: In flight — PR #2729 caps credit memos at the invoice balance with per-run tracking; the data-model selection change (PR 2) is next.
+- **Notes**: [projects.AR-I-3018.OTCM-143188](projects.AR-I-3018.OTCM-143188.md)
+
 ## OTCM-139198 – retire IN-I-2019L / FEDEX_LEGACY
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-139198
 - **RICE**: IN-I-2019L

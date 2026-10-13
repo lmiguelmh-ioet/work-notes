@@ -1,5 +1,6 @@
 > CLOSED 2026-10-06 — validated, ticket moved to Done; this file is frozen.
 > The open items below were outstanding at close and carry over as follow-ups.
+> Post-close follow-up outcomes are appended at the end of this file (latest: 2026-10-12).
 
 # OTCM-139313 — RMCS-I-3001: PoD data model, warranty split lines
 
@@ -125,3 +126,15 @@ Outstanding at close (2026-10-06) — carried over as follow-ups:
 - Mapping template: <https://docs.google.com/spreadsheets/d/1ZTlE9RFYYRHej9ZPCi3zxAwbA0hv9MoF/edit>
 - Skills touched: `rmcs-test-data`, `om-order-lifecycle`, `jira-qa-evidence` (new), `lambda-function-url-invoke` (oic2 profile), `fusion-sql` (`run_bip_report.py`).
 - Pre-ticket history + query collection: [projects.RMCS-I-3001.archive](projects.RMCS-I-3001.archive.md)
+
+## Post-close follow-ups
+
+### 2026-10-12 — U-row regression closed on dev1; replacement thread open
+
+- **U-row regression done** — closes the carried-over open item. A teammate-requested PoD upload for order 274 ran through the ott Lambda (HTTP 204). ESS job 117098183 SUCCEEDED. Lines 1, 2.2, and 2.3 landed as PROCESSED PoD sublines (doc lines 38013, 38015, 38016). The DEFERRED U update applied on 2.3 (row 45016 UPDATE_PROCESSED, target line 38016). First end-to-end U update through the Lambda on dev1.
+  - The first two attempts returned 401: the dev1 Oracle account was locked pod-side. The team unlocked it. The AWS secret was never wrong.
+- **Reviewer question answered**: the DEFERRED PoD date 2027-10-12 is the covered item's PoD date plus 365 (Q11). It uploaded same-day because order-numbers runs skip the DM date holds by design. This matches the Q14 decision (an early future-dated .3 is harmless).
+- **Replacement-scenario request (open)**: the reviewer asked the OM team for a replacement order on 274. Order 274 is spent: dedup allows one PoD per split line and the U update already applied, so a rerun extracts zero rows.
+  - Recommendation given: build the scenario on order 275 instead. Verified clean (contract 46048, active obligations, covered item delivered 2026-10-12, zero PoD sublines).
+  - Warning given: no order-numbers upload for 275 before the replacement delivers. That would consume the .3 row early with the 2027 date and kill the scenario.
+- **Logic change parked with functional** — user reply to the reviewer, 2026-10-12: the current logic stays as-is; a change happens only if the reviewer decides one is needed.
