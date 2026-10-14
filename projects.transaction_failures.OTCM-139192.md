@@ -2,21 +2,23 @@
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-139192
 - **RICE**: none — parent epic [OTCM-106900](https://warbyparker.atlassian.net/browse/OTCM-106900) (OIC Integration Error Handling)
 - **Repos**: monocle_integrations
-- **Status** (as of 2026-10-07): In flight — PRs 1, 2, 3a, 3b, 4, 5 of 9 open for review
+- **Status** (as of 2026-10-14): In flight — PRs 1–5 merged; #2684 (facade + routes) and #2699 (API tests) open
 - **Plan**: [otcm-139192_transaction_failures_read_api.plan.md](../monocle_integrations/.cursor/plans/otcm-139192_transaction_failures_read_api.plan.md) (lives in the monocle_integrations repo)
 
 ## Outcome
-- The transaction_failures read API ships as a stacked 9-PR series on monocle-app.
-- The auth groundwork, port contract, cursor codec, and both DynamoDB readers are open for review.
-- Nothing is deployed. All merged code stays inert until the facade and route PRs land.
+- The transaction_failures read API ships as a stacked PR series on monocle-app.
+- The auth groundwork, port contract, cursor codec, and both DynamoDB readers are merged.
+- Nothing is deployed. All merged code stays inert until the route PR lands and the series deploys.
 
 ## What shipped
-- [PR #2630](https://github.com/WarbyParker/monocle_integrations/pull/2630) — PR 1: auth whitelist path-template matching + presence-only Cloudflare JWT authenticator (inert groundwork). Open, base `main`. Self-review `7155976db`.
-- [PR #2649](https://github.com/WarbyParker/monocle_integrations/pull/2649) — PR 2: port contract — reader ABCs, frozen Query/Record/Page models, disjoint exceptions. Open, base `main`. Hardening `eba49fc8a` after the 12-agent panel.
-- [PR #2654](https://github.com/WarbyParker/monocle_integrations/pull/2654) — PR 3a: cursor encoder + filters hasher. Open, stacked on #2649.
-- [PR #2652](https://github.com/WarbyParker/monocle_integrations/pull/2652) — PR 3b: cursor decoder (keeps the original codec PR's history). Open, stacked on #2654. Hardening `fdaa3da9d` after the 12-agent panel (18 findings). Review fix `96b9a5a27` dropped the unused `from_table` (Johnny's comment).
-- [PR #2653](https://github.com/WarbyParker/monocle_integrations/pull/2653) — PR 4: by-id DynamoDB reader, item mapper, adapter wiring. Open, stacked on #2652. Hardening `29ff3ef8e` after the 12-agent panel (20 findings, 12 applied).
-- [PR #2659](https://github.com/WarbyParker/monocle_integrations/pull/2659) — PR 5: list DynamoDB reader with the GSI picker. Open, stacked on #2653. Hardening `765cc4ba1` after the 12-agent panel (23 findings, 1 BLOCKER: `rice_id` was dropped when `order_id` drove the index).
+- [PR #2630](https://github.com/WarbyParker/monocle_integrations/pull/2630) — PR 1: auth whitelist path-template matching + presence-only Cloudflare JWT authenticator (inert groundwork). Merged. Self-review `7155976db`.
+- [PR #2649](https://github.com/WarbyParker/monocle_integrations/pull/2649) — PR 2: port contract — reader ABCs, frozen Query/Record/Page models, disjoint exceptions. Merged. Hardening `eba49fc8a` after the 12-agent panel.
+- [PR #2654](https://github.com/WarbyParker/monocle_integrations/pull/2654) — PR 3a: cursor encoder + filters hasher. Merged.
+- [PR #2652](https://github.com/WarbyParker/monocle_integrations/pull/2652) — PR 3b: cursor decoder (keeps the original codec PR's history). Merged. Hardening `fdaa3da9d` after the 12-agent panel (18 findings). Review fix `96b9a5a27` dropped the unused `from_table` (Johnny's comment).
+- [PR #2653](https://github.com/WarbyParker/monocle_integrations/pull/2653) — PR 4: by-id DynamoDB reader, item mapper, adapter wiring. Merged. Hardening `29ff3ef8e` after the 12-agent panel (20 findings, 12 applied).
+- [PR #2659](https://github.com/WarbyParker/monocle_integrations/pull/2659) — PR 5: list DynamoDB reader with the GSI picker. Merged (`33a5168f1`). Hardening `765cc4ba1` after the 12-agent panel (23 findings, 1 BLOCKER: `rice_id` was dropped when `order_id` drove the index).
+- [PR #2684](https://github.com/WarbyParker/monocle_integrations/pull/2684) — PRs 6–7: facade wiring, read API routes, use cases. Open, base `main`. Review round `b33eabbce` after Johnny's first review: routes register only where JWT auth is enforced, `min_length=1` filters, typed response models.
+- [PR #2699](https://github.com/WarbyParker/monocle_integrations/pull/2699) — PR 8: localstack API test suite (20 tests). Open, stacked on #2684. Restacked onto `b33eabbce`; adaptation `af3cf3601`.
 
 ## Decisions
 
@@ -39,21 +41,22 @@
 11. The cursor decoder wires statically from `_constants.KEY_ATTRIBUTES`; no live schema read at wiring or first use. Supersedes the wiring half of decision 3; `from_table` stays available (Luis, PR5 panel, 2026-10-07).
 12. Every DynamoDB `ClientError` raises `TransactionFailureReaderError`; no start-key → 400 translation. Substring-matching an AWS-owned error message was too fragile to own (Luis, PR5 panel, 2026-10-07).
 13. The decoder's `from_table` live-schema constructor was removed with `_FakeTable` and its two tests (`96b9a5a27`) — nothing in the series calls it, so the static `_constants.KEY_ATTRIBUTES` wiring is the only construction path (Johnny, PR #2652 review, 2026-10-12). Supersedes the "`from_table` stays available" half of decision 11.
+14. The read routes register only when `config.enable_authentication or config.env == "dev"`, composed at the Router. `enable_authentication` is true exactly on the custom-auth deployments; the dev carve-out keeps the single local Lambda and the `_api/_test` suite serving the routes (Johnny, PR #2684 review, 2026-10-14; mechanism chosen with Luis). Rejected alternatives: a dedicated config flag (eight yml files plus a pin test), auth-only gating (breaks dev and the API tests), a dedicated Lambda handler (needs a terraform change).
+15. The routes reach the domain through use cases, and the not-found error lives in `GetTransactionFailure` — this supersedes the 404-mapping location in decision 4 (Johnny, PR #2684 review, 2026-10-14).
 
 ## Evidence
 - No QA runs yet; all code is inert. Unit gates before each push: PR2 6599 tests, PR3 6633, PR4 6662, PR5 6693 — 100% coverage each time.
+- PR7 review round `b33eabbce`: 7057 unit tests at 100% coverage; test-api suite 336 passed.
 
 ## Test data
 - None yet. Unit fixtures only (`_adapters/_transaction_failure_readers/_fixtures.py`).
 
 ## Open items
-- PRs 6–8: facade wiring, API routes with the CF-JWT guard, localstack API tests.
-- PR 7 validates `limit` as `ge=1, le=100`; a sub-1 limit otherwise escapes as a raw botocore `ParamValidationError` (PR5 panel catch, recorded in the plan).
-- AVP enforcement is blocked on OTCM-139191; API logic proceeds in shadow mode.
-- Clean up the dead `_aws_dynamodb_transaction_failures_client` wiring in the facade PR (PR4 panel note).
-- Localstack writer→reader round-trip test deferred to the route PR (API-level 200/404 coverage).
+- Final PR: AVP enforcement on the custom-auth routes, blocked on OTCM-139191 (AVP setup). API logic proceeds in shadow mode.
+- Deployment gate: the five merged PRs are not deployed to stage/prod yet; the next tag deploy picks them up.
+- Clean up the dead `_aws_dynamodb_transaction_failures_client` wiring (PR4 panel note); verify whether #2684 covered it.
 
 ## Artifacts
 - Spec: the ticket description is the spec; no FSD exists.
-- Day notes: [day-20261006](day/day-20261006.md), [day-20261007](day/day-20261007.md).
+- Day notes: [day-20261006](day/day-20261006.md), [day-20261007](day/day-20261007.md), [day-20261014](day/day-20261014.md).
 - Skills touched: `self-review` (created), `pr-review` (pre-opening panels).
