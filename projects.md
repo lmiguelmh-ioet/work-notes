@@ -11,6 +11,13 @@
 "Ser padre me ha enseñado que existe un nuevo sentido a la vida.
 Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 
+## OTCM-146798 – RMCS-I-3001: CPU pickup PoD, QC-fail chain, warranty returns
+- **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-146798
+- **RICE**: RMCS-I-3001
+- **Dates**: 2026-10-15 → —
+- **Outcome**: In flight — all 5 DM work items written + validated on dev1; 12-reviewer panel's 4 blockers fixed, post-fix A/B 6/6 byte-identical; dev1 upload pending.
+- **Notes**: [projects.RMCS-I-3001.OTCM-146798](projects.RMCS-I-3001.OTCM-146798.md)
+
 ## OTCM-143188 – AR-I-3018: cap credit memos at the invoice balance
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-143188
 - **RICE**: AR-I-3018
