@@ -22,7 +22,7 @@ Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-143188
 - **RICE**: AR-I-3018
 - **Dates**: 2026-10-12 → —
-- **Outcome**: In flight — #2730 merged; #2731/#2732 in review (the balance-cap stack); DM PR #1130 carries the selection change plus the `P_CT_REFERENCE` ad hoc parameter; #2746 open (ad hoc exchange-order-reference scoping).
+- **Outcome**: In flight — shipped in #2730/#2731/#2732/#2746/#2747/#2772, stage-verified on vstage388 (8/8 Pass, evidence in Jira comment 971417); awaiting QA closure; DM #1134 + OIC export #1136 merge at prod promotion.
 - **Notes**: [projects.AR-I-3018.OTCM-143188](projects.AR-I-3018.OTCM-143188.md)
 
 ## OTCM-139198 – retire IN-I-2019L / FEDEX_LEGACY

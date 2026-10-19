@@ -3,7 +3,7 @@
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-146798
 - **RICE**: RMCS-I-3001 (follow-on of OTCM-139313 / PR #1105)
 - **Repos**: oracle-integration-cloud (DM only)
-- **Status** (as of 2026-10-16): all 5 work items written + validated; review round 1 fixed + verified; dev1 catalog upload pending authorization
+- **Status** (as of 2026-10-19): all 7 work items written + validated on dev1; all Q&A resolved or dispositioned; dev1 catalog upload next, then live verify, user re-export, commit, PR
 - **Plan**: `monocle_integrations/.cursor/plans/rmcs-i-3001_cpu_qcfail_warranty_returns.plan.md`
 
 ## Outcome
@@ -13,7 +13,7 @@
 
 ## What shipped
 
-- Nothing merged yet. Work product: branch `OTCM-146798-rmcs-i-3001-pod-dm` (worktree `oracle-integration-cloud/tmp/otcm146798-wt`), DM +292/−43 vs the OTCM-139313 baseline, then review-fix delta on top; nothing committed as of 2026-10-16.
+- Nothing merged yet. Work product: branch `OTCM-146798-rmcs-i-3001-pod-dm` (worktree `oracle-integration-cloud/tmp/otcm146798-wt`), DM +394/−69 vs the OTCM-139313 baseline (items 1–7, uncommitted as of 2026-10-19). Item 7 (warranty-branch QC-fail redirect, from Q9's answer) landed 2026-10-19.
 
 ## Decisions
 
@@ -23,6 +23,12 @@
 2. Partial refund — set SRC_ATTRIBUTE_DATE1 to the return (credit memo) date and load the .3 PoD at that same date in the same upload (Luis proposal, FSD comment 2026-10-16 thread).
 3. Warranty EFF attribute_char2 cross-order branch — struck from the FSD (line 421), so the DM dropped it (FSD edit, synced 2026-10-16).
 4. Covered-line EFF carries the order line NUMBER, not the internal id (Aruna/Ranjeeth, FSD comments 2026-10-03, item 2.1) — for the Warranty EFF; the QC replacement EFF char5 semantics stay a merge gate (Q1).
+5. char5 of the replacement EFF carries the internal DOO line id, not the line number (Ranjeeth, FSD reply 2026-10-19); the DM join switched line_number → line_id. Inert on dev1 until real OMG replacement data.
+6. ct_reference on OMG credit memos is always the Oracle return order number (Aruna, FSD reply 2026-10-19) — the warranty-return detection join is confirmed as built.
+7. A warranty on a QC-failed covered line stays on the original order; no new warranty line is created on the replacement (Aruna, FSD reply 2026-10-19) — the .2/.3 dates follow the covered item's redirect (work item 7).
+8. Sequential partial refunds on one covered item take the auto-reversal path (Aruna, FSD reply 2026-10-19) — confirms the built per-credit-memo handling.
+9. QC fail applies only to CPU orders (Aruna, FSD reply 2026-10-19) — confirms the PICKUP_TASK-only redirect gating.
+10. The pickup task-type-code ask was withdrawn (user decision 2026-10-19): the 'Pending Customer Pick Up' step-name filter is final, tacitly accepted by OM.
 
 ### Design decisions (ours)
 
@@ -33,11 +39,15 @@
 5. char5 conversion is fail-loud on purpose (user decision 2026-10-16): a junk value fails the run until the bad EFF data is fixed; ROW_NUMBER partitions by the converted value ('03' vs '3' duplicate-rank fix).
 6. Late-return gate: a return at/after the computed end date moves nothing (FSD scopes the move to returns before expiry); functional confirmation pending (Q4).
 7. `rmcs_lines_base` → `rmcs_lines` split: the fulfillment-date CASE existed 4× (unanimous panel finding); now computed once, emission gates outside.
+8. Re-grain join shape (user standing decision 2026-10-19): both-grain `IN (l.line_id, fl.fulfill_line_id)` on both branches. RMCS-I-3001 never reached prod, so old-record concerns were discarded and the simpler symmetric join wins.
+9. The warranty-branch redirect mirrors the standard branch (2026-10-19): PICKUP_TASK covered orders only, replace-not-fallback, no new last-update analog — the redirect date pulls the row through the main GREATEST window.
 
 ## Evidence
 
 - QA-17 full-extract A/B (2026-10-16, dev1, window 6/01–10/16): 10 rows identical to the 681-line baseline, 3 explained new rows (TNAQ4YG02Z CPU backlog drain at go-live).
 - Post-review A/B (2026-10-16, dev1): pre-fix vs post-fix, 6 pairs byte-identical (9-row wide window, order-numbers 274/277/281/310, FIN-008 compile).
+- QA-19 re-grain A/B (2026-10-19, dev1): 336 resolves via FULFILL_LINE_ID with the delivered-dd key; TestOrder62 dual-key no fan-out; wide window 9/9 with 4 intended dd-key flips. char5 fix A/B: 9/9 byte-identical.
+- Item-7 warranty-redirect A/B (2026-10-19, dev1): wide window 9/9 byte-identical vs the pre-item-7 baseline; 348/353 order-numbers 0 rows both (held, pickups NOT_STARTED).
 - Review panel run 20261016T1024: 12/12 seats, consolidated at `oracle-integration-cloud/tmp/otcm146798_review/consolidated.md`.
 - Probes (dev1): version-row shapes (40 rows, VF='N'/VN=1), `doo_document_references.line_id` populated, zero OMG CMs on dev1 AND stage; prod arbiter report not permitted.
 
@@ -46,17 +56,16 @@
 - dev1 warranty orders 274/275/277/281/284/298/310/314 + POC*/RMA* series (interface rows incl. multi-version keys 277/281, rejected-then-reload 298, char2 order 310).
 - CPU backlog order TNAQ4YG02Z (WP_B2C_CPU, pickup 2026-09-16, delivery NULL forever).
 - Warranty-return path has NO test data anywhere (zero OMG CMs) — needs Guillermo's QA return orders with completed credit memos.
+- 348/353 (Ranjeeth, 2026-10-19): the Q9 scenario pair. 348 is WP_B2C_CPU with QC-failed lines incl. covered line 1 (warranty on line 8); 353 replaces 348's line 1 (char6='348'). 353's char5 is mixed (internal id on some rows, '1' on others — flagged to Ranjeeth). All pickup tasks NOT_STARTED; QA-22 needs OM to complete 353's pickup.
 
 ## Open items
 
-- NEW 2026-10-16 PM: mapping re-grain (Aruna, Slack + mapping sheets + 2 assigned cell comments) — all RMCS components re-key source-doc ids to fulfillment/delivery grain. DM impact: two bind joins must go cutover-tolerant (`IN (line_id, fulfill_line_id)`); dev1 already has 2 fulfill-keyed interface rows. Open ambiguity: addl_sub_line key (delivery_detail_id vs combination). Analysis: `tmp/otcm146798_review/mapping_regrain_20261016.md`. Replies anchor at Aruna's comments VRM_SOURCE_DOC_LINES!D4 / VRM_SOURCE_DOC_ADDL_SUBLINES!D21.
-
-- dev1 catalog upload (authorized text + live verify), then user re-exports `.xdm.catalog`, commit, PR.
-- Merge gates after triage (`questions_to_route.md`, 3-agent panel 2026-10-16, exact ask-locations per question): Q1 char5 line-id vs line-number (FSD Scenario 4 points at internal id, opposite the current join; dev1 probes 2026-10-16 not decisive — char5 NULL on real orders, only orphan TST rows carry '1'; bumped the existing FSD thread to Ranjeeth), Q2 ct_reference format on prod OMG CMs (new FSD comment on the Warranty Return Flow section), Q3 prod char2 count (data request in Bhanu's SQL thread — exact query attached; we lack prod access).
-- Already routed: covered-item QC-fail (Q7) sits unanswered in the FSD thread since 2026-10-16 — chase, non-blocking.
-- Triage dropped Q4/Q5/Q6/Q8/Q9/Q10/Q11 with documented assumptions (`triage/consolidated_triage.md`); Q10's lifecycle gets an empirical probe on the first closed CPU order before prod.
-- Return-path end-to-end proof blocked on Guillermo's warranty-return QA data.
-- Prod gates: task setup confirmation, explain plans on stage (unwindowed CTEs).
+- ~~dev1 + stage catalog upload (authorized text + live verify)~~ — DONE 2026-10-19 16:40/16:47: CDATA-only swap (byte-proven) on both pods, round-trip sha256 match both, dev1 live report 9/9 = arbiter + 348/353 = 0 rows, stage 0 rows / 0 errors (execution proof). Next: user re-exports `.xdm.catalog` from dev1 → commit (approval) → PR — the immediate next step.
+- Guillermo warranty-return QA data: fresh partials + one full-refund case with completed OMG credit memos. Blocks QA-11/12/14(full); newest dev1 CM is 2026-08-03.
+- QA-22 live proof: OM (Ranjeeth) completes the pickup task on 353's replacement line; the 353 char5 mixed-semantics flag rides with that ask.
+- Q18 probe: orchestration group stays ACTIVE on closed orders — empirical check rides with QA.
+- Deploy order: 3003 (OTCM-146384, Guillermo, in Review) loads first, then 3001 PoD (confirmed by Aruna 2026-10-15).
+- Prod gates: OM prod pickup-task setup timing; explain plans on stage (unwindowed CTEs).
 
 ## Artifacts
 
