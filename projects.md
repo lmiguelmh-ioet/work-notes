@@ -11,6 +11,13 @@
 "Ser padre me ha enseñado que existe un nuevo sentido a la vida.
 Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 
+## OTCM-149147 – AR-I-3018: keep selecting pairs after creation dates fall behind the last run
+- **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-149147
+- **RICE**: AR-I-3018
+- **Dates**: 2026-10-19 → —
+- **Outcome**: In flight — root cause confirmed on stage; fix designed and panel-verified (window on the open-balance row's creation date + small lookback); plan pending approval.
+- **Notes**: [projects.AR-I-3018.OTCM-149147](projects.AR-I-3018.OTCM-149147.md)
+
 ## OTCM-146798 – RMCS-I-3001: CPU pickup PoD, QC-fail chain, warranty returns
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-146798
 - **RICE**: RMCS-I-3001
