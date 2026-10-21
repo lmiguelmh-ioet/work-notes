@@ -3,7 +3,7 @@
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-146798
 - **RICE**: RMCS-I-3001 (follow-on of OTCM-139313 / PR #1105)
 - **Repos**: oracle-integration-cloud (DM only)
-- **Status** (as of 2026-10-20): **PR #1141 OPEN** in oracle-integration-cloud, stacked on #1105 (commit `a53bfb96`, labeled enhancement). The round-3 DM is uploaded to dev1 + stage (round-trip sha256 `47b75f5a919b48ba` on each; dev1 live report = 9 rows) and the `.xdm.catalog` re-export matches the upload byte-for-byte; all six routed comments posted (Q22–Q27, answers pending). The PR merges at prod promotion, after RMCS-I-3003 (OTCM-146384)
+- **Status** (as of 2026-10-21): **PR #1141 OPEN** in oracle-integration-cloud, stacked on #1105 (commit `a53bfb96`, labeled enhancement). The round-3 DM is uploaded to dev1 + stage (round-trip sha256 `47b75f5a919b48ba` on each; dev1 live report = 9 rows) and the `.xdm.catalog` re-export matches the upload byte-for-byte. Bugbot's 3 findings triaged (1 false positive, 1 real stranding fix committed in reply, 1 harmless) — prepared replies awaiting user approval to post. Routed comments: Q22/Q24/Q27 answered, Q23/Q25/Q26 pending. Round-5 (gray resolutions `_1` + `_2`:A + `_8`:A + `_3`) applied to the worktree DM 2026-10-21 (+38/−35), A/B byte-identical on dev1 and compile-clean on stage. Round-5 catalog upload DONE 2026-10-21 (user-authorized): freshness gate passed both pods (live CDATA == round-4 text), raw-XML `updateObject` true both, round-trip SQL sha256 `e79aea1c3b818fb5` == worktree on BOTH pods, dev1 live report 10/10 = arbiter (5.3 s), stage 0 rows / 0 errors (5.4 s). `.xdm.catalog` re-export + commit pending. The PR merges at prod promotion, after RMCS-I-3003 (OTCM-146384)
 - **Plan**: `monocle_integrations/.cursor/plans/rmcs-i-3001_cpu_qcfail_warranty_returns.plan.md`
 
 ## Outcome
@@ -15,6 +15,23 @@
 
 - **[PR #1141](https://github.com/WarbyParker/oracle-integration-cloud/pull/1141) OPEN 2026-10-20**, stacked on #1105: commit `a53bfb96`, DM `.sql` +535/−68 vs the OTCM-139313 baseline plus the re-exported `.xdm.catalog` (Bin 9,520 → 13,870 B, inflated SQL sha256 `47b75f5a919b48ba` == the pod upload). Labeled enhancement. Merges at prod promotion, after RMCS-I-3003 (OTCM-146384).
 - Build-up: work items 1–7 (+394/−69) through 2026-10-19; round-2 fix batch +199/−64 (`tmp/otcm146798_impl/merged/base_to_merged.diff`); round-3 fix batch 11 change groups (canonical `tmp/otcm146798_r3_impl/merged/DM.sql` md5 `da46dc77…`, diff `merged/r2base_to_r3merged.diff`). All committed in `a53bfb96`.
+
+## How it works (plain-language explainer)
+
+Written for a reader with zero context (added 2026-10-21, after the round-4 review).
+
+**The business problem.** Warby Parker may only book revenue for an order line once there is proof the customer received the item — "Proof of Delivery" (PoD). This data model is one big SQL report that runs on a schedule and answers one question: "which order lines were delivered, and on what date?" Each run looks at a window of dates (e.g. Sept 25 – Oct 21) and emits rows like: order `275`, line `300000900335082`, delivered `2026-10-12` → accounting may book the revenue.
+
+**The bug (Bugbot F2).** Most orders finalize at the moment they deliver. Store-pickup (CPU) orders are different: the customer can pick up their glasses on **Monday** while the order line only flips to its final state (SHIPPED/CLOSED) on **Wednesday**. Monday's run sees the pickup but skips the line (not final yet). Wednesday's run only looks at Wednesday's window — the pickup date (Monday) is not in it — and skips the line forever. Think of a package delivered while you are on vacation: it arrives Monday, you come home Wednesday, and from then on everyone only checks Wednesday's mail — nobody ever registers Monday's delivery.
+
+**The fix.** Besides asking "was the delivery date in this window?", also ask "was the order line's own paperwork touched in this window?" When the line flips to final on Wednesday, Oracle stamps its `last_update_date` to Wednesday — inside Wednesday's window — so Wednesday's run now finds the line and still reports the true delivery date (Monday). Proven to change zero rows of current output on both test pods.
+
+**The review.** Six independent AI reviewers confirmed the fix and stress-tested it. Two deeper questions were settled by user decision (2026-10-21):
+
+1. **Home-delivery orders** could theoretically strand the same way — but for them the delivery date is written by the same event (ship confirm) that finalizes the line, like a package you must be home to sign for: the delivery and "being home" always coincide, and nobody has ever observed a stranded one. Decision `_2`: fix it anyway, fully (option A) — the delivery lookup lost its date window, the catch now also watches the delivery record's writes, and the warranty side got the one-line mirror fix.
+2. **The ID key.** Every PoD row carries an ID key: a preferred one (think: the shipping box's tracking number) and a fallback (the order line's own internal ID) used when the box lookup misses. Rescued lines missed the box lookup because it had its own date window. Decision `_8`: unwindow the box lookup too (option A), so rescued lines carry their real tracking-number key instead of the fallback.
+
+**What it costs (performance).** The two unwindowed lookups now read their full history every run instead of one window. Measured 2026-10-21: on dev1 that is 56 delivery rows and 138 shipment rows per run (vs 11 and 0 inside the QA window); on stage, 8 and 17. The full report still runs in ~5-8 s on dev1 — no measurable change at this scale. Both pods are small test pods, so the prod-scale cost is genuinely unknown and stays a go-live gate (see "Prod gates" under Open items).
 
 ## Decisions
 
@@ -32,6 +49,7 @@
 10. The pickup task-type-code ask was withdrawn (user decision 2026-10-19): the 'Pending Customer Pick Up' step-name filter is final, tacitly accepted by OM.
 11. Warranty price is always fixed, never discounted (Aruna, FSD reply 2026-10-20) — the full-refund classifier's qty × unit-price comparison is safe.
 12. FSD §2.3 B2C CPU launch parameter updated by Aruna (2026-10-20): fetch CPU orders with delivery date updated; on CPU QC fail, the order-line EFF carries the original order number + line id — matches the built EFF resolution, no DM impact.
+13. Satisfied Quantity mapping accepted (Aruna, mapping reply 2026-10-21): FULFILLED_QTY populates on non-shippable warranty fulfill rows when invoiced — verified on dev1 (all 6 WP_AI_WARRANTY rows across 277/281/284/348: shippable N, CLOSED, qty 1) — but "either of this logic works"; the integration keeps sending the loaded split line's QUANTITY (safer: the .1 PoD emits pre-invoice).
 
 ### Design decisions (ours)
 
@@ -52,6 +70,9 @@
 15. `shipped_line_details` window (round-3 _03, user keep 2026-10-20): the CTE mirrors `fulfill_delivery`'s dual-mode predicate on `fl.fulfillment_date` — it no longer scans full shippable history every run. Verified output-inert statically (the standard branch emits only in-window/order-named FULFILLMENT rows) and by the byte-identical A/B.
 16. `qc_fail_resolution` LEFT JOINs (round-3 _06 option A): a QC-failed line whose header exists only as a DOO_REFERENCE import stub now survives with NULL resolution dates, so the redirect arm HOLDS the line instead of silently emitting at its own pickup. Fail-held beats fail-silent-wrong; recoverable via order-numbers run after a data fix. Byte-identical on healthy data.
 17. Best-of-3 implementation pattern with differentiated angles (surgical / stylist / skeptic), used for both merge rounds: the code hunks converged byte-identical across seats; the seats diverged only on comment wording, and the skeptic's anchor re-verification caught two geometrically infeasible "fits in 2 lines" register claims before they reached the file.
+18. Round-4 scoped panel (2026-10-21, 6/6 panel seats + 2 triage seats, `oracle-integration-cloud/tmp/pr1141_review/`): `_1` implemented — the QC-fail arm now also watches the replacement fulfill record's own write (`replacement_fulfill_last_update`, carried through `qc_fail_replacements` rank-1 + `qc_fail_resolution` COALESCE into both GREATESTs) — plus the `_3` comment pack (all-source catch framing, GREATEST-of-writes wording, NULL-as-held markers). `_5`: the commit rationale words the warranty-returns change as a join-column correction, not a rename.
+19. Gray `_2` option A (user, 2026-10-21): the DELIVERY-arm coverage gap is fixed fully in this PR — `fulfill_delivery` unwindowed (precedent: `pickup_task_dates`), `MAX(fld.last_update_date)` carried as the backfill clock, DELIVERY arm `GREATEST(fl.last_update_date, NVL(delivery_last_update, fl.last_update_date))` (NVL load-bearing against GREATEST NULL-poisoning), warranty mirror `GREATEST(MAX(cfld.last_update_date), MAX(cfl.last_update_date))`. The stranded-DELIVERY class is unproven in production; fixed on structural reachability, with the multi-window-delivery ripple explicitly re-checked by the A/B (byte-identical).
+20. Gray `_8` option A (user, 2026-10-21): `shipped_line_details` unwindowed, so catch-rescued FULFILLMENT lines key `doc_addl_sub_line_id_int_1` by their real WSH delivery detail instead of the contract-line fallback. Reverses the round-3 `_03` window (decision 15, added for scan cost) — the measured scan cost below is the price accepted.
 
 ## Evidence
 
@@ -68,6 +89,10 @@
 - Pre-posting comment fact-check (2026-10-20, 3 independent seats, `tmp/otcm146798_impl/comment_check_{1,2,3}.md`): _15/_17/_16a/_16b POST AS-IS; _14 trimmed (the classifier was already confirmed at Q7); _18 reworded (no "Key Logic thread" exists — the pickup confirmation lives in the Q1 thread on the §1.1 "For CPU Orders" sentence).
 - Round-3 catalog verification (2026-10-20): `updateObject` true on both pods; round-trip SQL == `merged/DM.sql` byte-for-byte on dev1 AND stage (sha256 `47b75f5a919b48ba`); dev1 live report through the deployed DM = 9 rows (= A/B QA baseline); the re-exported `.xdm.catalog` inflates to the same sha256.
 - Probes (dev1): version-row shapes (40 rows, VF='N'/VN=1), `doo_document_references.line_id` populated, zero OMG CMs on dev1 AND stage; prod arbiter report not permitted.
+- Bugbot-triage probes (2026-10-21, stage + dev1): `order_number == source_order_number` on every sampled header (TPP79X00Z7 ×3 incl. DOO_REFERENCE stubs, return order 42, RMA277/RMA281/294/295); `ORDER_NUMBER`/`SOURCE_ORDER_NUMBER`/`CT_REFERENCE` all VARCHAR2; OMG credit for TPP79X00Z7 carries `ct_reference='TPP79X00Z7'`; OMG-sourced trx classes = ONACC only on both pods; warranty fulfill rows on 277/281/284/348 all non-shippable, CLOSED, FULFILLED_QTY=1 (Aruna's Q24 claim).
+
+- Round-5 A/B (2026-10-21, harness `monocle_integrations/tmp/build_round5.py` on `/tmp/dm_r5_old.sql` = round-4 live vs `/tmp/dm_r5_new.sql`, buckets `/tmp/otcm146798_r5/`): dev1 — QA window 10/10 identical (old 7.8 s / new 5.2 s), round-3 window 13/13, wide 14/14, order 348 1/1, order 353 = 0 rows compile-clean (new variant run solo: empty `G_1`, no SOAP fault — the compare harness errors on empty rowsets). Stage — old/new in QA + wide windows and the new 353 variant all compile-clean, all 0 rows (stage carries no in-scope data; old = the round-4 live SQL covered by the round-4 evidence).
+- Scan-volume probes (2026-10-21, `/tmp/probe_fd_scan.sql` + `/tmp/probe_shd_scan.sql`): unwindowed `fulfill_delivery` reads dev1 56 detail rows / 56 lines (11 inside the QA window), stage 8 / 8; unwindowed `shipped_line_details` reads dev1 138 rows / 138 lines (0 in window), stage 17 / 17. Both pods are small test pods — the prod-scale cost of the two unwindowings is unmeasured and stays a prod gate.
 
 ## Test data
 
@@ -79,14 +104,16 @@
 ## Open items
 
 - ~~dev1 + stage catalog upload (authorized text + live verify)~~ — DONE 2026-10-19 16:40/16:47: CDATA-only swap (byte-proven) on both pods, round-trip sha256 match both, dev1 live report 9/9 = arbiter + 348/353 = 0 rows, stage 0 rows / 0 errors (execution proof). SUPERSEDED 2026-10-20: round-3 re-upload DONE 2026-10-20 (user-authorized): `updateObject` true on both pods (dev1 60,963 B, stage 60,966 B), round-trip SQL == round-3 `merged/DM.sql` byte-for-byte on BOTH pods (sql sha256 `47b75f5a919b48ba`), dev1 live report through the deployed DM = 9 rows (= A/B QA baseline). `.xdm.catalog` re-export DONE 09:43 (user, verified byte-for-byte) → commit `a53bfb96` → PR #1141 opened 09:50.
-- ~~Routed comments ready to post~~ — ALL SIX POSTED 2026-10-20 (user), recorded in the plan as Q22–Q27 with verbatim texts and anchors. Confirmed live in the 09:52 comment re-sync: FSD anchors (Scenario-1 title, QC-fail DFF sentence, Q1-thread reply) + mapping cells ADDL_SUBLINES!D36, LINES!D173, ADDL_SUBLINES!D23. The 09:00 invisibility was Drive comments API lag, not missing posts. **Answers 2026-10-20 (14:01 sync):** Q22 ANSWERED (warranty price always fixed, no discount — classifier safe); Q27 ANSWERED (§2.3 bullet stale, Aruna updated the FSD body to the EFF-linkage wording — no DM impact); Q9 re-confirmed (warranty .2/.3 = replacement's pickup completion — item 7 as built). Q23/Q24/Q25/Q26 pending.
+- ~~Routed comments ready to post~~ — ALL SIX POSTED 2026-10-20 (user), recorded in the plan as Q22–Q27 with verbatim texts and anchors. Confirmed live in the 09:52 comment re-sync: FSD anchors (Scenario-1 title, QC-fail DFF sentence, Q1-thread reply) + mapping cells ADDL_SUBLINES!D36, LINES!D173, ADDL_SUBLINES!D23. The 09:00 invisibility was Drive comments API lag, not missing posts. **Answers 2026-10-20 (14:01 sync):** Q22 ANSWERED (warranty price always fixed, no discount — classifier safe); Q27 ANSWERED (§2.3 bullet stale, Aruna updated the FSD body to the EFF-linkage wording — no DM impact); Q9 re-confirmed (warranty .2/.3 = replacement's pickup completion — item 7 as built). Q23/Q24/Q25/Q26 pending. **Answers 2026-10-21 (12:59 sync):** Q24 ANSWERED (FSD decision #13) — Q23/Q25/Q26 still pending.
+- **PR #1141 Bugbot round (2026-10-21):** 3 findings triaged with code + pod evidence — F1 (High, warranty CM join key) false positive (`order_number == source_order_number` in this DOO setup; ct_reference = return order number per Aruna); F2 (Medium, CPU pickup window stranding) APPLIES — reply commits to a last-update catch mirroring the warranty branch (`covered_pod_last_update` precedent; NOT EXISTS dedup keeps it safe); F3 (Medium, TO_CHAR wraps) harmless (no-op on VARCHAR2; access path is the unwrapped `delivery_detail_id`). Prepared replies at `oracle-integration-cloud/tmp/otcm146798_pr1141_comments/pr_comment_replies.yaml` — **awaiting user approval to post**. If approved with the F2 commitment: DM edit + A/B re-run + catalog re-upload + re-export + push to the PR branch.
 - ~~Round-3 review panel~~ — DONE 2026-10-20: 12/12 seats, zero blockers, 15 findings; user dispositions executed the same day (merge + A/B above).
 - QA-23 to QA-31 added to the plan (round-2 scenarios); QA-25 and QA-31 are already proven by the merged A/B. QA-23 needs a fresh multi-line delivery (already-loaded rows never re-emit).
 - Guillermo warranty-return QA data: fresh partials + one full-refund case with completed OMG credit memos. Blocks QA-11/12/14(full); newest dev1 CM is 2026-08-03.
 - QA-22 live proof: OM (Ranjeeth) completes the pickup task on 353's replacement line; the 353 char5 mixed-semantics flag rides with that ask.
 - Q18 probe: orchestration group stays ACTIVE on closed orders — empirical check rides with QA.
 - Deploy order: 3003 (OTCM-146384, Guillermo, in Review) loads first, then 3001 PoD (confirmed by Aruna 2026-10-15).
-- Prod gates: OM prod pickup-task setup timing; explain plans on stage (unwindowed CTEs).
+- Prod gates: OM prod pickup-task setup timing; explain plans on stage (unwindowed CTEs — after round 5 this gate also owns measuring `fulfill_delivery` + `shipped_line_details` unwindowed at prod scale; both test pods are too small to measure, see the scan-volume probes in Evidence).
+- Round-5 remaining flow: ~~catalog re-upload to dev1 + stage~~ DONE 2026-10-21 (artifacts `oracle-integration-cloud/tmp/otcm146798_r5_panel/catalog_swap/`; one self-inflicted zip-instead-of-raw-XML upload on dev1, corrected within a minute and proven by the round-trip). Next: user re-exports `.xdm.catalog` from dev1 → overwrite the worktree file, plan-file update, commit `[OTCM-146798]` + push (separate approvals), then post the 3 prepared Bugbot replies (`tmp/otcm146798_pr1141_comments/pr_comment_replies.yaml`).
 
 ## Artifacts
 
@@ -95,3 +122,5 @@
 - A/B harness artifacts: run outputs cleaned 2026-10-20 (results recorded in Evidence); harness scripts kept at `monocle_integrations/tmp/build_*.py` + `compare_r2_ab.py` for the QA-22 rerun
 - Skills: fusion-sql (RP_ARB usage), bip-catalog-sync (upload + round-trip verify executed both pods)
 - Catalog swap artifacts: `oracle-integration-cloud/tmp/otcm146798_r3_impl/catalog_swap/{dev1,stage}/` (backups, orig, edited, round-trips)
+- Bugbot reply drafts: `oracle-integration-cloud/tmp/otcm146798_pr1141_comments/pr_comment_replies.yaml` (3 threads, verbatim comments + dispositions + bodies)
+- Plan archive: `notes/projects.RMCS-I-3001.OTCM-146798.plan.md` (verbatim copy of the working plan, 2026-10-21)

@@ -1,0 +1,804 @@
+# RMCS-I-3001 — B2C CPU pickup-task PoD, QC-fail replacement chain, warranty returns
+
+**Ticket:** [OTCM-146798](https://warbyparker.atlassian.net/browse/OTCM-146798) (Story, To Do, assignee Luis; parent epic [OTCM-129790](https://warbyparker.atlassian.net/browse/OTCM-129790))
+**Status (2026-10-16):** BUILD IN PROGRESS — all 5 work items written + validated on dev1 (see Work items); QA-17 full-extract A/B PASSED; 12-seat review round 1 fixed + verified (6/6 byte-identical post-fix A/B; `oracle-integration-cloud/tmp/otcm146798_review/consolidated.md`). Q9 (warranty covered item on a QC-failed line) POSTED 10-16, awaiting Aruna/Vijay. Q3/Q4/Q7 answered + confirmed by Aruna 2026-10-15 (return date = credit memo date; detection = same as 3003; 3003 loads first; full-refund suppression = all pending PoD; amount-equality classifier) — Q3/Q7 threads closed by the user 10-16, answers preserved verbatim in Answered. Q2 answered (line level official — FSD "header EFF" was a typo per Aruna). Q1: Bhanuchander posted the OM canonical CPU-orchestration SQL 10-16 (adopted; name filter matches OM's own query); Q4 capability reply posted 10-16. Review-question triage (3-seat panel 10-16): 11 → 3 asks (char5 semantics — dev1 probes not decidable; ct_reference format; prod char2 count) + 1 chase (covered-item QC-fail, already routed) + 7 dropped with documented assumptions. NEW 10-16 PM: **Aruna's mapping re-grain** — RMCS-I-3001/3002/3003 re-key source-doc ids to fulfillment/delivery grain (Slack 11:17 + mapping template diffs + 2 assigned cell comments) → work item 6 added; 6-seat verification panel 10-16 (`triage_q12q13/consolidated_q12q13.md`): Q20 = must-ask (promotion gate only; anchor = the existing addl-sublines D5 thread — her empty D21 comment maps to that sheet's line-key cell, not the addl-sub key cell), Q21 = ASSUMPTION_OK 3/3 + reworded confirmation (anchor D4 + D21 pointer; premise corrected — warranty lines DO carry non-shippable fulfill rows, 53/53 probe). UPDATE 10-16 15:30: mapping xlsx (mtime 14:36) STRIKES LINE_ID at D4 + D21 (invisible to the CSV sync — recovered via `strike_check.py` on the xlsx rich text) and adds the Q20-answering sentence at D5 (Delivery_Detail_ID primary, combination fallback) → **Q20 downgraded to a routed CONFIRMATION** (user call 15:20: post anyway — SOX promotion decision, close the loop); Q21 reworded per user (states the move to FULFILL_LINE_ID outright — no both-grain claim; the DM keeps the both-grain bind as transition insurance for line-keyed dev1/stage QA data). dev1: the re-grained 3003 loader is LIVE (3 dd-keyed addl-sub rows 10-15/16) → item 6 grew to (a) both-grain join + (b) `NVL(delivered delivery_detail_id, combination)` addl-sub key; QA-21 added (multi-dd observation). Q20 confirmation + Q21 + the D21 pointer POSTED 15:33 (user-trimmed texts recorded verbatim in Questions §Q20/Q21), awaiting Aruna. Remaining external asks: stable task type code (low priority — OM's own query uses the name) + exact EFF attribute columns (Ranjeeth), a replacement for 333/341 (OM), prod task setup timing (promotion gate), Q9 answer, review asks (Q10 char5 POSTED 15:56 — Ranjeeth; Q11 ct_reference POSTED 16:17 — Aruna; Q15 sequential-refunds POSTED 16:17 — Aruna; Q16 QC-scope POSTED 16:19 — Aruna; Q12 prod char2 DROPPED per user 16:17 — 3001 never in prod), Q20/Q21 ANSWERED by Aruna 10-16 (16:00 sync; verbatim in Questions §Q20/Q21): Q20 "yes this logic is correct" (dd-id primary / combination fallback confirmed incl. the delivered-dd multi-dd rule); Q21 "Warranty order line in DOO_FULFILL_LINES_ALL has a fulfill_line_id. This change is requested in RMCS-I-3003 Contract creation." (warranty re-keys too, riding the 3003 contract-creation change — not landed on dev1 yet, matching 114/114 line-keyed warranty splits). **Item 6 (re-grain DM edit) UNBLOCKED 10-16 ~16:25 — Q20/Q21 answers landed; frozen scope in work item 6 now final: (c) warranty both-grain join is REQUIRED (not just recommended) until 3003's re-key reaches prod. Awaiting user go to apply the DM edit.** Single-PR implementation plan (user decision 10-15); branch `OTCM-146798-rmcs-i-3001-pod-dm` in scratch worktree `oracle-integration-cloud/tmp/otcm146798-wt`. **UPDATE 10-19 14:01 — Q15 + Q16 ANSWERED by Aruna (FSD replies, verbatim in their sections): later refunds net through the 3002/3003 auto-reversal path with no further 3001 PoD adjustment; QC fail applies only to CPU orders. Both confirm the implemented behavior — no DM change. Still open: Q9 (warranty on a QC-failed covered item — Aruna/Vijay), Q11 (ct_reference format — Aruna), a replacement for 333/341 (Vijay/Ranjeeth — the EFF thread is resolved, chase on Slack), Guillermo warranty QA data, prod pickup-task setup timing (promotion gate).** **UPDATE 10-19 PM — Q9 + Q11 ANSWERED by Aruna** (verbatim in their sections): the warranty stays on the original order (no new warranty line on the replacement) → follow-up DM change scoped: extend the QC-fail redirect into the warranty branch; ct_reference confirmed = return order number, no DM change. OM built the replacement pair 353→348 on dev1 today (submitted 15:31Z) — the 333/341 ask is SUPERSEDED, and 348 carries warranty lines covering its QC-failed line 1 (the Q9 scenario live; char5 mixed-semantics data flag recorded in Q9's log). Q15/Q16 closing replies posted by the user and both threads resolved. Remaining external asks: NONE blocking the build — Guillermo warranty QA data and prod pickup-task setup timing (promotion gate) remain.** **UPDATE 2026-10-21 — PR #1141 Bugbot round triaged, replies prepared; Q24 ANSWERED.** Bugbot reviewed commit `a53bfb96` (2026-10-20, 3 findings; dispositions verified against the worktree DM + both pods): F1 (High, warranty CM join key `ct_reference = TO_CHAR(ret_h.order_number)`) = FALSE POSITIVE — `order_number == source_order_number` on every sampled header on stage + dev1 (TPP79X00Z7 ×3, 42, RMA277, RMA281, 294, 295; all VARCHAR2), and ct_reference holds the return order number per Aruna's 10-19 confirmation; F2 (Medium, PICKUP_TASK window stranding) = APPLIES — the base gate requires terminal status at read time and the emission gate windows on the pickup completion, with no re-selection catch in the standard branch (the warranty branch has the `covered_pod_last_update` catch + GREATEST with creation/detected); the reply commits to a last-update-catch fix in this PR; F3 (Medium, TO_CHAR wraps join columns) = ACCURATE RULE, HARMLESS — the L433 wrap is a no-op on VARCHAR2 `order_number`, the L115 wrap filters inside the unwrapped `delivery_detail_id` access path, and `TO_NUMBER(fld.delivery_name)` would risk ORA-01722. Prepared replies `oracle-integration-cloud/tmp/otcm146798_pr1141_comments/pr_comment_replies.yaml` — AWAITING USER APPROVAL to post. FSD syncs (12:59/13:04): Q24 ANSWERED by Aruna — fulfilled qty populates on non-shippable warranty lines when invoiced, "either of this logic works" (verbatim in §Q24); her claim verified on dev1 (all 6 `WP_AI_WARRANTY` fulfill rows across 277/281/284/348: shippable_flag='N', CLOSED, FULFILLED_QTY=1). Q23/Q25/Q26 still pending. Sync delta committed (integrations `39789e4`).**
+**Sibling dependency:** [OTCM-146384](https://warbyparker.atlassian.net/browse/OTCM-146384) (Guillermo, RMCS-I-3003 warranty return lines, in Review) — the partial-refund PoD needs those return lines; coordinate trigger + deploy order.
+**Standing decision (user, 2026-10-19):** RMCS-I-3001/3002/3003 never reached production — there is NO prod data, and dev1/stage records are disposable dev-environment data, not assets to preserve. Whenever a design or QA decision turns on "old/existing records could break, corrupt, double-emit, or be lost", discard that concern outright; decide only on prod-correct behavior (the post-cutover state) and simplicity. Precedents: A3 prod char2 gate waived (10-16 16:17), Q12 prod char2 dropped (10-16). Applied 10-19 to the item-6 join-shape fork (see work item 6).
+
+## Sources
+
+- FSD: [RMCS-I-3001 - Proof of delivery upload in RMCS - FBDI Approach](https://drive.google.com/file/d/1BZInnIPHh0s6zG6n6Q6I93yGBVjl28Z8/view) — edited 2026-10-14 (CPU/QC-fail + warranty return flow). Local copy synced 2026-10-14 07:30, current.
+- Mapping sheet: [RMCS-I-3001 Mapping Template.xlsx](https://docs.google.com/spreadsheets/d/1ZTlE9RFYYRHej9ZPCi3zxAwbA0hv9MoF/edit) — edited 2026-10-13 (warranty-return notes on `VRM_SOURCE_DOC_LINES` + `VRM_SOURCE_DOC_ADDL_SUBLINES`). Synced, current.
+- Sample loads: [281 (partial refund, case 1)](https://drive.google.com/file/d/1sM-JSNk7UyON8Gs1_DM0cKNhxLGXpqWZ/view), [277 (partial refund, case 2)](https://drive.google.com/file/d/1llcSAzNgn5qEl8Gdc_amM6ziv9YMSVzx/view).
+- OM reference: [Order and Line Types sheet](https://docs.google.com/spreadsheets/d/1FBShJnM4Z2SN0vhpaoTUXUOnjXycodwB/edit) (Aruna, 2026-10-05 FSD comment).
+- Prior plan: `.cursor/plans/rmcs-i-3001_warranty_pod_support_360cc59e.plan.md` (OTCM-139313, Done — warranty PoD support, QA green 2026-10-06).
+- Related doc: `integrations/RMCS-I-3002/docs/drive/RMCS-I-3002 - Billing data upload in RMCS- FBDI Approach.md` — rewritten 2026-10-15 (07:31 sync): the "Warranty Return Flow" now defines Scenario 1 as the warranty AND the item fully returned ("Sales Order Header Amount = |Return Order Header|") and Scenario 2 with the two partial cases + CM_RMA281/CM_RMA277 sample loads. Supports A6's amount-based classifier (3002 uses the header-level variant of the same rule).
+
+## Current implementation map
+
+- All extraction/date logic lives in the BIP data model `WP_RMCS_PROOF_OF_DELIVERY_DM` — repo: oracle-integration-cloud, branch `OTCM-139313-rmcs-i-3001-pod-dm` only; umbrella PR #1105 open (merges at prod promotion per repo convention).
+- Monocle side shipped and QA'd (ott → dev1, 2026-10-06): reader `_oracle_proof_of_delivery_reader`, step `ProofOfDeliveryImportModelsMapper`, writer chain (addl-sub-lines DAT + source-doc-lines "U" DAT, one zip, VRMPRCBL). Row contract already carries PoD rows and "U" records.
+- DM structure relevant here: `order_type_rules` (type → DELIVERY/FULFILLMENT date source), `fulfill_delivery`, `covered_item_dates` (Warranty EFF: char1 covered line, char2 covered order), `replacement_dates` (warranty RMA replacement: return-line `reference_line_id` + ship-only sibling, MIN = first claim), `warranty_pod_rows` (.1/.2/.3 per-split hold), `warranty_u_rows` (decoupled U emission + EFF-state and interface-row dedup).
+
+## Dev1 research findings (2026-10-14, read-only fusion-sql, target pod dev1)
+
+- **Task chain exists and works:** `doo_fulfill_lines_all.process_instance_id` → `doo_process_instances` → `doo_task_instances` (`status_code`, `actual_start_date`, `actual_completion_date`). Verified end-to-end on real orders (fulfill line 300000876913713 → process 300000877200589 → 4 task instances on order "4").
+- **No "Pending Customer Pick Up" task type on dev1:** `doo_task_types_b` / `doo_task_types_tl` searched (pickup/QC/WP patterns) — nothing. `doo_task_instances.task_id` does not resolve to a name through the task-types tables → the stable filter identifier is unknown (Q1).
+- **No QC Fail / "Original Order" EFFs on dev1:** header EFF contexts are only Customer, Customer Billing Address, Customer Ship-To, PreOrder Information, Revenue_Management_Information_Header (Q2).
+- **Line/order types present on dev1:** `WP_CPU_SHIP_ONLY` AND `WP_SHIP_ONLY` (FSD says "Ship Only" — ambiguous), `WP_WARRANTY_RETURN`, `WP_RET_ONLY`; order types `WP_B2C_CPU`, `WP_B2C_RETURN`, plus proposed new-name `WP_CUST_PICKUP` (already in the DM's rules as DELIVERY).
+- **Covered Order # data:** 5 dev1 Warranty EFF rows have `attribute_char2` populated — dropping the cross-order branch changes their resolution (verify they are legacy test data before merge, A3).
+- Volumes: 166,272 task instances / 25,156 process instances — the pickup-task CTE must join through the fulfill line, never scan task instances unfiltered.
+
+**2026-10-15 verification (after Vijay's Q2 answer "all these are configured in Dev1"):**
+
+- **qcFail confirmed in data:** `Prescription Details` fulfill-line EFF, `attribute_char2`, values Yes/No. rkyatham is actively building QC-fail test data: order 333 (line …612 flipped No→Yes on 10-14 09:56; line …640 = No) and order 341 (lines …041/…043 = Yes, created 10-15 12:17–12:31).
+- **Pickup task exists on dev1:** step name "Pending Customer Pick Up" in `doo_process_steps_tl` (plus "Conditional Customer Pickup"/"Merge Customer Pickup"); behind it task_id 300000876754742 (shared by 6 steps); task instances since 2026-06-25, status NOT_STARTED. The numeric task_id is pod-specific, so Q1's portable-code ask and the prod timing stay open.
+- **Replacement data EXISTS (independent verifier, 2026-10-15 — corrected an earlier wrong claim):** order **316** (WP_B2C_CPU) carries original order **'314'** in `attribute_char6` on 20 `WP_CPU_SHIP_ONLY` lines, and 314 is QC-failed (10 Yes lines) — the FSD scenario materialized. TST002→'TST001' and TST004→'TST003' the same way (`WP_SHIP_ONLY`, WP_B2C orders, 10-14) with `attribute_char5='1'` (possible line reference, ambiguous — line number vs DOO line id unconfirmed). `attribute_char6` behaves like `originalOrder` (candidate, not setup-confirmed). No replacement references 333/341 yet. char columns stop at `attribute_char20` (verified via `all_tab_columns`).
+- Order 329's RM-info row (`attribute_char1`='3FED', `char2`='1301', `char4`='No') carries pre-existing segments of the shared context — '3FED' matches no order on dev1; not QC-flow data.
+
+**2026-10-16 PM — mapping re-grain probes (`vrm_source_doc_lines`, WP_RECEIVABLES, dev1):** 382 rows — 330 line_id-keyed, 2 fulfill-keyed (order 336 int_1=300000906923168 + RMATestOrder62 int_1=300000880838176; both int_2=1 whole lines, `src_attribute_char4` NULL, PROCESSED, created 2026-10-02/10-14 → the fulfill grain has been live on dev1 since at least 10-02), 0 both, 52 neither. No warranty-split (.1/.2/.3) row is fulfill-keyed yet. Panel probes 10-16 (Q21 verification): every WP_AI_WARRANTY line carries a non-shippable fulfill row (53/53, `shippable_flag='N'`) — the warranty grain is a design CHOICE, not a constraint; and 52 of the 114 warranty-split rows were created ≥10-02 (after the fulfill grain went live), all line_id-keyed → the line_id warranty grain is empirically supported (Q21 downgraded to assumption + confirmation).
+
+**2026-10-16 15:30 — mapping strike update + addl-sub probes (`vrm_source_doc_addl_sublines`, dev1):** the mapping xlsx (Drive mtime 14:36) STRIKES LINE_ID at `VRM_SOURCE_DOC_LINES!D4` and `VRM_SOURCE_DOC_ADDL_SUBLINES!D21` (FULFILL_LINE_ID survives; the warranty U-note survives unstruck) — the CSV sync cannot see strikes (formatting dropped), recovered via `strike_check.py` on the xlsx rich text. The same edit added the Q20-answering sentence at `VRM_SOURCE_DOC_ADDL_SUBLINES!D5`: "Where there is no delivery detail id scenarios, populate the concatenated value as below" → Delivery_Detail_ID primary, contract_header_id&document_line_id combination fallback. Probes (`dd_probe1-9.sql`): 138 addl-sub rows = 134 doc lines × 1 row (130 combination-keyed + 4 dd-keyed) + 4 NULL-document_line_id stubs (2026-07-17, synthetic keys — dedup joins never match NULLs). The 4 dd-keyed: 1 synthetic 8-18 + **3 fresh 10-15/16 (fulfill-grain doc lines 46022/46023/47016) → the re-grained 3003 loader is live on dev1**. CPU fulfill lines carry 0 delivery details (56/56 across orders 316/333/341/336) → combination fallback for CPU; warranty non-shippable → fallback. ~1.5% of WSH source lines are multi-dd (up to 96); no multi-dd line loaded yet → which-dd is unobserved (QA-21).
+
+## Scope sketch (pre-answers; PR division deferred per user)
+
+- **CPU PoD date:** new date source in `order_type_rules` for `WP_B2C_CPU` (and `WP_CUST_PICKUP` — Vijay confirmed 10-15 it follows the same rule): completion date of the "Pending Customer Pick Up" task via the fulfill-line → process-instance → task-instance chain. Applies to the standard branch AND to `covered_item_dates` (a covered item on a CPU order).
+- **QC-fail resolution (root semantics, per the Scenario 3 table — ZXC carries ASD, not QWE):** one lookup — all replacement lines whose `Revenue_Management_Information_Line` EFF `originalOrder` = the original order number (plus `originalSourceLineId` for the per-line case; all line-level per Vijay, 10-15); take the MOST RECENT replacement with QC Fail = No (`Prescription Details` EFF `attribute_char2`) and use its pickup-task completion as the original line's PoD. No chain walk, no hop cap (Q5 moot). Anomaly rule: several QC-passed replacements → latest wins.
+- **Ship-only exclusion:** replacement lines (line-level `originalOrder` EFF populated / ship-only line type: `WP_CPU_SHIP_ONLY` on CPU orders, `WP_SHIP_ONLY` on regular B2C per Vijay) create no RMCS contract (FSD "Please Note") — the DM must exclude them from standard PoD emission so VRMPRCBL never sees a contract-less row.
+- **Warranty partial refund:** new trigger — warranty return detected (definition pending Q3), classified full vs partial by the amount rule (A6) → "U" record setting `SRC_ATTRIBUTE_DATE1` = return date (overwrites the PoD+365 value; needs its own dedup guard, S2) + .3 DEFERRED PoD with fulfillment date = return date. Verified 2026-10-14: the current DM writes the end date to `SRC_ATTRIBUTE_DATE1` (branch `OTCM-139313-rmcs-i-3001-pod-dm`, DM line 435) and the sheet note targets the same column — the FSD's "EFF Attribute 4" is the RMCS-side label, no conflict, no ask needed. ADDL_SUBLINES sheet note verified: deferred-line PoD fulfillment date = return date.
+- **Warranty full refund:** suppress all pending .2/.3 PoD and U records for the warranty line (Q4).
+- **EFF correction:** drop the cross-order covered-item branch (`attribute_char2`) per FSD (A3).
+- **Monocle:** no code changes expected (A1) — the row contract already carries both record types.
+- **Regression surface:** the whole PoD extract (the date-source change touches shared CTEs) — full A/B run on dev1 before merge, plus the existing PoD regression suites.
+
+## Questions — exact texts and response history
+
+Audience: functional (Aruna) + OM team (Vijay/Ranjeeth). All four go to the FSD as anchored comments. Post each wording verbatim; log the answer under its question below with the date.
+
+### Open
+
+#### Q1 — Pickup task identity and environment setup — WITHDRAWN 2026-10-19 (user decision: step-name filter is final, tacitly accepted by OM; stop asking)
+
+- **Context:** the FSD sets the B2C CPU PoD date to the completion date of the "Pending Customer Pick Up" task. Verified on dev1 (2026-10-14): the task chain exists (`doo_fulfill_lines_all.process_instance_id` → `doo_process_instances` → `doo_task_instances`, carrying `status_code` + `actual_completion_date`), but no such task type exists on dev1, and the task-instance `task_id` does not resolve to a display name through the task-types tables. The FSD screenshot comes from an unknown pod.
+- **2026-10-14 deeper probe (user challenged: "the paragraph already answers it"):** the display name IS queryable — `doo_process_steps_tl.step_name` holds step names (multilingual store), reachable via task instance → process instance (process id + version) → `doo_process_steps_b` (by `task_id`) → `doo_process_steps_tl`. Residual problems: (1) the name is an editable, per-process-version, translatable display string — not a stable code; whether a task-type code exists behind the task is unknowable on dev1 (no pickup setup there); (2) the task exists on no queryable pod — no pickup step name or task type on dev1, so the 5-table name-resolution chain cannot be validated against a real pickup task and QA blocks on OM setup. User shown the evidence; Q1 revised to confirm-or-correct + setup ask.
+- **Question (REVISED wording, 2026-10-14):** "@ext.abhairapuneni@warbyparker.com @ext.vbellurkar@warbyparker.com We plan to find the task on the fulfillment line's orchestration tasks by its step name 'Pending Customer Pick Up' and read its completion date. Is there a stable task type code behind that name we should filter on instead? Display names can be edited in setup, so a code is safer. Also: on which environment does this task exist today (the screenshot above)? It is not configured on dev1 yet — when will it be set up on dev1 and prod?"
+- **Original wording (superseded 2026-10-14, kept for the record):** "@ext.abhairapuneni@warbyparker.com @ext.vbellurkar@warbyparker.com Two questions about the 'Pending Customer Pick Up' task: (1) Which stable identifier should the integration use to find this task on the fulfillment line: a task type code, an orchestration process step name, or the display name? Display names can be edited in setup, so we prefer a code. (2) On which environment does this task exist today (the screenshot above)? It is not configured on dev1 yet. When will it be set up on dev1 and prod? The integration cannot read the completion date until the task exists in the environment."
+- **Why it matters:** the DM branch and QA both block on this; filtering on an editable display name is fragile.
+- **Where to ask:** FSD, new comment anchored on the "For CPU Orders" intro sentence: "If the Order Type is B2C CPU, then the PoD Date needs to be the Completion Date of the Task where the task name is Pending Customer Pick Up." Tag Aruna + Vijay.
+- **Log:**
+  - 2026-10-14 — drafted (this plan).
+  - 2026-10-14 — revised after user challenge; name-resolution path found via `doo_process_steps_tl`; setup/identifier confirm still open.
+  - 2026-10-14 — **POSTED by the user** to the FSD (anchor: the "For CPU Orders" intro sentence), verbatim per the revised wording above.
+  - 2026-10-15 — dev1 evidence: the pickup task EXISTS on dev1 (step name in `doo_process_steps_tl`, task_id 300000876754742, task instances since 2026-06-25, NOT_STARTED). Our posted claim "not configured on dev1 yet" was wrong for the task (it applied to the EFFs, which OM configured per Vijay). The numeric task_id is pod-specific — the stable portable code and the prod setup timing remain open with OM.
+  - 2026-10-15 — follow-up reply **POSTED by the user** in the Q1 thread (verbatim): "Update from our side: we found the 'Pending Customer Pick Up' task on dev1. So the open points are only: (1) is there a stable task type code we should filter on instead of the editable step name?" **Sync-verified LANDED** (15:03 sync). Independent verifier confirmed every claim before posting (tmp/q1q2_followup_verify/report.md); task instances now 1,531 (39 COMPLETED, 40 WAITING, rest NOT_STARTED). Still awaiting OM on the portable code + prod timing.
+  - 2026-10-16 — sync: Aruna (10-15) punted the task-type-code question to **Ranjeeth** ("Can you please confirm the task type codes.", reassigned to ext.rkyatham). Still open with him; prod setup timing unanswered (dropped from our follow-up's scope — stays a promotion gate).
+  - 2026-10-19 — the 11:04 sync showed a Ranjeeth reply in this thread; verified against the live doc (user paste 11:15): NO reply here — his answer belongs to the EFF thread (Q10) and the sync mis-threaded it.
+  - 2026-10-19 — **WITHDRAWN (user decision):** we keep the step-name filter `'Pending Customer Pick Up'` (OM's own reference query filters on the name) and treat the task-type-code ask as tacitly declined — no more chasing. Thread to be closed with a short thank-you note. Prod pickup-task setup timing stays a promotion gate (tracked in Sequencing/gates, not chased in the thread).
+  - 2026-10-19 — independent 6-item resolution verification (tmp/qa_items_verify/report.md): all six dispositions confirmed. Q1's thread (sidecar id 0) is still OPEN — the thank-you close-out is still pending (user).
+  - 2026-10-16 — **Bhanuchander ANSWERED** with the OM team's canonical "CPU Orchestration" SQL. Their chain: fulfill line → `doo_orchestration_groups` (`status='ACTIVE'`, `fulfillment_line_id`) → `doo_process_step_instances` (`step_status='COMPLETED'`, `actual_completion_date`) → `doo_process_steps_tl` (step name filter) — NOT `doo_task_instances`. No stable code provided: their own reference query filters on the step name (`step_type` probed = generic 'SERVICE', 6 step defs / 6 processes — not a discriminator). **Validated on dev1 10-16:** both tables visible; vs the task-instance chain, 161 lines identical dates, 0 date disagreements; 11 task-chain-only lines = no ACTIVE group at all (no group rows exist — anomalous, correctly excluded); 6 step-chain-only lines = `fl.process_instance_id` points at a stale instance (correctly caught by the ACTIVE group). Fan-out: 1 ACTIVE group/line (107,773 lines), 1 pickup step/line (7,649). **Design adopted:** work item 1's CTE uses the OM chain (step-instance join, `step_status='COMPLETED'`, `actual_completion_date IS NOT NULL`); name filter stays with the PENDING CONFIRMATION marker (Ranjeeth may still provide a code).
+
+#### Q2 — QC-fail EFF locations and codes — ANSWERED 2026-10-15 (Vijay), see Answered section
+
+- **Context:** the QC-fail flow needs four setup values: the QC Fail flag (header or line? context/attribute?), the replacement order's header EFF "Original Order" (context/attribute), the replacement line's "Original Source Line Id" DFF (context/attribute), and the ship-only line type code — dev1 has both `WP_CPU_SHIP_ONLY` and `WP_SHIP_ONLY`. None of these EFFs exist on dev1 (only the 5 standard header contexts). The FSD also lists the proposed new-name order type `WP_CUST_PICKUP`.
+- **Question (exact wording to post):** "@ext.abhairapuneni@warbyparker.com @ext.vbellurkar@warbyparker.com @ext.rkyatham@warbyparker.com To build the QC-fail logic we need the exact flexfield setup, same as the Warranty EFF confirmation earlier: (1) The 'QC Fail' flag: is it on the order header or the order line? Which EFF context and which attribute column? (2) 'Original Order' on the replacement order: which header EFF context and attribute column? (3) 'Original Source Line Id' on the replacement line: which line DFF context and attribute column? (4) Which line type marks the replacement lines: WP_CPU_SHIP_ONLY or WP_SHIP_ONLY? Both exist on dev1. (5) Does the renamed order type WP_CUST_PICKUP follow the same pickup-task rule as WP_B2C_CPU? None of these EFFs are configured on dev1 yet, so please include the dev1 setup in the confirmation."
+- **Why it matters:** every QC-fail join depends on these values; a wrong guess fails silently (no rows emitted).
+- **Where to ask:** FSD, new comment anchored on the QC-fail logic bullet "Search for that Order Number in the Sales Order Header EFF - Original Order." (under "Logic to update the Proof of Delivery Date in such scenarios"). Tag Aruna + Vijay + Ranjeeth.
+- **Log:**
+  - 2026-10-14 — drafted (this plan).
+  - 2026-10-14 — **POSTED by the user** to the FSD (anchor per above). Posted wording (verbatim; user trimmed the clause "same as the Warranty EFF confirmation earlier" from the draft — kept here for the record): "@ext.abhairapuneni@warbyparker.com @ext.vbellurkar@warbyparker.com @ext.rkyatham@warbyparker.com To build the QC-fail logic we need the exact flexfield setup: (1) The 'QC Fail' flag: is it on the order header or the order line? Which EFF context and which attribute column? (2) 'Original Order' on the replacement order: which header EFF context and attribute column? (3) 'Original Source Line Id' on the replacement line: which line DFF context and attribute column? (4) Which line type marks the replacement lines: WP_CPU_SHIP_ONLY or WP_SHIP_ONLY? Both exist on dev1. (5) Does the renamed order type WP_CUST_PICKUP follow the same pickup-task rule as WP_B2C_CPU? None of these EFFs are configured on dev1 yet, so please include the dev1 setup in the confirmation."
+
+#### Q3 — Return date definition and partial-refund trigger — ANSWERED 2026-10-15 (Aruna), see Answered section
+
+- **Context:** the FSD says to load the deferred-line PoD "with the return date" and set the contract end date to the return date, without defining the return date (RMA creation date? receipt date? OMG credit-memo date?) or how RMCS-I-3001 detects the return. OTCM-146384 (3003) selects warranty returns once the OMG credit memo for the return order is complete (CT_REFERENCE = return order number).
+- **Question (exact wording to post):** "@ext.abhairapuneni@warbyparker.com On the warranty partial refund: (1) Which exact date is 'the return date' for the PoD on the deferred line and for the contract end date: the return order creation date, the receipt date, or the OMG credit memo date? (2) Should RMCS-I-3001 detect the warranty return the same way RMCS-I-3003 does: a WP_WARRANTY_RETURN line on the return order, once the OMG credit memo for that return is complete? (3) Must the deferred-line PoD arrive in RMCS after the RMCS-I-3003 return lines, or does RMCS not care about the arrival order?"
+- **Why it matters:** defines the new trigger's join and the deploy-order dependency with Guillermo's ticket.
+- **Where to ask:** FSD, new comment anchored on the Scenario 2 bullet "Load a POD at the return date to recognize the remaining deferred balance." (Warranty Return Flow section). Tag Aruna.
+- **Log:**
+  - 2026-10-14 — drafted (this plan).
+  - 2026-10-14 — **POSTED by the user** to the FSD (anchor per above), verbatim per the drafted wording above.
+  - 2026-10-15 — **ANSWERED by Aruna** (verbatim): "1. Use credit memo date as return date 2. Yes RMCS-I-3001 logic to identify warranty return is same as RMCS-I-3003 3. First RMCS-I-3003 load the return lines, next RMCS-I-3001 load POD for deferred line." All three build defaults confirmed — see Answered section.
+
+#### Q4 — Full-refund suppression scope — ANSWERED 2026-10-15 (Aruna), see Answered section
+
+- **Context:** FSD: full refund → "No additional POD load is needed" (3003 return lines + 3002 credit memos reverse recognized revenue). But the current DM would still fire the .3 DEFERRED PoD at contract end (up to 365 days later) and the .2 UPFRONT PoD if the covered item has not delivered yet.
+- **Question (exact wording to post):** "@ext.abhairapuneni@warbyparker.com Confirming the scope of 'No additional POD load is needed' for a full warranty refund: today the integration would still upload the DEFERRED (.3) PoD when the contract end date arrives (up to 365 days later), and the UPFRONT (.2) PoD if the covered item has not delivered yet. After a full warranty return, ALL pending PoD uploads for that warranty line should be suppressed forever: no .2, no .3. Is that correct?"
+- **Why it matters:** if wrong, deferred revenue gets recognized on fully refunded warranties.
+- **Where to ask:** FSD, new comment anchored on the Scenario 1 bullet "Oracle will reverse recognized revenue automatically and No additional POD load is needed." (Warranty Return Flow section). Tag Aruna.
+- **Log:**
+  - 2026-10-14 — drafted (this plan).
+  - 2026-10-14 — **POSTED by the user** to the FSD (anchor per above), verbatim per the drafted wording above.
+  - 2026-10-15 — **ANSWERED by Aruna** (verbatim): "yes. it is correct. is it possible to not load the POD for deferred line with the 365 days date.?" Suppression scope confirmed; her capability question has a reply drafted in the Answered section.
+
+#### Q5 — QC-fail chain depth limit (promoted from assumption A2, user decision 2026-10-14)
+
+- **Context:** the FSD QC-fail scenarios show chains of up to 2 replacements (order fails QC, replacement also fails, second replacement succeeds). Nothing states whether longer chains occur. BIP SQL resolves the chain hop-by-hop (each hop needs the replacement's pickup-task date), so a fixed hop cap is the pragmatic design; deeper chains would stay held (no emission), like other pending states.
+- **Question (exact wording to post):** "@ext.abhairapuneni@warbyparker.com The QC-fail scenarios show chains of up to 2 replacements (an order fails QC, its replacement also fails, a second replacement succeeds). Can a chain ever be longer in practice? The integration will follow up to 2 replacement hops; if a 3rd replacement is ever needed, the original order's PoD will simply stay on hold (no output). Is the 2-hop limit acceptable?"
+- **Why it matters:** decides whether the DM needs an unbounded (recursive) chain or the 2-hop cap is safe; a wrong guess either over-builds or silently holds real orders.
+- **Where to ask:** FSD, new comment anchored on the "Scenario 3" example table (the ASD / QWE / ZXC chain) in the QC-fail section. Tag Aruna.
+- **Log:**
+  - 2026-10-14 — drafted (this plan), pending post.
+  - 2026-10-14 — reported POSTED by the user to the FSD (anchor per above), verbatim per the drafted wording above. **Drive verification 18:34: NOT LANDED** — the thread is absent from the synced comments (Q1–Q4 are present). Suspected unsynced Word-desktop draft (same pattern as the 139313 lost draft). Re-post pending.
+  - 2026-10-14 — **PREMISE INVALIDATED by the FSD's own Scenario 3 table** (found on re-read): ZXC's Original Order = **ASD** (the root), not QWE (the parent). Every replacement carries the ORIGINAL order number, so there is no hop-by-hop chain — one lookup finds all replacements of the original; take the most recent one with QC Fail = No. The 2-hop cap is unnecessary and Q5 is moot.
+  - 2026-10-14 — withdrawal reply reported POSTED by the user in the Q5 thread. **Drive verification 18:34: NOT LANDED** (the whole Q5 thread is missing). Re-post pending — combine: post Q5 fresh with the withdrawal already appended. Draft: "The QC-fail scenarios show chains of up to 2 replacements (an order fails QC, its replacement also fails, a second replacement succeeds). Can a chain ever be longer in practice? UPDATE, withdrawing the question: the Scenario 3 table shows every replacement carries the original order number in the Original Order EFF (ZXC points to ASD, not to QWE). So the integration finds all replacements of the original order in one lookup and takes the most recent one with QC Fail = No — no hop limit applies. No answer needed."
+  - 2026-10-15 — still absent from Drive after the Q7 re-post landed (14:00 sync). The user re-posted Q7 only — presumably skipped Q5 deliberately since it is moot. **Confirm with user; if deliberate, this question is fully closed (no post needed).**
+
+#### Q6 — Covered Order # removal — WITHDRAWN (user decision 2026-10-14, not posted)
+
+- **Context:** the FSD strikes "Covered Order #" — "This will not be used as warby will not be selling warranties on a separate Order once the product is sold." The current DM resolves cross-order coverage via `attribute_char2`; dropping it is spec'd, but the note is future-tense. dev1 evidence (2026-10-14, read-only): 5 Warranty EFF rows carry `attribute_char2` — 1 legacy test row (2026-09-29, warranty order TWFC2324D0 → covered order TW2E66BCD1) and **4 rows created by ext.rkyatham on 2026-10-07** (warranty orders 309/310 → covered order 303) — the OM team exercised cross-order coverage on dev1 a week ago, AFTER the cross-order design was retired in the doc.
+- **Question (exact wording to post):** "@ext.abhairapuneni@warbyparker.com Confirming the removal of 'Covered Order #': the integration will only look for the covered item on the warranty's own order. (1) Do any warranties sold before this change still reference a covered item on a different order — for example live contracts in RMCS today? (2) If such a warranty ever appears, the covered item will not be found on the same order and its .2/.3 PoD rows will simply wait (no error, no output). Is that acceptable?"
+- **Why it matters:** if live prod contracts rely on cross-order coverage, dropping the branch breaks their .2/.3 PoD silently; the dev1 rkyatham rows show the attribute is still being exercised.
+- **Where to ask:** FSD, new comment anchored on the struck-through bullet "Covered Order # (when warranties entered on a different order) - This will not be used..." in the EFF bullet list. Tag Aruna.
+- **Log:**
+  - 2026-10-14 — drafted (this plan), pending post.
+  - 2026-10-14 — **WITHDRAWN, not posted** (user call, agent agreed): (1) the warranty feature is pre-prod (DM in PR #1105, merges at prod promotion), so no prod contracts can rely on cross-order coverage — part (1) has no possible "yes"; (2) silent hold for unsupported data is the integration's established default, no sign-off needed; (3) the rkyatham rows are best explained as EFF-setup validation on dev1, and the FSD is authoritative. Demoted back to assumption A3 (internal); the prod `attribute_char2` population check (expect zero) stays on the pre-merge checklist as our own verification.
+
+#### Q7 — Full vs partial refund determination rule — CONFIRMED 2026-10-15 (Aruna), see Answered section
+
+- **Resolution (user's point, verified):** the scenario titles state the rule — "Full Refund" = the full warranty amount is refunded. Classifier: compare the warranty return line amount with the original warranty line amount; equal → Scenario 1 (suppress all PoD per Q4), less → Scenario 2 (deferred PoD at return date). Checks against every FSD example (-$105 / -$87 ≠ $120 → partial; -$120 = $120 → full) and matches the revenue arithmetic: a full refund leaves zero deferred remainder after 3003's reversal, which is why Scenario 1 needs no PoD. The commission-refund detail belongs to 3003's return-line derivation (OTCM-146384), not to this classifier. User decided to post it anyway as a confirmation comment ("to be absolutely sure").
+- **Comment (exact wording to post):** "@ext.abhairapuneni@warbyparker.com One confirmation on the Warranty Return Flow: to tell the two scenarios apart in the data, the integration will compare the warranty return line amount on the return order with the original warranty line amount on the sales order. If the amounts are equal, it treats the return as a Full Refund (Scenario 1: no PoD load). If the refund is less, it treats it as a Partial Refund (Scenario 2: set the contract end date to the return date and load the PoD on the deferred line at the return date). Please confirm this is correct."
+- **Why it matters:** a wrong guess misclassifies silently — revenue recognized on a fully refunded warranty, or deferred revenue stuck. Q4's suppression and Q3's partial-refund trigger both depend on this rule.
+- **Where to ask:** FSD, new comment anchored on the "Scenario 1 : Warranty Full Refund Scenario" heading (Warranty Return Flow section). Tag Aruna.
+- **Log:**
+  - 2026-10-14 — drafted (amount-equality question), pending post.
+  - 2026-10-14 — user challenged twice: first "is that not answered by the same paragraph?" (the intro sentence alone cannot be the classifier — every real return is before the PoD+365 end date, so a literal reading makes Scenario 1 unreachable), then "does the title not answer this?" — correct: the titles define the scenarios by amount. Withdrawn as a question; classifier recorded as internal assumption A6.
+  - 2026-10-14 — user decided to post anyway as a CONFIRM comment ("to be absolutely sure"); wording above.
+  - 2026-10-14 — reported POSTED by the user to the FSD (anchor: the "Scenario 1 : Warranty Full Refund Scenario" heading). **Drive verification 18:34: NOT LANDED** — the comment is absent from the synced comments (Q1–Q4 are present). Suspected unsynced Word-desktop draft. Re-post pending. QA will also validate against Guillermo's return test data (RMA281/RMA277 partials + a full-refund case).
+  - 2026-10-15 — **verified LANDED in Drive** (14:00 sync): re-posted by the user, anchored on the Scenario 2 intro sentence ("When the warranty Item is returned before the Contact End date..."), verbatim per the wording above, assigned to Aruna.
+  - 2026-10-15 — **CONFIRMED by Aruna**: "Yes, this logic is correct." (synced 10-16). A6 promoted from internal assumption to confirmed rule.
+
+#### Q8 — Is B2C CPU live in production today? — WITHDRAWN (user decision 2026-10-14, not posted)
+
+- **Context:** the FSD changes the CPU PoD from Actual Delivery date to pickup-task completion, and the pickup task is not configured on dev1 (Q1 asks about dev1/prod setup timing). If B2C CPU orders were already live in prod under the old rule and the task were not configured in prod yet, the new DM would find no pickup task and hold every CPU PoD. Self-serve checks failed: the prod Fusion BIP user (wp_scp_integration_user) has no RP_ARB permission on prod, and the BIP user cannot see `doo_order_types_b` on stage — so we cannot count prod CPU orders ourselves.
+- **Log:**
+  - 2026-10-14 — drafted (this plan), pending post.
+  - 2026-10-14 — **WITHDRAWN, not posted**: the user confirmed B2C CPU has not moved to production yet, so the transition/fallback question is moot. Deploy ordering vs OM's prod task setup remains covered by Q1's "when will it be set up on dev1 and prod?" ask.
+
+#### Q9 — Warranty covered item on a QC-failed line (drafted 2026-10-16)
+
+- **Context:** the FSD QC-fail scenarios cover the replaced line's standard PoD; the warranty section drives the .2 UPFRONT / .3 DEFERRED PoD dates from the covered item's PoD date. The intersection is not covered: a warranty-covered item that fails QC and is replaced. No live dev1 example exists — order 314 has 6 warranty lines covering its lines 1/2, but its QC-failed lines are 3/11 (verified 2026-10-16), so the question cites no dev1 data. Build default while open: no redirect in the warranty branch (`covered_item_dates` unchanged) — the warranty PoD holds, recoverable via order-numbers reprocess once answered. User decision 2026-10-16: ask first, then build item 2 without the covered-item arm.
+- **Comment (exact wording to post):** "@ext.abhairapuneni@warbyparker.com @ext.vbellurkar@warbyparker.com The QC-fail scenarios cover the PoD of the replaced line. One case is not covered: a warranty-covered item that fails QC and is replaced. The warranty line's UPFRONT (.2) and DEFERRED (.3) PoD dates come from the covered item's PoD date, so the outcome depends on what happens to the warranty on replacement: (1) Does the warranty stay attached to the original (QC-failed) line? Then should the .2/.3 PoD dates follow the same redirect as the standard PoD — the replacement's pickup-task completion? (2) Or does OM move the warranty to the replacement line (updating the Warranty EFF covered order/line reference)? (3) Or is a new warranty line created on the replacement order? Until confirmed, the integration holds the warranty PoD for a QC-failed covered item (no row emitted); it can be reprocessed once we know the expected behavior."
+- **Why it matters:** without an answer the warranty .2/.3 for a QC-failed covered item stays held even though the customer received the replacement — silently stuck deferred revenue if the redirect is the expected behavior.
+- **Where to ask:** FSD, new comment anchored at the END of the QC-fail block — Scenario 4's closing sentence (md line 232: "In this case, the PoD for the first line on the LKJ Order will be 10/13/2026 & for the 2nd line it will be 10/15/2026."). The QC-fail section ends there; the warranty content the question intersects lives later (UPFRONT/DEFERRED rules ~L399–437), so the end-of-block anchor is the closest single spot. Tag Aruna + Vijay.
+- **Log:**
+  - 2026-10-16 — drafted; dev1 fact-check before posting (314's warranty lines cover lines 1/2, QC-failed lines are 3/11) — no live example cited.
+  - 2026-10-16 — **POSTED** (user). Posted with Verifier A's optional polish: "the PoD of the QC-failed (replaced) line" instead of "the PoD of the replaced line". Two independent verifiers passed every claim before posting (reports: monocle_integrations/tmp/q9_verify/). Heads-up for later (Verifier B): if the answer is option (2) (OM moves the warranty), it resolves through the `attribute_char2` cross-order branch — revisit work item 5's scope. Awaiting answer from Aruna / Vijay.
+  - 2026-10-16 — the review-question triage panel logged this same question as its chase item (routing-doc Q7, merged into this entry when the sidecar routing doc moved into the plan): non-blocking for this PR — the interim behavior holds the warranty PoD (no row emitted; reprocess once answered), the conservative side; the answer likely scopes a follow-up DM change (extend the redirect to covered items), not this PR's correctness. Chase the existing FSD comment — do not open a new one.
+  - 2026-10-19 — **ANSWERED by Aruna** (FSD reply 19:10Z, synced 15:01): "Warranty stay on the original order and no new warranty line will be created on the replacement order. Example orders # 348, 353 created in Dev1 by @ext.rkyatham@warbyparker.com from OM team for your reference." → option (1): the warranty stays on the original line; the FSD's own date-derivation rule (warranty dates come from the covered item's PoD) then makes the .2/.3 dates follow the covered item's redirect — the replacement's pickup-task completion. Scopes a follow-up DM change: extend the QC-fail redirect into the warranty branch (`covered_item_dates`), as this entry predicted. **Verified on dev1** (probes `monocle_integrations/tmp/probe_348_353.*`): 348 (WP_B2C_CPU, submitted 10-16) carries QC=Yes fulfill rows on lines 1/1.1/1.1.1/1.2/1.2.1 and Warranty EFF `attribute_char1='1'` on those lines plus line 8 (the covered-line reference — the Q9 scenario live); 353 (WP_B2C_CPU, submitted 10-19 15:31Z — built by Ranjeeth today) carries `originalOrder` char6='348' on src lines 2.1/2.1.1/2.2/2.2.1/6 pointing at 348's line 1, and NO warranty data (matches the answer). **DATA-QUALITY FLAG:** 353's char5 is mixed — some fulfill rows carry the internal line id (300000906986538 = 348's src-1), others carry '1' (line-number semantics); only the internal-id rows match the post-Q10 join. Flag to Ranjeeth at QA.
+  - 2026-10-19 — follow-up scoped + build authorized (user): work item 7 extends the redirect into the warranty branch (`covered_item_dates` + `warranty_lines_base` CASE arm); QA-22 added; the 333/341 replacement ask is SUPERSEDED by 348/353; pickup tasks on 348 (5 lines) and 353 (5) all NOT_STARTED → live proof blocked on OM completing 353's pickup.
+  - 2026-10-20 — **Re-confirmed by Aruna** (same thread, synced 14:01): "No change in dates require. Replacement order for covered item pick up task completion date should be considered for warranty .2/.3 lines" → the warranty-branch redirect (work item 7) matches the answer exactly: the .2/.3 dates follow the QC-passed replacement's pickup-task completion, and the failed line's own pickup stops counting.
+
+#### Q22 — Warranty lines never discounted (round-2 register _14) — ANSWERED 2026-10-20 by Aruna
+
+- **Context:** the full-refund classifier compares the return warranty line amount against ordered quantity × unit selling price (`full_refund_flag`, DM.sql:648). Aruna already confirmed the classifier itself (Q7, 2026-10-15). The residual open assumption: warranty lines are never discounted — a discount on either line breaks the quantity × unit-price comparison.
+- **Posted wording (verbatim):** "@ext.abhairapuneni@warbyparker.com The integration detects a full refund with this rule: the return warranty line amount covers the original warranty line amount (ordered quantity × unit selling price). Please confirm that warranty lines are never discounted. A discount on either side would break the quantity × unit price comparison."
+- **Why it matters:** if warranties can be discounted, the classifier mislabels refunds (direction depends on which line carries the discount).
+- **Where posted:** FSD, new comment anchored on the "Scenario 1 : Warranty Full Refund Scenario" title, assigned to Aruna.
+- **Log:**
+  - 2026-10-20 — **POSTED** (user). Pre-posting 3-seat fact-check (tmp/otcm146798_impl/comment_check_{1,2,3}.md): part (1) of the original draft (re-confirm the classifier) trimmed — already confirmed at Q7; the hazard sentence made direction-neutral (both sides of the DM predicate use qty × own unit price).
+  - 2026-10-20 — **ANSWERED by Aruna** (FSD reply, synced 14:01): "Warranty price is always fixed and no discount." → the never-discounted assumption holds; the full-refund classifier (return warranty amount covers ordered qty × unit selling price) is safe as built.
+
+#### Q23 — One failed line covered by both replacement-reference kinds? (round-2 register _15) — POSTED 2026-10-20, awaiting Aruna (+ OM)
+
+- **Context:** the replacement order's Line DFF (Revenue_Management_Information_Line) always carries the original order number; the original line id (char5 = internal line id, Ranjeeth 2026-10-19, Q10) is stored only when one specific line was replaced and stays blank on whole-order replacement. `qc_fail_resolution` prefers the per-line reference over the order-level one, regardless of which replacement picked up more recently.
+- **Posted wording (verbatim):** "@ext.abhairapuneni@warbyparker.com A question on the replacement order's Line DFF (Revenue_Management_Information_Line). The original order number is always stored there. The original line id is stored when one specific line was replaced. It stays blank when the whole order was replaced. Can ONE failed line end up covered by BOTH kinds of reference at once? That means one replacement line carries its line id, and another replacement line on the same original order carries a blank line id. We assume this cannot happen. If it can, the integration prefers the per-line reference over the order-level one. It does so regardless of which replacement completed pickup more recently. Please confirm that this preference is correct."
+- **Why it matters:** if dual coverage can happen, the per-line-first preference decides the redirect; a wrong preference redirects the PoD to the wrong replacement.
+- **Where posted:** FSD, new comment anchored on the QC-fail line-DFF sentence ("If the Order has multiple lines and one of the Lines has QC fail as yes, a separate order will be created for that specific line..."), assigned to Aruna.
+- **Log:**
+  - 2026-10-20 — **POSTED** (user). Fact-check: POST AS-IS (3/3 seats) — premise halves confirmed (Q10 char5 answer + FSD Scenario 4 + dev1 order 316), the dual-coverage question itself answered nowhere.
+
+#### Q24 — Warranty split rows send the loaded line's QUANTITY as Satisfied Quantity (round-2 register _17) — ANSWERED 2026-10-21 by Aruna (QUANTITY mapping accepted, no DM change)
+
+- **Context:** the mapping cell maps Satisfied Quantity to `DOO_FULFILL_LINES_ALL.FULFILLED_QTY` for all rows. Warranty fulfill rows are non-shippable (53/53 dev1 probe; the non-shippable logic confirmed by Aruna in the D5 thread), so no fulfilled quantity exists for them; the integration sends the loaded split line's `VRM_SOURCE_DOC_LINES.QUANTITY` on warranty split rows (.1/.2/.3). Standard lines still send FULFILLED_QTY as mapped.
+- **Posted wording (verbatim):** "@ext.abhairapuneni@warbyparker.com On warranty split rows (.1 COMMISSION / .2 UPFRONT / .3 DEFERRED) the integration sends the loaded split line's QUANTITY from VRM_SOURCE_DOC_LINES as Satisfied Quantity. It does not send FULFILLED_QTY. Warranty fulfill rows in DOO are non-shippable, so no fulfilled quantity exists for them. Standard (non-warranty) lines still send DOO_FULFILL_LINES_ALL.FULFILLED_QTY as mapped. Please confirm that this is expected."
+- **Why it matters:** an unexpected quantity source misstates satisfied quantity on every warranty contract line.
+- **Where posted:** mapping template, VRM_SOURCE_DOC_ADDL_SUBLINES sheet, Satisfied Quantity row, assigned to Aruna.
+- **Log:**
+  - 2026-10-20 — **POSTED** (user). Fact-check: POST AS-IS (3/3 seats). Confirmed live in the 09:52 comment re-sync (Drive comments API lag, not a missing post): VRM_SOURCE_DOC_ADDL_SUBLINES!D36.
+  - 2026-10-21 — **ANSWERED by Aruna** (12:59 sync, verbatim): "i can see fulfilled qty for warranty line as well even though it is non shippable but when it is invoiced, it is populating the fulfilled qty. can you check for few warranty orders # 284, 281, 277, 348 on Dev1 for warranty record. anyway either of this logic works."
+  - 2026-10-21 — her claim verified on dev1 (read-only fusion-sql): all 6 `WP_AI_WARRANTY` fulfill rows across 277/281/284/348 are `shippable_flag='N'`, CLOSED, FULFILLED_QTY=1. The qty populates at invoicing; the .1 PoD emits at split creation (pre-invoice), so FULFILLED_QTY could still be unset at emission time — the QUANTITY mapping stays the safer choice. "Either of this logic works" = functional acceptance of the built mapping, **no DM change**. A closing reply reporting the dev1 verification is pending (user posts). Thread anchor: mapping template `VRM_SOURCE_DOC_ADDL_SUBLINES!D36` ([file](https://drive.google.com/file/d/1ZTlE9RFYYRHej9ZPCi3zxAwbA0hv9MoF/view) — Excel-local comment id, no deep link).
+
+#### Q25 — "Return order date" wording vs the credit memo date (round-2 register _16a) — POSTED 2026-10-20, awaiting Aruna
+
+- **Context:** the SRC_ATTRIBUTE_DATE1 cell says "Return order date", which reads as the return order's ordered date. The integration uses the return's credit memo date (the completed OMG credit memo's transaction date) — the substance confirmed by Aruna (Q3, 2026-10-15) and matching the FSD Scenario 2 wording; only the cell wording is still unfixed.
+- **Posted wording (verbatim):** "@ext.abhairapuneni@warbyparker.com "Return order date" reads as the return order's ordered date. The integration uses the return's credit memo date (the completed OMG credit memo's transaction date). This matches the FSD Scenario 2 wording "Load a POD at the return date i.e credit memo date"."
+- **Why it matters:** a future reader mapping the order date instead of the credit memo date loads PoDs at the wrong date.
+- **Where posted:** mapping template, VRM_SOURCE_DOC_LINES sheet, SRC_ATTRIBUTE_DATE1 row, assigned to Aruna.
+- **Log:**
+  - 2026-10-20 — **POSTED** (user). Fact-check: POST AS-IS (3/3 seats) — substance already confirmed, the wording fix still outstanding. Confirmed live in the 09:52 comment re-sync (Drive comments API lag, not a missing post): VRM_SOURCE_DOC_LINES!D173.
+
+#### Q26 — Split-numbering typo "3.1 , 3.1 , 3.3" (round-2 register _16b) — POSTED 2026-10-20, awaiting Aruna
+
+- **Context:** the DOC_LINE_ID_INT_2 mapping text numbers the warranty splits "3.1 , 3.1 , 3.3"; FSD §2.4 Key Logic says 3.1, 3.2, 3.3.
+- **Posted wording (verbatim, corrected 2026-10-21 against the live comment):** "@ext.abhairapuneni@warbyparker.com Typo in this cell: the split numbering reads "3.1 , 3.1 , 3.3". The middle split should be 3.2." (The live comment ends there; the previously recorded trailing sentence "FSD §2.4 Key Logic says 3.1, 3.2, 3.3." was not posted.)
+- **Why it matters:** the cell teaches the wrong split numbering to anyone re-keying warranty lines.
+- **Where posted:** mapping template, VRM_SOURCE_DOC_ADDL_SUBLINES sheet, DOC_LINE_ID_INT_2 row, assigned to Aruna.
+- **Log:**
+  - 2026-10-20 — **POSTED** (user). Fact-check: POST AS-IS (3/3 seats) — typo verified verbatim in the sheet. Confirmed live in the 09:52 comment re-sync (Drive comments API lag, not a missing post): VRM_SOURCE_DOC_ADDL_SUBLINES!D23.
+
+#### Q27 — §2.3 stale B2C CPU launch parameter (round-2 register _18) — ANSWERED 2026-10-20 by Aruna (+ FSD body updated)
+
+- **Context:** §2.3 Launch Parameters still says "B2C CPU : Fetch sales orders with delivery date updated". The confirmed design (§1.1 "For CPU Orders" and the Q1 thread anchored there — the user's own 2026-10-14 comment holding Bhanuchander's 10-16 orchestration SQL) sets the CPU PoD date to the completion date of the 'Pending Customer Pick Up' orchestration step on the fulfill line. §2.2 already carries the pickup-task design; only the §2.3 bullet is stale.
+- **Posted wording (verbatim):** "@ext.abhairapuneni@warbyparker.com Does the Launch parameter's third item "B2C CPU : Fetch sales orders with delivery date updated" need updating?"
+- **Draft wording (superseded 2026-10-20 — user posted the bare question instead):** "@ext.abhairapuneni@warbyparker.com §2.3 still says B2C CPU lines are fetched "with delivery date updated". That text predates the confirmed pickup-task design: the CPU proof-of-delivery date is the completion date of the 'Pending Customer Pick Up' orchestration step on the fulfill line (the "For CPU Orders" design in §1.1). Could you refresh this bullet to the pickup-task design? Then the launch parameters match the build."
+- **Why it matters:** the launch parameters are what OIC scheduling reads; stale wording there misleads every operator who configures the run.
+- **Where to post:** FSD, NEW comment anchored on the §2.3 bullet "B2C CPU : Fetch sales orders with delivery date updated" (Launch Parameters). Assigned to Aruna.
+- **Log:**
+  - 2026-10-20 — drafted (register _18). The original text referenced "the Key Logic thread", which does not exist (3/3 fact-check seats); the confirmation thread is the Q1 thread anchored on the "For CPU Orders" sentence in §1.1. User could not locate the thread → identified as Q1's own thread; redrafted to cite the §1.1 design instead of a thread reference.
+  - 2026-10-20 — **POSTED** (user), trimmed to the bare question (posted wording above); the design context stays in this entry and in the Q1 thread if Aruna asks.
+  - 2026-10-20 — **ANSWERED by Aruna** (reply in the Q1 thread + FSD body edit, synced 14:01): "yes. you are correct. let me update the launch parameters section. Initial design was to consider the CPU order with delivery date as we expected the delivery date on the original order. but now as the design is changed to consider the CPU QC fail order EFF with original order number, line id." The §2.3 B2C CPU bullet now reads: "Fetch CPU sales orders with delivery date updated" and "Incase of CPU QC fail order line EFF with original order number, line id for to consider delivery date on the original order". Consistent with the build: the bullet covers the launch trigger and the EFF linkage (replacement → original order/line), not the date source; the redirect date stays the replacement's pickup-task completion, which Aruna re-confirmed the same day in the Q9 thread. No DM impact.
+
+### Answered
+
+#### Q2 — QC-fail EFF locations and codes — ANSWERED 2026-10-15 by Vijay Bellurkar (FSD comment reply, reassigned to Luis)
+
+Verbatim: "Hi @ext.lmamani@warbyparker.com 1. QC Fail Context Code : Prescription Details EFF Segment API : qcFail 2. Original Order # Context Code: Revenue_Management_Information_Line EFF Segment API: originalOrder 3. Source Line ID# Context Code: Revenue_Management_Information_Line EFF Segment API: originalSourceLineId All these are at line level. 4. If Order type is WP_B2C_CPU ,then line type: WP_CPU_SHIP_ONLY. If Order type is WP_B2C, then line type: WP_SHIP_ONLY 5. Yes All these are configured in Dev1." (cc Aruna, bpulipati, Ranjeeth)
+
+Mapped to the design:
+
+1. **QC Fail** — `Prescription Details` fulfill-line EFF, API `qcFail`. Verified in dev1 data: `attribute_char2`, values Yes/No (orders 333/341, rkyatham 10-14/10-15).
+2. **Original Order #** — `Revenue_Management_Information_Line` fulfill-line EFF, API `originalOrder`. NOTE: line level, not the header EFF the FSD prose says — the design follows Vijay (all joins on `doo_fulfill_lines_eff_b`). Aruna confirmed 10-15 the FSD "header EFF" text was a typo.
+3. **Original Source Line Id** — same context, API `originalSourceLineId`.
+4. **Ship-only line type** — order-type dependent: `WP_B2C_CPU` → `WP_CPU_SHIP_ONLY`; `WP_B2C` → `WP_SHIP_ONLY`.
+5. **WP_CUST_PICKUP** — Yes, follows the same pickup-task rule as WP_B2C_CPU.
+6. **dev1 setup** — "All these are configured in Dev1" (verified for the contexts/task; see the 2026-10-15 verification block).
+
+Residual (ours, QA checkpoint): `attribute_char6` behaves like `originalOrder` and `attribute_char5='1'` is a possible line reference (2026-10-15 verifier: 316→314, TST002→TST001, TST004→TST003) — confirm the official segment→column mapping and the line-reference semantics (line number vs DOO line id) in the follow-up reply / at QA.
+
+- **Follow-up log:**
+  - 2026-10-15 — reply drafted and independently verified before posting (tmp/q1q2_followup_verify/report.md). The verifier REFUTED the first draft's "no replacement order exists on dev1" claim (found 316→314 + TST pairs); point (2) rewritten around the evidence. User's final wording (user shortened point (2), dropping the char6/char5 evidence sentences — factually safe): "Thanks Vijay. Verified on dev1: the QC Fail flag is live in data (Prescription Details context, values Yes/No — orders 333 and 341), and both EFF contexts exist. Two follow-ups: (1) The FSD text says the Original Order is stored on the Sales Order HEADER EFF, but your answer has all three at line level. We will build for line level: please flag if that is wrong. (2) We found replacement data already on dev1: can you confirm the exact attribute columns for originalOrder and originalSourceLineId, and whether the line reference holds the line number or the DOO line id? None of the existing replacements reference our QC-fail test orders (333 or 341), so a replacement for one of those would still let us confirm the mapping end to end." — **POSTED by the user and sync-verified LANDED** (15:07 sync, comments line 222; Word normalized the em-dashes to commas, wording otherwise verbatim, reassigned to Vijay).
+  - 2026-10-16 — sync: **Aruna answered point (1)** (10-15): "It is typo. Original Order is at order Line level EFF." — line level officially confirmed, the FSD "header EFF" text was a typo. Point (2) (exact attribute columns) punted to **Ranjeeth** (reassigned 10-15). Still awaiting: Ranjeeth on segment→column mapping + line-reference semantics; Vijay/Ranjeeth on a replacement for 333/341.
+
+#### Q3 — Return date, detection, and ordering — ANSWERED 2026-10-15 by Aruna (FSD comment reply, synced 10-16)
+
+Verbatim: "1. Use credit memo date as return date 2. Yes RMCS-I-3001 logic to identify warranty return is same as RMCS-I-3003 3. First RMCS-I-3003 load the return lines, next RMCS-I-3001 load POD for deferred line."
+
+Mapped to the design:
+
+1. **Return date = credit memo date** — both the .3 deferred PoD fulfillment date and the `SRC_ATTRIBUTE_DATE1` value take the OMG credit memo date. (The FSD text now says "the return date i.e credit memo date" too.)
+2. **Detection = same as 3003** — `WP_WARRANTY_RETURN` line on the return order, once the OMG credit memo for that return is complete (CT_REFERENCE = return order number). Exactly the build default.
+3. **Ordering is a hard requirement** — 3003 loads the return lines FIRST, then 3001 loads the deferred-line PoD. O2 becomes a firm promotion gate (deploy + schedule order).
+
+- 2026-10-16 — **thread CLOSED by the user** (deleted from the doc's comments, not in Resolved state; the optional acknowledgment is moot). The answer is preserved verbatim above.
+
+#### Q4 — Full-refund suppression scope — ANSWERED 2026-10-15 by Aruna (FSD comment reply, synced 10-16)
+
+Verbatim: "yes. it is correct. is it possible to not load the POD for deferred line with the 365 days date.?"
+
+- Suppression scope confirmed: after a full warranty return, ALL pending PoD uploads for the warranty line are suppressed forever (no .2, no .3).
+- Her follow-up ("is it possible to not load the POD for deferred line with the 365 days date?") is a capability check — the answer is yes, that IS the suppression design. **Reply owed.**
+- Design flag (verifier B): the suppression also covers the U record (no end-date update on a full refund) — consistent with the spec expecting no 3001 action at all, but Aruna was never asked about the U explicitly. Build-time decision; QA checkpoint.
+- **Reply wording — verified 2026-10-16 by 2 independent agents** (tmp/q4_verify/report_a.md + report_b.md): sentence 1 VERIFIED by both (it survives because it self-scopes with "once detected" + "pending"). Sentence 2 PARTIALLY TRUE by both, same two faults: (a) "set first, so" misstates causality — the .3 carries the return date directly from detection (the DM recomputes, never reads the stored end date; DM lines 400-404), U and .3 ship in the same upload; (b) "never carries the 365-days date" credits the wrong mechanism (the per-split dedup stops the 365-row, not the end-date overwrite) and breaks in two windows (manual reprocess pre-detection; credit memo completing after day 365). **Final revised wording:** "Yes. Once the full refund is detected, the integration excludes every pending PoD row for that warranty line from the extract — no UPFRONT (.2) and no DEFERRED (.3), so the 365-days row is never loaded. Same for a partial refund: once the return is detected, the integration sets the contract end date to the return (credit memo) date and loads the deferred PoD at that same return date in the same upload, so the loaded deferred PoD never carries the 365-days date." — **POSTED by the user 2026-10-16, sync-verified LANDED** (07:28 sync, comments line 210; Word normalized the em-dash to a colon, wording otherwise verbatim). Q3 acknowledgment not posted (thread closed 10-16) — moot. Q4 thread stays open for any Aruna reaction; nothing further owed on it.
+
+#### Q7 — Full vs partial refund classifier — CONFIRMED 2026-10-15 by Aruna (FSD comment reply, synced 10-16)
+
+Verbatim: "Yes, this logic is correct." The amount-equality classifier (A6) is now a confirmed rule: return amount = original warranty amount → full refund (suppress all); less → partial (U record + .3 PoD at return date). QA still validates against Guillermo's return data (RMA281/RMA277 partials + a full-refund case).
+
+- 2026-10-16 — **thread CLOSED by the user** (deleted from the doc's comments, not in Resolved state). The confirmation is preserved verbatim above.
+
+### Routed review questions (panel triage 2026-10-16) — Q10–Q21
+
+Moved into this plan 2026-10-16; the sidecar file they briefly lived in
+(`oracle-integration-cloud/tmp/otcm146798_review/questions_to_route.md`) is
+DELETED — question tracking has ONE home, this plan. Renumbered to continue
+the plan's question sequence; old routing-doc numbers map: R-Q1→Q10,
+R-Q2→Q11, R-Q3→Q12, R-Q4→Q13, R-Q5→Q14, R-Q6→Q15, R-Q7≡Q9 (merged into Q9
+above), R-Q8→Q16, R-Q9→Q17, R-Q10→Q18, R-Q11→Q19, R-Q12→Q20, R-Q13→Q21.
+Scratch reports under `oracle-integration-cloud/tmp/otcm146798_review/`
+(triage/, triage_q12q13/, verify_posts/, verify_q2368/) cite the old numbers.
+
+"Route" = these are NOT for us to answer — they go to the OM team (Ranjeeth
+/ Vijay) and functional (Aruna / Guillermo). Each carries an exact
+Where-to-ask.
+
+Triaged by a 3-agent panel (textualist / contextual / risk) against the FSD,
+comment threads, mapping sheets, and probe evidence: **11 questions → 3 asks
++ 1 chase**; the other 7 answered by the sources or carrying safe, documented
+assumptions — see the appendix group. Full reasoning:
+`oracle-integration-cloud/tmp/otcm146798_review/triage/consolidated_triage.md`
+(+ per-seat reports in `triage/round1/`). Updated 2026-10-16 PM: +2 re-grain
+clarifications (Q20/Q21) from Aruna's mapping update — see the Re-grain
+clarifications group. A 6-seat verification panel (3 angles × 2 questions,
+`oracle-integration-cloud/tmp/otcm146798_review/triage_q12q13/consolidated_q12q13.md`)
+then dispositioned them: Q20 = must-ask (promotion gate only, anchor
+corrected), Q21 = safe assumption + courtesy confirmation (premise
+corrected).
+
+#### Merge gates (block promotion until answered)
+
+##### Q10 — Replacement EFF: line NUMBER or internal line ID? (OM — Ranjeeth) — ANSWERED 2026-10-19 (Ranjeeth): INTERNAL line id
+
+**ANSWER (Ranjeeth Kyatham, FSD reply 2026-10-19T15:53:32Z, sync-verified
+11:04, reassigned to Luis):** "OMG Stamp an Internal Source line ID of the
+Sales Order line". OMG stamps the internal DOO line id (7692421-style), NOT
+the visible line number — matching the FSD Scenario 4 reading. **Consequence
+(work item 2 DM change, PENDING): the char5 join must switch from
+`doo_lines_all.line_number` to `doo_lines_all.line_id`** — as pre-analyzed
+below, the line_number join would never match. Verified against the live doc
+2026-10-19 11:15 (user paste): the reply sits in THIS thread (the EFF-setup
+thread) — the sync had mis-filed it under the Q1 pickup-task thread (sync
+threading bug: it also duplicated Vijay's 10-15 EFF reply across both
+threads). Original entry kept for the record:
+
+Context: the QC-fail redirect reads the replacement ship-only line's
+`Revenue_Management_Information_Line` EFF: `attribute_char6` = original order
+number, `attribute_char5` = original line reference. The DM joins char5 to
+`doo_lines_all.line_number`. FSD QC-fail Scenario 4 shows POI's "Original
+Source Line Id" = 7692421 — the internal DOO line ID of LKJ line 2, not its
+visible line number (2). Vijay's 2026-10-15 comment named the EFF segment
+"Source Line ID#" (`originalSourceLineId`).
+dev1 probes (2026-10-16) could NOT settle it: the only rows with char5
+populated are synthetic TST001/TST003 carrying '1' (single-line orders —
+consistent with line number, but hand-entered and not reachable through the
+order joins); on real orders using this context (e.g. order 316 → original
+314) char5 is NULL. So no real OMG-stamped replacement exists on dev1 yet.
+Question: which value will OMG stamp into char5 — the order line number (1, 2,
+3...) or the internal line id (7692421-style)? Proposed answer: Scenario 4
+reads as the internal line id — confirm.
+POSTED 2026-10-16 15:56 (reply in the thread below, user-trimmed text,
+verbatim): "@ext.rkyatham@warbyparker.com which value will OMG stamp into
+attribute_char5 (originalSourceLineId): the order line number (1, 2, 3...) or
+the internal line id? FSD Scenario 4 shows POI's "Original Source Line Id" =
+7692421, an internal DOO line id, not the visible line number, so we think
+the internal line id. Please confirm. dev1 cannot settle it." (Posted form
+drops the bump framing, the TST/316 probe evidence, and the 333/341
+replacement ask from the verified draft; the core question and the Scenario-4
+argument are preserved.) Awaiting Ranjeeth.
+Why it matters: if it is the internal id, the per-line redirect never matches
+and every QC-failed line's PoD holds forever. One-word answer switches the
+join to `doo_lines_all.line_id`. (Note: the Warranty EFF's Covered Line was
+confirmed to carry the line NUMBER — that is a different EFF context and does
+not settle this one.)
+Where to ask: FSD Google Doc "RMCS-I-3001 - Proof of delivery upload in RMCS -
+FBDI Approach" — REPLY in the existing thread anchored on the QC-fail logic
+text "Search for that Order Number in the Sales Order Line EFF - Original
+Order." (thread opened 2026-10-14; your 2026-10-15 reply already asks this and
+Aruna reassigned it to Ranjeeth @ext.rkyatham@warbyparker.com on 2026-10-15).
+Do not open a new comment — bump that thread with the probe evidence above and
+ask Ranjeeth for (a) the exact attribute column mapping and (b) one real
+OMG-created replacement for order 333 or 341 on dev1, which settles the
+mapping end to end.
+
+##### Q11 — Credit memo `ct_reference` format (Ranjeeth / functional) — POSTED 2026-10-16 16:17 (Aruna) — ANSWERED 2026-10-19
+
+Context: warranty-return detection joins `ra_customer_trx_all.ct_reference =
+TO_CHAR(return_order.order_number)` for completed OMG-sourced CMs. dev1 and
+stage contain ZERO OMG credit memos, so the join has never matched a real row;
+a prod-side probe is not permitted for our report user. AR-I-3018 notes
+document OMG CMs carrying PREFIXED ct_reference values.
+Question: what exactly does ct_reference contain on a production OMG credit
+memo for a warranty return — the bare return order number, or a
+prefixed/composed value? A real prod example settles it.
+Why it matters: if the format differs from the bare order number, the entire
+warranty-return feature (partial-refund PoD move + full-refund suppression) is
+silently dead in production with no error.
+Where to ask: FSD Google Doc — NEW comment anchored on the Warranty Return
+Flow section (Scenario 1 text "Oracle will reverse recognized revenue
+automatically and No additional POD load is needed"), addressed to Ranjeeth
+@ext.rkyatham@warbyparker.com.
+DOWNGRADED to confirmation 2026-10-16 16:05 (user find + verifier seat
+`oracle-integration-cloud/tmp/otcm146798_review/verify_q2368/report_q2.md`):
+the 3003 FSD itself states the format — "Once the Credit memo is created with
+OMG source with CT_REFERENCE as return order number" (3003 FSD, exchange
+scenarios) — and AR-I-3017's own query joins `cm.ct_reference =
+rdha.order_number`. What the spec does NOT settle: whether OMG stamps the
+ORACLE return order number or its own OMG order id — the only concrete
+example (AR-I-3018: ct_reference = 'TP46T5G015') is an OMG-format order id,
+and dev1/stage have zero OMG CMs. ("Exchange_Order_Reference" appears nowhere
+in the synced docs; the FSD's words are "CT_REFERENCE as return order
+number".)
+POSTED 2026-10-16 16:17 — addressed to ARUNA (not Ranjeeth as drafted),
+user-trimmed ending (the "one real prod example settles it" ask and the
+Guillermo cross-reference dropped; the confirmation question stands),
+verbatim: "Aruna: Confirming the warranty-return detection: the RMCS-I-3003
+FSD says the OMG credit memo for a return is created with CT_REFERENCE as the
+return order number, and 3001 relies on that join
+(ra_customer_trx_all.ct_reference = the return order number) to detect
+warranty returns. Is ct_reference always the Oracle return order number on
+those credit memos? We have seen OMG credit memos where ct_reference carries
+an OMG-format order id (e.g. TP46T5G015 in AR-I-3018), and dev1/stage have no
+OMG warranty-return credit memos to check." Awaiting Aruna.
+ANSWERED 2026-10-19 by Aruna (FSD reply in the same thread, 19:12Z, synced
+15:01): "yes, ct_reference is always return order number" — the detection
+join is confirmed exactly as built. No DM change; the risk of silently dead
+prod detection is retired.
+
+##### Q12 — Prod Warranty EFF `attribute_char2` population (data request — whoever has prod query access) — DROPPED 2026-10-16 16:17
+
+DROPPED per user: "this RMCS-I-3001 was never in production" — no prod
+migration concern; first-load behavior is covered by pre-prod QA instead.
+The plan's promotion gate A3 (prod char2 zero-population check) is waived on
+the same decision. The drafted text stays below for the record.
+Context: this change drops the cross-order fallback that resolved the covered
+item through the Warranty EFF's char2 (per the FSD update that struck it).
+dev1 holds exactly 3 char2 rows, all with char1 NULL, all A/B-clean — proving
+the field CAN be written, so "zero in prod" cannot be assumed from the FSD
+strike alone. We cannot run prod queries (arbiter report not permitted for our
+report user), so this is a data request, not a functional question.
+Ask (reworded twice 2026-10-16 per user — plain "is it good if..." question;
+NO query, NO migration mention; verifier seat: POST as-is,
+`oracle-integration-cloud/tmp/otcm146798_review/verify_q2368/report_q3.md`):
+"@ext.bpulipati@warbyparker.com (cc @ext.rkyatham@warbyparker.com) one prod
+question for the warranty flow: the updated FSD struck the cross-order
+fallback that resolves the covered item through the Warranty EFF's
+attribute_char2, so 3001 does not implement it. Is it good if we don't add
+any fallback for that field — meaning in PROD no warranty order line carries
+attribute_char2? dev1 shows the field CAN be written, so we want to confirm
+prod is clean before promoting without the fallback."
+(Internal reference, NOT posted: the check is `SELECT count(*) FROM
+doo_fulfill_lines_eff_b WHERE context_code='Warranty' AND attribute_char2 IS
+NOT NULL`.)
+Why it matters: zero = safe to promote with the fallback dropped. Non-zero =
+those lines' .2/.3 PoDs would strand (held forever, silently) and we need an
+exception/migration decision before promotion.
+Where to ask: FSD Google Doc — REPLY in the thread anchored on "If the Order
+Type is B2C CPU, then the PoD Date needs to be the Completion Date of the
+Task..." (the thread where Bhanu Pulipati @ext.bpulipati@warbyparker.com
+posted the CPU orchestration SQL on 2026-10-16 — query-run requests already
+flow there). Ask Bhanu (cc Ranjeeth) to run the count above on PROD and paste
+the number.
+
+#### Already routed — chase, don't re-ask
+
+(routing-doc Q7) ≡ **Q9** above — covered item fails QC (functional — Aruna).
+The exact question already sits open in the FSD comment thread (Luis
+2026-10-16, assigned to Aruna, unanswered as of the 2026-10-16 sync): does
+the warranty stay on the QC-failed line, does OM move it to the replacement
+line, or is a new warranty created on the replacement order?
+Status: non-blocking for this PR — the documented interim behavior holds the
+warranty PoD (no row emitted; reprocess once answered), the conservative side.
+The answer likely scopes a follow-up DM change (extend the redirect to covered
+items), not this PR's correctness.
+Where to ask: FSD Google Doc — the existing comment you opened on 2026-10-16
+(anchored on the QC-fail section, assigned to Aruna
+@ext.abhairapuneni@warbyparker.com, unanswered as of the 2026-10-16 sync).
+Chase THAT comment — do not open a new one. (Merged into Q9's log 2026-10-16.)
+
+#### Re-grain clarifications (from the 2026-10-16 mapping update)
+
+Aruna's mapping re-grain (Slack 2026-10-16 11:17 + updated mapping sheets +
+two empty cell comments assigned to you) re-keys the RMCS source-document
+identifiers from order-line grain to fulfillment/delivery grain across
+RMCS-I-3001/3002/3003. Full analysis:
+`oracle-integration-cloud/tmp/otcm146798_review/mapping_regrain_20261016.md`.
+Both replies should open with the acknowledgment that the re-grain is
+understood and being implemented in the DM (cutover-tolerant join:
+DOC_LINE_ID_INT_1 matched against both LINE_ID and FULFILL_LINE_ID).
+
+Panel-verified 2026-10-16 (6 seats,
+`oracle-integration-cloud/tmp/otcm146798_review/triage_q12q13/consolidated_q12q13.md`):
+her two empty comments BOTH anchor line-key cells — `VRM_SOURCE_DOC_LINES!D4`
+is the DOC_LINE_ID_INT_1 row, and `VRM_SOURCE_DOC_ADDL_SUBLINES!D21` maps to
+THAT sheet's DOC_LINE_ID_INT_1 row (CSV line 26), not the addl-sub key cell.
+So Q21 goes to D4 (+ a pointer at D21). Q20's open questions were answered by
+the sheet itself the same afternoon — downgraded to a CONFIRMATION post (user
+call 15:20), see its entry.
+
+##### Q20 — `DOC_ADDL_SUB_LINE_ID_INT_1`: Delivery_Detail_ID or the combination? — ANSWERED 2026-10-16 (Aruna, D5 thread)
+
+**The sheet answered the ask** (xlsx mtime 14:36 — invisible to the CSV
+pipeline, which drops formatting; recovered by reading the xlsx rich text
+directly, `oracle-integration-cloud/tmp/otcm146798_review/strike_check.py`):
+the key cell `VRM_SOURCE_DOC_ADDL_SUBLINES!D5` gained "**Where there is no
+delivery detail id scenarios, populate the concatenated value as below:**" —
+Delivery_Detail_ID is the primary key; the CUSTOMER_CONTRACT_HEADER_ID &
+DOCUMENT_LINE_ID combination is the fallback. Per the user's call, this still
+posts as a CONFIRMATION (the loaded-key format is a SOX promotion decision —
+close the loop with functional), stating our reading and the dev1 evidence.
+Verifier agreed every underlying fact is sheet- or probe-verified
+(`oracle-integration-cloud/tmp/otcm146798_review/verify_posts/report.md`).
+
+dev1 evidence behind the confirmation
+(`oracle-integration-cloud/tmp/otcm146798_review/dd_probe*.sql`):
+- CPU/pickup lines: **0 delivery details** across all 56 fulfill lines of CPU
+  orders 316/333/341/336 → combination fallback. Warranty lines non-shippable
+  (53/53 `shippable_flag='N'`) → fallback.
+- A source line CAN have several delivery details (~1.5% of lines, 2+ each,
+  up to 96). No multi-dd line loaded to the interface yet → which-dd is
+  unobserved (QA-21 watches it; our implementation keys the delivered dd).
+- The re-grained 3003 loader is live on dev1: 3 fresh dd-keyed PoD addl-sub
+  rows (2026-10-15/16, doc lines 46022/46023/47016). 134 document lines × 1
+  addl-sub row each (130 combination-keyed + 4 dd-keyed); 4 NULL-doc-line
+  stubs from 2026-07-17 testing never match the DM's dedup joins.
+
+Confirmation (POSTED 2026-10-16 15:33 in the existing
+`VRM_SOURCE_DOC_ADDL_SUBLINES!D5` concatenation thread — user-trimmed text,
+verbatim): "Confirming our reading of this cell after your update:
+DOC_ADDL_SUB_LINE_ID_INT_1 = Delivery_Detail_ID (WSH_DELIVERY_DETAILS) where
+a delivery detail exists, and the concatenated CUSTOMER_CONTRACT_HEADER_ID &
+DOCUMENT_LINE_ID where there is none. Per row type: (1) shipped delivery
+lines carry a delivery detail, keyed by Delivery_Detail_ID; (2) CPU/pickup
+lines have no delivery detail (verified 0 across the pickup fulfill lines on
+dev1) so they take the concatenation; (3) warranty lines (WP_AI_WARRANTY)
+are non-shippable, so no delivery detail, also the concatenation. We also
+verified a source line can have several delivery details (split shipments);
+in that case the PoD row keys to the delivery detail that delivered (the one
+the PoD date comes from). Please confirm or correct."
+(Posted form drops the quoted sheet sentence and the em-dash phrasing from
+the verified draft; substance unchanged.)
+ANSWERED 2026-10-16 — Aruna (D5 thread, verbatim): "yes this logic is
+correct". Confirms the whole reading: Delivery_Detail_ID primary,
+combination fallback; the per-row-type split (shipped → dd-keyed; CPU/pickup
+and warranty → combination); and the multi-dd case keying to the delivery
+detail that delivered. Item 6(b) (`NVL(delivered delivery_detail_id,
+combination)`) proceeds as scoped.
+Why it matters: the loaded key format is a promotion decision; a wrong
+reading needs data correction in RMCS (SOX revenue system). The confirmation
+closes the loop with functional even though the sheet text + probes answer
+the facts.
+Where to ask: REPLY in the EXISTING thread at
+`VRM_SOURCE_DOC_ADDL_SUBLINES!D5` (the 2026-09-29 concatenation thread,
+assigned to Aruna). Not at her empty D21 comment (anchors the line-key cell).
+Blocking: no — implementation proceeds per the sheet rule either way
+(plan work item 6(b): `NVL(delivered delivery_detail_id, combination)`).
+
+##### Q21 — Warranty lines' `DOC_LINE_ID_INT_1` grain under the re-grain (functional — Aruna) — ANSWERED 2026-10-16 (Aruna, D4 thread)
+
+Assumption on record: warranty contract source lines keep
+DOC_LINE_ID_INT_1 = LINE_ID; FULFILL_LINE_ID applies to shippable lines.
+Basis: dev1 evidence — 114/114 warranty-split (.1/.2/.3) interface rows are
+line_id-keyed, 0 fulfill-keyed; 52 of them created since 2026-10-02, after
+the first fulfill-keyed standard row appeared. The 14:36 sheet edit RAISED
+the stakes: LINE_ID is now ~~struck~~ at both D4 and D21, leaving
+FULFILL_LINE_ID as the only listed key — while dev1 warranty data is still
+100% line-keyed. If warranty is NOT an exception, 3003 must re-key warranty
+rows and the DM's warranty bind silently emits nothing. Corrected premise
+(panel probe): warranty lines DO carry a fulfill row on dev1 (53/53,
+shippable_flag='N') — the grain is a design choice, not a constraint.
+The warranty U-note ("Update require only for the Warranty item ... DEFERRED")
+survives unstruck in D4.
+Wording note (user 15:20): the text states the move to FULFILL_LINE_ID
+outright — LINE_ID is struck, and 3001 never reached prod, so prod holds no
+line_id data to stay compatible with. (The DM's bind implementation still
+accepts both grains as transition insurance for the line-keyed dev1/stage QA
+data — 330 doc lines + 114/114 warranty splits would silently drop from the
+extract otherwise; id spaces are disjoint per probe, no fan-out. That is
+implementation detail, not spec-facing text.)
+Confirmation (POSTED 2026-10-16 15:33 at Aruna's empty comment
+`VRM_SOURCE_DOC_LINES!D4` — user-trimmed text, verbatim): "One confirmation:
+does the change include warranty lines (WP_AI_WARRANTY)? Because on dev1,
+every warranty split row in the RMCS interface is line_id-keyed today. So
+either warranty keeps LINE_ID as an exception, or the warranty re-key has
+not landed in the loader yet. Please confirm which."
+(Posted form drops the re-grain acknowledgment opener and the 114/114 +
+52-since-10-02 evidence counts from the verified draft; the core question
+and the exception-or-not-landed framing are preserved.)
+D21 pointer (POSTED at `VRM_SOURCE_DOC_ADDL_SUBLINES!D21`, verbatim): "The
+WP_AI_WARRANTY confirmation in the lines sheet's D4 thread applies to this
+sheet's DOC_LINE_ID_INT_1 as well."
+ANSWERED 2026-10-16 — Aruna (D4 thread, verbatim): "Warranty order line in
+DOO_FULFILL_LINES_ALL has a fulfill_line_id. This change is requested in
+RMCS-I-3003 Contract creation." Reading: warranty is NOT an exception — it
+re-keys to FULFILL_LINE_ID too, but that re-key rides with the 3003
+contract-creation change and has NOT landed in the dev1 loader yet (matches
+the probe: 114/114 warranty splits still line-keyed). No separate D21 reply;
+the D4 answer covers both sheets. Consequences: the DM's warranty bind must
+accept BOTH grains until 3003's re-key reaches prod — the both-grain join
+(frozen item-6 scope (c)) is REQUIRED, not just recommended; QA-20's
+pre-cutover warranty-grain check stays on the plan.
+Why it matters: if the assumption is wrong, the warranty bind (DM ~L575)
+silently emits nothing; the failure surfaces only with the first post-cutover
+warranty contract. Recovery is a scoped join fix (~3 lines — the warranty
+branch has no fulfill join in scope) + reprocess. QA-20 (below) schedules the
+empirical test before 3003's prod cutover.
+Where to ask: REPLY at Aruna's empty comment `VRM_SOURCE_DOC_LINES!D4`
+(2026-10-16, assigned to you) + the D21 pointer above.
+Blocking: no.
+
+#### Optional courtesy confirmations (promoted from the appendix 2026-10-16 15:56)
+
+Not gates; the assumptions on record hold either way. Post if you want
+explicit closure with functional — same pattern as Q20.
+
+##### Q15 — Sequential partial refunds on the same covered item (functional — Aruna) — POSTED 2026-10-16 16:17 — ANSWERED 2026-10-19
+
+Assumption on record: the .3 PoD at the return date recognizes the remaining
+deferred balance in one event; later refunds net through the 3002/3003
+auto-reversal path (worst case: interim gross-up, self-corrected and loud in
+the ledger).
+POSTED 2026-10-16 16:17 to Aruna (verbatim; verifier seat had approved the
+same text, `oracle-integration-cloud/tmp/otcm146798_review/verify_q2368/report_q6.md`):
+"Aruna: One confirmation on sequential partial refunds: the .3 PoD at the
+return date recognizes the remaining deferred balance in one event; any later
+refund against the same covered item is left to the standard auto-reversal
+path (3002/3003) with no further PoD adjustment from 3001. Please confirm or
+flag." Awaiting Aruna.
+ANSWERED 2026-10-19 by Aruna (FSD reply, synced 14:01): "Yes, This is
+correct. Once warranty is returned, then .3 POD recognize remaining deferred
+balance at return date in one event. Any refund against Covered item is auto
+reversal path." — confirms the implemented behavior verbatim (one-event .3
+recognition; later refunds net through 3002/3003 auto-reversal). No DM
+change; the appendix assumption is promoted to a confirmed rule.
+2026-10-19 PM — thread CLOSED by the user (thanks posted, then resolved; the
+resolved thread drops from the synced sidecar per the new sync logic — the
+answer is preserved verbatim above).
+
+##### Q16 — Non-CPU QC-fail scope (functional — Aruna) — POSTED 2026-10-16 16:19 — ANSWERED 2026-10-19
+
+Assumption on record (weakest of the dropped set; one panel seat dissented
+and would still ask): the FSD frames the entire QC logic under "For CPU
+Orders", and QC at handover is inherent to store pickup — so the redirect
+only covers CPU/pickup orders.
+Where to ask (clarified 16:17 — do NOT reply in the existing thread, it is
+the pickup-task SQL discussion): FSD Google Doc — NEW standalone comment (its
+own thread) anchored on the heading text "**For CPU Orders:**" (the heading
+directly above "If the Order Type is B2C CPU, then the PoD Date needs to be
+the Completion Date of the Task..."). If the heading will not take an anchor,
+anchor on the sentence "Scenario : QC Fail - If an Order 123 has failed the
+QC, then Order is updated with the Flag 'QC Fail' as "Yes"". Assigned to
+Aruna @ext.abhairapuneni@warbyparker.com.
+POSTED 2026-10-16 16:19 (new standalone comment at the anchor above; the
+verified text — "its PoD holds" had been corrected before posting: the DM
+ignores the QC flag for non-CPU lines, so the hold only comes from a missing
+delivery, `oracle-integration-cloud/tmp/otcm146798_review/verify_q2368/report_q8.md`):
+"The FSD frames the QC-fail logic under CPU orders. If a non-CPU (delivery)
+order ever fails QC at handover, 3001's replacement redirect does not apply:
+the original line's PoD follows only its own delivery (held if it never
+delivers), and a replacement delivery order would never feed it. Please
+confirm QC failure can only occur for CPU/pickup orders, or flag if the
+delivery case exists." Awaiting Aruna.
+ANSWERED 2026-10-19 by Aruna (FSD reply, synced 14:01): "QC fail is
+applicable only for CPU orders" — confirms the CPU-only redirect scope. No DM
+change; for non-CPU lines the PoD still follows only the line's own delivery
+(held while undelivered).
+2026-10-19 PM — thread CLOSED by the user (thanks posted, then resolved; the
+resolved thread drops from the synced sidecar per the new sync logic — the
+answer is preserved verbatim above).
+
+#### Appendix — dropped after triage (assumptions on record)
+
+The panel verdicts below are documented so the assumptions are auditable; if
+any stakeholder contradicts one, the fix is a scoped follow-up, not a redesign.
+
+- **Q13 late-return gate — answered by the FSD itself.** Scenario 2: "When the
+  warranty Item is returned before the Contact End date. Then it is Partial
+  refund of Warranty Amount." The implemented gate (a return at/after the end
+  date moves nothing) is the FSD's own scope; post-expiry the balance is
+  already recognized, so moving the date would be accounting nonsense.
+- **Q14 multi-line warranty returns — safe assumption, largely moot.** The DM
+  attributes refunds per return line (`doo_document_references.line_id`), which
+  is correct whether returns are 1:1 or multi-line; dev1 probe shows multi-line
+  return orders exist and `line_id` is populated. Guillermo's QA return data
+  exercises the join before prod.
+- **Q15 sequential partial refunds — safe assumption; PROMOTED to optional
+  courtesy confirmation 15:56 (see the group above).** FSD mechanics: the .3
+  PoD recognizes the *remaining* deferred balance in one event ("Load a POD at
+  the return date... to recognize the remaining deferred balance"); later
+  refunds net through the 3002/3003 auto-reversal path. Worst case is an
+  interim gross-up, self-corrected and loud in the ledger.
+- **Q16 non-CPU QC-fail scope — safe assumption (weakest); PROMOTED to optional
+  courtesy confirmation 15:56 (see the group above).** The FSD frames the
+  entire QC logic under "For CPU Orders"; QC at handover is inherent to store
+  pickup. If wrong, a delivery-order QC failure leaves a held PoD — loud in
+  reconciliation, reprocessable, and a pre-existing gap this PR does not
+  introduce. (One seat of three dissented and would still ask; logged for the
+  record.)
+- **Q17 qcFail EFF sparsity — safe assumption.** The FSD's own algorithm reads
+  the replacement's 'No' value, its scenarios depict 'No' flags, and dev1 live
+  data shows Yes/No values (orders 333/341). The strict-'No' join is the safe
+  direction regardless.
+- **Q18 orchestration group ACTIVE lifecycle — safe assumption.** The filter
+  comes from OM's own reference query for completed pickup tasks (Bhanuchander
+  2026-10-16) — OM would not hand over a filter that evaporates on order close.
+  Resolve empirically before prod: probe the first closed CPU order on
+  stage/dev1 (one query; can ride with the 333/341 replacement-data request).
+- **Q19 QC chain topology — answered by the FSD itself.** Scenario 3:
+  second-generation ZXC names the ROOT order ASD as its Original Order, not its
+  predecessor QWE — flat topology demonstrated on exactly the multi-hop case.
+  The one-hop code matches the spec.
+
+## Assumptions / suggestions / objections — triage (2026-10-14)
+
+User decision 2026-10-14: externally checkable assumptions are flagged as questions, tracked with the same rigor (A2 → Q5, posted). A3 was briefly promoted to Q6 and withdrawn the same day (see Q6's log for the rationale). The rest are internal engineering decisions/risks — no external ask; they stay here as the record.
+
+- **A2 → Q5** (QC-fail chain depth) — promoted to a question, posted 2026-10-14.
+- **A3 (internal, re-confirmed 2026-10-14):** drop the cross-order covered-item branch (`attribute_char2`) per the FSD. The warranty feature is pre-prod (PR #1105), so no prod reliance can exist; silent hold for unsupported data is the established default. Safety net we own: before merge/promotion, verify prod Fusion has zero `attribute_char2` population (read-only check).
+- **A1 (internal):** changes land almost entirely in `WP_RMCS_PROOF_OF_DELIVERY_DM` + `.xdm.catalog` re-export; monocle needs no code changes (the row contract already carries PoD rows and "U" records).
+- **A4 (internal):** DM development can start against hand-seeded data; QA waits for OM setup (pickup task, QC-fail EFFs) on dev1.
+- **A5 (internal):** the new DM work branches off `OTCM-139313-rmcs-i-3001-pod-dm` (or rebases) since PR #1105 is still unmerged.
+- **A6 (internal, from withdrawn Q7):** full vs partial refund classifier — warranty return line amount = original warranty line amount → full (suppress all pending .2/.3/U per Q4); less → partial (deferred PoD at return date + `SRC_ATTRIBUTE_DATE1` update). Validate in QA with RMA281/RMA277 (partials) and a full-refund return.
+- **S1 (internal):** filter the pickup step by a stable identifier if Ranjeeth yields a code; otherwise the step name — same filter the OM team's canonical query uses (Bhanuchander 10-16), so fragility is now low.
+- **S2 (internal):** emit the return-triggered "U" via a second decoupled-U branch with its own dedup guard (`src_attribute_date1 <> return date`), mirroring `warranty_u_rows`.
+- **S3 (internal):** likely PR split: PR1 = DM SQL + catalog re-export (oracle-integration-cloud); monocle only if the reader needs new columns (unlikely). Then QA evidence on the ticket.
+- **O1 (internal, tracked):** ~~setup gap blocks QA~~ — largely closed 2026-10-15: qcFail EFF + originalOrder/originalSourceLineId contexts configured on dev1 (Vijay), the pickup task exists on dev1, and rkyatham is building QC-fail test data (orders 333/341). Remaining: a replacement order exercising `originalOrder`/`originalSourceLineId` (QA checkpoint), and prod setup timing (Q1).
+- **O2 (internal, tracked):** race with OTCM-146384 — same warranty flow family; end-to-end QA of the partial-refund PoD needs 3003's return lines. Coordinate merge/deploy order with Guillermo. **CONFIRMED 10-15 (Aruna, Q3): 3003 loads return lines first, then 3001 loads the PoD** — firm deploy + schedule ordering.
+- **O3 (internal, design):** two triggers can now fire the same .3 row (return date vs contract end/replacement) — dedup must prevent double emission, including the ~4-minute INITIALIZED blind spot noted in the 139313 QA evidence. Load-bearing for the posted Q4 promise (verifiers A/B 2026-10-16): the per-split dedup — not the end-date overwrite — is what stops the 365-days .3 after a partial refund, and it must also cover within-run duplicates; the return-triggered .3 feeds the same per-split dedup key. Edge case to document at QA: a credit memo completing after covered-PoD + 365 lets the 365-row load before detection exists, and the dedup then blocks the corrective return-dated row.
+- **O4 (internal, QA):** the CPU date-source change touches the shared `order_type_rules` CTE — regression surface is the whole PoD extract, all order types.
+
+## Implementation plan — single PR (user decision 2026-10-15: start now; open items carry defaults)
+
+User decision 2026-10-15 (revised same day): **ONE PR** for the whole ticket scope. Exception to the `pr-split-planning` ~400-line target, called out per the rule: (1) the entire change is one artifact (the PoD DM `.sql`) plus its `.xdm.catalog`, a binary whole-DM export — slicing across PRs forces serialized live-environment exports and stacked binary churn; (2) this repo merges PRs only at prod promotion, so chained PRs would sit open for weeks with no merge-safety benefit — promotion is the real gate; (3) the slices share CTEs (task chain, `order_type_rules`, `covered_item_dates`, return detection) and are not cleanly separable diffs; (4) repo precedent: the whole 139313 PoD DM shipped as one PR (#1105). Each open point gets a `PENDING CONFIRMATION` comment in the SQL at the exact predicate/join it affects; markers must be resolved (answer received + code adjusted if needed) before promotion.
+
+| PR title | Repo | Contents | Est. lines | Depends on |
+|----------|------|----------|-----------|------------|
+| `[OTCM-146798] CPU PoD date, QC-fail replacement, and warranty-return PoD handling` | `oracle-integration-cloud` (DM `.sql` + `.xdm.catalog`) | The seven work items below | ~620–870 SQL | base branch `OTCM-139313-rmcs-i-3001-pod-dm` |
+
+### Work items (build order inside the PR)
+
+1. **CPU PoD date from pickup-task completion** (~150–200): pickup-step CTE using the OM canonical chain (fulfill line → ACTIVE `doo_orchestration_groups` → `doo_process_step_instances` COMPLETED → step name via `doo_process_steps_tl`, validated on dev1 10-16); new date source in `order_type_rules` for `WP_B2C_CPU` + `WP_CUST_PICKUP`; `covered_item_dates` picks it up for covered items on CPU orders. **DONE 2026-10-16** (+50/−3 lines in the DM, user-authorized edit text): 7 sites — header comment, 2 rule rows flipped to `PICKUP_TASK`, new `pickup_task_dates` CTE (with the PENDING CONFIRMATION name-filter marker), `rmcs_lines` join + 4 CASE arms, `covered_item_dates` join + 2 MAX columns, `warranty_lines_base` 2 CASE arms. **Spot-check PASSED on dev1** (FIN-008, dedup block removed for the A/B since its eligible lines already have loaded PoDs): order-numbers mode — same rows as the old query, `fulfillment_date` changed from delivery 2026-06-28 06:59 to pickup completion 2026-06-29 08:41:03 exactly; windowed mode — 0 rows in a 6/28-only window (pickup 6/29 excluded), 3 rows at the pickup timestamp in a 6/29–6/30 window; dedup suppression intact with the block in place; full query compiles and runs through BIP end-to-end. Warranty arm (covered item on a CPU order) not functionally exercised — no such data on dev1; covered by the compile + QA-4. Arbiter limit discovered: the RP_ARB `:p_sql` bind is VARCHAR2 (32,767) — the DM (34.6KB with comments) exceeds it; spot-checks strip full-line comments first (production DM in the catalog is unaffected).
+2. **QC-fail replacement PoD resolution** (~180–250): replacement lookup (`originalOrder` EFF = original order number, per-line via `originalSourceLineId`); QC Fail = No filter (`Prescription Details` `attribute_char2`); latest-QC-passed selection; PoD = replacement's pickup-task completion (reuses item 1's task chain); ship-only exclusion (`WP_CPU_SHIP_ONLY` / `WP_SHIP_ONLY`). **DONE 2026-10-16** (+98/−3 lines in the DM; Q9 posted first per user decision, covered-item arm deferred): 5 sites — header comment (redirect note), `qc_fail_flags` CTE (DISTINCT line_ids with qcFail='Yes'), `qc_fail_replacements` CTE (ROW_NUMBER latest-by-pickup-date per (original order, line ref); INNER `pickup_task_dates` so only buy-type replacements with a completed pickup qualify; INNER qcFail='No' on the same fulfill line; PENDING CONFIRMATION marker for char6/char5), `rmcs_lines` (ship-only line-type exclusion + qcf/qfr_line/qfr_order LEFT JOINs + 4 flat-CASE sites with the redirect arm gated to `PICKUP_TASK` types first). **Validation on dev1:** probes settled the structure — reference EFF and qcFail='No' co-located on the same fulfill line (22/22 rows); TST002 is WP_B2C buy (excluded by the INNER pickup join — no pickup task on DELIVERY types); TST004 WP_B2C_RETURN/draft (excluded by the rules join); 314's own lines carry no ship-only types. Standalone CTE returns exactly (314, NULL, 2026-10-08 11:42:03); redirect resolves 314's QC-Yes lines 3/11 → 2026-10-08, QC-No line 12 + ORA_BUY 13 → NULL (held), 4 rows = no fan-out. **Full-DM A/B through BIP (comment-stripped variants, dedup block removed for row visibility):** FIN-008 order-numbers old vs new BYTE-IDENTICAL (3 rows, fulfillment 2026-06-29 08:41:03 = item 1's pickup date); window 6/29–6/30 BYTE-IDENTICAL (3 rows); dedup-in runs 0 rows both (suppression intact); order-numbers '314' compiles + executes (0 rows — 314 has no RMCS contract lines, sdl=0). Full functional check on real QC data waits for OM's 333/341 replacement + contracts (QA-5..9). Scratch: monocle_integrations/tmp/dm_qcf_*; item-1 snapshot for the A/B: tmp/dm_item1_state.sql; builder: tmp/build_qcf_variants.py. **char5 fix 2026-10-19 (Q10 answer, Ranjeeth):** char5 carries the internal line id — join switched `l.line_number` → `l.line_id`, column renamed `original_line_id`, PENDING CONFIRMATION comments resolved (char5 mapping confirmed; pickup step-name filter final per user decision). Wide-window A/B on dev1: 9/9 rows BYTE-IDENTICAL vs the item-6 baseline — inert on dev1 data, activates on real OMG replacements (QA-5+).
+3. **Warranty partial-refund PoD** (~220–300): return-detection CTE; full-vs-partial classifier; "U" record (`SRC_ATTRIBUTE_DATE1` = return date, own dedup guard S2); .3 DEFERRED PoD at return date. **DONE 2026-10-16** (+130/−15 lines in the DM together with item 4, user-authorized edit text): 6 sites — header comment; new `warranty_returns` CTE (detection = 3003's merged gate: `WP_WARRANTY_RETURN` line + completed OMG credit memo via `ra_customer_trx_all` `CT_REFERENCE` = return order number, `COMPLETE_FLAG='Y'`, `TRX_CLASS='CM'`, `ra_batch_sources_all.NAME='OMG'`; link to the original warranty line via `doo_document_references` `DOC_REF_TYPE='ORIGINAL_ORCHESTRATION_ORDER'` — the return line's `reference_line_id` is NULL on all 7 dev1 return lines; return date = CM `TRX_DATE`, detection date = CM `CREATION_DATE`); new `warranty_line_state` CTE (latest non-terminal .2/.3 version state per split line via `KEEP/DENSE_RANK LAST` on `version_number NULLS FIRST, creation_date` — required because U writes land as NEW version rows and the pol-joined original row never carries them: 277's original row holds 2026-10-02 while the UPDATE_PROCESSED version holds 2027-09-29); `warranty_lines_base` (drop `sdl.src_attribute_char4/date1`, add `wr.return_date/detected_date`, `full_refund_flag` classifier `ABS(ret.qty*ret.price) >= l.ordered_qty*l.unit_selling_price` — matches FSD Case 1/2 exactly: RMA281 −105 vs 120 partial, RMA277 −87 vs 120 partial, `wls.live_*`, 2 LEFT JOINs); `warranty_lines` (pass-throughs; .3 arm `NVL(return_date, LEAST(end, replacement))`; `contract_end_date` `NVL(return_date, covered_pod+365)` — no second U branch, S2 revised to in-place guards); emission guards (item 4). **Validation on dev1:** full-DM A/B through BIP (comment-stripped, binds substituted) old(item-2 state) vs new — wide window 2026-09-25..10-16 BYTE-IDENTICAL (9 rows incl. warranty .1/.2/.3 PoD rows + one U-record — non-vacuous over the modified paths); 274/277/281 order-numbers byte-identical (0 rows: 277/281 held — covered delivery NULL today; 274 suppressed after the TRUNC fix); FIN-008 / 314 / 6-29..6-30 window compile clean, 0 rows (deduped). Two bugs caught BY the validation: (a) `ra_batch_sources_all` join column is `BATCH_SOURCE_SEQ_ID` not `BATCH_SOURCE_ID` (ORA-00904); (b) two dedup regressions — interface dedup `NOT IN (terminal)` blocked on PROCESSED/UPDATE_PROCESSED (every U would suppress forever; dev1 vocabulary: NOT_PROCESSED/PROCESSED/REJECTED/UPDATE_PROCESSED/UPDATE_REJECTED) → narrowed to `= 'NOT_PROCESSED'` (in-flight only; processed rows must not block the return re-emit), and EFF dedup `live_end_date <> contract_end_date` compared with time components → same-calendar-day re-emit churn (274 emitted a U carrying the stored date) → TRUNC both sides. Return path (wr non-empty) cannot fire on dev1 today: zero completed OMG CMs on warranty return orders (probe re-confirmed 10-16) — end-to-end proof of .3-at-return-date + U rewrite + full suppression waits for Guillermo's fresh warranty-return QA data. Scratch: monocle_integrations/tmp/dm_wg_*; item-2 snapshot tmp/dm_item2_state.sql; builder tmp/build_wg_variants.py; item-4 snapshot tmp/dm_item4_state.sql.
+4. **Full-refund PoD suppression** (~40–70): suppression guard — no pending .2/.3/U rows for a fully-refunded warranty line (shares item 3's detection + classifier). The guard must apply in BOTH windowed and order-numbers (manual reprocess) mode: manual mode skips date holds by design (DM lines 467-469), it must not skip suppression (verifiers A/B, 2026-10-16). QA proves zero rows in both modes. **DONE 2026-10-16** (with item 3): `full_refund_flag IS NULL` predicate in BOTH `warranty_pod_rows` and `warranty_u_rows`, placed OUTSIDE the mode OR so it binds both modes; window GREATEST arms extended with `NVL(detected_date, creation_date)` so a return detected inside the window pulls the .3 PoD / U into the run. Validated as part of item 3's A/B; the suppression-fires case needs a full-refund warranty return with a completed OMG CM — none exists on dev1 (QA-11/12/14(full) blocked on Guillermo coordination, per Open items).
+5. **Drop cross-order covered-item branch** (~30–50): remove the `attribute_char2` cross-order coverage branch (spec'd FSD removal, A3). **DONE 2026-10-16** (+5/−6 lines in the DM, user-authorized edit text): 3 sites — `covered_item_dates` comment (char1 = covered line on the warranty's own order), the join (`NVL(eff.attribute_char2, wh.source_order_number)` → `wh.source_order_number`; the `ch` join stays for stub `DOO_REFERENCE` normalization), header accuracy fix (U-row window description now includes the return-detection date, item-4 follow-through). FSD line 421 strikes Covered Order # ("will not be used as warby will not be selling warranties on a separate Order"). **dev1 evidence:** only 3 Warranty EFF rows carry char2 (309, 310, TWFC2324D0), all with char1 NULL → the covered-line join resolves to nothing for them today; 309/TWFC2324D0 have no contract rows; 310's .1 emits independent of covered resolution. **Validation:** A/B vs item-4 state byte-identical in all 5 pairs — wide window (9 rows, non-vacuous), 310 order-numbers (1 row — the char2-populated order, unaffected as predicted), 277 / FIN-008 / 6-29 window (0-row compile proofs). Untouched: `Prescription Details` char2 (QC-fail) and `sdl.src_attribute_char2` (product segment). Q9 caveat recorded: if Q9's answer ever revives cross-order warranty moves it contradicts the FSD and becomes a functional conversation, not a code branch. A3 prod zero-population check stays a promotion gate. Scratch: tmp/dm_xo_*; item-5 snapshot tmp/dm_item5_state.sql; builder tmp/build_xo_variants.py.
+6. **Mapping re-grain: fulfillment-grain source-doc keys** (~30–45, grew at 15:30): Aruna directive 2026-10-16 (Slack 11:17 + updated mapping template + 2 empty mapping-cell comments assigned to Luis — the reply anchors): all three RMCS components re-key source-doc identifiers. Sheet state after the 14:36 edit (xlsx rich text; the panel's "additive / LINE_ID never struck" finding is SUPERSEDED): 3001 + 3003 DOC_LINE_ID_INT_1 now list FULFILL_LINE_ID with ~~LINE_ID~~ **struck** (D4 + D21; the warranty U-note "only for Warranty DEFERRED" survives unstruck); 3003's DOC_SUB_LINE_ID_INT_1 → DELIVERY_ID from CST_SHIPMENT_REVENUE_MAP; 3001's DOC_ADDL_SUB_LINE_ID_INT_1 (D5) = Delivery_Detail_ID (WSH_DELIVERY_DETAILS) PRIMARY + "Where there is no delivery detail id scenarios, populate the concatenated value as below" → the contract_header_id&document_line_id combination is the documented FALLBACK (Q20 resolved by the sheet — no routed question). DM impact = three edits: (a) standard-branch bind `sdl.doc_line_id_int_1 = l.line_id` in `rmcs_lines_base` (~L442) → `sdl.doc_line_id_int_1 IN (l.line_id, fl.fulfill_line_id)` (cutover-tolerant; no fan-out — one int_1 value per sdl row and the two id spaces are disjoint per the dev1 probe; `fl` already in scope); (b) **addl-sub key emission → `NVL(delivered delivery_detail_id, combination)`** — REQUIRED, not optional: the re-grained 3003 loader is live on dev1 and already wrote 3 dd-keyed PoD addl-sub rows (10-15/16, doc lines 46022/46023/47016) that combination-only U-records would never match; which dd for a multi-dd line is unobserved → join the delivered delivery detail (the one whose delivery the PoD date reads), QA-21 observes loader behavior and adjusts; (c) warranty branch unchanged on the Q21 assumption (warranty keeps line_id — dev1 114/114 line-keyed incl. 52 since 10-02; premise corrected: warranty lines DO carry non-shippable fulfill rows, so 3003 COULD re-key them — the assumption rests on the dev1 grain data, not on design necessity; recovery if wrong = ~3-line join add). Emission + dedup self-adapt: the DM reuses the loaded interface keys, and the dedup/state CTEs key on `document_line_id` + `doc_line_id_int_2` (value-agnostic to the int_1 grain). dev1 evidence: the 10-16 PM + 15:30 probe blocks above. Analysis: `oracle-integration-cloud/tmp/otcm146798_review/mapping_regrain_20261016.md`; probes `int1_grain_probe{,2}.sql`, `dd_probe1-9.sql`. Status: **UNBLOCKED 2026-10-16 ~16:25 — Aruna answered Q20 ("yes this logic is correct") and Q21 ("Warranty order line in DOO_FULFILL_LINES_ALL has a fulfill_line_id. This change is requested in RMCS-I-3003 Contract creation.").** Warranty re-keys to fulfill grain too, but that change rides 3003's contract creation and has NOT landed on dev1 (114/114 warranty splits still line-keyed). Scope final for resume: (a) standard-branch both-grain join `sdl.doc_line_id_int_1 IN (l.line_id, fl.fulfill_line_id)`; (b) addl-sub key `NVL(delivered delivery_detail_id, combination)` (multi-dd rule per QA-21 observation — confirmed by Aruna's Q20 answer); (c) warranty branch both-grain join (~3 lines) — REQUIRED, not optional: the DM must read line-keyed warranty rows until 3003's re-key reaches prod, then self-adapt. **Join-shape fork RESOLVED 2026-10-19 (user standing decision — never in prod):** the standard-branch fork was (A) both-grain `IN (l.line_id, fl.fulfill_line_id)` vs (B) fulfill-preferred precedence with line-key fallback. The only dual-keyed line on dev1 (TestOrder62 line 1) has its line-keyed row WITH an active obligation and its fulfill-keyed row with NO obligation, so (A) emits once via the live contract while (B) emits nothing for it; dev1-wide, zero lines have both keyed rows with active obligations, so (A)'s theoretical double-emission has no instance. Under the standing decision the old-record concerns on BOTH sides are discarded, prod sees only fulfill-keyed rows where (A) and (B) are identical, and (A) is simpler and matches the warranty branch → **(A) both-grain `IN` on both branches.** Delivered-dd resolution for (b): `fulfill_delivery` extends with `MIN(wda.delivery_detail_id)` via `doo_fulfill_line_details.delivery_name` = `TO_CHAR(wsh_delivery_assignments.delivery_id)` (bridge verified on dev1: dated fld rows match 1:1; 103 dds / 51 dated fulfill lines → must aggregate to one dd per fulfill line; all 103 released_status='C', mvt_stat_status NULL on dev1 → no delivered-status filter possible, MIN picks the lowest dd = the first delivery). **DONE 2026-10-19** (+30/−4 lines, 4 hunks): (a) `rmcs_lines_base` bind → `IN (l.line_id, fl.fulfill_line_id)`; (b) `fulfill_delivery` + `MIN(wda.delivery_detail_id) AS delivered_delivery_detail_id` via the bridge LEFT JOIN, key emission → `NVL(fld.delivered_delivery_detail_id, combination)`; (c) `warranty_lines_base` gains a `fl` LEFT JOIN (no shippable filter — 53/53 warranty fulfill rows are non-shippable) + the same `IN` bind; header business-keys comment updated. Validation (QA-19, dev1, comment-stripped binds, dedup removed for visibility except the wide window): order-numbers 336 — OLD 0 rows / NEW 1 row resolved via FULFILL_LINE_ID with `sub_line_id=4369698` (delivered dd) and fulfillment 2026-10-15 00:38 = the delivery date; TestOrder62 (the only dual-keyed line) — 1 row BOTH, byte-identical via the live line-keyed contract (no fan-out); 344 — 0 rows BOTH (its dd-keyed addl-sub parents are FUSION/OPS-sourced rows from 3003's loader, outside the `WP_RECEIVABLES` bind — not a defect); RMATestOrder62 — 0 rows BOTH (its fulfill-keyed sdl row carries no obligation); wide window 2026-09-25..10-19 dedup intact — 9/9 rows match, the only diffs = 4 shipped lines whose `sub_line_id` flips combination → delivered dd (TestPoD3 4358712, TestPoD5 4357024, TestPoDQ12B 4359692, 275 4354508 — each verified = the bridge's delivered dd for that fulfill line), 5 rows byte-identical (CPU/warranty paths untouched); no re-emission of loaded rows (336's loaded combination-keyed PoD still dedups on document_line_id+int_2). Arbiter note: the unminified new wide-window variant (33,053 bytes) blew the 32,767 bind (ORA-01460) — whitespace-minified reruns are the comparison of record. Scratch: `monocle_integrations/tmp/dm_qa19_*`, builder `tmp/build_qa19_variants.py`, pre-item-6 baseline `tmp/dm_item6pre_state.sql`. After the edit: re-run the full A/B incl. QA-19. Prior planning notes (pre-hold): Q21 reworded 15:20 per user: states the move to FULFILL_LINE_ID outright (LINE_ID struck; 3001 never reached prod → no line_id data in prod) — the text no longer claims a both-grain bind, so no pre-post condition. The DM implementation KEEPS the both-grain bind as transition insurance: dev1/stage QA data is line-keyed (330 doc lines, 114/114 warranty splits) and a fulfill-only bind would silently empty the extract for it until 3003's loader re-keys; id spaces are disjoint per probe, no fan-out, prod behavior identical post-cutover. (Note 10-19: the insurance is for QA executability on dev/stage, not data preservation — per the standing decision the dev/stage rows themselves are disposable; a fulfill-only bind would just make QA impossible until the re-key lands.)
+7. **Warranty-branch QC-fail redirect** (~40–60): Q9 answered 2026-10-19 (Aruna): the warranty stays on the original order and no new warranty line is created on the replacement → per the FSD's own date-derivation rule the .2/.3 dates follow the covered item's redirect. Extends item 2's redirect into the warranty branch. Scope + build authorized 2026-10-19 (user). Sites: `covered_item_dates` joins `qc_fail_flags` on the covered line + the two `qc_fail_replacements` arms (covered order's `source_order_number` + covered `line_id`; order-level fallback on NULL line id — no fan-out: flags are DISTINCT, replacements rank-1 per partition) and outputs `covered_qc_failed` / `covered_redirect_date` (MAX-wrapped for the GROUP BY); `warranty_lines_base` `covered_pod_date` CASE gains the first arm `WHEN cotr.date_source='PICKUP_TASK' AND cid.covered_qc_failed='Y' THEN cid.covered_redirect_date`; comments (header redirect note, `covered_item_dates` consumption note, `qc_fail_replacements` "referenced twice" → both branches). Design decisions (mirror the standard branch; no functional asks): D1 redirect gated to PICKUP_TASK covered orders (QC fail is CPU-only — Q16); D2 replace-not-fallback (a QC-failed covered line's own pickup date stops counting; held while no QC-passed replacement picked up); D3 no new last-update analog in v1 — the redirect date pulls the row through the main GREATEST window (the same assumption the standard branch already relies on). Follows automatically: .2 emits at the redirect date, .3 end = redirect + 365, U-records/dedup/suppression untouched; `replacement_dates` (warranty RMA claims) is a separate CTE and stays untouched. QA-22 is the live functional proof — blocked on OM completing 353's pickup (all pickup tasks NOT_STARTED on 348 and 353, probed 2026-10-19). **DONE 2026-10-19** (+31/−10 lines, 6 hunks: header redirect note; `qc_fail_replacements` reference comment; `covered_item_dates` consumption note + 2 outputs + 3 joins; `warranty_lines_base` redirect arm). One build-time bug caught by validation: the FULFILLMENT arm was written in simple-CASE form (`WHEN 'FULFILLMENT'`) inside the converted searched CASE → ORA-00920 on all new variants; fixed before the runs of record. **A/B on dev1 (minified comment-stripped variants, dedup intact; builder `tmp/build_qcf_warr.py`, baseline `tmp/dm_item7pre_state.sql`, runs `tmp/dm_qcfw_*`):** wide window 2026-09-25..10-19 — 9/9 rows BYTE-IDENTICAL vs the item-7-pre baseline (non-vacuous compile+execution proof of the new joins/outputs); 348 and 353 order-numbers — 0 rows BOTH (348 has no RMCS contract rows loaded yet; both hold as predicted: 348's own pickup and 353's replacement pickup NOT_STARTED). Live functional proof = QA-22 (blocked on OM completing 353's pickup). **Refactor 2026-10-20 (user-directed):** the two-column form (`covered_qc_failed` flag + `covered_redirect_date`) collapsed into one output `covered_pickup_pod_date` — the CASE branch moved INTO `covered_item_dates` (`WHEN cqcf.line_id IS NOT NULL THEN COALESCE(cqfr_line, cqfr_order) ELSE ptd.pickup_completion_date END`), so D2 survives (the failed line's own pickup is unreachable once failed) and the consumer's `covered_pod_date` reverted to a simple CASE. A/B on dev1 (builder `tmp/build_qcf_refactor.py`, baseline `tmp/dm_qcfw_refactor_pre_state.sql`, runs `tmp/dm_qcfr_*`): wide window 9/9 BYTE-IDENTICAL, 348/353 empty-group BOTH. DM sha256 now `d65c57df…`. **Re-uploaded 2026-10-20 06:50 (user-authorized):** both pods re-downloaded fresh first (still held `fadf6523…` overnight), CDATA-only swap proven, `updateObject` true on dev1 + stage, round-trip sha256 `d65c57df…` on both; dev1 live windowed run = 9 rows, stage = 0 rows / 0 errors. Pods and worktree are in sync for the `.xdm.catalog` re-export.
+
+### PENDING CONFIRMATION markers (open answer → build default)
+
+- ~~**Item 1**~~ — RESOLVED 2026-10-19 (user decision): the step-name filter `'Pending Customer Pick Up'` is final — tacitly accepted by OM (their reference query uses it; Q1 withdrawn). No marker remains.
+- ~~**Item 2**~~ — RESOLVED 2026-10-19 (Q10, **Ranjeeth**): `attribute_char5` carries the INTERNAL line id, not the line number (the 10-16 TST004 evidence pointed the other way — synthetic rows, superseded by OM's answer). `attribute_char6` = `originalOrder` stands (evidence: 316→'314' ×20, TST004→'TST003'). **DM change APPLIED 2026-10-19:** char5 join switched to `l.line_id`, column renamed `original_line_id`, marker comments resolved. Wide-window A/B 2026-09-25..10-19 on dev1: 9/9 rows BYTE-IDENTICAL vs the item-6 baseline (`tmp/dm_char5_win_min*` vs `tmp/dm_qa19_new_win_min*`) — no real char5 data on dev1, so the fix is inert until real OMG replacements land.
+- **Item 6** — ANSWERED 2026-10-16 (Q21, **Aruna**, D4 thread, verbatim: "Warranty order line in DOO_FULFILL_LINES_ALL has a fulfill_line_id. This change is requested in RMCS-I-3003 Contract creation." — warranty re-keys with 3003, not landed on dev1 yet): warranty contract source lines keep DOC_LINE_ID_INT_1 = `line_id` under the re-grain. Panel 10-16: ASSUMPTION_OK 3/3 — 114/114 warranty splits line_id-keyed, 52 created since 10-02; premise corrected (warranty lines carry non-shippable fulfill rows — the grain is a choice, not a constraint). Raised stakes 15:30: LINE_ID is now struck at D4/D21, leaving FULFILL_LINE_ID the only listed key — if warranty is NOT an exception, 3003 re-keys warranty rows and the warranty bind silently emits nothing. One marker at the `warranty_lines_base` bind join; the join stays `= l.line_id` until confirmed. Not a gate; QA-20 is the empirical backstop.
+- **Item 6** — ANSWERED 2026-10-16 (Q20, **Aruna**, D5 thread, verbatim: "yes this logic is correct" — dd-id primary / combination fallback and the delivered-dd multi-dd rule confirmed): the D5 edit (14:36) answered the open facts — "Where there is no delivery detail id scenarios, populate the concatenated value as below" (Delivery_Detail_ID primary, combination fallback) — so the ask became a confirmation of our reading + dev1 evidence (CPU/pickup 0 delivery details → fallback; warranty non-shippable → fallback; multi-dd lines exist → key the delivered dd). Non-blocking; implementation folded into work item 6(b): `NVL(delivered delivery_detail_id, combination)`; multi-dd which-dd unobserved → QA-21.
+- ~~Item 3 (Q3)~~ — CONFIRMED 2026-10-15 (Aruna): return date = credit memo date; detection = same as 3003 (`WP_WARRANTY_RETURN` line + OMG credit memo complete); ordering = 3003 return lines first, then 3001 PoD.
+- ~~Item 3 (Q7)~~ — CONFIRMED 2026-10-15 (Aruna): amount-equality classifier.
+- ~~Item 4 (Q4)~~ — CONFIRMED 2026-10-15 (Aruna): suppress ALL pending .2/.3/U rows forever.
+
+### Sequencing / gates
+
+- Branch `OTCM-146798-rmcs-i-3001-pod-dm` off `OTCM-139313-rmcs-i-3001-pod-dm` (A5; PR #1105 unmerged — merges at prod promotion).
+- Build in item order, spot-checking each against dev1 data as it lands; ONE full A/B PoD-extract regression on the final state before opening the PR (O4 — shared `order_type_rules` / `covered_item_dates` CTEs; the whole extract is the regression surface).
+- Merge gate (repo convention): the PR merges at prod promotion — the natural window to resolve the PENDING CONFIRMATION markers.
+- Promotion gates: OM prod pickup-task setup (Q1); deploy AFTER OTCM-146384 / 3003 — confirmed by Aruna 10-15 (3003 return lines first, then 3001 PoD; O2); ~~prod `attribute_char2` zero-population check (A3)~~ — WAIVED per user 2026-10-16 16:17 ("this RMCS-I-3001 was never in production" — no migration concern; pre-prod QA covers first-load behavior); no unresolved PENDING CONFIRMATION markers.
+- Re-grain (item 6): the cutover-tolerant join is correct on both sides of the 3003 rollout — no deploy-order dependency (it self-adapts by each loaded row's grain). Q20 is RESOLVED by the sheet (15:30) and folded into the item-6(b) NVL edit; Q21 (warranty grain) does not gate — a different answer is a scoped join fix (~3 lines: the warranty branch has no fulfill join in scope) + reprocess, with QA-20 as the empirical backstop before 3003's prod cutover.
+- QA data: 333/341 (QC fail), 316→314 + TST pairs (replacements), 39 COMPLETED pickup tasks on dev1; a replacement for 333/341 requested from Vijay for end-to-end mapping confirmation; warranty return data needs coordination with Guillermo (RMA281/RMA277 consumed by 146384 QA). **Verifier dev1 probes 2026-10-16 (open-items check):** 314 carries QC Fail = Yes on 10 lines, 316 all No on 40 lines, and 316 has 5 COMPLETED pickup steps (last 2026-10-08) → QA-5's ORDER-level path is servable today with 316→314; but 316's `originalSourceLineId` (char5) is NULL on all 40 lines → the PER-LINE arm has zero serving data (the asked 333/341 replacement is needed for per-line coverage). Warranty: RMA281/RMA277 partials are SPENT (order 277's .3 PoD+365 already loaded, end date overwritten by a U record — reusable only for the QA-15 late-detection edge); NO full-refund warranty case exists on dev1 at all → QA-11/12/14(full) blocked until Guillermo coordination produces fresh partials + one full-refund case. **2026-10-19 open-items verifier probes (dev1):** full-refund-SHAPED return orders exist but are DM-invisible — RMA-284 (OPEN, refund 120 = original 120) and 293 (DOO_DRAFT, 120 = 120) carry NO credit memo; newest CM on dev1 is 2026-08-03 and zero OMG-source CMs exist, so the detection chain fires on nothing (partial or full) until Guillermo's fresh data lands with completed OMG CMs. Also re-confirmed: no replacement of 333/341 exists (0 EFF char6 hits), 316's 40 rows still char5-NULL.
+
+### QA test scenarios (user decision 2026-10-16: WE propose and execute — generate the data on dev1, run the PoD extract, verify results, post the evidence to the ticket; QA only validates the evidence)
+
+Execution note: the change is DM-only (A1 — no monocle code), so "run" = run the PoD extract (BIP report / OIC flow) on dev1 in windowed mode and, where stated, order-numbers (manual reprocess) mode. Evidence per scenario: extract rows (DAT), report output, and the resulting RMCS state, posted to OTCM-146798 per the `jira-qa-evidence` skill.
+
+**CPU PoD date (work item 1):**
+- QA-1 WP_B2C_CPU order with a COMPLETED pickup task → PoD = task completion date (dev1 has 39 COMPLETED tasks, incl. order 341's line).
+- QA-2 WP_CUST_PICKUP order → same rule (Vijay 10-15).
+- QA-3 CPU order whose task is NOT_STARTED / WAITING → no PoD row emitted (held).
+- QA-4 Warranty covered item on a CPU order → the .2 UPFRONT PoD date = task completion date.
+
+**QC-fail replacement chain (work item 2):**
+- QA-5 QC-failed order with a QC-passed replacement (333 or 341 + the OM-created replacement) → the original line's PoD = replacement's pickup-task completion.
+- QA-6 Double replacement (original fails, replacement fails, second replacement passes — FSD Scenario 3) → root semantics: latest QC-passed replacement OF THE ORIGINAL order wins.
+- QA-7 QC-failed order with no replacement yet → held, no row.
+- QA-8 Ship-only lines (`WP_CPU_SHIP_ONLY` / `WP_SHIP_ONLY`) never emit standard PoD rows (316's 20 lines as the standing example).
+- QA-9 Anomaly: several QC-passed replacements of one original → latest wins.
+- QA-22 Warranty covered item on a QC-failed CPU line (348/353 — Q9's scenario, work item 7): before the replacement's pickup completes, the warranty .2 stays held; after OM completes the pickup task on 353's replacement line, the .2 emits at that pickup completion and the .3 = pickup + 365. After OM completes 353's pickup, run the standalone `covered_item_dates` CTE for 348/353 read-only and assert `covered_pickup_last_update` equals the replacement's pickup write date (isolates the write-date leg, which a fresh pickup never separates from the completion-date leg); post the probe output as evidence. External ask at QA: Ranjeeth completes 353's pickup task (rides with the 353 char5 mixed-semantics flag).
+
+**Warranty returns (work items 3/4) — per verifiers A/B 2026-10-16:**
+- QA-10 Partial refund → U carries `SRC_ATTRIBUTE_DATE1` = credit memo date; the .3 carries the credit memo date; no row carries PoD + 365; a later run covering the old end date emits nothing more for that split.
+- QA-11 Full refund → zero .2/.3/U rows in windowed mode AND in order-numbers (manual reprocess) mode — proves the guard is suppression, not a date hold.
+- QA-12 Full refund after the .2 already loaded → pending .3 and U suppressed.
+- QA-13 Both .3 triggers eligible in one run → exactly one .3 row (within-run dedup + INITIALIZED blind spot).
+- QA-14 Classifier boundaries: return amount = original warranty amount → full; less → partial (partials à la RMA281/RMA277 + one full-refund case; coordinate data with Guillermo).
+- QA-15 Late-detection boundary (credit memo completes after day 365): document actual behavior — the 365-row loads first and the gate suppresses the corrective return-dated row before it is computed.
+- QA-16 Ordering: evidence shows 3003 return lines loaded before the 3001 PoD (Aruna Q3-3).
+
+**Regression / cleanup (item 5 + O4):**
+- QA-17 Full A/B PoD extract vs the pre-change baseline on dev1: all order types; standard no-return warranty flows (.1/.2/.3 + U) byte-identical. **PASSED 2026-10-16** (window 2026-06-01..10-16, baseline = git HEAD of the worktree branch, 681-line pre-change DM): 10 rows identical (incl. all standard warranty .1/.2/.3 + U flows), 0 rows only-in-old, 3 rows only-in-new — order TNAQ4YG02Z (WP_B2C_CPU) lines 3/5/6, fulfillment 2026-09-16 16:18:20 = each line's `Pending Customer Pick Up` completion; verified: `actual_delivery_date` NULL (old DELIVERY rule held them forever), so these are the intended item-1 backlog surfacing through the normal window — expected first-run behavior at go-live, note in the PR. Artifacts: tmp/dm_qa17_*.{sql,out.xml,err.log} + dm_qa17_full.diff + dm_qa17_tnaq.sql.
+- QA-18 Cross-order coverage dropped (item 5): a warranty referencing a covered item on another order → held silently (no error, no output). Plus the prod `attribute_char2` zero-population check before promotion (A3).
+
+**Re-grain (item 6):**
+- QA-19 Cutover tolerance: order-numbers A/B (dedup block removed for visibility) on 336 + RMATestOrder62 — the only 2 fulfill-keyed interface rows on dev1: old DM = 0 rows (the `line_id` bind fails), new DM = rows resolve via FULFILL_LINE_ID. Wide-window A/B with dedup intact: byte-identical — no duplicate re-emission of the already-loaded fulfill-keyed rows. **PASSED 2026-10-19** (full results in work item 6): 336 old 0 / new 1 row (dd-keyed `sub_line_id=4369698`, fulfillment = delivery date); TestOrder62 dual-key line byte-identical 1 row (no fan-out); 344 + RMATestOrder62 0/0 with data explanations (non-WP_RECEIVABLES parent rows; no obligation); wide window 9/9 with the 4 intended dd-key flips (each bridge-verified) and 5 byte-identical.
+- QA-20 Post-cutover warranty grain test (Q21 backstop): after the re-grained 3003 deploys to dev1, create a warranty contract and probe the split rows' DOC_LINE_ID_INT_1 grain (expect line_id). The ONLY empirical test of the Q21 assumption — all existing dev1/QA warranty data is pre-cutover. MUST run before 3003's prod cutover; coordinate with Guillermo's 3003 QA.
+- QA-21 Multi-dd addl-sub key observation (item-6(b) backstop): ~1.5% of WSH source lines carry 2+ delivery details (up to 96), but no multi-dd line has been loaded to `vrm_source_doc_addl_sublines` on dev1 (134/134 singleton rows; the 4-row group was NULL-doc-line stubs). When Guillermo's 3003 QA loads a split-shipment (multi-dd) contract line — or we construct one — observe: one addl-sub row per dd, or one row keyed by one dd (which?). Align the DM's NVL join (delivered dd) with the observed loader behavior. Same check for the FULFILLMENT branch: `shipped_line_details` keys a split-shipped line by `MAX(delivery_detail_id)` with no date pairing; when multi-dd loader behavior is observed, also check which dd a FULFILLMENT-source line gets keyed by (if the loader treats the dd key as a specific-shipment reference, the MAX-pick may mis-key). Escalate to Aruna ONLY if the observed behavior is incoherent with PoD semantics. Bounded blast radius: every pre-prod load is reprocessable.
+
+**Round-2 review fixes (2026-10-20 panel → best-of-3 merged DM):**
+- QA-23 Multi-line delivery own-detail keys (fix _04): one WSH delivery with several fulfill lines (FIN-006 pattern, delivery 1439126) → each line's PoD keys by its own delivery detail, never a sibling's. NOTE: already-loaded rows (FIN-006's four lines) do not re-emit — the dedup suppresses re-emission; verify on a NEW multi-line delivery from QA (or after clearing the loaded rows).
+- QA-24 Dated-delivery tie (fix _04): a fulfill line with details on 2+ deliveries, one with a delivery date → the emitted key is a detail of the DATED delivery (KEEP LAST), never another delivery's. No dev1 data — construct in QA or accept code-level verification (wide-window A/B byte-identity proves no regression).
+- QA-25 Wholesale with WSH details (fix _13): a WP_B2B_WHOLESALE shipped line → addl-sub key = its own delivery_detail_id. **PROVEN 2026-10-20** on dev1 (merged-DM wide-window A/B): order 248 line 300000896504426 flipped 3801438017 → 4349296, probe-verified as that line's own detail.
+- QA-26 FULFILLMENT-source without details (fix _13 fallback): a takeaway/wholesale line with no WSH detail → combination fallback key, unchanged (wide-window byte-identity covers: 12/13 rows identical).
+- QA-27 Warranty fulfill fan-out (fix _02): a line-id-keyed warranty split whose line carries 2+ non-shippable fulfill rows → exactly one PoD row per split (semi-join). Data-dependent on dev1 — check at QA.
+- QA-28 Reload after rejection (fix _01): a standard line whose interface row exists twice on the same keys (REJECTED + reloaded NOT_PROCESSED) → the pin yields one PoD row; multi-fulfill-row lines are covered by the 1:1 assumption, not the pin.
+- QA-29 Late-return backfill (fix _19, order-numbers mode): a return detected after the computed contract end date → no .3 and no U for that return, even in manual reprocess mode (the gate now binds in both modes).
+- QA-30 Gate binding (fix _19): the gated return date is bound by the .3 arm and contract_end_date; the raw value is not projected (a missed consumer fails ORA-00904). Compile + windowed byte-identity in the 2026-10-20 merged A/B cover this.
+- QA-31 Round-2 regression guard: '348'/'353' order-numbers byte-identity + QA-window byte-identity. **PROVEN 2026-10-20** (merged-DM A/B on dev1): 348/353 empty in both old and new; window 2026-09-25..10-19 9/9 identical (QA-19 keys hold); wide 13/13 with the single QA-25 flip.
+
+## Next steps
+
+1. ~~User posts Q1–Q5 to the FSD~~ — Q1–Q4 verified in Drive 10-14; Q7 verified landed 10-15; Q5 presumed deliberately skipped (confirm with user).
+2. ~~User confirms/flags A1–A5, S1–S3, O1–O4~~ — triaged 2026-10-14 (A2 → Q5; A3 internal with prod pre-merge check; A6 from Q7; rest internal).
+3. ~~Q2~~ — answered by Vijay 2026-10-15 (see Answered section).
+4. ~~Await: Q3, Q4, Q7-confirm~~ — all answered by Aruna 2026-10-15 (synced 10-16; see Answered section). Still awaiting: task type code + exact EFF attribute columns (both punted by Aruna to **Ranjeeth**, reassigned 10-15); a replacement order for 333/341 (Vijay ask); prod task setup timing (promotion gate).
+4b. User posts reply to Aruna's 365-days question on the Q4 thread (final revised wording in Answered §Q4 — verified by 2 independent agents 2026-10-16, reports in tmp/q4_verify/).
+5. Confirm with user: Q5 deliberately not re-posted? (it is moot either way).
+6. **OPEN — prod SQL self-serve blocked:** prod Fusion BIP user `wp_scp_integration_user` lacks RP_ARB on prod; stage BIP user cannot see `doo_order_types_b`. (Prod creds must come from the user per the pod-targeting rule, if ever needed.)
+7. ~~PR division per the `pr-split-planning` rule~~ — resolved 2026-10-15 as a SINGLE PR (user decision; exception to the ~400-line target recorded in the Implementation plan section).
+8. Implementation per `pr-workflow`: branch `OTCM-146798-rmcs-i-3001-pod-dm` off `OTCM-139313-rmcs-i-3001-pod-dm`, work items in order, DM change + catalog re-export, full A/B regression before opening. **Status 2026-10-16:** all 5 work items written + validated (entries above); QA-17 full-extract A/B PASSED (10 identical / 0 old-only / 3 explained new — TNAQ4YG02Z CPU backlog); freshness gate clean (origin/main has no DM, only PR #1105 overlaps, live dev1 == live stage == worktree HEAD); Drive re-sync confirmed all requirement docs current; pre-opening review panel launched (run id `20261016T1024`, 4 panels × 3 seats, briefs+reports in `oracle-integration-cloud/tmp/otcm146798_review/`). Next: consolidate findings → dev1 catalog upload (authorized text, then live verify) → user re-exports `.xdm.catalog` → commit (approval) → PR. **Review round 1 consolidated** (`oracle-integration-cloud/tmp/otcm146798_review/consolidated.md`): 12/12 seats, every claim verified against the worktree. 4 verified blockers (U-window GREATEST NULL-poisoned on the return path; sdl version-row fan-out — dev1 probe: VF='N'/VN=1 on all rows, creation_date is the only discriminator, multi-row keys exist today; warranty_returns header-grain refund cross-contamination — fix available, ddr.line_id IS populated; unguarded TO_NUMBER(char5) + raw-string rank partition), 6 should-fix, comment pack, 12 functional/OM questions (ct_reference format unverifiable on dev1/stage — zero OMG CMs, prod probe not permitted), A/B re-run required post-fix. **Review fixes applied + verified (2026-10-16 12:30)**: dispositions per user (fail-loud char5, refactor now, late-return gate now, .1 suppression kept per FSD); all fixes in the worktree DM (GREATEST NVL, earliest-viable anti-join pin, ddr.line_id correlation, terminal filter, stub filter, rmcs_lines_base refactor, conversion policy, comment pack, UPDATE_NOT_PROCESSED dedup hardening). Post-fix A/B vs pre-fix snapshot: 6/6 byte-identical (9-row wide window, 274/277/281/310 order-numbers, FIN-008 compile). Question triage (3-seat panel 10-16, `triage/consolidated_triage.md`): the review questions → 3 asks (Q10 char5 line-id semantics — dev1 probes 10-16 NOT decidable: only synthetic TST orders carry char5='1', and those are orphan EFF rows that fail the fulfill-line join — 0 TST rows in the 2,205-row joined probe; real replacement rows 316→314 carry char5 NULL; Q11 ct_reference format — unverifiable, zero OMG CMs on dev1/stage; Q12 prod char2 count reframed as a data request with the exact query) + 1 chase (≡ Q9 covered-item QC-fail, already routed in the FSD 10-16) + 7 dropped with documented assumptions (Q18 kept as a pre-prod empirical probe; Q16 weakest — risk-seat dissent logged). Every routed question carries an exact Where-to-ask (rule hardened after repeat misses); all live in this plan's Questions section (Q10–Q21) — the sidecar routing doc was merged in and deleted 2026-10-16. NEW 10-16 PM: **Aruna's mapping re-grain** (Slack 11:17 + mapping template diffs via `--refresh` sync; FSD body/comments unchanged) — all three RMCS components re-key source-doc ids to fulfillment/delivery grain; 2 empty mapping-cell comments assigned to Luis (`VRM_SOURCE_DOC_LINES!D4`, `VRM_SOURCE_DOC_ADDL_SUBLINES!D21`) are the reply anchors; Q20/Q21 added, then dispositioned by a 6-seat verification panel (`triage_q12q13/consolidated_q12q13.md`): Q20 = MUST ASK (promotion gate only; anchor corrected to the existing D5 thread; wording asks-not-asserts CPU + folds in the WSH-vs-CST_SHIPMENT_REVENUE_MAP id-space and delivery-detail uniqueness checks); Q21 = ASSUMPTION_OK 3/3 + reworded confirmation at D4 + D21 pointer (premise corrected: warranty lines carry non-shippable fulfill rows — 53/53 probe; the assumption rests on additive edits + 52/114 post-cutover warranty splits line_id-keyed); QA-20 added (post-cutover grain test, must run before 3003's prod cutover). Next: apply item 6 (re-grain joins) → full A/B re-run incl. QA-19 → dev1 catalog upload (authorization pending) → live verify → user re-exports `.xdm.catalog` → commit → PR. **Status 2026-10-19 ~16:40:** item 6 applied (QA-19 PASSED) and item 7 applied (A/B byte-identical — entries above); dev1 catalog upload EXECUTED (user-authorized 16:30): edited `_datamodel.xdm` built from dev1's own download with a byte-level CDATA-only proof (parameters and `<structure>` untouched), `updateObject` true on dev1, round-trip re-download sha256 `fadf6523…` == the authorized worktree text; live report verify — windowed 09-25..10-19 = 9/9 rows identical to the arbiter run, order-numbers 348/353 = 0 rows as predicted (BIP date params take `MM-dd-yyyy` per the DM's parameter format mask; ISO strings silently misparse into garbage dates with no error). **Stage sync 2026-10-19 ~16:47 (user-authorized):** same CDATA-only build from stage's own download → `updateObject` true on fa-evdi-test; round-trip sha256 `fadf6523…` identical; live report windowed = 0 rows / 0 errors (execution proof — stage has no eligible QA data in the window). Both pods now carry the identical DM. Next: user re-exports the `.xdm.catalog` from dev1 → commit (approval) → PR. **Status 2026-10-20:** review round 2 (run `20261020T0644`, 12/12 seats, 19 findings — register `oracle-integration-cloud/tmp/otcm146798_review/panels2/all_findings.md`) → user keep/drop → best-of-3 implementation merge (implementer B's base + restored shippable filter + comment trims; canonical artifact `tmp/otcm146798_impl/merged/DM.sql`, md5 `b471e82f…`; base→merged +199/−64 verified hunk-by-hunk against the register). Merged A/B: dev1 348/353 empty both sides, QA window 9/9 byte-identical (QA-19 keys hold), wide 13/13 with one verified flip (order 248 line 300000896504426 → own detail 4349296, fix _13); stage empty in both windows and both order modes. QA-23..QA-31 added (QA section). Plan file QA note: already-loaded rows never re-emit (dedup), so FIN-006-style key fixes prove only on fresh data. Review round 3 (run `20261020T0823`, 12/12 seats, ZERO blockers) consolidated at `tmp/otcm146798_review/panels3/all_findings.md` — 15 findings, user keep/drop PENDING: top = unwindowed `shipped_line_details` (SHOULD-FIX, 8/12 seats, output-inert verified against the real window predicate), plan-side QA-28/_06-proof/QA-30 wording, the bridge char-conversion claim UNVERIFIED (orchestrator DUMP probe: `source_shipment_id` is Typ=2 NUMBER — premise disproven), resolution INNER-vs-LEFT call with a cross-seat dissent. Worktree drift (one comment line lost after the merge) caught by requirements_3 and restored from the canonical copy. Next: round-3 dispositions → code-touching fixes + dev1 A/B re-run → catalog re-upload (confirmation) → user re-export → commit → PR. **Round-3 dispositions (user, 2026-10-20):** apply 3, 11, 12, 6A (LEFT JOINs), 9A (fold into QA-21), 13, 10, 1, 2, 7, 8 (accept as-is), 4; ignore 5 (DUMP probe disproved the premise), 14 (already resolved), 15 (record-only). Best-of-3 implementation (`tmp/otcm146798_r3_impl/`): code hunks byte-identical across all seats; merge = seat B's DM + seat A's "same WSH bridge as" bridge pointers; canonical `tmp/otcm146798_r3_impl/merged/DM.sql` (md5 `da46dc77…`), worktree synced, diff vs round-2 base = exactly the 7 approved fixes (11 change groups, `merged/r2base_to_r3merged.diff`). Plan-side fixes applied to QA-28/QA-22/QA-30/QA-15/QA-21 (seat A's texts). **Round-3 A/B (2026-10-20, harness `monocle_integrations/tmp/build_round3_ab.py` + `dm_r3m_*`):** dev1 — QA window 9/9 md5-identical (`94bdb9c9…`), wide 13/13 md5-identical (`c3348e95…`), 348/353 empty on both variants; stage — empty in both windows and both order modes on both variants. The _03 window predicate is output-inert in practice, _06A byte-identical on healthy data, alias/comments invisible. Round-3 regression gate PASSED. **Round-3 catalog upload (2026-10-20, user-authorized):** CDATA-only swap built per pod from each pod's own fresh download (dev1 live SQL verified == round-2 base before the swap); `updateObject` true on dev1 (60,963 bytes) and stage (60,966 bytes); round-trip re-download on BOTH pods == round-3 `merged/DM.sql` byte-for-byte (sql sha256 `47b75f5a919b48ba` both pods); dev1 live report run through the deployed DM (`WP RMCS Proof of Delivery Report.xdo`, 09-25-2026..10-19-2026, orders NONE) = 9 rows, matching the A/B QA baseline. Artifacts in `oracle-integration-cloud/tmp/otcm146798_r3_impl/catalog_swap/{dev1,stage}/` (backups, orig, edited, round-trips). **`.xdm.catalog` re-export DONE 2026-10-20 09:43 (user):** the worktree catalog inflates cleanly and its SQL sha256 == `47b75f5a919b48ba` (the round-3 upload) — the catalog carries the round-3 DM. Worktree DM.sql md5 == `da46dc77…` (round-3 canonical). **PR OPENED 2026-10-20 09:50 (user-approved):** [#1141](https://github.com/WarbyParker/oracle-integration-cloud/pull/1141), commit `a53bfb96` (`[OTCM-146798] Add CPU pickup, QC-fail replacement, and warranty-return handling to the PoD DM`), base `OTCM-139313-rmcs-i-3001-pod-dm` (stacked on #1105), body = `oracle-integration-cloud/tmp/pr_description.md` verbatim, labeled `enhancement` (checkbox flipped post-label). Merges at prod promotion after RMCS-I-3003 (OTCM-146384).
+9. QA: OM setup on dev1 largely done (O1); needs a replacement order exercising `originalOrder`/`originalSourceLineId` + new warranty return test data (RMA281/RMA277 already consumed by 146384's QA).
+10. **Routed comments (round-2 register _14–_18) — POSTING 2026-10-20:** six final texts (user-trimmed from `oracle-integration-cloud/tmp/otcm146798_impl/merged/prepared_comments.md`): _14 FSD Scenario-1 thread (full-refund detection rule + never-discounted assumption); _15 new FSD comment on the QC-fail DFF text (one failed line covered by BOTH a per-line and an order-level replacement reference? — OM + functional); _17 mapping ADDL_SUBLINES Satisfied Quantity (warranty splits send the loaded split line's QUANTITY, not FULFILLED_QTY — non-shippable fulfill rows); _16a mapping LINES SRC_ATTRIBUTE_DATE1 ("Return order date" → credit memo date wording); _16b mapping ADDL_SUBLINES DOC_LINE_ID_INT_2 (split-numbering typo "3.1 , 3.1 , 3.3"); _18 FSD §2.3 (stale "delivery date updated" bullet → pickup-task design). Pre-posting gate: 3 independent agents fact-checked the exact posting texts word by word against the FSD body, open + resolved threads, mapping sheets, sample loaded files, and this plan's Answered section (`tmp/otcm146798_impl/comment_check_{1,2,3}.md`). When the threads reply, fold the answers into the Questions section. **Fact-check outcome (3/3 seats agree):** _15, _17, _16a, _16b POST AS-IS; _14 TRIMMED (dropped part (1) — Aruna confirmed the classifier 2026-10-15, Answered Q7; hazard sentence made direction-neutral since both sides of the DM predicate use qty × own unit price, DM.sql 418/648); _18 REWORDED (the 'Pending Customer Pick Up' thread is anchored in §1.1, not §2.4 Key Logic). `merged/prepared_comments.md` updated to match. **POSTED 2026-10-20 (user):** _14 → Q22 (FSD, Scenario 1 title, new comment), _15 → Q23 (FSD, QC-fail DFF sentence), _17 → Q24 / _16a → Q25 / _16b → Q26 (mapping template rows). FSD posts verified in the 09:00 comment sync; the three mapping posts confirmed in the 09:52 re-sync (Drive comments API lag between UI posting and API visibility, not missing posts): ADDL_SUBLINES!D36, LINES!D173, ADDL_SUBLINES!D23. _18 → Q27 POSTED (user-trimmed to the bare question on the §2.3 bullet) — all six routed comments are live and verified in the local sidecars. **Answers 2026-10-20 (synced 14:01):** Q22 ANSWERED (warranty price always fixed, no discount — the full-refund classifier is safe as built); Q27 ANSWERED (§2.3 bullet confirmed stale, Aruna updated the body to the EFF-linkage wording — no DM impact); Q9 re-confirmed (warranty .2/.3 = the replacement's pickup-task completion — work item 7 as built). Q23 (dual replacement references), Q24 (Satisfied Quantity), Q25 ("Return order date" wording), Q26 (typo) still pending. **Answers 2026-10-21 (12:59 sync):** Q24 ANSWERED — fulfilled qty populates on non-shippable warranty fulfill rows when invoiced; verified on dev1 across 277/281/284/348; "either of this logic works" = the QUANTITY mapping is accepted (verbatim + verification in §Q24). Q23/Q25/Q26 still pending.
+11. **PR #1141 Bugbot review round (2026-10-21):** Bugbot reviewed commit `a53bfb96` on 2026-10-20 (3 findings; threads `4326445650` / `4326445664` / `4326445677`). Dispositions after code + pod verification: F1 (High, warranty CM join key) = FALSE POSITIVE — `order_number == source_order_number` on all sampled headers on both pods, all three columns VARCHAR2, ct_reference = the return order number per Aruna 10-19; an optional `source_order_number` rename is conceded as a no-op readability nit. F2 (Medium, CPU PoD missed across windows) = APPLIES — terminal-status gate × pickup-completion window with no re-selection catch in the standard branch (the warranty branch's `covered_pod_last_update` catch is the in-file precedent; same stranding class as AR-I-3018); the reply commits to a last-update-catch fix in this PR. F3 (Medium, TO_CHAR wraps) = ACCURATE RULE, HARMLESS — L433 no-op on VARCHAR2 `order_number`; L115 filters within the unwrapped `wda.delivery_detail_id` access path; `TO_NUMBER(fld.delivery_name)` would risk ORA-01722. Prepared replies (verbatim comments + bodies): `oracle-integration-cloud/tmp/otcm146798_pr1141_comments/pr_comment_replies.yaml` — **AWAITING USER APPROVAL to post** (GitHub review-thread replies on #1141). If approved with the F2 commitment: add the last-update catch to the standard branch (mirror the warranty branch; NOT EXISTS dedup keeps the wider selection safe), A/B re-run, catalog re-upload (user confirmation), `.xdm.catalog` re-export, commit + push to the PR branch.

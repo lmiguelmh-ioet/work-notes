@@ -15,14 +15,14 @@ Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-149147
 - **RICE**: AR-I-3018
 - **Dates**: 2026-10-19 → —
-- **Outcome**: In flight — root cause confirmed on stage; fix designed and panel-verified (window on the open-balance row's creation date + small lookback); plan pending approval.
+- **Outcome**: In flight — PR #1143 (balance-row window + `P_LOOKBACK_MINUTES` + first-invoice rule, head `babdcda1`, dev1 byte-verified) and PR #2795 (skip visibility + aligned ticket text) open; Tony's review threads and his 8-item comment 972074 answered (verified, posted 2026-10-21); AR-I-3019 follow-up filed as OTCM-149784; merge gated on Tony's Q1–Q5 (asked 2026-10-21), stage QA pending.
 - **Notes**: [projects.AR-I-3018.OTCM-149147](projects.AR-I-3018.OTCM-149147.md)
 
 ## OTCM-146798 – RMCS-I-3001: CPU pickup PoD, QC-fail chain, warranty returns
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-146798
 - **RICE**: RMCS-I-3001
 - **Dates**: 2026-10-15 → —
-- **Outcome**: In flight — all 5 DM work items written + validated on dev1; 12-reviewer panel's 4 blockers fixed, post-fix A/B 6/6 byte-identical; dev1 upload pending.
+- **Outcome**: In flight — PR #1141 open (stacked on #1105, merges at prod promotion after RMCS-I-3003); DM live + verified on dev1 and stage; Bugbot's 3 findings triaged (1 false positive, 1 real pickup-window stranding fix committed, 1 harmless) with replies awaiting approval to post; functional Q&A nearly closed (Q23/Q25/Q26 pending).
 - **Notes**: [projects.RMCS-I-3001.OTCM-146798](projects.RMCS-I-3001.OTCM-146798.md)
 
 ## OTCM-143188 – AR-I-3018: cap credit memos at the invoice balance

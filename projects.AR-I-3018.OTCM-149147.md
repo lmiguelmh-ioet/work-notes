@@ -1,9 +1,9 @@
 # OTCM-149147 — AR-I-3018: keep selecting an unapplied exchange credit memo and its open invoice after both creation dates fall behind the last run
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-149147
 - **RICE**: AR-I-3018
-- **Repos**: `oracle-integration-cloud` (data model only — no monocle, no OIC change)
-- **Status** (as of 2026-10-20, plan pending approval): root cause confirmed on stage (invoice 18024: header created 19:59:23, its open-balance row 20:03:26 — the 20:00 run's window covered the header date but the join found no balance row; every later window starts past the header date). Fix designed and verified by a 3-seat independent panel and a 2-seat adversarial panel: window the report on the open-balance row's creation date plus a small lookback. User dropped the OIC pointer-gate companion (shared flow) and the managed backlog drain (old records run manually anytime). Plan pending approval.
-- **Plan**: `monocle_integrations/.cursor/plans/ar-i-3018_window_schedule_creation_554f4650.plan.md` (archive copy lands here at wrap-up)
+- **Repos**: `oracle-integration-cloud` (PR 1: data model only, no OIC change) + `monocle_integrations` (PR 2: zero-balance skip visibility, added 2026-10-20 per user decision 1B)
+- **Status** (as of 2026-10-21): ticket in **Review** (moved 2026-10-21 11:02 ET, per the local ticket sync); both PRs open. PR 1 ([#1143](https://github.com/WarbyParker/oracle-integration-cloud/pull/1143), stacked on #1064, merges at prod promotion) carries the balance-row window fix, the lookback as report parameter `P_LOOKBACK_MINUTES` (default 5), AND the first-invoice rule (head `babdcda1`): johnny-coral-wp's review exposed a re-pair hazard — a memo skipped on a closed invoice stayed eligible and could pair with a second invoice on the reference — confirmed by a 3-seat panel and a 2-seat adversarial panel. Dev1 carries the full text byte-verified; stage carries the window text. PR 2 ([#2795](https://github.com/WarbyParker/monocle_integrations/pull/2795)) opens one consolidated Error-severity Jira ticket per run naming each zero-balance skipped memo; its ticket text now matches the rule (`9926940de`). The AR-I-3019 selection follow-up is filed as OTCM-149784. Remaining: Tony's Q1–Q5 sign-off (asked on Slack 2026-10-21, merge gate), T9/T10 dev1 legs, stage paste + stage QA scenarios, Tony updates the description/ACs, FSD comment, PR-2 Jira comment, gate-wording comment on OTCM-149784, merge at prod promotion.
+- **Plan**: `monocle_integrations/.cursor/plans/ar-i-3018_window_schedule_creation_554f4650.plan.md` (verbatim snapshot archived 2026-10-21 at `notes/projects.AR-I-3018.OTCM-149147.plan.md`)
 
 ## The stranding bug and the fix (plain terms, with the real example)
 
@@ -68,7 +68,7 @@ One microscopic race survives: if Oracle stamps the balance row at 19:59:59 but 
 
 - **Pairs already stranded today** have old balance-row dates too; no future window reaches them. They are recovered by a manual ad hoc run (by transaction number or date range) anytime — no managed drain needed.
 - **Unapply-revival**: if a human deliberately unapplies a memo, the pair re-opens with all-old dates and no scheduled window ever selects it again. Automatic re-selection would fight a deliberate human action, so revival stays manual (ad hoc run). Documented on the ticket; the automatic variant is parked as a follow-up pending functional sign-off.
-- **The zero-balance skip** (found by the adversarial panel, code-verified): when two memos pair with the same invoice in one run, monocle applies the first, sees the invoice balance hit zero, and politely SKIPS the second — reporting success, moving the bookmark, firing no alert. The skipped memo strands invisibly. No date field can fix this; it needs a pairing/ordering decision. Open business question (Q4 in the plan): could that invoice be reused — should the skipped memo re-pair with the next eligible invoice on the same exchange reference, or stay for manual handling?
+- **The zero-balance skip** (found by the adversarial panel, code-verified): when two memos pair with the same invoice in one run, monocle applies the first, sees the invoice balance hit zero, and politely SKIPS the second — reporting success, moving the bookmark, firing no alert. The skipped memo strands invisibly. No date field can fix this; it needs a pairing/ordering decision. Open business question (Q4 in the plan): could that invoice be reused — should the skipped memo re-pair with the next eligible invoice on the same exchange reference, or stay for manual handling? (Answered 2026-10-20 by Tony: never re-pairs — now enforced by the first-invoice rule, decision 10.)
 
 Because of the last two, the ticket's acceptance criterion AC1 ("any pair whose dates fall behind gets applied by a later scheduled run") is re-scoped honestly to the read-lag class, which the fix eliminates structurally.
 
@@ -77,10 +77,11 @@ Because of the last two, the ticket's acceptance criterion AC1 ("any pair whose 
 The integration remembers where it left off with a bookmark and only looks at records "created since the bookmark". The bug: it checked the birth certificate of the invoice (the header row) but required the balance row to already exist — and the balance row is born minutes to hours later. A pair whose window closed in between vanished forever. The fix checks the balance row's birthday instead — by definition the first moment the pair could possibly be seen — so anything not yet visible simply shows up in a later window. A small lookback covers the seconds-scale commit race. Old records are recovered by manual runs anytime; human un-applies and same-invoice memo collisions are documented as follow-ups, not silently ignored.
 
 ## Outcome
-- In flight — nothing shipped yet; plan pending approval.
+- In flight — two PRs open, both updated 2026-10-21 (PR 1 head `babdcda1`: window + lookback parameter + first-invoice rule; PR 2: skip visibility + aligned ticket text). Dev1 carries the full DM text byte-verified; stage carries the window text. Merge gated on Tony's Q1–Q5, then prod promotion with the #1064 stack.
 
 ## What shipped
-- Nothing yet.
+- PR 1 [#1143](https://github.com/WarbyParker/oracle-integration-cloud/pull/1143) (oracle-integration-cloud, OPEN, stacked on #1064's branch): window on each side's first open balance-row creation + `P_LOOKBACK_MINUTES` lookback parameter (default 5) + the first-invoice rule. Head `babdcda1`. Dev1 carries the full text (paste byte-verified, 8865 B; catalog parity OK); stage carries the window text.
+- PR 2 [#2795](https://github.com/WarbyParker/monocle_integrations/pull/2795) (monocle_integrations, OPEN): one consolidated Error-severity Jira ticket per run naming each zero-balance skipped memo (+ invoice, exchange reference); abort path tickets too. Ticket text aligned with the first-invoice rule (`9926940de`); both review threads answered.
 
 ## Decisions
 
@@ -88,6 +89,8 @@ The integration remembers where it left off with a bookmark and only looks at re
 1. Q1 (repeating-failure reporting): per-run error notification acceptable; the team fixes invalid data first (Luis, chat, 2026-10-20).
 2. Q2 (unbounded vs lookback): superseded — the window mechanism STAYS ("a proven pattern used by everyone in this repo"); fix stranding inside it (Luis, chat, 2026-10-20).
 3. Q3 (monocle contract shape): flat request + one field — moot; the chosen fix needs no monocle change (Luis, chat, 2026-10-20).
+4. Q4 (zero-balance skip): answered by Tony ([Jira comment 971887](https://warbyparker.atlassian.net/browse/OTCM-149147?focusedCommentId=971887), 2026-10-20): several memos of one exchange DO share one invoice by design; a skip means the replacement total dropped after the memos were raised; the skipped memo must NEVER re-pair — its remainder belongs to an AR-I-3019 refund; the skip must be visible; unapply-revival stays manual. Follow-up ticket for AR-I-3019 selection handed to Gabriel Viera (2026-10-20), filed as **OTCM-149784** (2026-10-21).
+5. Q5 (Tony's comment 972074, 8 items): answered 2026-10-21 with a benchmark- and panel-verified reply — a 500 freezes the last-run date (no OIC change); the pointer records the run start; medians ~1 s on both pods; skip tickets at Error, unassigned, routed to the on-call engineer by triage; stage QA per the acceptance criteria.
 
 ### Design decisions (ours)
 1. Window the report on the open-balance row's creation date — `MIN(creation_date)` per transaction over `ar_payment_schedules_all`, carried on both sides; the row's creation is the first moment the pair is selectable (Luis, 2026-10-20, after both panels).
@@ -96,6 +99,10 @@ The integration remembers where it left off with a bookmark and only looks at re
 4. No managed backlog drain — old stranded records are recovered by manual ad hoc runs anytime (Luis, 2026-10-20).
 5. Unapply-revival stays manual — auto-reapply would fight a deliberate human unapply; documented on the ticket, automatic variant parked as a follow-up (Luis, 2026-10-20).
 6. Solution verified by a 3-seat independent panel (all three converged on the same family: keep the window, fix the date basis, manual backlog recovery, no monocle change) and a 2-seat adversarial panel (both ADOPT WITH CHANGES; changes folded) (Luis, 2026-10-20).
+7. Zero-balance skip visibility IN scope as PR 2 (Luis "1B", 2026-10-20): one Error-severity Jira ticket per skipped memo — Warning is auto-rejected by the daily sweep, a 500 would freeze the pointer for every other pair.
+8. Lookback value: 5 minutes confirmed (Luis, 2026-10-20) → narrowed to 2 (Luis, 2026-10-20) → restored to 5 AND parameterized as `P_LOOKBACK_MINUTES` (default 5) after Tony's PR review asked for configurability (Luis, 2026-10-21). Day-2 tuning = change the parameter default in the BIP console.
+9. Header overclaim conceded to Tony's review: "keeps every pair reachable" → "makes each pair selectable in the window that covers the later side's balance-row creation" (Luis, 2026-10-21).
+10. First-invoice rule (Luis, 2026-10-21; hazard raised in johnny-coral-wp's #1143 review): a memo pairs only with the first invoice raised on the exchange reference — the lowest-id transaction with INV-class schedule rows, open or closed — in every run mode. After it closes, the memo never re-pairs; the remainder goes to the AR-I-3019 refund. Alternatives rejected: closed-sibling exclusion (false positive on a closed non-first sibling), sibling-application exclusion (blind when no sibling application exists). Unapply re-qualifies the memo as today and revival stays manual onto the first invoice. Gated on Tony's Q1–Q5 (asked on Slack 2026-10-21).
 
 ## Evidence
 - Root cause, stage (2026-10-19): invoice 18024 header 19:59:23 vs balance row 20:03:26; memo 31014 applied by hand since.
@@ -105,18 +112,31 @@ The integration remembers where it left off with a bookmark and only looks at re
 - Falsification probe (2026-10-20): pairs selectable today but dropped under the new basis = 0 (no selection regression).
 - Column types: all relevant `creation_date`/`last_update_date` columns are TIMESTAMP(6) on stage AND dev1; the current query already compares TIMESTAMP to `CAST(:P AS DATE)`, so the change adds no type risk.
 - Panel reports: `oracle-integration-cloud/tmp/otcm149147_q2/round1/indep_{1,2,3}.md`, `round2/adv_{1,2}.md`.
+- Dev1 verification (2026-10-20/21): T1 basis proof, E1 boundary, T7 A/B 23 identical / 0 diffs. Parameterized re-run (2026-10-21): E1 boundary passed with `P_LOOKBACK_MINUTES` unpassed — the report echoed the default 5; from = T+4min selected, from = T+6min zero rows.
+- Live parity (2026-10-21): dev1 and stage DM SQL byte-identical to the repo `.sql` (7907 B); parameter `name="P_LOOKBACK_MINUTES" defaultValue="5" dataType="xsd:integer"` on both pods; catalog export parity OK.
+- The "separate steps" named (2026-10-21, stage): invoice header by ESS `AutoInvoiceImportEss`; balance row minutes later by `Vertex.Taxuser` (`PopulatePartnerLines` job or inline call) — the Vertex tax completion creates the payment schedule row. Memos: one OAuth API client writes both rows 2–4 s apart.
+- Reply verification (2026-10-21): 2 independent seats word-level over both posted replies; 4 conservative edits folded (no "same window", "no materially backdated", dropped unsourced "sub-second", "has not occurred"). Reports: `oracle-integration-cloud/tmp/otcm149147_pr1143_comments/verify_round1/seat_{1,2}.md`.
+- Timing benchmark (2026-10-21, independent agent, 30/30 runs): medians 1d 0.8 s / 1m 0.9 s / 1y 0.9 s on dev1, 1d 1.0 s / 1m 1.0 s / 1y 0.9 s on stage; worst 1.7 s (two cold starts). Report: `oracle-integration-cloud/tmp/otcm149147_jira_comment/timing_benchmark_report.md`.
+- Comment-972074 verification (2026-10-21, 3 seats): ~25 findings, all ruled on and applied before posting. Caught the stale TPP79X00Z7 claim: the pair was applied on stage 2026-10-19 20:54 UTC (application 377956, 31014 → 18024, 395.00) before the fix reached stage. Reports: `oracle-integration-cloud/tmp/otcm149147_jira_comment/verification/seat_{1,2,3}_report.md`.
+- Comment 972074 reply POSTED 2026-10-21 ~09:20 ET (user's final trims recorded in the plan; as-posted text in `tmp/otcm149147_jira_comment/comment_972074_reply.md`).
+- Pin panels (2026-10-21, documents only, no live pods): 3 independent seats converged (hazard real, fix in the DM selection query, predicate outside the window OR-block) + 2 adversarial seats (ADOPT WITH CHANGES, 0 blockers). Reports: `oracle-integration-cloud/tmp/otcm149147_repair/round{1,2}/`. Slack question-set verification: `tmp/otcm149147_slack_q/verif.md` (POSTABLE WITH EDITS, all applied; caught the FSD-overclaim on the two-shipment case and the consolidated-ticket shape).
+- Pin dev1 paste (2026-10-21): freshness gate all-pass (live dev1 == stage == `b7b290d0`); live CDATA byte-identical to the pinned `.sql` (8865 B) after `catalog_upload.py`; catalog re-export parity OK (`xdm_catalog_sql.py`).
 
 ## Test data
 - Skill: `ar-i-3018-credit-memo-test-data` (seed/revive pairs on stage).
 - Existing stage fixtures (from OTCM-143188): `TestTPCOLA01` (contract-test pair — never for ad hoc runs), `TestTPCOLA02`/`03` (burnable, revived, eligible), `04` (left applied), `05` (left partially applied).
 
 ## Open items
-- Q4 (zero-balance skip, business): could the invoice be reused — should a skipped memo re-pair with the next eligible invoice on the same reference, or stay manual? To post as a Jira comment on OTCM-149147 tagging Tony Huang (draft in the plan).
-- Revival follow-up ticket proposal (automatic re-selection via memo-side last-update term) — parked pending functional sign-off; documented in the same ticket comment.
-- AC1 re-scope wording (read-lag class vs literal reading) — part of the same comment.
-- FSD sync approval: `integrations/sync/sync.sh --refresh --no-commit` (pending since Phase 1); needed for the FSD Testing Strategy comparison at PR time.
-- Lookback value X: recommend 5 minutes; confirm at plan approval.
-- Panel scratch dir `oracle-integration-cloud/tmp/otcm149147_q2/` — remove after consolidation unless kept for reference.
+- Tony's Q1–Q5 answers (merge gate) — asked on Slack 2026-10-21; Q1 re-asks the FSD-thread question he was cc'd on 2026-10-13 and never answered.
+- Tony updates the ticket description and acceptance criteria (his commitment once items 1–2 of 972074 were answered).
+- Stage QA scenarios T1–T6/E1–E4 on the parameterized DM, then evidence comment; T3 last (controlled window). T2 uses the acceptance criterion's equivalent-pair fallback (TPP79X00Z7 was applied 2026-10-19); the evidence comment names that application. Pin scenarios T9–T11 added; T11 is written after Tony's Q1 answer.
+- T9/T10 dev1 legs (pin verification on dev1 data).
+- Gate-wording comment on OTCM-149784: re-word its selection in the pin's vocabulary ("the reference's FIRST invoice fully closed") before either change ships.
+- FSD comment on the window basis (F8): reply in the existing selection-logic thread ([Drive id AAACIoDQK4A](https://docs.google.com/document/d/18VyR76v5hXvU09rnibpgzxgHljVcZqtR/edit?disco=AAACIoDQK4A)) — draft needs the parameter wording.
+- PR-2 Jira comment (consolidated ticket shape + assignment deferral) — draft awaiting confirmation since 2026-10-20.
+- Revival follow-up ticket (automatic re-selection) — parked pending functional sign-off.
+- Daily wide-range sweep — follow-up gated on evidence of long transactions (per the posted reply).
+- Merge: PR 1 at prod promotion bundled with the #1064 stack; PR 2 on monocle's own tag pipeline.
 
 ## Artifacts
 - Plan: `monocle_integrations/.cursor/plans/ar-i-3018_window_schedule_creation_554f4650.plan.md`
