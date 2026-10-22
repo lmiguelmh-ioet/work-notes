@@ -17,6 +17,11 @@ synced across work/personal devices.
   context in the moment, this is the searchable record.
 - `team.1on1.<name>.md` — running 1:1 notes per person; copy
   `team.1on1-template.md`.
+- `oncall.YYYY-MM.md` — one per on-call rotation, named by the month of its
+  starting Monday (rotations run ~every two months, so the month is unique);
+  scaffold from `oncall-template.md`. Maintained per the `oncall-week-note`
+  skill (ledger → clusters → knowledge delta → handoff); frozen at handoff;
+  indexed in `projects.md` as a plain `## ON-CALL <Mon> → <Mon>` card.
 - `assets/` — images/attachments referenced from notes.
 - `urls.md` — bookmarked links catalog (consumed by the `open-note-url` skill).
 

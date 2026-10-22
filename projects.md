@@ -11,11 +11,17 @@
 "Ser padre me ha enseñado que existe un nuevo sentido a la vida.
 Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 
+## ON-CALL 2026-10-19 → 2026-10-26
+- **Board**: [OEH list](https://warbyparker.atlassian.net/jira/software/c/projects/OEH/list?jql=project%20%3D%20%22OEH%22%0AAND%20created%20%3E%3D%20%222026-10-19%22%0AAND%20created%20%3C%3D%20%222026-10-26%22%0AAND%20status%20NOT%20IN%20(Rejected%2C%20Resolved)%0AORDER%20BY%20created%20DESC)
+- **Tickets**: in progress — counts at handoff
+- **Top clusters**: —
+- **Notes**: [oncall.2026-10](oncall.2026-10.md)
+
 ## OTCM-149147 – AR-I-3018: keep selecting pairs after creation dates fall behind the last run
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-149147
 - **RICE**: AR-I-3018
-- **Dates**: 2026-10-19 → —
-- **Outcome**: In flight — PR #1143 (balance-row window + `P_LOOKBACK_MINUTES` + first-invoice rule, head `babdcda1`, dev1 byte-verified) and PR #2795 (skip visibility + aligned ticket text) open; Tony's review threads and his 8-item comment 972074 answered (verified, posted 2026-10-21); AR-I-3019 follow-up filed as OTCM-149784; merge gated on Tony's Q1–Q5 (asked 2026-10-21), stage QA pending.
+- **Dates**: 2026-10-19 → 2026-10-22
+- **Outcome**: **CLOSED (Jira Done 2026-10-22)** — PR #2795 **MERGED** (skip visibility live on stage). PR #1143 (balance-row window + `P_LOOKBACK_MINUTES` + first-invoice rule, head `babdcda1`) live and byte-verified on dev1 and stage; merges at prod promotion with the #1064 stack. Stage QA 15/15 green (evidence comment 973195, SOX panel applied). Residual: Tony's Q1–Q5 gate #1143's merge.
 - **Notes**: [projects.AR-I-3018.OTCM-149147](projects.AR-I-3018.OTCM-149147.md)
 
 ## OTCM-146798 – RMCS-I-3001: CPU pickup PoD, QC-fail chain, warranty returns

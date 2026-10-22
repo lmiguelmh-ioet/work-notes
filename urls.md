@@ -56,6 +56,7 @@
 | --- | --- | --- |
 | jira, jira otcm, otcm board | https://warbyparker.atlassian.net/jira/software/c/projects/OTCM/boards/771 | |
 | jira oeh, error tickets | https://warbyparker.atlassian.net/jira/software/c/projects/OEH/boards/725 | Auto-created error tickets |
+| oncall board, tablero oeh, oeh list | https://warbyparker.atlassian.net/jira/software/c/projects/OEH/issues?jql=project%20%3D%20%22OEH%22%20ORDER%20BY%20created%20DESC | Unfiltered OEH list; scope to an on-call week by adding created >=/<= Monday dates per team.oncall.md |
 | jira search, jira jql | https://warbyparker.atlassian.net/issues/?jql=textfields%20~%20%22MFG-I-3021%22 | Template — replace MFG-I-3021 with any ticket/RICE ID |
 
 ## GitHub & CI
