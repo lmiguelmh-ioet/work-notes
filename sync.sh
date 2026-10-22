@@ -6,6 +6,19 @@ set -euo pipefail
 cd "$(dirname "${BASH_SOURCE[0]}")"
 mkdir -p .cache
 
+# A failed run fires sound + modal (once per day) — the log alone is not a notification.
+loud_failure() {
+    local today
+    today=$(date +%F)
+    echo "$(date '+%F %T') SYNC FAILURE: $1" >> .cache/sync.log
+    [ "$(cat .cache/alert_state 2>/dev/null || true)" = "$today" ] && return
+    afplay /System/Library/Sounds/Glass.aiff || true
+    # State is written only after the dialog displays; otherwise retry next failure.
+    osascript -e "display alert \"notes sync FAILED\" message \"$1\\n\\nDetails: $(pwd)/.cache/sync.log\"" \
+        && echo "$today" > .cache/alert_state || true
+}
+trap 'loud_failure "exit $? (line $LINENO)"' ERR
+
 git add -A
 if git diff --cached --quiet; then
     echo "$(date '+%F %T') no changes"
