@@ -35,6 +35,7 @@
 | lambda prod, monocle api prod | https://us-east-1.console.aws.amazon.com/lambda/home?region=us-east-1#/functions/oic-monocle-integrations-lambda-prod-us-east-1?subtab=url&tab=monitoring | REST API lambda |
 | lambda events stage, event handler stage | https://us-east-1.console.aws.amazon.com/lambda/home?region=us-east-1#/functions/oic-monocle-integrations-events_handler_lambda-stage-us-east-1?tab=code | S3/SQS event handler |
 | lambda events prod, event handler prod | https://us-east-1.console.aws.amazon.com/lambda/home?region=us-east-1#/functions/oic-monocle-integrations-events_handler_lambda-prod-us-east-1?tab=code | S3/SQS event handler |
+| lambda invoker keys, monocle lambda user keys | https://us-east-1.console.aws.amazon.com/secretsmanager/secret?name=oic-monocle-integrations%2Fprod%2Flambda_user_keys&region=us-east-1 | AWS secret `oic-monocle-integrations/ENV/lambda_user_keys` (ENV = stage/ott/prod): the IAM user keys authorized to invoke that env's function URL. Local profiles holding copies: `oic`=stage, `oic2`=ott, `oic4`=prod |
 
 ## AWS — S3 buckets
 
@@ -58,6 +59,13 @@
 | jira oeh, error tickets | https://warbyparker.atlassian.net/jira/software/c/projects/OEH/boards/725 | Auto-created error tickets |
 | oncall board, tablero oeh, oeh list | https://warbyparker.atlassian.net/jira/software/c/projects/OEH/issues?jql=project%20%3D%20%22OEH%22%20ORDER%20BY%20created%20DESC | Unfiltered OEH list; scope to an on-call week by adding created >=/<= Monday dates per team.oncall.md |
 | jira search, jira jql | https://warbyparker.atlassian.net/issues/?jql=textfields%20~%20%22MFG-I-3021%22 | Template — replace MFG-I-3021 with any ticket/RICE ID |
+
+## On-call
+
+| Aliases | URL | Notes |
+| --- | --- | --- |
+| oncall recipes sheet | https://docs.google.com/spreadsheets/d/1np28IorbDKbEWFQo-hn-a4TGyz7jqHbSCaT48b66U6k/edit?gid=0#gid=0 | Team on-call instruction sheet; also the S3 prod-change registry (`_OEH_xxx.ext` prefix, row tied to the OEH ticket) |
+| oncall tony instructions | https://warbyparker.atlassian.net/wiki/spaces/OT/pages/7726531192/Common+Oracle+Integration+On-Call+Issues | Confluence: Common Oracle Integration On-Call Issues (recipe book) |
 
 ## GitHub & CI
 

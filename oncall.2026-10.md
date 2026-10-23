@@ -6,12 +6,12 @@
 
 ## Ledger
 
-- `10-20 13:26` · [OEH-88425](https://warbyparker.atlassian.net/browse/OEH-88425) · WMS-I-1005 · pick confirm failure → C1 · pulled · Not Started
-- `10-20 13:27` · [OEH-88426](https://warbyparker.atlassian.net/browse/OEH-88426) · WMS-I-1005 · pick confirm failure → C1 · pulled · Not Started
-- `10-20 13:27` · [OEH-88427](https://warbyparker.atlassian.net/browse/OEH-88427) · WMS-I-1005 · pick confirm failure → C1 · pulled · Not Started
-- `10-20 13:28` · [OEH-88429](https://warbyparker.atlassian.net/browse/OEH-88429) · WMS-I-1005 · pick confirm failure → C1 · pulled · Not Started
-- `10-21 15:01` · [OEH-88586](https://warbyparker.atlassian.net/browse/OEH-88586) · WMS-I-1005 · pick confirm failure → C1 · pulled · Not Started
-- `10-21 16:26` · [OEH-88620](https://warbyparker.atlassian.net/browse/OEH-88620) · IN-I-2017A · receiving inbound failure → untriaged · pulled · Not Started
+- `10-20 13:26` · [OEH-88425](https://warbyparker.atlassian.net/browse/OEH-88425) · WMS-I-1005 · pick confirm failure → C1 · pulled · Resolved (parent)
+- `10-20 13:27` · [OEH-88426](https://warbyparker.atlassian.net/browse/OEH-88426) · WMS-I-1005 · pick confirm failure → C1 · pulled · Rejected (dup of OEH-88425)
+- `10-20 13:27` · [OEH-88427](https://warbyparker.atlassian.net/browse/OEH-88427) · WMS-I-1005 · pick confirm failure → C1 · pulled · Rejected (dup of OEH-88425)
+- `10-20 13:28` · [OEH-88429](https://warbyparker.atlassian.net/browse/OEH-88429) · WMS-I-1005 · pick confirm failure → C1 · pulled · Rejected (dup of OEH-88425)
+- `10-21 15:01` · [OEH-88586](https://warbyparker.atlassian.net/browse/OEH-88586) · WMS-I-1005 · pick confirm failure → C1 · pulled · Rejected (dup of OEH-88425)
+- `10-21 16:26` · [OEH-88620](https://warbyparker.atlassian.net/browse/OEH-88620) · IN-I-2017A · receiving inbound failure → already put away (concurrent-completion race) · pulled · Rejected
 - `10-22 02:02` · [OEH-88627](https://warbyparker.atlassian.net/browse/OEH-88627) · GL-I-1060 · payroll to Anaplan failure → untriaged · pulled · Not Started
 - `10-22 06:11` · [OEH-88628](https://warbyparker.atlassian.net/browse/OEH-88628) · WMS-I-1031 · production status update failure → untriaged · pulled · Not Started
 - `10-22 08:17` · [OEH-88631](https://warbyparker.atlassian.net/browse/OEH-88631) · Comerica → EPM (ARCS) · bank rec failure → untriaged · pulled · Not Started
@@ -20,14 +20,16 @@
 
 ### C1 — WMS-I-1005 — pick confirmation failure burst
 
-- **Tickets**: [OEH-88425](https://warbyparker.atlassian.net/browse/OEH-88425) · [OEH-88426](https://warbyparker.atlassian.net/browse/OEH-88426) · [OEH-88427](https://warbyparker.atlassian.net/browse/OEH-88427) · [OEH-88429](https://warbyparker.atlassian.net/browse/OEH-88429) · [OEH-88586](https://warbyparker.atlassian.net/browse/OEH-88586) (all Not Started) — 5 total
-- **Signature**: TBD at triage — 4 landed in a 2-minute burst on 10-20 13:26–13:28, suggesting one upstream incident
-- **Playbook**: `wms-i-1005-pick-confirm` skill (branch `on-call-agent-wip`) — reject if lines Interfaced/Staged/Canceled; reprocess from S3 Error payload if Released to warehouse
-- **Outcome**: open
+- **Tickets**: [OEH-88425](https://warbyparker.atlassian.net/browse/OEH-88425) (parent — Resolved) · [OEH-88426](https://warbyparker.atlassian.net/browse/OEH-88426) · [OEH-88427](https://warbyparker.atlassian.net/browse/OEH-88427) · [OEH-88429](https://warbyparker.atlassian.net/browse/OEH-88429) · [OEH-88586](https://warbyparker.atlassian.net/browse/OEH-88586) (Rejected as dups) — 5 total
+- **Signature**: order 1192224 (TO/LSLO) — WMS picked more than the open remainder per item; "Overpicked lines found" false positive (picked == SUM(requested) per item; remainder lines still Released to warehouse)
+- **Playbook**: new `wms-i-1005-overpick` skill (branch `on-call-agent-wip`, commit pending) — Branch A corrected-payload replay at remainders; never plain-reprocess
+- **Outcome**: resolved 10-23 — replay `POST /wms/pick-confirmation` HTTP 201 (uuid `3856d2c6-0499-4efd-83b1-8cea885ba989`), 3 remainder lines → Staged; parent Resolved with evidence attachments + comment, 4 dups Rejected. Root cause: overpick check compares running picked totals vs open remainder per item — OTCM bug pending. Watch for a follow-up `PickConfirmNotAllowedError` ticket → reject pointing to OEH-88425
 
 ## Knowledge delta
 
-- Skill candidate `in-i-2017a-receiving`: OEH-88620 is IN-I-2017A (receiving); only a 2017B ship-confirm skill exists. Trigger TBD after triage.
+- Skill `in-i-2017a-receiving` created from OEH-88620 triage (branch `on-call-agent-wip`, commit pending): two-stage receiving verification — linesToPutAway + inboundShipments + errored-receipts + pending-putaway reports; reject-if-complete per OEH-65095.
 - Skill candidate for Comerica → EPM (ARCS) bank rec: no skill covers EPM/ARCS failures. Trigger TBD after OEH-88631 triage.
+- Prod monocle Lambda invoker: AWS profile `oic4` (`oic-monocle-integrations-lambda-prod`) — `oic`/`oic3` 403 on prod. User keys live in Secrets Manager `oic-monocle-integrations/ENV/lambda_user_keys`. Prod URL in `notes/urls.md`.
+- OEH workflow quirk: terminal `Resolved` status is reached via the transition named **Complete** (id 231) from `Promote to Production`; the transition named "Resolved" (id 141) only loops back to Testing. Path: Not Started → Triage → In Progress → Test → Testing → Complete.
 
 ## Handoff

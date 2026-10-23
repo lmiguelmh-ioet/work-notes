@@ -17,6 +17,20 @@ Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 - **Top clusters**: —
 - **Notes**: [oncall.2026-10](oncall.2026-10.md)
 
+## OTCM-149784 – AR-I-3019: refund unapplied exchange credit memos stranded by the zero-balance skip
+- **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-149784
+- **RICE**: AR-I-3019
+- **Dates**: 2026-10-23 → —
+- **Outcome**: In flight (on hold) — [PR #1151](https://github.com/WarbyParker/oracle-integration-cloud/pull/1151) open (stacked on #1147); skip-class DM live on stage + dev1; stage schedule organically refunded 4 fixtures; V7 ad-hoc leg (console Run Now) and A5 (AR-approved adjustment) pending.
+- **Notes**: [projects.AR-I-3019.OTCM-149784](projects.AR-I-3019.OTCM-149784.md)
+
+## OTCM-150190 – OM-I-3015: split the EasyPost tracker sync onto its own flag
+- **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-150190
+- **RICE**: OM-I-3015
+- **Dates**: 2026-10-22 → —
+- **Outcome**: In flight — PR #2821 open: tracker sync + delivery chain moved off `WMS-I-1006-roosevelt` onto `OM-I-3015-easypost-tracker-sync`; prod ships disabled, flip ticket owns catch-up.
+- **Notes**: [projects.OM-I-3015.OTCM-150190](projects.OM-I-3015.OTCM-150190.md)
+
 ## OTCM-149147 – AR-I-3018: keep selecting pairs after creation dates fall behind the last run
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-149147
 - **RICE**: AR-I-3018
@@ -27,8 +41,8 @@ Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 ## OTCM-146798 – RMCS-I-3001: CPU pickup PoD, QC-fail chain, warranty returns
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-146798
 - **RICE**: RMCS-I-3001
-- **Dates**: 2026-10-15 → —
-- **Outcome**: In flight — PR #1141 open (stacked on #1105, merges at prod promotion after RMCS-I-3003); DM live + verified on dev1 and stage; Bugbot's 3 findings triaged (1 false positive, 1 real pickup-window stranding fix committed, 1 harmless) with replies awaiting approval to post; functional Q&A nearly closed (Q23/Q25/Q26 pending).
+- **Dates**: 2026-10-15 → 2026-10-23
+- **Outcome**: **CLOSED (Jira Done 2026-10-23)** — round-8 PoD DM live and byte-verified on dev1 and stage; QA evidence complete (round-7 comment + round-8 comment 973591): R1/R2/R3/R9/REG all Pass, Boundary B7 closed by the TestPodQc1/Qc2 fixture. PR #1141 (stacked on #1105) merges at prod promotion after RMCS-I-3003. Residuals: Bugbot prepared replies await user posting; Q23/Q25/Q26 with functional; Guillermo warranty-return data; prod gates at promotion; exception-report ticket with Gabriel.
 - **Notes**: [projects.RMCS-I-3001.OTCM-146798](projects.RMCS-I-3001.OTCM-146798.md)
 
 ## OTCM-143188 – AR-I-3018: cap credit memos at the invoice balance
