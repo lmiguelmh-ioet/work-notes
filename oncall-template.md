@@ -10,4 +10,6 @@
 
 ## Knowledge delta
 
+## Open tickets
+
 ## Handoff
