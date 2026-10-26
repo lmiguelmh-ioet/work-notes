@@ -49,17 +49,19 @@ QA artifacts: `integrations/AR-I-3019/data/OTCM-149784-qa/` (probe SQL/XML, A/B 
 ## Test data
 
 - Stage `TestTPCOLA06`: memo 33070 (−50, pre-fix skip, first invoice 238001 CL) — RESERVED for the V7 ad-hoc leg; anchor behind the rolling window, stays eligible for ad-hoc naming.
-- Stage `TestTPCOLA12` (permanent negative): 240004 OP $100, 240005 zeroed, memo 33123 OP −100 — schedule can never pick it up.
-- Stage `TestTPCOLA13` (A5, primed): invoice 240006 OP $100, memo 33125 OP −100 with PENDING adjustments 16001 (−10) and 16002 (−2) — approving 16001 inflates it to −110; then receipt-close 240006 and probe (expect 0 rows).
+- Stage `TestTPCOLA12` (negative, consumed): 33123 carried dues 50, so AR-I-3018 partly applied it 2026-10-23 18:40:04 (240004 → $50) and AR-I-3019 branch-1 refunded the leftover 18:50:14. The closure-gate probe (0 rows while unapplied + first invoice open) was captured before consumption and stands. Never a permanent fixture — any memo with dues is 3018-eligible.
+- Stage `TestTPCOLA13` (A5 v1, consumed): same fate as TPCOLA12 — 33125 CL/0 via partial apply + branch-1 refund; adjustments 16001/16002 (ids …413836/…413837) still W on a closed memo, unusable.
+- Stage `TestTPCOLA14` (A5 v2, partial 2026-10-26): invoice 241001 CL/0 (receipt `TestRCP149784C` id …498110 applied 20:52 UTC); memo 33194 OP −90/−80 (adjustment 17001 approved by Deanna 20:32:35) with dues 0/0 — REST refuses post-create DFF updates ("The action 'update' is not enabled", child and parent PATCH both 400; DFF fields are create-only), so the cap-guard leg moved to A5 v3. Stands as a permanent dues-gate negative.
+- Stage `TestTPCOLA15` (A5 v3, 2026-10-26): invoice 241002 CL/0 (receipt `TestRCP149784D` id …499461 applied 21:00:49); memo 35038 OP −90/−80, dues 40 (dues set at creation; adjustment 17002 approved 21:19:57). Probes naming 35038 → 0 rows (`verify_2026-10-26_a5v3_probe_tight.xml`; the wide-window probe also lists 33070/33111 — the names param is an OR-bypass for evaluation, not a strict filter). Cap guard isolated: dues ✓, unapplied ✓, first invoice CL ✓, named ✓ — only `remaining −90 >= original −80` fails. Race note: a dues-bearing memo on a closed-invoice reference is 3019-eligible from its first tick (a W adjustment does not move `amount_due_remaining`), so both schedules were stopped 21:10→21:29 UTC for the create; organic skip confirmed after restart. Permanent cap-guard negative.
 - Stage TestTPCOLA07/10/11: refunded by the schedule (V7 evidence); memos CL/0.
 - Dev1: 34038 (class 1, −55/−15), 34039 (skip class, −40) — A5 dev1 fallback target (adjust −2 → probe 0); dev1 denies `createAdjustment` for the integration user (WSFunctionPermission).
-- Fixture tooling: `ar-i-3018-credit-memo-test-data` skill (invoice/memo scripts); receipt/adjustment envelopes at `integrations/AR-I-3019/data/OTCM-149784-qa/fixtures/`; receipt path = REST `standardReceipts` + `applyReceipt` action (RemittanceBankAccountNumber `REC00000601300257` mandatory).
+- Fixture tooling: `ar-i-3018-credit-memo-test-data` skill (invoice/memo scripts); receipt/adjustment envelopes at `integrations/AR-I-3019/data/OTCM-149784-qa/fixtures/`; receipt path = REST `standardReceipts` + `applyReceipt` action (RemittanceBankAccountNumber `REC00000601300257` mandatory; ADF action calls need `Content-Type: application/vnd.oracle.adf.action+json` — the resourceitem type gets HTTP 400 "check the URL and the headers"). Memo DFF fields (e.g. `customerDueOnExchange` → `attribute7`) are create-only — PATCH on the DFF child or the parent returns 400 "The action 'update' is not enabled."
 
 ## Open items
 
 - Johnny's re-review of #1151 after the round-1 trim (commit `61ccabb2`, five replies posted 2026-10-23).
 - V7 ad-hoc leg — OIC console Run Now on `WP_AR_I_3019_CRED_MEMO_REFU|01.00.0000` with `credit_memo_trx_numbers=33070` (Luis drives; no local OAuth client has ServiceInvoker — the `.env.prod` "Prod WMS Oauth Client" gets 401 at the Gen-3 design host). Verify the $50 refund lands and 33070 closes.
-- A5 — an AR-rights user approves stage adjustment 16001, or posts −2 on dev1 memo 34039, or skip (guard is one SQL line, code-review covered).
+- A5 — DONE 2026-10-26 (A5 v3, memo 35038 on `TestTPCOLA15`; adjustment 17002 approved by Deanna 21:19:57). A5 v2 abandoned: REST DFF updates blocked (create-only fields). Dev1 fallback not needed.
 - QA evidence Jira comment after those two legs (jira-qa-evidence skill: production entry point + readability rules).
 - Promotion: #1143 (AR-I-3018 pin) ahead of this bundle; #1125 (OIC schedule) independent. Tony's Q1–Q5 gate #1143.
 - One-shot asymmetry disclosure for the QA note (plan file, round-2 10A).

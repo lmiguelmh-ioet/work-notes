@@ -350,6 +350,12 @@ from WP_PAAS.WP_INT_GENERIC_REPORT_PARAM;
 - proyecto
 	- Dan Morel (WP - principal engineer)
 	- Gabriel Viera
+- Me:
+	- bienvenid@
+	- soy Luis Miguel de Peru
+	- vengo trabajando desde 06 de enero de este año en IOET
+	- como dijeron todos es un team muy dispuesto a ayudarte
+	- y estamos aquí dispuestos a ayudarte
 
 ![](assets/Pasted%20image%2020260706104304.png)
 
@@ -433,6 +439,9 @@ Agustin Frire (24/08/26)
 - ![](assets/Pasted%20image%2020260824104709.png)
 - 3 meses IOET
 - Argentina
+Norma Pineda (26/10/26)
+- s
+
 
 ### top performers
 - 1 Ariel - bueno técnicamente
