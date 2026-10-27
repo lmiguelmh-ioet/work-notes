@@ -17,11 +17,18 @@ Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 - **Top clusters**: —
 - **Notes**: [oncall.2026-10](oncall.2026-10.md)
 
+## OMG-3162 – omg-ui: stage shipment table with fake-delivery modal
+- **Ticket**: https://warbyparker.atlassian.net/browse/OMG-3162
+- **RICE**: — (no RICE; OMG platform work)
+- **Dates**: 2026-10-26 → —
+- **Outcome**: Dev complete — [PR #337](https://github.com/WarbyParker/omg-ui/pull/337) merged (the tool, behind the dev flag) and [PR #346](https://github.com/WarbyParker/omg-ui/pull/346) merged 2026-10-27 (stage enablement + timeline focus fixes); live on stage since `v0.2.102` (2026-10-27 16:40). OMG-3160's read verified live on stage. Ticket awaits QA.
+- **Notes**: [projects.OMG-3162](projects.OMG-3162.md)
+
 ## OTCM-149784 – AR-I-3019: refund unapplied exchange credit memos stranded by the zero-balance skip
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-149784
 - **RICE**: AR-I-3019
-- **Dates**: 2026-10-23 → —
-- **Outcome**: In flight (on hold) — [PR #1151](https://github.com/WarbyParker/oracle-integration-cloud/pull/1151) open (stacked on #1147); skip-class DM live on stage + dev1; stage schedule organically refunded 4 fixtures; V7 ad-hoc leg (console Run Now) and A5 (AR-approved adjustment) pending.
+- **Dates**: 2026-10-23 → 2026-10-27
+- **Outcome**: Done — the DM now refunds never-applied exchange memos stranded by the zero-balance skip; QA-passed 2026-10-27 (10/11, R11 cannot-test on a stage refund-limits outage) after six organic stage refunds. Ships in [PR #1151](https://github.com/WarbyParker/oracle-integration-cloud/pull/1151) (stacked on #1147, behind #1143); merges at prod promotion.
 - **Notes**: [projects.AR-I-3019.OTCM-149784](projects.AR-I-3019.OTCM-149784.md)
 
 ## OTCM-150190 – OM-I-3015: split the EasyPost tracker sync onto its own flag

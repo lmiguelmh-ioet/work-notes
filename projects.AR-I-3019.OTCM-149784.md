@@ -3,12 +3,15 @@
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-149784
 - **RICE**: AR-I-3019 (report `WP AP AR Credit Memo Applied Report`, DM `WP_AP_AR_CREDIT_MEMO_APPLIED_DM`)
 - **Repos**: `oracle-integration-cloud` — [PR #1151](https://github.com/WarbyParker/oracle-integration-cloud/pull/1151), stacked on #1147
-- **Status** (as of 2026-10-23): **ON HOLD** — PR in review (round-1 comments answered 2026-10-23, awaiting re-review), trimmed DM text live on stage + dev1, QA legs done except A5 and the V7 ad-hoc leg
+- **Status** (as of 2026-10-27): **DONE — file frozen** — QA passed 2026-10-27 (Kaio), ticket moved to Done by QA. R11 closed as cannot-test (stage refund-limits outage, escalated 2026-10-27). PR #1151 merges at prod promotion (bundled with #1147, behind #1143).
 - **Plan**: [projects.AR-I-3019.OTCM-149784.plan.md](projects.AR-I-3019.OTCM-149784.plan.md)
 
 ## Outcome
 
-- In flight (on hold 2026-10-23): the skip-class door is in the DM and proven live — the stage AR-I-3019 schedule organically refunded four fixtures within minutes of eligibility.
+- The AR-I-3019 data model now selects never-applied exchange credit memos stranded by the zero-balance skip (first invoice fully closed) and refunds their exact open balance through the existing OIC schedule.
+- Proven live on stage: the schedule organically refunded six memos across three windows on 2026-10-23, and every exclusion gate held — including two organic gate-holds (closure gate Friday, cap guard Monday).
+- QA passed 2026-10-27 (10 of 11 scenarios; R11 recorded cannot-test for a stage refund-limits outage unrelated to the change, escalated to AR). Ticket Done 2026-10-27.
+- Ships in [PR #1151](https://github.com/WarbyParker/oracle-integration-cloud/pull/1151) (stacked on #1147, behind #1143); merges at prod promotion.
 
 ## What shipped
 
@@ -44,7 +47,9 @@ QA artifacts: `integrations/AR-I-3019/data/OTCM-149784-qa/` (probe SQL/XML, A/B 
 - V8 Pass: 1-day/1-month/1-year windows — stage 2.3/1.8/1.6 s, dev1 2.9/2.2/1.9 s.
 - V9 Pass: re-exported catalog's embedded SQL byte-identical (7,845 B) to the PR `.sql`; `P_LOOKBACK_MINUTES` declared. Export sourced from dev1 (env churn only).
 - Post-trim verification (2026-10-23, commit `61ccabb2`): live CDATA byte-identical to the trimmed `.sql` on dev1 AND stage; stage probes 33123 → 0 rows (closure gate holds) and 33070 → 1 row; dev1 window run clean; new catalog parity sha256 `3bd3d2224a520c46`, `P_LOOKBACK_MINUTES` still declared.
-- QA evidence Jira comment: NOT YET POSTED (waits on A5 + V7 ad-hoc).
+- V7 ad-hoc attempt (R11, 2026-10-26 21:59:38 UTC, request `5ba448f6`): Run Now naming 33070 — DM selection through production proven (`Credit memos retrieved: 1` via the names arm), but Fusion rejected the refund SOAP call: AR-856537 "You don't have approval limits set up for refunds" (+ benign AR-855799). Failure path worked: payload to S3 `Error/10262026215941_credit_memo_33070.json`, `Failed transaction numbers: 33070`, HTTP 200, no Jira ticket. 33070 stays OP −50, zero applications.
+- R11 root cause (2026-10-27): a raw $1 curl (basic auth `WP_SCM_INTEGRATION_USER`, the Lambda's exact envelope, no middleware) returned the identical AR-856537 — the pod lost the integration user's refund approval limits between Friday's six successes (18:20–18:50 UTC, refs 1862690/1862691/1863686/1863687/1862694/1863688) and Monday 21:59 UTC. Not the Lambda, not OIC, not the OAuth mapping, not the fixture. Escalated to Rocio + Aruna 2026-10-27 ~09:20 ET. Aruna confirmed (~10:10 ET): the refund approval limits were removed for `WP_SCP_INTEGRATION_USER` in TEST — the OAuth client `ec0d977d`'s refund identity; restore pending. (The basic-auth repro user `WP_SCM_INTEGRATION_USER` fails the same way; whether it ever held refund limits is unknown — the production path runs via OAuth.) Artifacts: `verify_2026-10-27_r11_direct_refund_1usd_{request,response}.xml`, `verify_2026-10-27_cloudwatch_r11_failed_run.json`.
+- QA evidence Jira comment id 974721 (posted 2026-10-27 12:03 ET; local-path attachment list scrubbed in a same-day hand edit — the comment stands alone, every claim re-pullable). QA passed on it 2026-10-27 12:09 ET (Kaio, comment 974723); ticket → Done. Draft at `oracle-integration-cloud/tmp/otcm149784_qa_evidence_comment.md`.
 
 ## Test data
 
@@ -60,11 +65,8 @@ QA artifacts: `integrations/AR-I-3019/data/OTCM-149784-qa/` (probe SQL/XML, A/B 
 ## Open items
 
 - Johnny's re-review of #1151 after the round-1 trim (commit `61ccabb2`, five replies posted 2026-10-23).
-- V7 ad-hoc leg — OIC console Run Now on `WP_AR_I_3019_CRED_MEMO_REFU|01.00.0000` with `credit_memo_trx_numbers=33070` (Luis drives; no local OAuth client has ServiceInvoker — the `.env.prod` "Prod WMS Oauth Client" gets 401 at the Gen-3 design host). Verify the $50 refund lands and 33070 closes.
-- A5 — DONE 2026-10-26 (A5 v3, memo 35038 on `TestTPCOLA15`; adjustment 17002 approved by Deanna 21:19:57). A5 v2 abandoned: REST DFF updates blocked (create-only fields). Dev1 fallback not needed.
-- QA evidence Jira comment after those two legs (jira-qa-evidence skill: production entry point + readability rules).
 - Promotion: #1143 (AR-I-3018 pin) ahead of this bundle; #1125 (OIC schedule) independent. Tony's Q1–Q5 gate #1143.
-- One-shot asymmetry disclosure for the QA note (plan file, round-2 10A).
+- Optional R11 re-run once AR restores the stage refund limits: Run Now on `WP_AR_I_3019_CRED_MEMO_REFU|01.00.0000` naming 33070 (still OP −50, eligible), verify the $50 refund lands and the memo closes, then post a short follow-up flipping R11 to full Pass. (Luis drives; no local OAuth client has ServiceInvoker.)
 
 ## Artifacts
 

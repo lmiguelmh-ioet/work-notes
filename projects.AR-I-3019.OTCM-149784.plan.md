@@ -1,3 +1,5 @@
+> **FROZEN 2026-10-27** — ticket Done (QA passed 2026-10-27). Verbatim plan archive at wrap-up; never edited again. Final outcomes live in [projects.AR-I-3019.OTCM-149784](projects.AR-I-3019.OTCM-149784.md).
+
 # OTCM-149784 — AR-I-3019: refund unapplied exchange credit memos stranded by the zero-balance skip (plan)
 
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-149784
