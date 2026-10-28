@@ -3,7 +3,7 @@
 - **Ticket**: https://warbyparker.atlassian.net/browse/OMG-3162
 - **RICE**: — (OMG platform work, no RICE id)
 - **Repos**: `omg-ui` (the PR); `order-management-gateway` holds the contract (OMG-3160 read, OMG-3161 carrier-events)
-- **Status** (as of 2026-10-27): **MERGED** — [PR #346](https://github.com/WarbyParker/omg-ui/pull/346) merged 16:13 (stage enablement + timeline focus fix). PR #337 merged 11:25. OMG-3160 verified live on stage. The tool becomes visible on stage with the next tag deploy; the ticket stays with QA.
+- **Status** (as of 2026-10-28): **MERGED** — follow-up [PR #357](https://github.com/WarbyParker/omg-ui/pull/357) merged 2026-10-28 17:46 UTC (squash `e26474fe`) and deployed via tag `v0.2.114`. Earlier: [PR #346](https://github.com/WarbyParker/omg-ui/pull/346) merged 2026-10-27 16:13 (stage enablement + timeline focus fix), PR #337 the same day; the tool live on stage since `v0.2.102`. The ticket stays with QA.
 - **Plan**: [projects.OMG-3162.plan](projects.OMG-3162.plan.md) (archived verbatim 2026-10-26)
 
 ## Outcome
@@ -16,6 +16,7 @@
 - omg-ui [PR #337](https://github.com/WarbyParker/omg-ui/pull/337) — **MERGED** 2026-10-27 (5 commits, 41 files, +1650/−166). Shipments table page, fake-delivery modal, shared carrier-events client + UI, `shipmentsTool` flag with nav gating. Branch `feat/OMG-3162-shipments-tool`.
 - Commits: `6144d9a` (the tool), `bfe0af4` (Bugbot fix: WMS result on a light card), `e8d44c1` (UX refinement + Preview-only mode + close gate, driven by two independent UX/FE review rounds), `96e83a5` (Sniffany review fixes: shared `filterNavigation` traversal, dev-forced preview, timeline blur sort, plus 5 light-panel hardening fixes), `f5b8f83` (OMG-3160 contract correction: four shipment header fields widened to `string | null`).
 - omg-ui [PR #346](https://github.com/WarbyParker/omg-ui/pull/346) — **MERGED** 2026-10-27 16:13 (2 commits, 5 files, +48/−23; Bugbot post-push scan: low risk, no findings). `1e94def`: `stage.shipmentsTool: true`; blur re-sort deleted in favor of the existing submit-time sort; Remove-button mousedown guard deleted with it. `ec63d07`: Add appends instead of re-sorting the timeline (Sniffany thread [r4394030090](https://github.com/WarbyParker/omg-ui/pull/346#discussion_r4394030090), answered [r4394106104](https://github.com/WarbyParker/omg-ui/pull/346#discussion_r4394106104)). Branch `feat/OMG-3162-enable-shipments-stage`.
+- omg-ui [PR #357](https://github.com/WarbyParker/omg-ui/pull/357) — **MERGED** 2026-10-28 17:46 UTC (squash `e26474fe`), deployed via tag `v0.2.114` (cut 12:47 local on the merge commit; tag CD). 2 commits, 4 files, +174/−15; `enhancement`. QA feedback round: all 8 data columns sortable, the button column labeled "Actions". `b15f001`: the two asks. `8a836a3`: light-panel fixes — line-column keys carry the dotted path (the key→path map deleted), per-column sort tests, QA note on the inert-on-stage line columns. Branch `feat/OMG-3162-sortable-shipment-columns`.
 
 ## Decisions
 
@@ -39,6 +40,7 @@
 12. Miguel's OMG-3160 contract correction (2026-10-27, Slack): `initialShipDate`, `shipFromOrganization`, `customer`, `shipToLocation` come back null for a shipment with no lines. Types widened to `string | null`; the table's existing `"-"` fallback renders them. This supersedes the OMG-3160 field table, which shows all four as always-present strings.
 13. Submit-time-only sort replaced the blur re-sort (Sniffany's deferred Low on #337): the blur re-sort moved the focused row's DOM node and dropped keyboard focus to `<body>`. Submit already sorted before sending; the caption now reads "Sent earliest first when you submit." and the Remove-button mousedown guard, which existed only to protect the blur sort, went with it.
 14. The OMG-3160 envelope is a bare array — verified live on stage 2026-10-27 (decision 5's one unverified point). The client's assumption held; no UI change was needed.
+15. Sorting reuses the house idiom (`sortByKey`/`nextSortState` from `@utils`, DataTable's `sortable` + controlled sort props). The stacked line columns sort by the shipment's first line only, and the column key carries the dotted path (`lines.0.orderNumber`) — both the sort helper and DataTable traverse dots, so a key→path map would store the same fact twice (panel finding).
 
 ## Evidence
 
@@ -50,6 +52,8 @@
 - Local gates pre-push (2026-10-27, `1e94def`): full unit suite 4565/4565 (392 files), production build green, eslint 0 errors, typecheck clean.
 - Reviews (2026-10-27, #346): 4-seat light panel, 3× SHIP-WITH-NITS + 1× SHIP; 6 findings applied (triage in `omg-ui/tmp/stage_enable_review_triage.md`), 1 follow-up logged (Remove-click focus), 1 skipped.
 - Comment round (2026-10-27, #346): Sniffany's Low — Add still re-sorted the whole timeline — verified true and fixed in `ec63d07` (append; new test pins full row preservation). A 4-seat light panel reviewed the fix diff (1× SHIP, 3× SHIP-WITH-NITS; triage in `omg-ui/tmp/pr346_comment_fix_triage.md`): one unanimous finding applied, one skipped, one already tracked. Gates 4566/4566, build green; reply posted (r4394106104).
+- Local gates pre-push (2026-10-28, #357, `8a836a3`): full unit suite 4771/4771 (402 files), production build green, eslint 0 errors, typecheck clean.
+- Reviews (2026-10-28, #357): 4-seat light panel (Code ×2, Requirements ×2) + 2 triage seats; no blockers. All three gray findings implemented per user call (dotted keys, 8-column `it.each` + numeric-collation + multi-line pins, QA handoff note in the PR body). Triage record: `omg-ui/tmp/omg3162_sort_review/triage_plan.yaml`.
 
 ## Test data
 
@@ -69,7 +73,8 @@
 
 ## Artifacts
 
-- PRs: [#337](https://github.com/WarbyParker/omg-ui/pull/337) (merged), [#346](https://github.com/WarbyParker/omg-ui/pull/346) (open)
+- PRs: [#337](https://github.com/WarbyParker/omg-ui/pull/337) (merged), [#346](https://github.com/WarbyParker/omg-ui/pull/346) (merged), [#357](https://github.com/WarbyParker/omg-ui/pull/357) (merged, deployed `v0.2.114`)
+- Review triage record: `omg-ui/tmp/omg3162_sort_review/triage_plan.yaml`
 - Related tickets: [OMG-3160](https://warbyparker.atlassian.net/browse/OMG-3160) (shipments read, In Review — deployed to stage), [OMG-3161](https://warbyparker.atlassian.net/browse/OMG-3161) (carrier-events route, merged)
 - PR description scratch: `omg-ui/tmp/pr_description.md`
 - Stage verification evidence: `omg-ui/tmp/omg3160_verify/`

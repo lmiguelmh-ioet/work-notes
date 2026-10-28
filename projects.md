@@ -17,18 +17,25 @@ Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 - **Top clusters**: —
 - **Notes**: [oncall.2026-10](oncall.2026-10.md)
 
+## OTCM-151550 – IN-I-2019: fix cycle count outage (3FED)
+- **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-151550
+- **RICE**: IN-I-2019
+- **Dates**: 2026-10-27 → —
+- **Outcome**: In flight — plan approved (three PRs: error chain + WARNING logs, dual-create serialization, ticket identity); monitor and self-heal parked as open questions; orphan headers pending functional per-header review.
+- **Notes**: [projects.IN-I-2019.OTCM-151550](projects.IN-I-2019.OTCM-151550.md)
+
 ## OTCM-149231 – AP-I-3006: customer refund report fails on more than one order number
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-149231
 - **RICE**: AP-I-3006
-- **Dates**: 2026-10-27 → —
-- **Outcome**: In flight — DM fix live on dev1 + stage (scalar bind + `order_keys` CTE); QA evidence posted (comment 975346 + 8 console screenshots); oracle-integration-cloud #1169 open, merges at prod promotion.
+- **Dates**: 2026-10-27 → 2026-10-28
+- **Outcome**: Done 2026-10-28 (QA) — DM fix live on dev1 + stage (scalar bind + `order_keys` CTE), proven by QA evidence comment 975346 + 8 console screenshots; oracle-integration-cloud #1169 stays open until prod promotion.
 - **Notes**: [projects.AP-I-3006.OTCM-149231](projects.AP-I-3006.OTCM-149231.md)
 
 ## OMG-3162 – omg-ui: stage shipment table with fake-delivery modal
 - **Ticket**: https://warbyparker.atlassian.net/browse/OMG-3162
 - **RICE**: — (no RICE; OMG platform work)
 - **Dates**: 2026-10-26 → —
-- **Outcome**: Dev complete — [PR #337](https://github.com/WarbyParker/omg-ui/pull/337) merged (the tool, behind the dev flag) and [PR #346](https://github.com/WarbyParker/omg-ui/pull/346) merged 2026-10-27 (stage enablement + timeline focus fixes); live on stage since `v0.2.102` (2026-10-27 16:40). OMG-3160's read verified live on stage. Ticket awaits QA.
+- **Outcome**: Dev complete — [PR #337](https://github.com/WarbyParker/omg-ui/pull/337) merged (the tool, behind the dev flag) and [PR #346](https://github.com/WarbyParker/omg-ui/pull/346) merged 2026-10-27 (stage enablement + timeline focus fixes); live on stage since `v0.2.102` (2026-10-27 16:40). OMG-3160's read verified live on stage. QA-feedback follow-up [PR #357](https://github.com/WarbyParker/omg-ui/pull/357) merged and deployed 2026-10-28 via `v0.2.114` (sortable columns + "Actions" label). Ticket awaits QA.
 - **Notes**: [projects.OMG-3162](projects.OMG-3162.md)
 
 ## OTCM-149784 – AR-I-3019: refund unapplied exchange credit memos stranded by the zero-balance skip

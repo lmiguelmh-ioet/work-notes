@@ -2,7 +2,7 @@
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-149231
 - **RICE**: AP-I-3006
 - **Repos**: oracle-integration-cloud
-- **Status** (as of 2026-10-28): QA evidence posted (comment 975346 + 8 console screenshots, audit panel passed); fix live on dev1 + stage; PR #1169 open, merges at PROD promotion
+- **Status** (2026-10-28): **DONE** — QA moved the ticket 2026-10-28 12:32 local on the posted evidence (comment 975346). File frozen. Fix live on dev1 + stage; PR #1169 stays open until PROD promotion.
 - **Plan**: [projects.AP-I-3006.OTCM-149231.plan](projects.AP-I-3006.OTCM-149231.plan.md)
 
 ## Outcome
@@ -46,6 +46,7 @@
 - All verified single-row 2026-10-28; re-derive from a fresh scheduled capture before relying on them later.
 
 ## Open items
+Ticket closed by QA 2026-10-28; these follow-ups survive closure.
 - Prod paste at promotion + V5 smoke (CSV + single + scheduled count).
 - E2E ad hoc OIC run (two orders through the form) — undecided; it announces real refunds to stage payment services.
 - dates+CSV combined evidence coverage — the audit panel flagged the dropped scenario; options: leave / one-line boundary / SQL-level predicate probe (recommended).
