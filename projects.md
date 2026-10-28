@@ -17,6 +17,13 @@ Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 - **Top clusters**: —
 - **Notes**: [oncall.2026-10](oncall.2026-10.md)
 
+## OTCM-149231 – AP-I-3006: customer refund report fails on more than one order number
+- **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-149231
+- **RICE**: AP-I-3006
+- **Dates**: 2026-10-27 → —
+- **Outcome**: In flight — DM fix live on dev1 + stage (scalar bind + `order_keys` CTE); QA evidence posted (comment 975346 + 8 console screenshots); oracle-integration-cloud #1169 open, merges at prod promotion.
+- **Notes**: [projects.AP-I-3006.OTCM-149231](projects.AP-I-3006.OTCM-149231.md)
+
 ## OMG-3162 – omg-ui: stage shipment table with fake-delivery modal
 - **Ticket**: https://warbyparker.atlassian.net/browse/OMG-3162
 - **RICE**: — (no RICE; OMG platform work)
