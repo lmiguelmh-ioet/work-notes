@@ -1,0 +1,12 @@
+HTTP/2 200 
+date: Tue, 27 Oct 2026 20:40:48 GMT
+content-type: application/json
+content-length: 11983
+cf-ray: a5148477983fc2c2-LIM
+cf-cache-status: DYNAMIC
+server: cloudflare
+strict-transport-security: max-age=31536000; includeSubDomains
+vary: Origin
+x-envoy-upstream-service-time: 3990
+set-cookie: __cf_bm=EZBoRW3Ygv3GE2azcqiLkcZpG7GOHBFuPWKpxaXD3k4-1793133643.4615898-1.0.1.1-6ID7xcIP9dvyNWhbZDHjaufSMpwxoQJIUlItwWeQMShfhTsk38ZyJ3IKjg6gBhGPCG_IGYKa7rlJep3r8rOHXRjhQPp9Y4YDBl0Sc7kRlNPCEXSUuUmAHdgXHmNSzEWK; HttpOnly; SameSite=None; Secure; Path=/; Domain=stage.warby.io; Expires=Tue, 27 Oct 2026 21:10:48 GMT
+

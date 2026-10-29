@@ -21,7 +21,7 @@ Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-151550
 - **RICE**: IN-I-2019
 - **Dates**: 2026-10-27 → —
-- **Outcome**: In flight — plan approved (three PRs: error chain + WARNING logs, dual-create serialization, ticket identity); monitor and self-heal parked as open questions; orphan headers pending functional per-header review.
+- **Outcome**: In flight — PR1 and PR2 merged 2026-10-29; PR3 in progress (two commits local, pre-push). Monitor and self-heal parked as open questions; orphan headers pending functional per-header review.
 - **Notes**: [projects.IN-I-2019.OTCM-151550](projects.IN-I-2019.OTCM-151550.md)
 
 ## OTCM-149231 – AP-I-3006: customer refund report fails on more than one order number
@@ -32,10 +32,10 @@ Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 - **Notes**: [projects.AP-I-3006.OTCM-149231](projects.AP-I-3006.OTCM-149231.md)
 
 ## OMG-3162 – omg-ui: stage shipment table with fake-delivery modal
-- **Ticket**: https://warbyparker.atlassian.net/browse/OMG-3162
+- **Ticket**: https://warbyparker.atlassian.net/browse/OMG-3162 (moved; now OTCM-151727)
 - **RICE**: — (no RICE; OMG platform work)
-- **Dates**: 2026-10-26 → —
-- **Outcome**: Dev complete — [PR #337](https://github.com/WarbyParker/omg-ui/pull/337) merged (the tool, behind the dev flag) and [PR #346](https://github.com/WarbyParker/omg-ui/pull/346) merged 2026-10-27 (stage enablement + timeline focus fixes); live on stage since `v0.2.102` (2026-10-27 16:40). OMG-3160's read verified live on stage. QA-feedback follow-up [PR #357](https://github.com/WarbyParker/omg-ui/pull/357) merged and deployed 2026-10-28 via `v0.2.114` (sortable columns + "Actions" label). Ticket awaits QA.
+- **Dates**: 2026-10-26 → 2026-10-28
+- **Outcome**: Done 2026-10-28 (QA) — the stage Shipments tool is live behind the `shipmentsTool` flag: #337 (the tool) + #346 (stage enablement) in `v0.2.102`, QA-feedback #357 (sortable columns + "Actions" label) in `v0.2.114`. Prod keeps the flag off.
 - **Notes**: [projects.OMG-3162](projects.OMG-3162.md)
 
 ## OTCM-149784 – AR-I-3019: refund unapplied exchange credit memos stranded by the zero-balance skip

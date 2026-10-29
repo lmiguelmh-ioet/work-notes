@@ -24,7 +24,7 @@ The page uses two OMG endpoints:
    (`monocle _ship_confirm_sales_orders.py:421,205`). Request:
    `{containerId?, estimatedDeliveryDate?, events[] (min 1), dryRun?}`; response:
    `{orderId, fulfillmentRequestExternalId, target, dryRun, sent[]{shipmentId,
-   trackingNumber, containerId, payload, monocleResponse}}`; errors: 404 unknown or
+trackingNumber, containerId, payload, monocleResponse}}`; errors: 404 unknown or
    superseded id, 409 no shipped box with a tracking number yet, 422 naive dates/empty
    events, 502 monocle failure with partial-progress detail.
 
@@ -125,12 +125,12 @@ order/orderType/lineStatus in the row.
 **One PR.** Decision (Luis, 2026-10-26): the ~400-line split limit is a monocle
 constraint; omg-ui ships this ticket as a single PR.
 
-| Field | Value |
-|---|---|
-| Proposed title | `[OMG-3162] feat(shipments): add the stage shipment table with the fake-delivery modal` |
-| Repo / branch | omg-ui / `feat/OMG-3162-shipments-tool` |
-| Contents | Everything in "Design decisions": the `carrierEvents.ts` move to `src/api/carrierEvents/`, the new `src/api/shipments/` client, the `shipmentsTool` flag, the Tools page + route + Sidebar entry, the `FakeDeliveryModal`, and all tests |
-| Est. lines | ~1100 with tests — exceeds the ~400 guideline deliberately; exception confirmed by the user |
+| Field          | Value                                                                                                                                                                                                                                    |
+| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Proposed title | `[OMG-3162] feat(shipments): add the stage shipment table with the fake-delivery modal`                                                                                                                                                  |
+| Repo / branch  | omg-ui / `feat/OMG-3162-shipments-tool`                                                                                                                                                                                                  |
+| Contents       | Everything in "Design decisions": the `carrierEvents.ts` move to `src/api/carrierEvents/`, the new `src/api/shipments/` client, the `shipmentsTool` flag, the Tools page + route + Sidebar entry, the `FakeDeliveryModal`, and all tests |
+| Est. lines     | ~1100 with tests — exceeds the ~400 guideline deliberately; exception confirmed by the user                                                                                                                                              |
 
 Sequencing notes:
 
@@ -169,25 +169,25 @@ We are the testers; QA verifies posted evidence. Evidence posted to OMG-3162 per
 
 Requirement matrix:
 
-| Scenario | Covers | Setup / run | Expected | Evidence |
-|---|---|---|---|---|
-| QA-S1 | AC1 | Stage, after OMG-3160 deploys: open `/tools/shipments` | Up to 50 rows; all 8 columns; multi-line rows stack line values | Screenshot + the `GET /v1/test/shipments` JSON |
-| QA-S2 | AC2 | Same session: search a known shipment number | Table replaced by the single matching row | Screenshot + request URL with `shipmentNumber` |
-| QA-S3 | AC3 | Stage, OMG-fulfilled shipped row (after monocle guard fix): Fake deliver → Delivery preset → Submit | Three events sent (`pre_transit`, `in_transit`, `delivery`); `sent[]` per box; monocle writes the delivery date; OMG shipment turns delivered | Response JSON + order detail (delivered) + Oracle shipment view |
-| QA-S4 | AC4 | Code/unit level: every call goes through `apiFetch` `/v1/...` | No raw `fetch`, no Oracle/monocle hosts | PR diff + unit tests |
-| QA-S5 | AC5 | Production build/config: `shipmentsTool` false in production; prod deploy check | No Sidebar entry; `/tools/shipments` renders NotFound | Config diff + prod screenshot |
-| QA-S6 | Modal spec | Unit: presets replace the timeline one minute apart; custom Add appends; remove drops; empty timeline disables Submit; failure keeps modal open with the error; success shows `sent[]` | As spec'd | vitest output in PR |
+| Scenario | Covers     | Setup / run                                                                                                                                                                            | Expected                                                                                                                                      | Evidence                                                        |
+| -------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| QA-S1    | AC1        | Stage, after OMG-3160 deploys: open `/tools/shipments`                                                                                                                                 | Up to 50 rows; all 8 columns; multi-line rows stack line values                                                                               | Screenshot + the `GET /v1/test/shipments` JSON                  |
+| QA-S2    | AC2        | Same session: search a known shipment number                                                                                                                                           | Table replaced by the single matching row                                                                                                     | Screenshot + request URL with `shipmentNumber`                  |
+| QA-S3    | AC3        | Stage, OMG-fulfilled shipped row (after monocle guard fix): Fake deliver → Delivery preset → Submit                                                                                    | Three events sent (`pre_transit`, `in_transit`, `delivery`); `sent[]` per box; monocle writes the delivery date; OMG shipment turns delivered | Response JSON + order detail (delivered) + Oracle shipment view |
+| QA-S4    | AC4        | Code/unit level: every call goes through `apiFetch` `/v1/...`                                                                                                                          | No raw `fetch`, no Oracle/monocle hosts                                                                                                       | PR diff + unit tests                                            |
+| QA-S5    | AC5        | Production build/config: `shipmentsTool` false in production; prod deploy check                                                                                                        | No Sidebar entry; `/tools/shipments` renders NotFound                                                                                         | Config diff + prod screenshot                                   |
+| QA-S6    | Modal spec | Unit: presets replace the timeline one minute apart; custom Add appends; remove drops; empty timeline disables Submit; failure keeps modal open with the error; success shows `sent[]` | As spec'd                                                                                                                                     | vitest output in PR                                             |
 
 Design-derived edge cases (second group):
 
-| Scenario | Covers | Run | Expected |
-|---|---|---|---|
-| QA-S7 | Regression: carrierEvents move | Existing wms-test vitest files + stage smoke of the WMS Test carrier-events panel | WMS Test page unchanged |
-| QA-S8 | Non-OMG-fulfilled row submit | Stage (or unit with 404) | Error shown, modal stays open, timeline intact |
-| QA-S9 | Ship confirm not yet consumed | Stage timing window (or unit with 409) | 409 text shown ("run the ship confirm first") |
-| QA-S10 | `estimatedDeliveryDate` + naive-datetime guard | Unit: body sent with ISO offset datetimes | Backend accepts (no 422) |
-| QA-S11 | Tracker-guard window | Stage after guard fix: fake deliver AFTER tracker sync has run | Delivery still lands (the defect's regression check) |
-| QA-S12 | Empty search | Unit + stage: search a shipment number that does not exist | Explicit empty state, no error |
+| Scenario | Covers                                         | Run                                                                               | Expected                                             |
+| -------- | ---------------------------------------------- | --------------------------------------------------------------------------------- | ---------------------------------------------------- |
+| QA-S7    | Regression: carrierEvents move                 | Existing wms-test vitest files + stage smoke of the WMS Test carrier-events panel | WMS Test page unchanged                              |
+| QA-S8    | Non-OMG-fulfilled row submit                   | Stage (or unit with 404)                                                          | Error shown, modal stays open, timeline intact       |
+| QA-S9    | Ship confirm not yet consumed                  | Stage timing window (or unit with 409)                                            | 409 text shown ("run the ship confirm first")        |
+| QA-S10   | `estimatedDeliveryDate` + naive-datetime guard | Unit: body sent with ISO offset datetimes                                         | Backend accepts (no 422)                             |
+| QA-S11   | Tracker-guard window                           | Stage after guard fix: fake deliver AFTER tracker sync has run                    | Delivery still lands (the defect's regression check) |
+| QA-S12   | Empty search                                   | Unit + stage: search a shipment number that does not exist                        | Explicit empty state, no error                       |
 
 ## QA / functional back-and-forth (post-implementation)
 

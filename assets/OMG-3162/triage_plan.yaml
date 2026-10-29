@@ -1,0 +1,87 @@
+# Triage plan — 20261028T1214 (pre-opening, feat/OMG-3162-sortable-shipment-columns @ b15f001)
+# Panels: code x2, requirements x2. Seats: implement-now, only-if-necessary (both verified
+# every finding against the working tree; the only empirical dispute — the useMemo lint
+# question — was settled by reproduction: removing it re-fires exhaustive-deps).
+# Gray resolutions (user, 2026-10-28): _1 A (implement), _2 A (implement), _5 A (implement)
+# — all three applied; fast gates re-run green (35/35 scoped, eslint, prettier, tsc).
+findings:
+  - id: 20261028T1214_1
+    label: SORT_VALUE_PATHS map vs dotted column keys
+    disposition: gray
+    reason: implement-now says collapse the map into lines.0.* column keys now (deletes the
+      orphaned-entry hazard); only-if-necessary says the map is correct and test-pinned —
+      collapse is rot-prevention for the next touch of this page.
+    fix: rename the 3 column keys to lines.0.orderNumber/orderType/lineStatus, delete the
+      map and the ?? sort.key fallback, move the first-line comment to shipmentColumns.tsx
+    votes: { implement-now: implement, only-if-necessary: follow-up }
+    risk:
+      trigger: disputed (every-run on the sort path vs data-dependent on a future rename)
+      consequence: internal (orphaned key makes that column's sort silently no-op)
+      detection: silent (Order caught by the line test; orderType/lineStatus ship green)
+      reversibility: reversible
+      fix-risk: mechanical rename, one consumer, label-based tests; low
+  - id: 20261028T1214_2
+    label: only 2 of 8 sortable columns behaviorally tested
+    disposition: gray
+    reason: implement-now says pin all 8 keys now (silent no-op failure mode demonstrated);
+      only-if-necessary says all keys are verified correct today and per-column params guard
+      only future rot.
+    fix: it.each over all 8 columns (high/blank/low rows, asc→desc→server-order), live-shape
+      ISO datetimes ("2026-10-26T14:49:14+00:00") for Initial Ship Date, one 2-line row
+      pinning lines.0 semantics, third-click coverage on the line test. Test-only.
+    votes: { implement-now: implement, only-if-necessary: skip }
+    risk:
+      trigger: data-dependent (a future edit breaking one of the 6 unpinned keys)
+      consequence: internal (that column's sort silently no-ops on stage)
+      detection: silent (header-button test checks labels, not keys)
+      reversibility: reversible
+      fix-risk: none (test-only)
+  - id: 20261028T1214_3
+    label: multi-line shipments sort line columns by first line only
+    disposition: skip
+    reason: both seats — deterministic, documented in code, standard reading of "sortable";
+      the semantic QA wants is a ticket question, not a code defect. Near-invisible on stage
+      (49/50 rows line-less; exactly one 2-line shipment, L0ZHA78DBK).
+    votes: { implement-now: skip, only-if-necessary: skip }
+  - id: 20261028T1214_4
+    label: Initial Ship Date string-sort needs ISO wire format
+    disposition: skip
+    reason: both seats — falsified on live evidence: the saved stage payload
+      (tmp/omg3160_verify/list.body, 50 rows) shows uniform ISO-8601 datetimes at +00:00,
+      so localeCompare is chronological. Two raw-report sub-claims corrected: the folder
+      exists; the wire is datetime+offset, not date-only.
+    votes: { implement-now: skip, only-if-necessary: skip }
+  - id: 20261028T1214_5
+    label: line columns look inert on stage data (QA handoff note)
+    disposition: gray
+    reason: implement-now says add the one-line QA note to the PR description now (prevents
+      a false "sort does nothing" round-trip); only-if-necessary says skip as a code finding
+      (nothing broken; PR-note territory).
+    fix: one line in the PR description telling QA the line columns move only rows with
+      lines (49/50 have none); search L0ZHA78DBK to see them work.
+    votes: { implement-now: implement, only-if-necessary: skip }
+    risk:
+      trigger: every-run (QA clicks a line-column header on the default listing)
+      consequence: disputed (operational — a wasted QA round-trip; vs internal)
+      detection: loud but misleading (nothing visibly moves)
+      reversibility: reversible
+      fix-risk: none (PR-description text only)
+  - id: 20261028T1214_6
+    label: sort is local to the <=50 loaded rows
+    disposition: skip
+    reason: both seats — disclosed on the page and matches the ticket spec ("render the
+      first 50"); server-side global sort is a cross-repo feature QA has not asked for.
+    votes: { implement-now: skip, only-if-necessary: skip }
+  - id: 20261028T1214_7
+    label: shipments useMemo is behavior-neutral
+    disposition: skip
+    reason: both seats — verified empirically that removing it re-fires
+      react-hooks/exhaustive-deps at 31:9; the memo is lint-load-bearing, keep it.
+    votes: { implement-now: skip, only-if-necessary: skip }
+  - id: 20261028T1214_8
+    label: third copy of the sort-wiring pattern (useSortedData hook)
+    disposition: follow-up
+    reason: both seats decline it for this PR — the sort logic is already centralized in
+      @utils, only wiring is copied, and VipPoolOverview's batched setPage(1) breaks the
+      naive hook signature. Real consolidation, its own change with its own tests.
+    votes: { implement-now: skip, only-if-necessary: follow-up }

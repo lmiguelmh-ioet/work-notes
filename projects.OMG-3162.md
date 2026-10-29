@@ -3,8 +3,8 @@
 - **Ticket**: https://warbyparker.atlassian.net/browse/OMG-3162
 - **RICE**: — (OMG platform work, no RICE id)
 - **Repos**: `omg-ui` (the PR); `order-management-gateway` holds the contract (OMG-3160 read, OMG-3161 carrier-events)
-- **Status** (as of 2026-10-28): **MERGED** — follow-up [PR #357](https://github.com/WarbyParker/omg-ui/pull/357) merged 2026-10-28 17:46 UTC (squash `e26474fe`) and deployed via tag `v0.2.114`. Earlier: [PR #346](https://github.com/WarbyParker/omg-ui/pull/346) merged 2026-10-27 16:13 (stage enablement + timeline focus fix), PR #337 the same day; the tool live on stage since `v0.2.102`. The ticket stays with QA.
-- **Plan**: [projects.OMG-3162.plan](projects.OMG-3162.plan.md) (archived verbatim 2026-10-26)
+- **Status** (2026-10-29): **DONE** — QA moved the ticket to Done 2026-10-28 16:45 local (as [OTCM-151727](https://warbyparker.atlassian.net/browse/OTCM-151727), resolution Done; verified in Jira 2026-10-29). File frozen. Everything shipped and live on stage: the tool (#337 + #346, `v0.2.102`) and the QA-feedback round (#357, `v0.2.114`). Prod keeps `shipmentsTool` off. Surviving follow-ups under Open items.
+- **Plan**: [projects.OMG-3162.plan](projects.OMG-3162.plan.md) (archived verbatim 2026-10-29)
 
 ## Outcome
 
@@ -48,18 +48,20 @@
 - Local gates pre-push (2026-10-27, `96e83a5`): full unit suite 4473/4473 (390 files), production build green, eslint 0 errors, typecheck clean. Scoped suites ran 3 consecutive clean passes after the flake-hardening fix.
 - Reviews: 12-seat full panel (17 findings applied, `_14`/`_19` skipped) plus a 3-seat light panel on the fix round (all findings applied). Two independent UX-expert/senior-FE rounds on the modal (spacing/labels, big-result overflow) — all applied findings listed in the chat; live-verified by the user against the local stub.
 - Reviews (2026-10-27, human round): Sniffany left 4 threads (1 Medium, 3 Low); all verified true, fixed in `96e83a5`, and answered on the PR. A 4-seat light panel (Code ×2, Requirements ×2) then reviewed the fix delta: 4× SHIP-WITH-NITS, 5 findings applied (flag-restore idiom, `previewRequested` rename, Remove-button mousedown guard, test hardening, hoisted `byEventDate`), 3 consciously skipped (Sidebar two-pass composition, wrapper-test restructure, NaN cosmetic order). Requirements seat revert-tested each new test and proved it pins its fix.
-- Stage verification (2026-10-27): OMG-3160 live behind CF Access (cloudflared token, the omg-ui `get-cf-token.sh` pattern). The bare list returns exactly 50 shipments; `?shipmentNumber=L0ZHA78DBK` returns one fully populated row (LLAS, tracking `SIML0ZHA78DBK`, 2 lines on `TQ0YJK009Z`). `customer` and `trackingNumber` are null on 49/50, key always present. Saved in `omg-ui/tmp/omg3160_verify/`.
+- Stage verification (2026-10-27): OMG-3160 live behind CF Access (cloudflared token, the omg-ui `get-cf-token.sh` pattern). The bare list returns exactly 50 shipments; `?shipmentNumber=L0ZHA78DBK` returns one fully populated row (LLAS, tracking `SIML0ZHA78DBK`, 2 lines on `TQ0YJK009Z`). `customer` and `trackingNumber` are null on 49/50, key always present. Saved in `assets/OMG-3162/omg3160_verify/`.
 - Local gates pre-push (2026-10-27, `1e94def`): full unit suite 4565/4565 (392 files), production build green, eslint 0 errors, typecheck clean.
-- Reviews (2026-10-27, #346): 4-seat light panel, 3× SHIP-WITH-NITS + 1× SHIP; 6 findings applied (triage in `omg-ui/tmp/stage_enable_review_triage.md`), 1 follow-up logged (Remove-click focus), 1 skipped.
-- Comment round (2026-10-27, #346): Sniffany's Low — Add still re-sorted the whole timeline — verified true and fixed in `ec63d07` (append; new test pins full row preservation). A 4-seat light panel reviewed the fix diff (1× SHIP, 3× SHIP-WITH-NITS; triage in `omg-ui/tmp/pr346_comment_fix_triage.md`): one unanimous finding applied, one skipped, one already tracked. Gates 4566/4566, build green; reply posted (r4394106104).
+- Reviews (2026-10-27, #346): 4-seat light panel, 3× SHIP-WITH-NITS + 1× SHIP; 6 findings applied (triage in `assets/OMG-3162/stage_enable_review_triage.md`), 1 follow-up logged (Remove-click focus), 1 skipped.
+- Comment round (2026-10-27, #346): Sniffany's Low — Add still re-sorted the whole timeline — verified true and fixed in `ec63d07` (append; new test pins full row preservation). A 4-seat light panel reviewed the fix diff (1× SHIP, 3× SHIP-WITH-NITS; triage in `assets/OMG-3162/pr346_comment_fix_triage.md`): one unanimous finding applied, one skipped, one already tracked. Gates 4566/4566, build green; reply posted (r4394106104).
 - Local gates pre-push (2026-10-28, #357, `8a836a3`): full unit suite 4771/4771 (402 files), production build green, eslint 0 errors, typecheck clean.
-- Reviews (2026-10-28, #357): 4-seat light panel (Code ×2, Requirements ×2) + 2 triage seats; no blockers. All three gray findings implemented per user call (dotted keys, 8-column `it.each` + numeric-collation + multi-line pins, QA handoff note in the PR body). Triage record: `omg-ui/tmp/omg3162_sort_review/triage_plan.yaml`.
+- Reviews (2026-10-28, #357): 4-seat light panel (Code ×2, Requirements ×2) + 2 triage seats; no blockers. All three gray findings implemented per user call (dotted keys, 8-column `it.each` + numeric-collation + multi-line pins, QA handoff note in the PR body). Triage record: `assets/OMG-3162/triage_plan.yaml`.
 
 ## Test data
 
 - No Oracle fixtures needed — unit tests use in-memory fixtures; the tool itself creates the QA data once live.
 
 ## Open items
+
+Ticket closed by QA 2026-10-28; these follow-ups survive closure.
 
 - ~~Stage visibility waits on the next omg-ui tag deploy~~ **DONE 2026-10-27**: `v0.2.102` deployed to stage 16:40 (tag CD `frontend-push-stage`); the live bundle verified to carry the flag flip and the new caption. Tools → Shipments is visible on stage.
 - **v0.2.102 prod gate** (manual approval, parked): prod keeps `shipmentsTool` off, so approving is low-risk for this ticket, but approve in tag order with Emma's queued `v0.2.101` or prod rolls back to the older bundle. Emma's `#345` merged to main after the tag and rides the NEXT release.
@@ -74,7 +76,7 @@
 ## Artifacts
 
 - PRs: [#337](https://github.com/WarbyParker/omg-ui/pull/337) (merged), [#346](https://github.com/WarbyParker/omg-ui/pull/346) (merged), [#357](https://github.com/WarbyParker/omg-ui/pull/357) (merged, deployed `v0.2.114`)
-- Review triage record: `omg-ui/tmp/omg3162_sort_review/triage_plan.yaml`
+- Review triage record: `assets/OMG-3162/triage_plan.yaml`
 - Related tickets: [OMG-3160](https://warbyparker.atlassian.net/browse/OMG-3160) (shipments read, In Review — deployed to stage), [OMG-3161](https://warbyparker.atlassian.net/browse/OMG-3161) (carrier-events route, merged)
-- PR description scratch: `omg-ui/tmp/pr_description.md`
-- Stage verification evidence: `omg-ui/tmp/omg3160_verify/`
+- PR description scratch: deleted; the final texts live on the PRs
+- Stage verification evidence: `assets/OMG-3162/omg3160_verify/`
