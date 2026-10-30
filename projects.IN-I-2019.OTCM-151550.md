@@ -2,7 +2,7 @@
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-151550
 - **RICE**: IN-I-2019
 - **Repos**: monocle_integrations
-- **Status**: PR1 and PR2 merged; PR3 in progress locally (2 commits, pre-push) (as of 2026-10-29)
+- **Status**: PR1 and PR2 merged; PR3 #2854 open, CI running (as of 2026-10-30)
 - **Plan**: [in-i-2019_outage_fix plan](https://github.com/WarbyParker/monocle_integrations) (local: `monocle_integrations/.cursor/plans/in-i-2019_outage_fix_a56f355a.plan.md`)
 
 ## Background — the integration and the outage
@@ -19,11 +19,12 @@
 **What this ticket fixes.** Those three bugs, in three PRs (error-chain hardening, dual-create serialization, event-route ticket identity). The ticket's acceptance criteria also asked for three extras: self-healing recovery (AC3), a count-didn't-land monitor (AC4), and orphan-header cleanup (AC5). The extras are where the scope questions lived; their outcomes are under Decisions.
 
 ## Outcome
-- In flight. Plan approved 2026-10-28 after two adversarial review rounds. PR1 (error-chain survival) and PR2 (dual-create serialization) merged 2026-10-29. PR3 holds two local commits (ticket identity; bounded ticket-call helper) and needs a rebase onto main plus the slow suites before push. The close-all in-flight safety question was confirmed a live prod hazard and parked as a follow-up ticket, to be filed after the PRs merge.
+- In flight. Plan approved 2026-10-28 after two adversarial review rounds. PR1 (error-chain survival) and PR2 (dual-create serialization) merged 2026-10-29. PR3 opened as #2854 on 2026-10-30 with ticket identity and the bounded ticket-call helper (docs excluded). The ticket-creation retry and DLQ redelivery hardening was descoped before opening and parked as a follow-up candidate. The close-all in-flight safety question was confirmed a live prod hazard and parked as a follow-up ticket, to be filed after the PRs merge.
 
 ## What shipped
 - PR1: [monocle#2848](https://github.com/WarbyParker/monocle_integrations/pull/2848) (merged 2026-10-29) — error text preserved (`message=str(error)`), Jira ticket call bounded (`asyncio.wait_for`, 30 s default), silent-success WARNING logs, FedEx 422 description contract preserved.
 - PR2: [monocle#2851](https://github.com/WarbyParker/monocle_integrations/pull/2851) (merged 2026-10-29) — dual create serialized via the shared `create_counts_sequentially` helper; `close_all_sessions` is deterministic pop-and-close. Review round: the timeout skip keys on a request-budget marker (`HttpClientTimeoutError` at `_raise_client_error`), and dual failures raise one `ExceptionGroup`.
+- PR3: [monocle#2854](https://github.com/WarbyParker/monocle_integrations/pull/2854) (opened 2026-10-30) — event-route error tickets carry RICE id + file path (S3 configuration-id fallback, SQS DLQ queue-RICE-id fallback, non-dict body normalization); one shared bounded ticket-call helper across the three event routes; Kinesis traceback string fix.
 
 ## Decisions
 ### Functional clarifications (Q&A)
@@ -44,6 +45,7 @@
 8. The dual-create serialization lives in ONE shared helper (`create_counts_sequentially` in `_wp_common_create_cycle_count_integration`), not two hand-copied blocks (light review panel, 2026-10-29). Race semantics must agree on both routes; the helper makes agreement structural.
 9. The timeout skip keys on a request-budget marker, not a bare `TimeoutError` chain-walk. `_raise_client_error` raises `HttpClientTimeoutError` only when the direct cause is a timeout, so a wrapped 10s token-fetch timeout cannot trigger the skip (light review panel finding; user approved the mechanism, Cursor chat, 2026-10-29).
 10. A dual create failure raises one `ExceptionGroup` carrying both errors, so the Jira ticket renders both tracebacks via `traceback.format_exception` (user chose ExceptionGroup over `add_note`, Cursor chat, 2026-10-29).
+11. Ticket-creation retry (3 attempts, jittered backoff) and DLQ redelivery via `batchItemFailures` (with the Terraform ESM flag and `batch_size = 1`) were implemented and panel-reviewed, then dropped from PR3 (user, Cursor chat, 2026-10-29). Parked as a follow-up candidate (`tmp/pr3_review/triage_plan_delta.yaml`). Consequence: a DLQ message whose ticket call fails is still consumed silently, and one Jira blip loses a ticket.
 
 ## Evidence
 - Full verified chain in the plan (CloudWatch prod logs, New Relic 3902898, read-only Oracle prod GETs, 2026-10-28): the 10-25 REST run's AI items got a 400 on a committed parent; the disconnects hit the non-AI batches after the legacy close-all; the Jira POST was abandoned mid-flight; the finally path crashed JSON serialization.
@@ -55,7 +57,7 @@
 - TBD per the plan's QA matrix: a crafted FedEx file on the stage S3 prefix (lines passing the subinventory/lock-code filters with bogus UPCs) forces the no-match ValueError; empty and incomplete file sets exercise the new WARNING logs.
 
 ## Open items
-- PR3 (ticket identity + bounded ticket-call helper) — two commits local; rebase onto main (PR2 landed, `_domain/__init__.py` overlap) and slow suites before push.
+- PR3 #2854 (ticket identity + bounded ticket-call helper) — open, CI running. The one local `make test-api` failure (`test__two_items_processed_concurrently_create_exactly_one_tracker`) is pre-existing: it fails identically on the merge-base.
 - The Samsung AP-I-1071 event-test failure from the full `make test-api` run was concurrent-suite interference, not PR3 code: the test passes alone and the full `_event_handlers` suite passes 53/53 on the branch.
 - Close-all follow-up ticket — draft ready at `tmp/otcm151550_close_all_followup_ticket.md` (verbatim backup in the plan's post-merge action); file in OTCM after the PRs merge, adding the PR links.
 - WI6 orphan review-request comment (Q16) — evidence-backed draft ready; recommendation is OEH-88850 (the user's parked on-call ticket whose run generated orphan 952; OEH-88909–88914 belong to the current rotation, hands off); pending approval to post.
