@@ -2,7 +2,7 @@
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-151550
 - **RICE**: IN-I-2019
 - **Repos**: monocle_integrations
-- **Status**: PR1 and PR2 merged; PR3 #2854 open, CI running (as of 2026-10-30)
+- **Status**: all three PRs merged; deployed to stage as `vstage432`; stage QA evidence posted 2026-11-02; ticket with QA (as of 2026-11-02)
 - **Plan**: [in-i-2019_outage_fix plan](https://github.com/WarbyParker/monocle_integrations) (local: `monocle_integrations/.cursor/plans/in-i-2019_outage_fix_a56f355a.plan.md`)
 
 ## Background — the integration and the outage
@@ -19,12 +19,13 @@
 **What this ticket fixes.** Those three bugs, in three PRs (error-chain hardening, dual-create serialization, event-route ticket identity). The ticket's acceptance criteria also asked for three extras: self-healing recovery (AC3), a count-didn't-land monitor (AC4), and orphan-header cleanup (AC5). The extras are where the scope questions lived; their outcomes are under Decisions.
 
 ## Outcome
-- In flight. Plan approved 2026-10-28 after two adversarial review rounds. PR1 (error-chain survival) and PR2 (dual-create serialization) merged 2026-10-29. PR3 opened as #2854 on 2026-10-30 with ticket identity and the bounded ticket-call helper (docs excluded). The ticket-creation retry and DLQ redelivery hardening was descoped before opening and parked as a follow-up candidate. The close-all in-flight safety question was confirmed a live prod hazard and parked as a follow-up ticket, to be filed after the PRs merge.
+- In flight. Plan approved 2026-10-28 after two adversarial review rounds. PR1 (error-chain survival) and PR2 (dual-create serialization) merged 2026-10-29. PR3 opened as #2854 on 2026-10-30 with ticket identity and bounded ticket calls (docs excluded; the shared helper was dropped the same day in favor of inline `asyncio.wait_for` bounds). Review on 2026-11-02 raised the batch-level ticket-time gap; answered with verified numbers and parked as its own follow-up ticket draft. The ticket-creation retry and DLQ redelivery hardening was descoped before opening and parked as a follow-up candidate. The close-all in-flight safety question was confirmed a live prod hazard and parked as a follow-up ticket, to be filed after the PRs merge.
+- 2026-11-02: all three PRs merged and deployed to stage as `vstage432` (CD workflow green incl. both health checks). Stage QA evidence posted on the ticket ([comment 977087](https://warbyparker.atlassian.net/browse/OTCM-151550?focusedCommentId=977087)): seven scenarios (S1–S7) all Pass — happy path creates both counts on evdi-test, duplicate-name and malformed-file failures open correctly-identified OTCM tickets (OTCM-152817, OTCM-152818), no session-race markers in any log, silent-success path logs WARNING and creates nothing. AC3/AC4 stay descoped boundaries. The OEH-88850 orphan review (AC5) posted as [comment 977051](https://warbyparker.atlassian.net/browse/OEH-88850?focusedCommentId=977051), updated the same day after re-verification: prod recovered on pre-fix code (both daily counts land since 2026-10-29); the five orphans still hold 0 items.
 
 ## What shipped
 - PR1: [monocle#2848](https://github.com/WarbyParker/monocle_integrations/pull/2848) (merged 2026-10-29) — error text preserved (`message=str(error)`), Jira ticket call bounded (`asyncio.wait_for`, 30 s default), silent-success WARNING logs, FedEx 422 description contract preserved.
 - PR2: [monocle#2851](https://github.com/WarbyParker/monocle_integrations/pull/2851) (merged 2026-10-29) — dual create serialized via the shared `create_counts_sequentially` helper; `close_all_sessions` is deterministic pop-and-close. Review round: the timeout skip keys on a request-budget marker (`HttpClientTimeoutError` at `_raise_client_error`), and dual failures raise one `ExceptionGroup`.
-- PR3: [monocle#2854](https://github.com/WarbyParker/monocle_integrations/pull/2854) (opened 2026-10-30) — event-route error tickets carry RICE id + file path (S3 configuration-id fallback, SQS DLQ queue-RICE-id fallback, non-dict body normalization); one shared bounded ticket-call helper across the three event routes; Kinesis traceback string fix.
+- PR3: [monocle#2854](https://github.com/WarbyParker/monocle_integrations/pull/2854) (merged 2026-11-02) — event-route error tickets carry RICE id + file path (S3 configuration-id fallback, SQS DLQ queue-RICE-id fallback, non-dict body normalization); inline `asyncio.wait_for` bounds at the three event routes; Kinesis traceback string fix.
 
 ## Decisions
 ### Functional clarifications (Q&A)
@@ -46,22 +47,25 @@
 9. The timeout skip keys on a request-budget marker, not a bare `TimeoutError` chain-walk. `_raise_client_error` raises `HttpClientTimeoutError` only when the direct cause is a timeout, so a wrapped 10s token-fetch timeout cannot trigger the skip (light review panel finding; user approved the mechanism, Cursor chat, 2026-10-29).
 10. A dual create failure raises one `ExceptionGroup` carrying both errors, so the Jira ticket renders both tracebacks via `traceback.format_exception` (user chose ExceptionGroup over `add_note`, Cursor chat, 2026-10-29).
 11. Ticket-creation retry (3 attempts, jittered backoff) and DLQ redelivery via `batchItemFailures` (with the Terraform ESM flag and `batch_size = 1`) were implemented and panel-reviewed, then dropped from PR3 (user, Cursor chat, 2026-10-29). Parked as a follow-up candidate (`tmp/pr3_review/triage_plan_delta.yaml`). Consequence: a DLQ message whose ticket call fails is still consumed silently, and one Jira blip loses a ticket.
+12. The shared `create_error_ticket_with_timeout` helper was dropped from PR3; the three event routes keep inline `asyncio.wait_for` bounds (user, Cursor chat, 2026-10-30). The API decorator keeps its PR1 inline block, and the Kinesis traceback string fix stayed.
+13. The batch-level ticket-time gap (PR #2854 review, agustin-freire-wp) gets its own OTCM ticket, not a ride-along on this ticket (user, Cursor chat, 2026-11-02). Cross-cutting hardening with its own design choice (Terraform `batch_size` cap vs handler-level time budget); draft at `tmp/pr3_review/followup_ticket_batch_ticket_budget.md`.
 
 ## Evidence
 - Full verified chain in the plan (CloudWatch prod logs, New Relic 3902898, read-only Oracle prod GETs, 2026-10-28): the 10-25 REST run's AI items got a 400 on a committed parent; the disconnects hit the non-AI batches after the legacy close-all; the Jira POST was abandoned mid-flight; the finally path crashed JSON serialization.
 - Orphan headers (read-only prod GETs, 2026-10-28 ~15:40): all five verified 0 items via `countItems`. All five carry AutomaticallySchedule = Yes / Daily / "CC Schedule" — not just the 10-25 one as first believed. 085 "FEDEX Snapshot 2026-10-24" (10-24 09:31 UTC), 333 "FEDEX Snapshot 2026-10-25" (10-25 09:32), 952 "FEDEX Snapshot 2026-10-26" (10-26 09:31), 686 "3FED Snapshot 2026-10-26" (10-26 14:03, the OEH-88909 backfill run), 987 "3FED AI Snapshot 2026-10-26" (same run).
 - Today's run (2026-10-28 08:12 UTC): landed the non-AI count "3FED Snapshot 2026-10-28" (header 300001040406623) with 2,301 items, then failed on a serial-quantity data error (OEH-89097 — a different defect class from the race). The AI twin was never created. A same-day reprocess will collide with that header by name.
 - Integration failures are live while the fix is unshipped: OEH-89097 opened 2026-10-28 04:13.
+- Stage QA evidence (2026-11-02, comment 977087): happy path created `3FED AI Snapshot 2026-11-02` (header 300001015809958) and `3FED Snapshot 2026-11-02` (header 300001015809976) on evdi-test; ESS import jobs 128054814 / 128054825. Duplicate reprocess failed on the name collision (400) with ticket OTCM-152817 carrying RICE id + S3 path + request id; the malformed file failed with OTCM-152818. Zero race markers (`RuntimeError` / `Session is closed` / `Event loop is closed`) in every log window.
+- Prod re-verification (2026-11-02, read-only GETs): the five orphans still hold 0 items; both daily counts landed every day 2026-10-29 through 2026-11-02 (~2,300 non-AI + 14 AI items) on pre-fix code — the outage ended without a deploy. Orphan #1 still carries AutomaticallySchedule = Yes / Daily / "CC Schedule".
 
 ## Test data
-- TBD per the plan's QA matrix: a crafted FedEx file on the stage S3 prefix (lines passing the subinventory/lock-code filters with bogus UPCs) forces the no-match ValueError; empty and incomplete file sets exercise the new WARNING logs.
+- Stage QA (2026-11-02): a 9-row FedEx fixture at `transfer-stage-data/vendors/fedex/In/qa_otcm151550_s3_happy.csv` (2 serial AI_Frames rows UPC 846864073022 qty 2, AI_Accessories 846864072469 qty 5, AI_Consumables 846864073183 qty 3, 5 non-AI Frames rows for 846864001018 / 846864030315 / 846864050054, all PRSN/Available). Re-uploaded as `qa_otcm151550_s4_duplicate.csv` for the collision case. A malformed file (`qa_otcm151550_s5_malformed.csv`, Unit Quantity `NOT_A_NUMBER`) drove the builder error. evdi-test zero-fill added 2,364 on-hand lines, so the stage counts carry 2,373 lines (39 AI / 2,334 non-AI).
+- Local (LocalStack + mock Oracle): REST pages with a bogus UPC (no-match ValueError) and with both creates stubbed to HTTP 500 (dual-failure ExceptionGroup); a 2-row file with unmapped Inventory Type `BOGUS` drove the no-countable-lines WARNING.
 
 ## Open items
-- PR3 #2854 (ticket identity + bounded ticket-call helper) — open, CI running. The one local `make test-api` failure (`test__two_items_processed_concurrently_create_exactly_one_tracker`) is pre-existing: it fails identically on the merge-base.
-- The Samsung AP-I-1071 event-test failure from the full `make test-api` run was concurrent-suite interference, not PR3 code: the test passes alone and the full `_event_handlers` suite passes 53/53 on the branch.
-- Close-all follow-up ticket — draft ready at `tmp/otcm151550_close_all_followup_ticket.md` (verbatim backup in the plan's post-merge action); file in OTCM after the PRs merge, adding the PR links.
-- WI6 orphan review-request comment (Q16) — evidence-backed draft ready; recommendation is OEH-88850 (the user's parked on-call ticket whose run generated orphan 952; OEH-88909–88914 belong to the current rotation, hands off); pending approval to post.
-- Q14 (monitor needed?) and Q15 (self-heal needed?) — open, internal, parked.
+- Close-all follow-up ticket — draft ready at `tmp/otcm151550_close_all_followup_ticket.md` (verbatim backup in the plan's post-merge action); file in OTCM now that the PRs merged, adding the PR links.
+- Batch-budget follow-up ticket — draft parked at `tmp/pr3_review/followup_ticket_batch_ticket_budget.md` (two-drafter + adversarial-review round, 2026-11-02). Do NOT create yet; user deferred creation (Cursor chat, 2026-11-02).
+- Q14 (monitor needed?) and Q15 (self-heal needed?) — open, internal, parked. Prod's unassisted recovery since 2026-10-29 is new input for both.
 
 ## Artifacts
 - Plan: `monocle_integrations/.cursor/plans/in-i-2019_outage_fix_a56f355a.plan.md`

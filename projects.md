@@ -11,6 +11,13 @@
 "Ser padre me ha enseñado que existe un nuevo sentido a la vida.
 Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 
+## OTCM-151549 – spike: call Oracle Fusion with an IDCS token from Okta
+- **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-151549
+- **RICE**: — (no RICE; spike feeding the SCM/FIN MCP tickets OTCM-151536 / OTCM-151537)
+- **Dates**: 2026-11-02 → —
+- **Outcome**: In flight — tooling built and validated 2026-11-02 (both-mode script green on an offline mock E2E; service-account baseline proven live on dev1); live Okta-user runs blocked on the IDCS/Okta registrations.
+- **Notes**: [projects.OTCM-151549](projects.OTCM-151549.md)
+
 ## ON-CALL 2026-10-19 → 2026-10-26
 - **Board**: [OEH list](https://warbyparker.atlassian.net/jira/software/c/projects/OEH/list?jql=project%20%3D%20%22OEH%22%0AAND%20created%20%3E%3D%20%222026-10-19%22%0AAND%20created%20%3C%3D%20%222026-10-26%22%0AAND%20status%20NOT%20IN%20(Rejected%2C%20Resolved)%0AORDER%20BY%20created%20DESC)
 - **Tickets**: in progress — counts at handoff
@@ -21,7 +28,7 @@ Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-151550
 - **RICE**: IN-I-2019
 - **Dates**: 2026-10-27 → —
-- **Outcome**: In flight — PR1 and PR2 merged 2026-10-29; PR3 in progress (two commits local, pre-push). Monitor and self-heal parked as open questions; orphan headers pending functional per-header review.
+- **Outcome**: In flight (with QA) — all three PRs merged and deployed to stage as `vstage432`; stage QA evidence posted 2026-11-02 (comment 977087: S1–S7 all Pass). OEH-88850 orphan review posted as comment 977051; prod re-verification shows the integration recovered on pre-fix code since 2026-10-29. Monitor and self-heal parked as open questions.
 - **Notes**: [projects.IN-I-2019.OTCM-151550](projects.IN-I-2019.OTCM-151550.md)
 
 ## OTCM-149231 – AP-I-3006: customer refund report fails on more than one order number
