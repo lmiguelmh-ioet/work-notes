@@ -20,15 +20,15 @@ Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 
 ## ON-CALL 2026-10-19 → 2026-10-26
 - **Board**: [OEH list](https://warbyparker.atlassian.net/jira/software/c/projects/OEH/list?jql=project%20%3D%20%22OEH%22%0AAND%20created%20%3E%3D%20%222026-10-19%22%0AAND%20created%20%3C%3D%20%222026-10-26%22%0AAND%20status%20NOT%20IN%20(Rejected%2C%20Resolved)%0AORDER%20BY%20created%20DESC)
-- **Tickets**: in progress — counts at handoff
-- **Top clusters**: —
+- **Tickets**: 1,369 at close (11-03) — 876 Rejected · 483 Resolved · 10 open (none ours; [OEH-88666](https://warbyparker.atlassian.net/browse/OEH-88666) closed last — serial fix landed via the FedEx file itself)
+- **Top clusters**: WMS-I-1005 pick-confirm bursts (overpick + Oracle-outage ×71) · Comerica ARCS dailies (dup of OEH-76395) · WMS-I-1031 discards/transients · stale feature-flag warnings · IN-I-2019 3FED outage → [OTCM-151550](https://warbyparker.atlassian.net/browse/OTCM-151550)
 - **Notes**: [oncall.2026-10](oncall.2026-10.md)
 
 ## OTCM-151550 – IN-I-2019: fix cycle count outage (3FED)
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-151550
 - **RICE**: IN-I-2019
-- **Dates**: 2026-10-27 → —
-- **Outcome**: In flight (with QA) — all three PRs merged and deployed to stage as `vstage432`; stage QA evidence posted 2026-11-02 (comment 977087: S1–S7 all Pass). OEH-88850 orphan review posted as comment 977051; prod re-verification shows the integration recovered on pre-fix code since 2026-10-29. Monitor and self-heal parked as open questions.
+- **Dates**: 2026-10-27 → 2026-11-03
+- **Outcome**: Done 2026-11-03 (QA) — three PRs shipped the dual-create race serialization, the surviving error chain, and traceable event-route tickets (stage `vstage432`, QA evidence comment 977087: S1–S7 all Pass). Orphan-header review routed to functional (OEH-88850 comment 977051); monitor and self-heal parked as open questions.
 - **Notes**: [projects.IN-I-2019.OTCM-151550](projects.IN-I-2019.OTCM-151550.md)
 
 ## OTCM-149231 – AP-I-3006: customer refund report fails on more than one order number

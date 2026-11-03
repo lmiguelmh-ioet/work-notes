@@ -2,7 +2,7 @@
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-151550
 - **RICE**: IN-I-2019
 - **Repos**: monocle_integrations
-- **Status**: all three PRs merged; deployed to stage as `vstage432`; stage QA evidence posted 2026-11-02; ticket with QA (as of 2026-11-02)
+- **Status**: CLOSED 2026-11-03 — Jira shows Done (resolution Done; moved by QA). This file is now frozen and will not be edited again. Residuals deferred at closure: the close-all follow-up ticket (draft ready, filing parked by user), the batch-budget follow-up ticket (parked by user), and open questions Q14/Q15 (monitor, self-heal) — see Open items.
 - **Plan**: [in-i-2019_outage_fix plan](https://github.com/WarbyParker/monocle_integrations) (local: `monocle_integrations/.cursor/plans/in-i-2019_outage_fix_a56f355a.plan.md`)
 
 ## Background — the integration and the outage
@@ -19,8 +19,9 @@
 **What this ticket fixes.** Those three bugs, in three PRs (error-chain hardening, dual-create serialization, event-route ticket identity). The ticket's acceptance criteria also asked for three extras: self-healing recovery (AC3), a count-didn't-land monitor (AC4), and orphan-header cleanup (AC5). The extras are where the scope questions lived; their outcomes are under Decisions.
 
 ## Outcome
-- In flight. Plan approved 2026-10-28 after two adversarial review rounds. PR1 (error-chain survival) and PR2 (dual-create serialization) merged 2026-10-29. PR3 opened as #2854 on 2026-10-30 with ticket identity and bounded ticket calls (docs excluded; the shared helper was dropped the same day in favor of inline `asyncio.wait_for` bounds). Review on 2026-11-02 raised the batch-level ticket-time gap; answered with verified numbers and parked as its own follow-up ticket draft. The ticket-creation retry and DLQ redelivery hardening was descoped before opening and parked as a follow-up candidate. The close-all in-flight safety question was confirmed a live prod hazard and parked as a follow-up ticket, to be filed after the PRs merge.
+- Plan approved 2026-10-28 after two adversarial review rounds. PR1 (error-chain survival) and PR2 (dual-create serialization) merged 2026-10-29. PR3 opened as #2854 on 2026-10-30 with ticket identity and bounded ticket calls (docs excluded; the shared helper was dropped the same day in favor of inline `asyncio.wait_for` bounds). Review on 2026-11-02 raised the batch-level ticket-time gap; answered with verified numbers and parked as its own follow-up ticket draft. The ticket-creation retry and DLQ redelivery hardening was descoped before opening and parked as a follow-up candidate. The close-all in-flight safety question was confirmed a live prod hazard and parked as a follow-up ticket, to be filed after the PRs merge.
 - 2026-11-02: all three PRs merged and deployed to stage as `vstage432` (CD workflow green incl. both health checks). Stage QA evidence posted on the ticket ([comment 977087](https://warbyparker.atlassian.net/browse/OTCM-151550?focusedCommentId=977087)): seven scenarios (S1–S7) all Pass — happy path creates both counts on evdi-test, duplicate-name and malformed-file failures open correctly-identified OTCM tickets (OTCM-152817, OTCM-152818), no session-race markers in any log, silent-success path logs WARNING and creates nothing. AC3/AC4 stay descoped boundaries. The OEH-88850 orphan review (AC5) posted as [comment 977051](https://warbyparker.atlassian.net/browse/OEH-88850?focusedCommentId=977051), updated the same day after re-verification: prod recovered on pre-fix code (both daily counts land since 2026-10-29); the five orphans still hold 0 items.
+- 2026-11-03: QA moved the ticket to Done. The three fixes ship the race serialization, the surviving error chain, and traceable event-route tickets; the monitor and the self-heal stay parked as open questions, and functional owns the keep-or-purge call on the five orphan headers.
 
 ## What shipped
 - PR1: [monocle#2848](https://github.com/WarbyParker/monocle_integrations/pull/2848) (merged 2026-10-29) — error text preserved (`message=str(error)`), Jira ticket call bounded (`asyncio.wait_for`, 30 s default), silent-success WARNING logs, FedEx 422 description contract preserved.
@@ -62,11 +63,12 @@
 - Stage QA (2026-11-02): a 9-row FedEx fixture at `transfer-stage-data/vendors/fedex/In/qa_otcm151550_s3_happy.csv` (2 serial AI_Frames rows UPC 846864073022 qty 2, AI_Accessories 846864072469 qty 5, AI_Consumables 846864073183 qty 3, 5 non-AI Frames rows for 846864001018 / 846864030315 / 846864050054, all PRSN/Available). Re-uploaded as `qa_otcm151550_s4_duplicate.csv` for the collision case. A malformed file (`qa_otcm151550_s5_malformed.csv`, Unit Quantity `NOT_A_NUMBER`) drove the builder error. evdi-test zero-fill added 2,364 on-hand lines, so the stage counts carry 2,373 lines (39 AI / 2,334 non-AI).
 - Local (LocalStack + mock Oracle): REST pages with a bogus UPC (no-match ValueError) and with both creates stubbed to HTTP 500 (dual-failure ExceptionGroup); a 2-row file with unmapped Inventory Type `BOGUS` drove the no-countable-lines WARNING.
 
-## Open items
-- Close-all follow-up ticket — draft ready at `tmp/otcm151550_close_all_followup_ticket.md` (verbatim backup in the plan's post-merge action); file in OTCM now that the PRs merged, adding the PR links.
-- Batch-budget follow-up ticket — draft parked at `tmp/pr3_review/followup_ticket_batch_ticket_budget.md` (two-drafter + adversarial-review round, 2026-11-02). Do NOT create yet; user deferred creation (Cursor chat, 2026-11-02).
-- Q14 (monitor needed?) and Q15 (self-heal needed?) — open, internal, parked. Prod's unassisted recovery since 2026-10-29 is new input for both.
+## Open items (state at closure 2026-11-03 — all deferred, none blocking)
+- Close-all follow-up ticket — deferred at closure; draft ready at `tmp/otcm151550_close_all_followup_ticket.md` (verbatim backup in the archived plan's post-merge action), to be filed in OTCM with this ticket's PR links.
+- Per-create session follow-up ticket — deferred at closure; draft at `tmp/otcm151550_per_create_session_followup_ticket.md`, gated on the close-all ticket's go/no-go.
+- Batch-budget follow-up ticket — deferred at closure; draft parked at `tmp/pr3_review/followup_ticket_batch_ticket_budget.md` (two-drafter + adversarial-review round, 2026-11-02); user deferred creation (Cursor chat, 2026-11-02).
+- Q14 (monitor needed?) and Q15 (self-heal needed?) — open, internal, parked at closure. Prod's unassisted recovery since 2026-10-29 is input for both.
 
 ## Artifacts
-- Plan: `monocle_integrations/.cursor/plans/in-i-2019_outage_fix_a56f355a.plan.md`
+- Plan: [projects.IN-I-2019.OTCM-151550.plan](projects.IN-I-2019.OTCM-151550.plan.md) (verbatim archive; working copy at `monocle_integrations/.cursor/plans/in-i-2019_outage_fix_a56f355a.plan.md`)
 - Related notes: [projects.IN-I-2019L.OTCM-139198](projects.IN-I-2019L.OTCM-139198.md) (legacy route retirement)
