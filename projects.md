@@ -18,6 +18,13 @@ Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 - **Outcome**: In flight — tooling built and validated 2026-11-02 (both-mode script green on an offline mock E2E; service-account baseline proven live on dev1); live Okta-user runs blocked on the IDCS/Okta registrations.
 - **Notes**: [projects.OTCM-151549](projects.OTCM-151549.md)
 
+## OTCM-152262 – RMCS-I-3001: resolve the RMI text source_line_id in the PoD DM
+- **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-152262
+- **RICE**: RMCS-I-3001
+- **Dates**: 2026-10-30 → 2026-11-04
+- **Outcome**: Done 2026-11-04 (QA) — the PoD DM resolves text char5/char1 via lookups (no more ORA-01722), plus pickup and DELIVERY completion gates; QA evidence comment 978153 (7/7 ACs pass). oracle-integration-cloud #1181 stays open until prod promotion; canceled-line release spun off to OTCM-153073.
+- **Notes**: [projects.RMCS-I-3001.OTCM-152262](projects.RMCS-I-3001.OTCM-152262.md)
+
 ## ON-CALL 2026-10-19 → 2026-10-26
 - **Board**: [OEH list](https://warbyparker.atlassian.net/jira/software/c/projects/OEH/list?jql=project%20%3D%20%22OEH%22%0AAND%20created%20%3E%3D%20%222026-10-19%22%0AAND%20created%20%3C%3D%20%222026-10-26%22%0AAND%20status%20NOT%20IN%20(Rejected%2C%20Resolved)%0AORDER%20BY%20created%20DESC)
 - **Tickets**: 1,369 at close (11-03) — 876 Rejected · 483 Resolved · 10 open (none ours; [OEH-88666](https://warbyparker.atlassian.net/browse/OEH-88666) closed last — serial fix landed via the FedEx file itself)

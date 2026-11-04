@@ -64,9 +64,9 @@
 - Local (LocalStack + mock Oracle): REST pages with a bogus UPC (no-match ValueError) and with both creates stubbed to HTTP 500 (dual-failure ExceptionGroup); a 2-row file with unmapped Inventory Type `BOGUS` drove the no-countable-lines WARNING.
 
 ## Open items (state at closure 2026-11-03 — all deferred, none blocking)
-- Close-all follow-up ticket — deferred at closure; draft ready at `tmp/otcm151550_close_all_followup_ticket.md` (verbatim backup in the archived plan's post-merge action), to be filed in OTCM with this ticket's PR links.
-- Per-create session follow-up ticket — deferred at closure; draft at `tmp/otcm151550_per_create_session_followup_ticket.md`, gated on the close-all ticket's go/no-go.
-- Batch-budget follow-up ticket — deferred at closure; draft parked at `tmp/pr3_review/followup_ticket_batch_ticket_budget.md` (two-drafter + adversarial-review round, 2026-11-02); user deferred creation (Cursor chat, 2026-11-02).
+- Close-all follow-up ticket — deferred at closure; draft ready at [future-work/otcm-151550-session-failure-isolation-rollout](future-work/otcm-151550-session-failure-isolation-rollout.md) (verbatim backup in the archived plan's post-merge action), to be filed in OTCM with this ticket's PR links.
+- Per-create session follow-up ticket — deferred at closure; draft at [future-work/otcm-151550-per-create-private-sessions](future-work/otcm-151550-per-create-private-sessions.md), gated on the close-all ticket's go/no-go.
+- Batch-budget follow-up ticket — deferred at closure; draft parked at [future-work/otcm-151550-batch-ticket-time-budget](future-work/otcm-151550-batch-ticket-time-budget.md) (two-drafter + adversarial-review round, 2026-11-02); user deferred creation (Cursor chat, 2026-11-02).
 - Q14 (monitor needed?) and Q15 (self-heal needed?) — open, internal, parked at closure. Prod's unassisted recovery since 2026-10-29 is input for both.
 
 ## Artifacts
