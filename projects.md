@@ -11,6 +11,13 @@
 "Ser padre me ha enseñado que existe un nuevo sentido a la vida.
 Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 
+## OTCM-153073 – RMCS-I-3001: release the warranty PoD when a covered line is canceled pre-shipping
+- **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-153073
+- **RICE**: RMCS-I-3001
+- **Dates**: 2026-11-03 → —
+- **Outcome**: In flight — PR #1184 open, stacked on #1181 (merges at prod promotion); dev1+stage A/B byte-identical and two dev1 end-to-end fixtures pass; stage legs blocked by the fa-evdi-test outage.
+- **Notes**: [projects.RMCS-I-3001.OTCM-153073](projects.RMCS-I-3001.OTCM-153073.md)
+
 ## OTCM-151549 – spike: call Oracle Fusion with an IDCS token from Okta
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-151549
 - **RICE**: — (no RICE; spike feeding the SCM/FIN MCP tickets OTCM-151536 / OTCM-151537)
