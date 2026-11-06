@@ -282,7 +282,7 @@ from WP_PAAS.WP_INT_GENERIC_REPORT_PARAM;
 		- "Hello, <> do you have any updates regarding your ticket?"
 		- "Hello, <> do you have any updates?"
 		- "Hello, <> any updates you want to share?"
-		- Kaio, Fabiola, Rocio are not in the board
+		- Kaio, Fabiola, Rocio, Norma are not in the board
 			- ![](assets/Pasted%20image%2020260220104144.png)
 			- Select Group None (to confirm)
 		- Astrid and Emilio

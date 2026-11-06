@@ -2,7 +2,7 @@
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-153073
 - **RICE**: RMCS-I-3001
 - **Repos**: oracle-integration-cloud
-- **Status** (as of 2026-11-05): ticket in QA; PR #1184 open in native GitHub stack #1182 (#1105 ← #1141 ← #1181 ← #1184), CI green; review round 1 answered and closed (qty-0 case CLOSED — no follow-up; closing comment 979446); QA passed on dev1, evidence posted (comment 979116); stage DM parity DONE after the pod recovery; AC6 stage e2e leg awaiting user's go
+- **Status** (as of 2026-11-06): DONE — QA moved the ticket 2026-11-06 07:14 EST; this file is FROZEN. PR #1184 open in native GitHub stack #1182 (#1105 ← #1141 ← #1181 ← #1184), CI green, merges at the stack's prod promotion
 - **Plan**: `monocle_integrations/.cursor/plans/rmcs-i-3001_pod_canceled_covered_line.plan.md` (frozen copy: `projects.RMCS-I-3001.OTCM-153073.plan.md`)
 
 ## Outcome
@@ -37,16 +37,14 @@
 - QA-12 dev1 e2e 2026-11-05 (TestCP3, ott Lambda request 6d1d2ca3-af47-4fc6-8c09-8d0393d36c02): HTTP 204; 5 rows; U landed with SRC_ATTRIBUTE_DATE1=2027-11-05 (T1+365); FBDI ESS 117208796; re-extract 0 rows.
 - Synthetic harness matrix QA-4..QA-11 and QA-13: 9/9 pass.
 - QA evidence comment POSTED 2026-11-05 (Jira comment 979116 on OTCM-153073); source draft at `oracle-integration-cloud/tmp/otcm153073_qa_evidence_comment.md`.
-- Stage e2e leg (AC6): POSTPONED by the fa-evdi-test outage.
+- Stage e2e leg (AC6): not run — postponed by the fa-evdi-test outage, then descoped when the ticket went DONE 2026-11-06; disclosed as a boundary in the QA evidence comment. Stage DM parity landed 2026-11-05 (byte-verified 658da45d272b).
 
 ## Test data
 - Skill: `rmcs-test-data`.
 - dev1 fixtures: TestCP1 (header 300000913502149, contract 55049, invoice 60106); TestCP3 (header 300000913635069, contract 55072, invoice 61106).
 
 ## Open items
-- Stage e2e leg (AC6) — unblocked (pod recovered 2026-11-05 ~17:05 EST); awaiting user's go, then posts as its own stage QA comment.
-- qty-0 case CLOSED 2026-11-05, no follow-up ticket — closing comment POSTED on the ticket (Jira 979446) and the closing reply POSTED on Guillermo's PR thread (discussion_r4486590083).
-- PR #1184 merge — waits on prod promotion of the stack (#1105 ← #1141 ← #1181).
+- PR #1184 merge — waits on prod promotion of the stack (#1105 ← #1141 ← #1181); repo convention merges at promotion, after this file froze.
 
 ## Artifacts
 - FSD: https://docs.google.com/document/d/1BZInnIPHh0s6zG6n6Q6I93yGBVjl28Z8/edit (ruling thread: `disco=AAAB_Ztc5xA`)

@@ -14,15 +14,15 @@ Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 ## OTCM-153073 – RMCS-I-3001: release the warranty PoD when a covered line is canceled pre-shipping
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-153073
 - **RICE**: RMCS-I-3001
-- **Dates**: 2026-11-03 → —
-- **Outcome**: In flight — PR #1184 open, stacked on #1181 (merges at prod promotion); dev1+stage A/B byte-identical and two dev1 end-to-end fixtures pass; stage legs blocked by the fa-evdi-test outage.
+- **Dates**: 2026-11-03 → 2026-11-06
+- **Outcome**: Done 2026-11-06 (QA) — the PoD DM releases the warranty .2 PoD + U record when a covered line is canceled pre-shipping; QA evidence comment 979116; oracle-integration-cloud #1184 (stack #1182) merges at prod promotion.
 - **Notes**: [projects.RMCS-I-3001.OTCM-153073](projects.RMCS-I-3001.OTCM-153073.md)
 
 ## OTCM-151549 – spike: call Oracle Fusion with an IDCS token from Okta
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-151549
 - **RICE**: — (no RICE; spike feeding the SCM/FIN MCP tickets OTCM-151536 / OTCM-151537)
 - **Dates**: 2026-11-02 → —
-- **Outcome**: In flight — tooling built and validated 2026-11-02 (both-mode script green on an offline mock E2E; service-account baseline proven live on dev1); live Okta-user runs blocked on the IDCS/Okta registrations.
+- **Outcome**: In flight — registrations in motion 2026-11-06: dev1 Okta assignment filed (Freshservice #184054), IDCS client registration live with Tony 2026-11-09 9 AM ET; all Oracle environments confirmed on OCI IAM identity domains (ID-JAG gate open). Run follows the session.
 - **Notes**: [projects.OTCM-151549](projects.OTCM-151549.md)
 
 ## OTCM-152262 – RMCS-I-3001: resolve the RMI text source_line_id in the PoD DM
