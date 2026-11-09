@@ -22,7 +22,7 @@ Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-151549
 - **RICE**: — (no RICE; spike feeding the SCM/FIN MCP tickets OTCM-151536 / OTCM-151537)
 - **Dates**: 2026-11-02 → —
-- **Outcome**: In flight — registrations in motion 2026-11-06: dev1 Okta assignment filed (Freshservice #184054), IDCS client registration live with Tony 2026-11-09 9 AM ET; all Oracle environments confirmed on OCI IAM identity domains (ID-JAG gate open). Run follows the session.
+- **Outcome**: In flight — mode B (Okta SSO → IDCS auth-code + PKCE) PROVEN live on dev1 2026-11-09: Fusion applies the person's data security (workers 5→0 rows, suppliers 200→403 vs the service-account baseline). ID-JAG future track blocked on the inbound Identity Propagation Trust; IPT + confidential-app ask to Tony drafted. Jira evidence comment next.
 - **Notes**: [projects.OTCM-151549](projects.OTCM-151549.md)
 
 ## OTCM-152262 – RMCS-I-3001: resolve the RMI text source_line_id in the PoD DM
