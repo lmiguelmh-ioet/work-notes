@@ -440,7 +440,13 @@ Agustin Frire (24/08/26)
 - 3 meses IOET
 - Argentina
 Norma Pineda (26/10/26)
-- s
+- Oracle specialist
+- ?
+Maximiliano (10/11/26)
+- Norma's friend
+- Oracle specialist
+- Argentina
+- ?
 
 
 ### top performers

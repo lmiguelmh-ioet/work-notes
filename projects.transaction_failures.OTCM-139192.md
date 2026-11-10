@@ -2,13 +2,13 @@
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-139192
 - **RICE**: none — parent epic [OTCM-106900](https://warbyparker.atlassian.net/browse/OTCM-106900) (OIC Integration Error Handling)
 - **Repos**: monocle_integrations
-- **Status** (as of 2026-10-14): In flight — PRs 1–5 merged; #2684 (facade + routes) and #2699 (API tests) open
+- **Status** (as of 2026-11-10): In QA — full series merged, deployed to stage as `vstage449`; run evidence posted (comment 982351, 21/21 pass)
 - **Plan**: [otcm-139192_transaction_failures_read_api.plan.md](../monocle_integrations/.cursor/plans/otcm-139192_transaction_failures_read_api.plan.md) (lives in the monocle_integrations repo)
 
 ## Outcome
-- The transaction_failures read API ships as a stacked PR series on monocle-app.
-- The auth groundwork, port contract, cursor codec, and both DynamoDB readers are merged.
-- Nothing is deployed. All merged code stays inert until the route PR lands and the series deploys.
+- The transaction_failures read API shipped as an 8-PR stacked series on monocle-app. All PRs merged.
+- Deployed to stage as `vstage449` (main `6d564f63e`), cd-pipeline green 2026-11-09 13:08–13:15 UTC.
+- Run evidence posted 2026-11-10 (comment 982351): 21 scenarios on the stage custom-auth Function URL, all passed. QA verification belongs to the QA team.
 
 ## What shipped
 - [PR #2630](https://github.com/WarbyParker/monocle_integrations/pull/2630) — PR 1: auth whitelist path-template matching + presence-only Cloudflare JWT authenticator (inert groundwork). Merged. Self-review `7155976db`.
@@ -17,8 +17,9 @@
 - [PR #2652](https://github.com/WarbyParker/monocle_integrations/pull/2652) — PR 3b: cursor decoder (keeps the original codec PR's history). Merged. Hardening `fdaa3da9d` after the 12-agent panel (18 findings). Review fix `96b9a5a27` dropped the unused `from_table` (Johnny's comment).
 - [PR #2653](https://github.com/WarbyParker/monocle_integrations/pull/2653) — PR 4: by-id DynamoDB reader, item mapper, adapter wiring. Merged. Hardening `29ff3ef8e` after the 12-agent panel (20 findings, 12 applied).
 - [PR #2659](https://github.com/WarbyParker/monocle_integrations/pull/2659) — PR 5: list DynamoDB reader with the GSI picker. Merged (`33a5168f1`). Hardening `765cc4ba1` after the 12-agent panel (23 findings, 1 BLOCKER: `rice_id` was dropped when `order_id` drove the index).
-- [PR #2684](https://github.com/WarbyParker/monocle_integrations/pull/2684) — PRs 6–7: facade wiring, read API routes, use cases. Open, base `main`. Review round `b33eabbce` after Johnny's first review: routes register only where JWT auth is enforced, `min_length=1` filters, typed response models.
-- [PR #2699](https://github.com/WarbyParker/monocle_integrations/pull/2699) — PR 8: localstack API test suite (20 tests). Open, stacked on #2684. Restacked onto `b33eabbce`; adaptation `af3cf3601`.
+- [PR #2684](https://github.com/WarbyParker/monocle_integrations/pull/2684) — PRs 6–7: facade wiring, read API routes, use cases. Merged 2026-11-09. Review round `b33eabbce` after Johnny's first review: routes register only where JWT auth is enforced, `min_length=1` filters, typed response models.
+- [PR #2699](https://github.com/WarbyParker/monocle_integrations/pull/2699) — PR 8: localstack API test suite (20 tests). Merged 2026-11-09. Restacked onto `b33eabbce`; adaptation `af3cf3601`.
+- Deployed to stage: `vstage449` (main `6d564f63e`), cd-pipeline green 2026-11-09 13:08–13:15 UTC.
 
 ## Decisions
 
@@ -45,18 +46,22 @@
 15. The routes reach the domain through use cases, and the not-found error lives in `GetTransactionFailure` — this supersedes the 404-mapping location in decision 4 (Johnny, PR #2684 review, 2026-10-14).
 
 ## Evidence
-- No QA runs yet; all code is inert. Unit gates before each push: PR2 6599 tests, PR3 6633, PR4 6662, PR5 6693 — 100% coverage each time.
+- Run evidence 2026-11-10, Jira comment 982351: 21 scenarios S1–S21 against the stage custom-auth Function URL, all passed. Run of record 13:53:29–13:53:40 UTC; S2/S14 re-captured 14:06 UTC with S1's literal cursor. 21 scenario files plus two raw CloudWatch `filter-log-events` pulls attached (352 + 15 events across three Lambda instances). Boundaries: B1 never-Scan (unit tests), B2 AVP shadow mode, B3 coverage gate.
+- Unit gates before each push: PR2 6599 tests, PR3 6633, PR4 6662, PR5 6693 — 100% coverage each time.
 - PR7 review round `b33eabbce`: 7057 unit tests at 100% coverage; test-api suite 336 passed.
 
 ## Test data
-- None yet. Unit fixtures only (`_adapters/_transaction_failure_readers/_fixtures.py`).
+- Stage run (S1–S21): pre-existing rows, nothing seeded. 100+ FAILED rows across five RICE ids. Detail fixture `WMS-I-1024#S0ZB9723EK#353598842dc5` (`OrderReceiptNotFoundError`, `last_failed_at` 2026-11-09T23:29:31Z). No RETRYING rows on stage that day; S8 covered the empty-listing path.
+- Unit fixtures (`_adapters/_transaction_failure_readers/_fixtures.py`).
 
 ## Open items
-- Final PR: AVP enforcement on the custom-auth routes, blocked on OTCM-139191 (AVP setup). API logic proceeds in shadow mode.
-- Deployment gate: the five merged PRs are not deployed to stage/prod yet; the next tag deploy picks them up.
+- AVP enforcement on the custom-auth routes, blocked on OTCM-139191 (AVP setup). Stage runs AVP in shadow mode; the AVP rollout owns the enforcement flip.
+- Prod deployment: the series is on stage (`vstage449`); it rides the next prod tag.
+- QA verification belongs to the QA team; the ticket stays with them.
 - Clean up the dead `_aws_dynamodb_transaction_failures_client` wiring (PR4 panel note); verify whether #2684 covered it.
+- Superseded formatted-log attachment 367590 on the ticket: delete or keep, Luis's call.
 
 ## Artifacts
 - Spec: the ticket description is the spec; no FSD exists.
-- Day notes: [day-20261006](day/day-20261006.md), [day-20261007](day/day-20261007.md), [day-20261014](day/day-20261014.md).
-- Skills touched: `self-review` (created), `pr-review` (pre-opening panels).
+- Day notes: [day-20261006](day/day-20261006.md), [day-20261007](day/day-20261007.md), [day-20261014](day/day-20261014.md), [day-20261110](day/day-20261110.md).
+- Skills touched: `self-review` (created), `pr-review` (pre-opening panels), `jira-qa-evidence` (verbatim/instance-separator rule, 2026-11-10).

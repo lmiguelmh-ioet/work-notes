@@ -11,6 +11,13 @@
 "Ser padre me ha enseñado que existe un nuevo sentido a la vida.
 Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 
+## OTCM-138123 – WMS-I-1005: pick-confirmation idempotency + transaction_failures replay
+- **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-138123
+- **RICE**: WMS-I-1005
+- **Dates**: 2026-11-10 → —
+- **Outcome**: In flight — PR1 [#2900](https://github.com/WarbyParker/monocle_integrations/pull/2900) + PR2 [#2904](https://github.com/WarbyParker/monocle_integrations/pull/2904) open (stack #2905): skip pick-terminal orders, count confirmed work, cap slip posting by the picked budget. Merge holds on stage evidence for the pick-terminal and double-confirm assumptions.
+- **Notes**: [projects.WMS-I-1005.OTCM-138123](projects.WMS-I-1005.OTCM-138123.md)
+
 ## OTCM-153073 – RMCS-I-3001: release the warranty PoD when a covered line is canceled pre-shipping
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-153073
 - **RICE**: RMCS-I-3001
@@ -105,7 +112,7 @@ Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-139192
 - **RICE**: none (epic OTCM-106900 OIC Integration Error Handling)
 - **Dates**: 2026-10-05 → —
-- **Outcome**: In flight — port contract, cursor codec, and by-id reader open as PRs #2649/#2652/#2653 (4 of 8 up).
+- **Outcome**: In QA — full 8-PR series merged, deployed to stage as `vstage449`; run evidence posted 2026-11-10 (21/21 pass, comment 982351).
 - **Notes**: [projects.transaction_failures.OTCM-139192](projects.transaction_failures.OTCM-139192.md)
 
 ## OTCM-139313 – RMCS-I-3001 PoD data model: warranty split lines
