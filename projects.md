@@ -39,6 +39,12 @@ Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 - **Outcome**: Done 2026-11-04 (QA) — the PoD DM resolves text char5/char1 via lookups (no more ORA-01722), plus pickup and DELIVERY completion gates; QA evidence comment 978153 (7/7 ACs pass). oracle-integration-cloud #1181 stays open until prod promotion; canceled-line release spun off to OTCM-153073.
 - **Notes**: [projects.RMCS-I-3001.OTCM-152262](projects.RMCS-I-3001.OTCM-152262.md)
 
+## ON-CALL 2026-11-09 → 2026-11-16
+- **Board**: [OEH list](https://warbyparker.atlassian.net/jira/software/c/projects/OEH/list?jql=project%20%3D%20%22OEH%22%0AAND%20created%20%3E%3D%20%222026-11-09%22%0AAND%20created%20%3C%3D%20%222026-11-16%22%0AAND%20status%20NOT%20IN%20(Rejected%2C%20Resolved)%0AORDER%20BY%20created%20DESC)
+- **Tickets**: 1 so far — [OEH-91409](https://warbyparker.atlassian.net/browse/OEH-91409) Rejected 11-11 (IN-I-2019 serial mismatch, healed by the next daily run)
+- **Top clusters**: IN-I-2019 serialized qty vs serial count (blank serials; 4th occurrence in two weeks — Alexis asked about the FedEx-side pattern)
+- **Notes**: [oncall.2026-11](oncall.2026-11.md)
+
 ## ON-CALL 2026-10-19 → 2026-10-26
 - **Board**: [OEH list](https://warbyparker.atlassian.net/jira/software/c/projects/OEH/list?jql=project%20%3D%20%22OEH%22%0AAND%20created%20%3E%3D%20%222026-10-19%22%0AAND%20created%20%3C%3D%20%222026-10-26%22%0AAND%20status%20NOT%20IN%20(Rejected%2C%20Resolved)%0AORDER%20BY%20created%20DESC)
 - **Tickets**: 1,369 at close (11-03) — 876 Rejected · 483 Resolved · 10 open (none ours; [OEH-88666](https://warbyparker.atlassian.net/browse/OEH-88666) closed last — serial fix landed via the FedEx file itself)
@@ -111,8 +117,8 @@ Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 ## OTCM-139192 – transaction_failures read API
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-139192
 - **RICE**: none (epic OTCM-106900 OIC Integration Error Handling)
-- **Dates**: 2026-10-05 → —
-- **Outcome**: In QA — full 8-PR series merged, deployed to stage as `vstage449`; run evidence posted 2026-11-10 (21/21 pass, comment 982351).
+- **Dates**: 2026-10-05 → 2026-11-11
+- **Outcome**: Done 2026-11-11 (QA, Kaio comment 983402) — read API on the custom-auth Lambda, stage `vstage449`, evidence comment 982351 (21/21). Prod tag stays held for OTCM-139191.
 - **Notes**: [projects.transaction_failures.OTCM-139192](projects.transaction_failures.OTCM-139192.md)
 
 ## OTCM-139313 – RMCS-I-3001 PoD data model: warranty split lines

@@ -2,13 +2,13 @@
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-139192
 - **RICE**: none — parent epic [OTCM-106900](https://warbyparker.atlassian.net/browse/OTCM-106900) (OIC Integration Error Handling)
 - **Repos**: monocle_integrations
-- **Status** (as of 2026-11-10): In QA — full series merged, deployed to stage as `vstage449`; run evidence posted (comment 982351, 21/21 pass)
-- **Plan**: [otcm-139192_transaction_failures_read_api.plan.md](../monocle_integrations/.cursor/plans/otcm-139192_transaction_failures_read_api.plan.md) (lives in the monocle_integrations repo)
+- **Status** (as of 2026-11-11): **CLOSED — file frozen** — Jira Done 2026-11-11 14:57 EST (resolution Done). QA passed on comment 983402 (Kaio Amaral) against evidence comment 982351. Residuals: AVP enforcement stays with OTCM-139191; the prod tag stays held for that enforcement; the OpenAPI query contract belongs on OTCM-139193; the writer status literal and the dead Dynamo client wiring stay unfiled.
+- **Plan**: [projects.transaction_failures.OTCM-139192.plan.md](projects.transaction_failures.OTCM-139192.plan.md) (verbatim archive of `monocle_integrations/.cursor/plans/otcm-139192_transaction_failures_read_api.plan.md`)
 
 ## Outcome
 - The transaction_failures read API shipped as an 8-PR stacked series on monocle-app. All PRs merged.
 - Deployed to stage as `vstage449` (main `6d564f63e`), cd-pipeline green 2026-11-09 13:08–13:15 UTC.
-- Run evidence posted 2026-11-10 (comment 982351): 21 scenarios on the stage custom-auth Function URL, all passed. QA verification belongs to the QA team.
+- Run evidence posted 2026-11-10 (comment 982351): 21 scenarios on the stage custom-auth Function URL, all passed. QA passed 2026-11-11 (Kaio Amaral, comment 983402). The ticket is Done.
 
 ## What shipped
 - [PR #2630](https://github.com/WarbyParker/monocle_integrations/pull/2630) — PR 1: auth whitelist path-template matching + presence-only Cloudflare JWT authenticator (inert groundwork). Merged. Self-review `7155976db`.
@@ -55,11 +55,12 @@
 - Unit fixtures (`_adapters/_transaction_failure_readers/_fixtures.py`).
 
 ## Open items
-- AVP enforcement on the custom-auth routes, blocked on OTCM-139191 (AVP setup). Stage runs AVP in shadow mode; the AVP rollout owns the enforcement flip.
-- Prod deployment: the series is on stage (`vstage449`); it rides the next prod tag.
-- QA verification belongs to the QA team; the ticket stays with them.
-- Clean up the dead `_aws_dynamodb_transaction_failures_client` wiring (PR4 panel note); verify whether #2684 covered it.
-- Superseded formatted-log attachment 367590 on the ticket: delete or keep, Luis's call.
+- AVP enforcement on the custom-auth routes stays with OTCM-139191. Stage runs AVP in shadow mode.
+- The prod tag stays held until OTCM-139191 turns enforcement on (plan O1). The series is on main and on stage as `vstage449`.
+- The list route still parses query params by hand, so OpenAPI documents none. That work belongs on OTCM-139193.
+- The writer still stores status as the literal `FAILED`. A later change should use `TransactionFailureStatus.FAILED.value`. Unfiled.
+- The dead `_aws_dynamodb_transaction_failures_client` wiring was not checked against #2684. Unfiled.
+- Attachment 367590 is superseded by the raw CloudWatch pulls. Delete or keep is Luis's call.
 
 ## Artifacts
 - Spec: the ticket description is the spec; no FSD exists.
