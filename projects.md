@@ -15,7 +15,7 @@ Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-138123
 - **RICE**: WMS-I-1005
 - **Dates**: 2026-11-10 → —
-- **Outcome**: In flight — PR1 [#2900](https://github.com/WarbyParker/monocle_integrations/pull/2900) + PR2 [#2904](https://github.com/WarbyParker/monocle_integrations/pull/2904) open (stack #2905): skip pick-terminal orders, count confirmed work, cap slip posting by the picked budget. Merge holds on stage evidence for the pick-terminal and double-confirm assumptions.
+- **Outcome**: In flight — PR1 [#2900](https://github.com/WarbyParker/monocle_integrations/pull/2900) approved 2026-11-13 (merge holds on stage evidence for the pick-terminal and double-confirm assumptions); PR2 [#2904](https://github.com/WarbyParker/monocle_integrations/pull/2904) rebased onto the reworked PR1 tip and force-pushed, continuing in review (stack #2905).
 - **Notes**: [projects.WMS-I-1005.OTCM-138123](projects.WMS-I-1005.OTCM-138123.md)
 
 ## OTCM-153073 – RMCS-I-3001: release the warranty PoD when a covered line is canceled pre-shipping
