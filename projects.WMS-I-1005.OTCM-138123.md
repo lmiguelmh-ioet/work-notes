@@ -2,17 +2,18 @@
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-138123
 - **RICE**: WMS-I-1005
 - **Repos**: monocle_integrations
-- **Status** (as of 2026-11-13): In flight — PR1 #2900 approved (merge gates: stage evidence); PR2 #2904 rebased onto PR1's reworked tip and force-pushed; the parallel tab continues PR2
-- **Plan**: [projects.WMS-I-1005.OTCM-138123.plan.md](projects.WMS-I-1005.OTCM-138123.plan.md) (archive, snapshot at PR1 opening) · live copy: `monocle_integrations/.cursor/plans/otcm-138123_idempotency_+_replay_8462d0b0.plan.md` (gitignored, evolves with the stack)
+- **Status** (as of 2026-11-17): DONE — QA moved the ticket 2026-11-17 09:55 EST; this file is FROZEN. PRs #2900 + #2904 merged 2026-11-17; stage Run Evidence comment 986809. Residuals: follow-up drafts (replay lifecycle, one-table store, TO line-level matching, Boundary 2 ESS-cancel, OMG dedupe) stay unfiled — named owners in Open items.
+- **Plan**: [projects.WMS-I-1005.OTCM-138123.plan.md](projects.WMS-I-1005.OTCM-138123.plan.md) — frozen verbatim archive at close 2026-11-17 (main plan `monocle_integrations/.cursor/plans/otcm-138123_idempotency_+_replay_8462d0b0.plan.md` + stage-QA run plan `~/.cursor/plans/otcm-138123_stage_qa_runs_460d1d98.plan.md`)
 
 ## Outcome
-- In flight. The 6-PR stack implements the spike's two idempotency changes plus an operator-triggered replay endpoint for WMS-I-1005 `transaction_failures` rows.
-- PR1 opened 2026-11-10: the pick confirmation skips an order when every request-matched shipment line is pick-terminal, instead of failing the run on WMS retries.
-- PR2 opened 2026-11-10: the pick confirmation counts work an earlier attempt already confirmed and caps each slip line by the open picked budget, so a replay confirms only the open work.
+- PR1 + PR2 MERGED 2026-11-17 after stage QA evidence cleared both merge gates (Jira comment 986809: 14 of 15 scenarios pass; S9 discloses an ESS-cancel redelivery boundary with a follow-up drafted).
+- The 2-PR stack implements the spike's two idempotency changes (re-scoped from 6 PRs on 2026-11-11: the replay machinery moved to unfiled follow-up drafts in `notes/future-work/`).
+- PR1: the pick confirmation skips an order when every request-matched shipment line is pick-terminal, instead of failing the run on WMS retries.
+- PR2: the pick confirmation counts work an earlier attempt already confirmed and caps each slip line by the open picked budget, so a replay confirms only the open work.
 
 ## What shipped
-- [monocle_integrations #2900](https://github.com/WarbyParker/monocle_integrations/pull/2900) — PR1: pick-terminal set + request-matched classifier + skip-success on pick-terminal duplicates + skip-aware OMG publish exclusion. Open, `enhancement`. Reworked 2026-11-11 to FSD §10 compliance (decision 12): unmatched request keys fail (`PickConfirmNoMatchingShipmentLinesError`), fully canceled orders fail and any ship-confirmed matched line fails (`PickConfirmNotAllowedError`) — skip-success covers only Staged/Interfaced/`Pending inventory processing` duplicates, which have no FSD error row. Reworked again 2026-11-12 (rounds 4–5, tips `2e16822b2` + `7b7c10cf5`): the status-name split is gone — all four post-ship statuses share the quantity gate (decision 13); null/missing `PickedQuantity` reads as 0. All 13 review threads answered. **Approved 2026-11-13** (Guillermo, Johnny Coral). Merge gate: (a) stage evidence that `Pending inventory processing` is pick-terminal, (b) stage evidence that Oracle safely rejects a double-confirm POST.
-- [monocle_integrations #2904](https://github.com/WarbyParker/monocle_integrations/pull/2904) — PR2: done-work quantity counting + picked-budget slip allocation + per-line Short Pick reason + hardening refusals. Open, `enhancement`, stacked on #2900 (stack #2905). Three light panel rounds resolved. Rebased 2026-11-13 onto PR1's `7b7c10cf5` (force-pushed, tips `1aae10dcd` + `f0e863ee0`): the `counted`/`done` partition moved into the classifier, so the budget math inherits the quantity gate (decision 14). Gates green on the rebased branch: 363 scoped + 13 API + 9,623 unit at 100% coverage, mypy strict.
+- [monocle_integrations #2900](https://github.com/WarbyParker/monocle_integrations/pull/2900) — PR1: pick-terminal set + request-matched classifier + skip-success on pick-terminal duplicates + skip-aware OMG publish exclusion. **MERGED 2026-11-17** (`enhancement`). Reworked 2026-11-11 to FSD §10 compliance (decision 12): unmatched request keys fail (`PickConfirmNoMatchingShipmentLinesError`), fully canceled orders fail and any ship-confirmed matched line fails (`PickConfirmNotAllowedError`) — skip-success covers only Staged/Interfaced/`Pending inventory processing` duplicates, which have no FSD error row. Reworked again 2026-11-12 (rounds 4–5, tips `2e16822b2` + `7b7c10cf5`): the status-name split is gone — all four post-ship statuses share the quantity gate (decision 13); null/missing `PickedQuantity` reads as 0. All 13 review threads answered. **Approved 2026-11-13** (Guillermo, Johnny Coral). Merge gate: (a) stage evidence that `Pending inventory processing` is pick-terminal, (b) stage evidence that Oracle safely rejects a double-confirm POST.
+- [monocle_integrations #2904](https://github.com/WarbyParker/monocle_integrations/pull/2904) — PR2: done-work quantity counting + picked-budget slip allocation + per-line Short Pick reason + hardening refusals. **MERGED 2026-11-17** (`enhancement`); was stacked on #2900 (stack #2905). Three light panel rounds resolved. Rebased 2026-11-13 onto PR1's `7b7c10cf5` (force-pushed, tips `1aae10dcd` + `f0e863ee0`): the `counted`/`done` partition moved into the classifier, so the budget math inherits the quantity gate (decision 14). Gates green on the rebased branch: 363 scoped + 13 API + 9,623 unit at 100% coverage, mypy strict.
 
 ## Decisions
 ### Functional clarifications (Q&A)
@@ -43,21 +44,24 @@
 14. The `counted`/`done` line partition lives in the classifier, not the processor (agent, PR2 rebase resolution 2026-11-13): `ShipmentLineClassification.counted_lines`/`done_lines`, with `done` = pick-terminal under the quantity gate, so PR2's done-work accounting follows the same semantics as the skip. Pending the parallel tab's veto.
 
 ## Evidence
-- Pending. The QA matrix runs on stage after PR1/PR2 land; per-scenario evidence follows the `jira-qa-evidence` standard.
+- 2026-11-16 22:00–23:08 UTC, stage Lambda (vstage458, tip `8555b8064`) → evdi-test. 15 scenarios: 14 pass; S9 discloses a boundary (an ESS-cancel redelivery posts the remainder — production's own path does this too; follow-up drafted).
+- Jira Run Evidence comment 986809 (posted 2026-11-17) with 6 attachments: full CloudWatch pull, ESS submit artifacts, before/after diffs, OEH watch, 13-payload zip + manifest, follow-up draft.
+- A four-seat audit panel re-verified the draft before posting: 26/26 live-reproducible claims pass; two wording errors fixed (Boundary 1 subtraction ordering, ESS artifact timestamps).
 
 ## Test data
 - Unit fixtures: `monocle_integrations/_domain/_integrations/_wp_wms_i_1005_wms_to_oracle_pick_confirmation/_fixtures.py`. No stage orders yet.
 
 ## Open items
-- PR2 continues in the parallel tab: its uncommitted WIP (`stale_lines_possible` → `unfiltered_slip_read` rename + comment trims) survived the 2026-11-13 rebase stashed + restored in `tmp/pr2-cleanup-wt`; the commit decision belongs to that tab. PR2's base retargets to `main` when PR1 merges (stack #2905).
+- ~~QA sign-off on the stage evidence (AC4-b/d/e behavior changes)~~ — RESOLVED 2026-11-17: QA moved the ticket to Done on the stage evidence (comment 986809).
 - Jira items parked in `tmp/otcm138123_jira_drafts.md` for the user to post: the comment-983437 amendment (quantity gate), the R4.16 partial-pick boundary question, the follow-up Task draft.
-- Stage validation before PR1 merge: `Pending inventory processing` pick-terminal assumption; Oracle double-confirm POST behavior; `picked_quantity` population (AC4-f).
-- Functional question: does Manhattan ever redeliver a pick confirmation with altered quantities? If yes, the accounting design belongs to PR2.
-- Functional/OIC-owner confirmation: no parallel pick-confirm writer exists for OMG-sourced SOs. A parallel writer upgrades PR4a's publish ledger from option to mandatory.
-- PR3–PR4c per the plan. PR4c blocked on the OTCM-139192 read-API stack merging to main.
+- Boundary 2 follow-up (ESS-cancel redelivery posts the remainder): draft attached to evidence comment 986809 (`monocle_integrations/tmp/otcm138123_followup_ess_cancel_draft.md`) for the functional/Oracle owner to file — the agent never files tickets.
+- Functional question: does Manhattan ever redeliver a pick confirmation with altered quantities? If yes, the accounting design belongs to PR2 (merged; answer now informs a hardening follow-up).
+- Functional/OIC-owner confirmation: no parallel pick-confirm writer exists for OMG-sourced SOs. A parallel writer would upgrade the deferred publish-ledger design from option to mandatory.
+- Replay machinery (former PR3/PR4a/PR4b/PR4c): moved out of scope 2026-11-11 (owner + lead decisions) to unfiled drafts in `notes/future-work/` (`followup_transaction_failures_replay_lifecycle.md`, `one_table_state_store_baseline.md`).
 - Follow-up ticket draft (file only, never filed): TO line-level matching, `tickets/OTCM-138123/followup_to_line_level_matching.md`.
 
 ## Artifacts
+- Run evidence package: Jira comment 986809 attachments (raw CloudWatch pull of 4,334 events, ESS submit artifacts, duplicate-skip diffs, OEH watch JSON, 13-payload zip + manifest, ESS-cancel follow-up draft). Working scratch `/tmp/otcm138123_evidence/` is ephemeral.
 - Spike: [WMS-I-1005 Pick Confirm Auto-retry and idempotency](https://warbyparker.atlassian.net/wiki/spaces/OT/pages/10536812552) (Johnny Coral, v13, 2026-10-05). Recs #3/#6 already done; #1/#2 = this stack; #5 = the replay design.
 - FSD synced 2026-11-10 (v1.8, 2026-07-14, predates roosevelt) into the `integrations` repo, unstaged — user decides on commit.
 - PR1 review records: `monocle_integrations/tmp/otcm138123_pr1_review/triage_plan.yaml` (16 findings, round 1) and `monocle_integrations/tmp/otcm138123_pr1_review_r2/triage_plan.yaml` (12 findings, round 2) — all resolved, all fixes applied.

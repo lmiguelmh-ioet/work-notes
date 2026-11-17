@@ -14,8 +14,8 @@ Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 ## OTCM-138123 – WMS-I-1005: pick-confirmation idempotency + transaction_failures replay
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-138123
 - **RICE**: WMS-I-1005
-- **Dates**: 2026-11-10 → —
-- **Outcome**: In flight — PR1 [#2900](https://github.com/WarbyParker/monocle_integrations/pull/2900) approved 2026-11-13 (merge holds on stage evidence for the pick-terminal and double-confirm assumptions); PR2 [#2904](https://github.com/WarbyParker/monocle_integrations/pull/2904) rebased onto the reworked PR1 tip and force-pushed, continuing in review (stack #2905).
+- **Dates**: 2026-11-10 → 2026-11-17
+- **Outcome**: Done 2026-11-17 (QA) — WMS-I-1005 pick confirmations are idempotent on WMS retry: pick-terminal duplicates skip, replays post only the open work. PRs [#2900](https://github.com/WarbyParker/monocle_integrations/pull/2900) + [#2904](https://github.com/WarbyParker/monocle_integrations/pull/2904) merged; stage Run Evidence comment 986809 (14/15 pass, one ESS-cancel boundary disclosed, follow-up drafted).
 - **Notes**: [projects.WMS-I-1005.OTCM-138123](projects.WMS-I-1005.OTCM-138123.md)
 
 ## OTCM-153073 – RMCS-I-3001: release the warranty PoD when a covered line is canceled pre-shipping
@@ -29,7 +29,7 @@ Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-151549
 - **RICE**: — (no RICE; spike feeding the SCM/FIN MCP tickets OTCM-151536 / OTCM-151537)
 - **Dates**: 2026-11-02 → —
-- **Outcome**: In flight — mode B (Okta SSO → IDCS auth-code + PKCE) PROVEN live on dev1 2026-11-09: Fusion applies the person's data security (workers 5→0 rows, suppliers 200→403 vs the service-account baseline). ID-JAG future track blocked on the inbound Identity Propagation Trust; IPT + confidential-app ask to Tony drafted. Jira evidence comment next.
+- **Outcome**: In flight — mode B (Okta SSO → IDCS auth-code + PKCE) PROVEN live on dev1 2026-11-09: Fusion applies the person's data security (workers 5→0 rows, suppliers 200→403 vs the service-account baseline). ID-JAG track: trust `WP-OKTA-IPT-DEV1` + confidential exchange client created 2026-11-17 (scheme-less issuer, patch queued); Okta-side app in flight via TECHSERV-14930 (Caitlyn); redemption probe next. Report approved for Confluence.
 - **Notes**: [projects.OTCM-151549](projects.OTCM-151549.md)
 
 ## OTCM-152262 – RMCS-I-3001: resolve the RMI text source_line_id in the PoD DM
