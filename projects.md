@@ -11,6 +11,20 @@
 "Ser padre me ha enseñado que existe un nuevo sentido a la vida.
 Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 
+## OTCM-159624 – RMCS-I-3001: PoD for Paid Expedite shipping lines at the first delivered line's date
+- **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-159624
+- **RICE**: RMCS-I-3001
+- **Dates**: 2026-11-19 → —
+- **Outcome**: In flight — ticket filed (Emilio); six functional questions posted in the 3001 FSD thread, awaiting Vijay/Aruna.
+- **Notes**: [projects.RMCS-I-3001.OTCM-159624](projects.RMCS-I-3001.OTCM-159624.md)
+
+## OTCM-158442 – OIC MCP server in monocle-mcp (read-only tools + Okta login)
+- **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-158442
+- **RICE**: — (no RICE; OIC track of the MCP epic OTCM-158710)
+- **Dates**: 2026-11-18 → —
+- **Outcome**: In flight — PRs [#21](https://github.com/WarbyParker/monocle-mcp/pull/21) (config + IDCS client) and [#22](https://github.com/WarbyParker/monocle-mcp/pull/22) (memory-only session store) open; PR 3 (login/callback routes) starting.
+- **Notes**: [projects.OTCM-158442](projects.OTCM-158442.md)
+
 ## OTCM-138123 – WMS-I-1005: pick-confirmation idempotency + transaction_failures replay
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-138123
 - **RICE**: WMS-I-1005
