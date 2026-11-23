@@ -3,7 +3,7 @@
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-158442
 - **RICE**: — (no RICE; OIC track of the MCP epic OTCM-158710)
 - **Repos**: monocle-mcp
-- **Status** (as of 2026-11-20): In flight — #21 and #22 merged, PR 3 open as #24 awaiting review
+- **Status** (as of 2026-11-23): In flight — #21 and #22 merged, PR 3 open as #24, PR 4 open as #27 (hardening pushed `11d950b`)
 - **Plan**: [tickets/OTCM-158442/plan.md](../tickets/OTCM-158442/plan.md)
 
 ## Outcome
@@ -16,6 +16,7 @@
 - PR [#21](https://github.com/WarbyParker/monocle-mcp/pull/21) — Oracle config + IDCS client — MERGED.
 - PR [#22](https://github.com/WarbyParker/monocle-mcp/pull/22) — encrypted memory-only session store — MERGED (squash `15b10bc`; 20-finding review, 7 fixes as one hardening commit; conflicts with main's #9 CI/coverage wave resolved as `22072a3`).
 - PR [#24](https://github.com/WarbyParker/monocle-mcp/pull/24) — Okta login/callback routes — OPEN (5 light review rounds, comment cleanup, two main merges, coverage pin for `_verified_user`; includes the OAuth query scrub; 459 unit tests + 1 xfailed, 100% coverage green; a same-day scrub/SDK descope, `7cfc8de`, was reverted by `16cfb98` after the SDK proved to predate the PR, introduced in #7).
+- PR [#27](https://github.com/WarbyParker/monocle-mcp/pull/27) — dev-only entry point for local runs — OPEN. Shape changed from the plan's config-gated `dev_user` (option A, parked as stash + patch) to a `.dockerignore`-excluded `dev_server.py` per user direction. Three light review rounds (15 panel seats + 6 triage verdicts): 14 findings implemented, 7 skipped as the documented indirection/residual class. Hardening commit `11d950b` pushed 2026-11-23; 402 unit tests + 1 xfailed, 100% coverage green.
 
 ## Decisions
 
@@ -33,6 +34,9 @@
 2. Callback behind Access with an email match (not a public path); email normalized once at bind; email as GCM AAD.
 3. `redirect_slashes=False` on the main router. The `/oauth/*` query scrub (spans + uvicorn access logs) stays in PR 3 (user, chat, 2026-11-20): a same-day descope (`7cfc8de`) assumed `opentelemetry-sdk` was PR-introduced, but the SDK predates the PR (added with the Access middleware in #7), so `16cfb98` restored the scrub.
 4. `IdcsClient` constructor https refusal + `oic_base_url` https pin deferred from #21's review — lands in PR 3 (PR 9 fallback).
+5. PR 4 shape: a dev-only entry point excluded from the deployed image over a shipped config-gated `dev_user` (user, chat, 2026-11-20) — no dev-user handling ships at all; option A parked (stash + patch at `tickets/OTCM-158442/parked-dev-user-config-gate.patch`).
+6. Dev identity hardcoded as `dev@localhost`, not config: a config field would reintroduce dev-user surface into the shipped config model (user, chat, 2026-11-20).
+7. The verifier-injection pin is an AST call check; `functools.partial` and the wider indirection class (wrapper chains, rebinding, getattr) stay documented review-owned residuals instead of growing the pin per spelling (review rounds 2–3, 2026-11-23).
 
 ## Evidence
 
@@ -46,7 +50,8 @@
 
 - Q7 — spike client needs the OIC scope + this app's redirect URIs; ask drafted at `tickets/OTCM-158442/tony_message_idcs.md`, awaiting Tony's reply. Blocks the dev manual run and stage, not PRs.
 - Q8 — stage Access app + hostname (OTCM-158707 track); also owns the replica-affinity pin.
-- PR 3 ([#24](https://github.com/WarbyParker/monocle-mcp/pull/24)) open 2026-11-20 with the `enhancement` label; awaiting review. Main merged 2026-11-20 (#13 EKS infra, clean, `720e764`). Bugbot round 1 (High: OAuth secrets in telemetry) answered; a follow-up correction notes the scrub's restoration (`16cfb98`), making the finding moot. Next: PR 4 of the plan (`tickets/OTCM-158442/plan.md`).
+- PR 3 ([#24](https://github.com/WarbyParker/monocle-mcp/pull/24)) open 2026-11-20 with the `enhancement` label; awaiting review. Main merged 2026-11-20 (#13 EKS infra, clean, `720e764`). Bugbot round 1 (High: OAuth secrets in telemetry) answered; a follow-up correction notes the scrub's restoration (`16cfb98`), making the finding moot.
+- PR 4 ([#27](https://github.com/WarbyParker/monocle-mcp/pull/27)) open with the `enhancement` label; hardening commit `11d950b` pushed 2026-11-23 after three light review rounds. Next: PR 5 of the plan (`tickets/OTCM-158442/plan.md`).
 
 ## Artifacts
 

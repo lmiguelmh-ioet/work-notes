@@ -11,6 +11,13 @@
 "Ser padre me ha enseñado que existe un nuevo sentido a la vida.
 Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 
+## OEH-94147 – WMS-I-1006: all-SF ship-confirm file timed out in the tracking-reference step
+- **Ticket**: https://warbyparker.atlassian.net/browse/OEH-94147
+- **RICE**: WMS-I-1006
+- **Dates**: 2026-11-23 → 2026-11-23
+- **Outcome**: Done 2026-11-23 (terminal) — SF tracking references skip Oracle resolution and store with empty order fields; stage Run Evidence comment 989665 (S1/S2 pass + old-build baseline). PR #2956 MERGED (`a7c3f2839`); prod tag `v1.0.43` pushed, green through stage. Prod apply pending at the pipeline's manual-approval gate; it activates the fix + the split flag.
+- **Notes**: [projects.WMS-I-1006.OEH-94147](projects.WMS-I-1006.OEH-94147.md)
+
 ## OTCM-159624 – RMCS-I-3001: PoD for Paid Expedite shipping lines at the first delivered line's date
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-159624
 - **RICE**: RMCS-I-3001
