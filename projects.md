@@ -21,8 +21,8 @@ Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 ## OTCM-159624 – RMCS-I-3001: PoD for Paid Expedite shipping lines at the first delivered line's date
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-159624
 - **RICE**: RMCS-I-3001
-- **Dates**: 2026-11-19 → —
-- **Outcome**: In flight — ticket filed (Emilio); six functional questions posted in the 3001 FSD thread, awaiting Vijay/Aruna.
+- **Dates**: 2026-11-19 → 2026-11-24
+- **Outcome**: Done 2026-11-24 — the Paid Expedite PoD arm is live on dev1/TEST (byte-verified); QA evidence posted (comments 990237/990238 + 36 attachments), all 7 ACs Pass. PRs #1211 (stacked in #1182) + #2953 stay open and merge at PROD promotion.
 - **Notes**: [projects.RMCS-I-3001.OTCM-159624](projects.RMCS-I-3001.OTCM-159624.md)
 
 ## OTCM-158442 – OIC MCP server in monocle-mcp (read-only tools + Okta login)
@@ -111,7 +111,7 @@ Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-149147
 - **RICE**: AR-I-3018
 - **Dates**: 2026-10-19 → 2026-10-22
-- **Outcome**: **CLOSED (Jira Done 2026-10-22)** — PR #2795 **MERGED** (skip visibility live on stage). PR #1143 (balance-row window + `P_LOOKBACK_MINUTES` + first-invoice rule, head `babdcda1`) live and byte-verified on dev1 and stage; merges at prod promotion with the #1064 stack. Stage QA 15/15 green (evidence comment 973195, SOX panel applied). Residual: Tony's Q1–Q5 gate #1143's merge.
+- **Outcome**: **CLOSED (Jira Done 2026-10-22)** — PR #2795 **MERGED** (skip visibility live on stage). Stage QA 15/15 green (evidence comment 973195). **#1064** (`739b71f9`) and **#1143** (`d5238e3d`) merged to main 2026-11-24. The prod data model upload is not done. Ticket file stays frozen.
 - **Notes**: [projects.AR-I-3018.OTCM-149147](projects.AR-I-3018.OTCM-149147.md)
 
 ## OTCM-146798 – RMCS-I-3001: CPU pickup PoD, QC-fail chain, warranty returns
@@ -125,7 +125,7 @@ Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-143188
 - **RICE**: AR-I-3018
 - **Dates**: 2026-10-12 → —
-- **Outcome**: In flight — shipped in #2730/#2731/#2732/#2746/#2747/#2772, stage-verified on vstage388 (8/8 Pass, evidence in Jira comment 971417); awaiting QA closure; DM #1134 + OIC export #1136 merge at prod promotion.
+- **Outcome**: In flight — shipped in #2730/#2731/#2732/#2746/#2747/#2772, stage-verified on vstage388 (8/8 Pass, evidence in Jira comment 971417); awaiting QA closure. **#1134** reached main 2026-11-24 inside the #1064 squash `739b71f9`. **#1136** merged the same day (`3e2ce177`). The prod OIC import is not done.
 - **Notes**: [projects.AR-I-3018.OTCM-143188](projects.AR-I-3018.OTCM-143188.md)
 
 ## OTCM-139198 – retire IN-I-2019L / FEDEX_LEGACY
