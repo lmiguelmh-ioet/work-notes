@@ -1,3 +1,5 @@
+> **FROZEN 2026-10-22** — ticket Done. Verbatim plan archive. Never edit this file again. Outcomes live in [projects.AR-I-3018.OTCM-149147](projects.AR-I-3018.OTCM-149147.md).
+
 # OTCM-149147 — AR-I-3018: keep selecting pairs after creation dates fall behind the last run
 
 **Plan APPROVED 2026-10-20** (user: "plan go!") · **D1 CONFIRMED**: lookback X = 5 minutes · **FSD sync APPROVED** (ran 2026-10-20)

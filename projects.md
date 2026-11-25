@@ -97,7 +97,7 @@ Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-149784
 - **RICE**: AR-I-3019
 - **Dates**: 2026-10-23 → 2026-10-27
-- **Outcome**: Done — the DM now refunds never-applied exchange memos stranded by the zero-balance skip; QA-passed 2026-10-27 (10/11, R11 cannot-test on a stage refund-limits outage) after six organic stage refunds. Ships in [PR #1151](https://github.com/WarbyParker/oracle-integration-cloud/pull/1151) (stacked on #1147, behind #1143); merges at prod promotion.
+- **Outcome**: Done — QA-passed 2026-10-27 (10/11, R11 cannot-test on a stage refund-limits outage). **#1147** (`f6079e7b`), **#1151** (`69ebcb3d`), and **#1125** (`129f399f`) merged to main 2026-11-24. #1151 carries #1174 and #1187. The prod applied data model, the refund-history objects, and OIC archive `01.00.0000` are on prod. Ticket file stays frozen.
 - **Notes**: [projects.AR-I-3019.OTCM-149784](projects.AR-I-3019.OTCM-149784.md)
 
 ## OTCM-150190 – OM-I-3015: split the EasyPost tracker sync onto its own flag
@@ -111,7 +111,7 @@ Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-149147
 - **RICE**: AR-I-3018
 - **Dates**: 2026-10-19 → 2026-10-22
-- **Outcome**: **CLOSED (Jira Done 2026-10-22)** — PR #2795 **MERGED** (skip visibility live on stage). Stage QA 15/15 green (evidence comment 973195). **#1064** (`739b71f9`) and **#1143** (`d5238e3d`) merged to main 2026-11-24. The prod data model upload is not done. Ticket file stays frozen.
+- **Outcome**: **CLOSED (Jira Done 2026-10-22)** — PR #2795 **MERGED** (skip visibility live on stage). Stage QA 15/15 green (evidence comment 973195). **#1064** (`739b71f9`) and **#1143** (`d5238e3d`) merged to main 2026-11-24. The prod unapplied data model and report were created the same day. Ticket file stays frozen.
 - **Notes**: [projects.AR-I-3018.OTCM-149147](projects.AR-I-3018.OTCM-149147.md)
 
 ## OTCM-146798 – RMCS-I-3001: CPU pickup PoD, QC-fail chain, warranty returns
@@ -125,7 +125,7 @@ Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-143188
 - **RICE**: AR-I-3018
 - **Dates**: 2026-10-12 → —
-- **Outcome**: In flight — shipped in #2730/#2731/#2732/#2746/#2747/#2772, stage-verified on vstage388 (8/8 Pass, evidence in Jira comment 971417); awaiting QA closure. **#1134** reached main 2026-11-24 inside the #1064 squash `739b71f9`. **#1136** merged the same day (`3e2ce177`). The prod OIC import is not done.
+- **Outcome**: In flight — shipped in #2730/#2731/#2732/#2746/#2747/#2772, stage-verified on vstage388 (8/8 Pass, evidence in Jira comment 971417); awaiting QA closure. **#1134** reached main 2026-11-24 inside the #1064 squash `739b71f9`. **#1136** merged the same day (`3e2ce177`). The prod OIC import of `01.01.0000` is not done.
 - **Notes**: [projects.AR-I-3018.OTCM-143188](projects.AR-I-3018.OTCM-143188.md)
 
 ## OTCM-139198 – retire IN-I-2019L / FEDEX_LEGACY
