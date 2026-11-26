@@ -98,7 +98,7 @@ Completed:
 
 - ~~Tony invite for Monday 2026-11-09 9 AM ET~~ — session held 2026-11-09.
 - ~~Freshservice #184054~~ RESOLVED 2026-11-06 — all three non-prod pod apps assigned (dev1, stage, dev2).
-- ~~Monday session registration~~ — `WP-OTCM-151549-SPIKE-CLI` registered and activated on the dev1 identity domain (client id `80ca07a94d124a4487e8ed61877d46dd`).
+- ~~Monday session registration~~ — registered and activated on the dev1 identity domain 2026-11-09 as **`MCP Test Dev1`** (the click-path's proposed name was `WP-OTCM-151549-SPIKE-CLI`; Tony named it at creation — console searches must use `MCP Test Dev1`), client id `80ca07a94d124a4487e8ed61877d46dd`; "Enforce grants as authorization" was CHECKED on the create screen, so Luis's user was assigned post-activation from the app's Users tab. Per-step execution record: `tickets/OTCM-151549/monday_session_prep.md` (✅/⏭️ markers).
 - ~~Run mode B live on dev1~~ — done 2026-11-09 09:14 ET; proven (see Evidence).
 - ~~Draft the two-track results report~~ — `spike/07_report_draft.md` drafted 2026-11-09; updated for publish 2026-11-17.
 - ~~Send `tony_message_ipt.md` to Tony~~ — sent 2026-11-09.

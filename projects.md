@@ -11,6 +11,13 @@
 "Ser padre me ha enseñado que existe un nuevo sentido a la vida.
 Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 
+## OTCM-160175 – RMCS-I-3001: Identify Customer Contracts with Create Accounting = Yes
+- **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-160175
+- **RICE**: RMCS-I-3001
+- **Dates**: 2026-11-26 → —
+- **Outcome**: In flight (QA) — PR #2975 **MERGED** (`1551b2beb`); QA Run Evidence comment 991696 posted all-Pass (five Identify runs; 5 draft accounting entries post-freeze for contracts 24003/24004, one per event; 9 attachments). TEST's freeze period changed from 2 days to immediate on 2026-11-26. Waiting on QA to close.
+- **Notes**: [projects.RMCS-I-3001.OTCM-160175](projects.RMCS-I-3001.OTCM-160175.md)
+
 ## OEH-94147 – WMS-I-1006: all-SF ship-confirm file timed out in the tracking-reference step
 - **Ticket**: https://warbyparker.atlassian.net/browse/OEH-94147
 - **RICE**: WMS-I-1006
@@ -29,7 +36,7 @@ Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-158442
 - **RICE**: — (no RICE; OIC track of the MCP epic OTCM-158710)
 - **Dates**: 2026-11-18 → —
-- **Outcome**: In flight — PRs [#21](https://github.com/WarbyParker/monocle-mcp/pull/21) (config + IDCS client) and [#22](https://github.com/WarbyParker/monocle-mcp/pull/22) (memory-only session store) open; PR 3 (login/callback routes) starting.
+- **Outcome**: In flight — plan rows 1–9 shipped: #21/#22/#31 merged; stack #39 open six deep (#24 → #35 → #37 → #38 → #40 → #41, all eight OIC tools live in code); #27 (dev entry point) open off-stack. Row 10 (activity-stream tool) waits on the live S2 probe; local E2E with real Okta tokens being scoped.
 - **Notes**: [projects.OTCM-158442](projects.OTCM-158442.md)
 
 ## OTCM-138123 – WMS-I-1005: pick-confirmation idempotency + transaction_failures replay
