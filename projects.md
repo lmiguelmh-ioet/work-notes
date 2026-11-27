@@ -14,8 +14,8 @@ Que entre momentos dulces y salados, uno encuentra dicha y felicidad."
 ## OTCM-160175 – RMCS-I-3001: Identify Customer Contracts with Create Accounting = Yes
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-160175
 - **RICE**: RMCS-I-3001
-- **Dates**: 2026-11-26 → —
-- **Outcome**: In flight (QA) — PR #2975 **MERGED** (`1551b2beb`); QA Run Evidence comment 991696 posted all-Pass (five Identify runs; 5 draft accounting entries post-freeze for contracts 24003/24004, one per event; 9 attachments). TEST's freeze period changed from 2 days to immediate on 2026-11-26. Waiting on QA to close.
+- **Dates**: 2026-11-26 → 2026-11-27
+- **Outcome**: Done 2026-11-27 — Identify submits Create Accounting = Yes + Summary style + submission date in position 3. PR #2975 **MERGED** (`1551b2beb`); QA Run Evidence comment 991696 all-Pass (five Identify runs; 5 draft accounting entries post-freeze for contracts 24003/24004, one per event; 9 attachments). TEST's freeze period changed from 2 days to immediate.
 - **Notes**: [projects.RMCS-I-3001.OTCM-160175](projects.RMCS-I-3001.OTCM-160175.md)
 
 ## OEH-94147 – WMS-I-1006: all-SF ship-confirm file timed out in the tracking-reference step

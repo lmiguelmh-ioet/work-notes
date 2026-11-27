@@ -2,7 +2,7 @@
 - **Ticket**: https://warbyparker.atlassian.net/browse/OTCM-160175
 - **RICE**: RMCS-I-3001
 - **Repos**: monocle_integrations
-- **Status** (as of 2026-11-26): PR merged, QA evidence posted; waiting on QA to close
+- **Status**: CLOSED 2026-11-27 — Jira shows Done (resolved 06:08 ET, QA). This file is now frozen.
 - **Plan**: — (no plan file)
 
 ## Outcome
@@ -31,9 +31,9 @@
 - TEST fixtures: orders O160175H (document 27004 / contract 24003, invoice 22320 $104) and O160175G (document 28002 / contract 24004, invoices 22321 $103 + 27122 $80).
 
 ## Open items
-- Wait for QA to verify and move the ticket; freeze this note when Jira shows the terminal status.
+- None — QA verified and closed the ticket 2026-11-27.
 
 ## Artifacts
-- PR: https://github.com/WarbyParker/monocle_integrations/pull/2975
-- QA draft + fixtures: `monocle_integrations/tmp/otcm160175_qa_evidence_comment.md`, `monocle_integrations/tmp/otcm160175_review/fixtures/`
+- PR: https://github.com/WarbyParker/monocle_integrations/pull/2975 (merged `1551b2beb`)
+- QA Run Evidence: Jira comment 991696 on OTCM-160175 + 9 attachments (ids 374190–374198)
 - Skill touched: `rmcs-test-data`
